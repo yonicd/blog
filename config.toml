@@ -1,0 +1,83 @@
+baseurl = "https://yonicd.github.io"
+DefaultContentLanguage = "en"
+title = "Reproducible Random Thoughts"
+theme = "beautifulhugo"
+metaDataFormat = "yaml"
+pygmentsUseClasses = true
+pygmentCodeFences = true
+ignoreFiles = ["defaults$","\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+disqusShortname = "yonicd"
+googleAnalytics = "UA-84988961-2"
+
+[Params]
+  subtitle = "Je T'aime Terminal"
+  logo = "img/cd-icon.png"
+  favicon = "img/favicon.ico"
+  dateFormat = "January 2, 2006"
+  commit = false
+  rss = true
+  comments = true
+#  gcse = "012345678901234567890:abcdefghijk" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
+
+#[[Params.bigimg]]
+#  src = "img/triangle.jpg"
+#  desc = "Triangle"
+#[[Params.bigimg]]
+#  src = "img/sphere.jpg"
+#  desc = "Sphere"
+#[[Params.bigimg]]
+#  src = "img/hexagon.jpg"
+#  desc = "Hexagon"
+
+[Author]
+  name = "Jonathan Sidi"
+  website = "yonicd.github.io"
+  email = "yonicd@gmail.com"
+  facebook = "yoniceedee"
+  googleplus = "+yonicd"
+  github = "yonicd"
+  twitter = "yoniceedee"
+  linkedin = "yonicd"
+
+[[menu.main]]
+    name = "Blog"
+    url = ""
+    weight = 1
+
+[[menu.main]]
+    name = "About"
+    url = "page/about/"
+    weight = 3
+
+[[menu.main]]
+    name = "Projects"
+    url = "page/projects/"
+    weight = 2
+
+[[menu.main]]
+    identifier = "resources"
+    name = "Resources"
+    weight = 4
+
+[[menu.main]]
+    parent = "resources"
+    name = "Metrum Research"
+    url = "http://www.metrumrg.com/"
+    weight = 1
+
+[[menu.main]]
+    parent = "resources"
+    name = "R-bloggers"
+    url = "http://www.r-bloggers.com"
+    weight = 2
+
+#[[menu.main]]
+#    parent = "resources"
+#    name = "Code Sample"
+#    url = "post/2016-03-08-code-sample"
+#    weight = 3
+
+[[menu.main]]
+    name = "Tags"
+    url = "tags"
+    weight = 4

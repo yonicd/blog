@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="{{ .Lang }}">
+  {{ partial "head.html" . }}
+  <body>
+    {{ partial "nav.html" . }}
+    {{ block "header" . }}{{ partial "header.html" . }}{{ end }}
+    {{ block "main" . }}{{ end }}
+    {{ partial "footer.html" . }}
+    
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    
+  </body>
+</html>
+

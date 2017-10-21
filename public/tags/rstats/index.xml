@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rstats on Reproducible Random Thoughts</title>
+    <link>https://yonicd.github.io/tags/rstats/</link>
+    <description>Recent content in Rstats on Reproducible Random Thoughts</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
+    <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
+    <lastBuildDate>Mon, 02 Oct 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://yonicd.github.io/tags/rstats/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Combining Github Traffic Plots Across Repositories</title>
+      <link>https://yonicd.github.io/post/2017-10-02-githubtraffic/</link>
+      <pubDate>Mon, 02 Oct 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>https://yonicd.github.io/post/2017-10-02-githubtraffic/</guid>
+      <description>This post will show how to use the RSelenium package to scrape your own github account to retrieve all that fun traffic data of clones and visits and create a single traffic plot for your account.
+For the single file you can find it in this gist file.
+Packages library(RSelenium) library(XML) library(ggplot2) library(reshape2) library(plyr) library(dplyr)  Fill in the relevant information for your account. The team is usually your username, but it can be different.</description>
+    </item>
+    
+    <item>
+      <title>Regular Expression Searching within Shiny Selectize Objects</title>
+      <link>https://yonicd.github.io/post/2017-09-26-regexselect/</link>
+      <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>https://yonicd.github.io/post/2017-09-26-regexselect/</guid>
+      <description>regexSelect is a small package that uses Shiny modules to solve a problem in Shiny selectize objects - regular expression (regex) searching. You can quickly filter the values in the selectize object, while being able to add that new regex query to the selectize list.
+This is great for long lists, since you can return multiple item simultaneously without needing to endlessly click items in a list!
+Install install.packages(&#39;regexSelect&#39;) #devtools::install_github(&#39;yonicd/regexSelect&#39;)  Below are two examples of using regular expressions to quickly populate multiple items in a ggplot and a datatable.</description>
+    </item>
+    
+    <item>
+      <title>What is the appropriate population scaling of the Affordable Care Act Funding?</title>
+      <link>https://yonicd.github.io/post/2017-09-26-aca/</link>
+      <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>https://yonicd.github.io/post/2017-09-26-aca/</guid>
+      <description>I have been trying to decipher for myself, what is in the current (well, yesterday&amp;rsquo;s) Graham-Cassidy health care bill. I saw this image on many news outlets a few days ago and my inner hate for pie charts bubbled up.
+This is a zoom in on the pie chart &amp;hellip; From what I can gather, these figures are attempting to say that there are specific states that are getting relatively more of the federal health care funds under the Afordable Care Act (ACA) than their relative state population.</description>
+    </item>
+    
+    <item>
+      <title>Automating roxygen2 package documentation</title>
+      <link>https://yonicd.github.io/post/2017-09-18-sinew/</link>
+      <pubDate>Mon, 18 Sep 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>https://yonicd.github.io/post/2017-09-18-sinew/</guid>
+      <description>Thinking of creating a new package? Dread the task of function documentation? Afraid to run devtools::check(build_args = &#39;--as-cran&#39;) and get bombarded by Errors, Warnings, and Notes (oh my!) ? Wait&amp;hellip;. breathe!
+After feeling all that anxiety and following all of Hadley&amp;rsquo;s directions online, I felt I was doing a lot of manual labour, and that a package should be doing all lot of this for me. So we wrote one - sinew (sin-yu).</description>
+    </item>
+    
+  </channel>
+</rss>

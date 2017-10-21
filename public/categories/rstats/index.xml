@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rstats on Reproducible Random Thoughts</title>
+    <link>https://yonicd.github.io/categories/rstats/</link>
+    <description>Recent content in Rstats on Reproducible Random Thoughts</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
+    <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
+    <lastBuildDate>Thu, 19 Oct 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://yonicd.github.io/categories/rstats/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>jsTree</title>
+      <link>https://yonicd.github.io/post/jstree/</link>
+      <pubDate>Thu, 19 Oct 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>https://yonicd.github.io/post/jstree/</guid>
+      <description>jsTree is a R package that is a standalone htmlwidget for the jsTree JavaScript library. It can be run from the R console directly into the Rstudio Viewer, be used in a Shiny application or be part of an Rmarkdown html output.
+Installation #CRAN install.packages(&amp;#39;jsTree&amp;#39;) #Github devtools::install_github(&amp;#39;metrumresearchgroup/jsTree&amp;#39;) The motivation for the package came from the shinyTree by Jeff Allen, which has an early version of the JavaScript library hardcoded into a Shiny application.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,145 @@
+---
+title: jsTree
+author: Jonathan Sidi
+date: '2017-10-19'
+slug: jstree
+categories: []
+tags:
+  - htmlwigdet
+cran: jsTree
+cran_badge: [status, downloads]
+gh_repo: metrumresearchgroup/jsTree
+gh_badge: [follow, star, issue]
+---
+
+jsTree is a R package that is a standalone htmlwidget for the jsTree JavaScript library. It can be run from the R console directly into the Rstudio Viewer, be used in a Shiny application or be part of an Rmarkdown html output.
+
+## Installation
+
+```{r,eval=FALSE}
+#CRAN
+install.packages('jsTree')
+
+#Github
+devtools::install_github('metrumresearchgroup/jsTree')
+```
+
+The motivation for the package came from the [shinyTree](https://github.com/trestletech/shinyTree) by Jeff Allen, which has an early version of the JavaScript library hardcoded into a Shiny application.
+
+The input for the htmlwidget is a character vector and the heirarchy is set by the '/', as to mimic the delimiter of a file path. 
+
+The main purpose of this package is vizualize folder hierarchy, much like in the `Files` tab in RStudio. But, instead of looking in local directories it will be used for remote repositories, such as github, bitbucket and svn repositories. This is implemented in the [vcs](https://github.com/metrumresearchgroup/vcs) package and a future post will show utility that package gives.
+
+To show the basic functionality of jsTree we will use a toy dataset from the babynames package.
+
+```{r,message=FALSE,warning=FALSE}
+#install.packages('babynames')
+library(babynames)
+library(dplyr)
+library(jsTree)
+library(widgetframe)
+```
+
+Taking a random sample of names
+```{r ex0}
+set.seed(1234)
+
+x <- babynames%>%
+  sample_n(100)%>%
+  select(-c(prop,n))%>%
+  mutate(initial=substr(name,1,1),
+         sex=ifelse(sex=='F','Female','Male'))%>%
+  select(year,sex,initial,name)
+  
+myx <- apply(x,1,paste,collapse='/')
+
+j0 <- jsTree(obj = myx)
+frameWidget(j0)
+```
+
+Initialize tree with checked boxes for certain fields
+```{r ex1}
+nodestate1 <- x$year<=1920
+
+j1 <- jsTree(myx,nodestate=nodestate1)
+frameWidget(j1)
+```
+
+Change the order of the hierarchy
+```{r ex2}
+ nested_string2 <- apply(x[,c(3,1,2,4)],1,paste,collapse='/')
+ 
+j2 <- jsTree(nested_string2)
+frameWidget(j2)
+```
+
+Use the gender as a tooltip on the name
+```{r ex3}
+ nested_string3 <- apply(x[,-c(2)],1,paste,collapse='/')
+
+gender_label <- x$sex
+names(gender_label) <- x$name
+
+j3 <- jsTree(nested_string3,tooltips = gender_label)
+frameWidget(j3)
+```
+
+## Shiny
+
+jsTree can be used in Shiny applications and supplies observers so the Shiny can react to the tree.
+
+```{r,eval=FALSE}
+
+ui <- shiny::fluidPage(
+  
+  shiny::column(width=4,jsTree::jsTreeOutput('tree')),
+  
+  shiny::column(width=8,shiny::uiOutput('chosen'))
+  
+)
+
+server <- function(input, output,session) {
+  
+  network <- shiny::reactiveValues()
+  
+  shiny::observeEvent(input$tree_update,{
+    
+    current_selection <- input$tree_update$.current_tree
+    if(!is.null(current_selection)) 
+      network$tree <- jsonlite::fromJSON(current_selection)
+    
+  })
+  
+  shiny::observeEvent(network$tree,{
+    
+    output$results <- shiny::renderPrint({
+      
+      str.out <- ''
+      
+      if(length(network$tree)>0)
+        str.out=network$tree
+      
+      return(str.out)
+    })    
+  })
+  
+  output$chosen <- shiny::renderUI({
+    
+    list(shiny::h3('Selected Items'),
+         
+    shiny::verbatimTextOutput(outputId = "results"))
+    
+  })
+  
+  output$tree <- jsTree::renderJsTree({
+    
+    nested_string <- myx
+    
+    jsTree(nested_string)
+    
+  })
+  
+}
+
+shinyApp(ui, server)
+```

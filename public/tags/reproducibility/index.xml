@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Reproducibility on Reproducible Random Thoughts</title>
+    <link>https://yonicd.github.io/tags/reproducibility/</link>
+    <description>Recent content in Reproducibility on Reproducible Random Thoughts</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
+    <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
+    <lastBuildDate>Mon, 18 Sep 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://yonicd.github.io/tags/reproducibility/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Automating roxygen2 package documentation</title>
+      <link>https://yonicd.github.io/post/2017-09-18-sinew/</link>
+      <pubDate>Mon, 18 Sep 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>https://yonicd.github.io/post/2017-09-18-sinew/</guid>
+      <description>Thinking of creating a new package? Dread the task of function documentation? Afraid to run devtools::check(build_args = &#39;--as-cran&#39;) and get bombarded by Errors, Warnings, and Notes (oh my!) ? Wait&amp;hellip;. breathe!
+After feeling all that anxiety and following all of Hadley&amp;rsquo;s directions online, I felt I was doing a lot of manual labour, and that a package should be doing all lot of this for me. So we wrote one - sinew (sin-yu).</description>
+    </item>
+    
+    <item>
+      <title>sinew</title>
+      <link>https://yonicd.github.io/post/2017-05-03-sinew/</link>
+      <pubDate>Wed, 03 May 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>https://yonicd.github.io/post/2017-05-03-sinew/</guid>
+      <description>Sinew is a R package that generates a Roxygen skeleton populated with information scraped from the function script.
+Functionality  makeOxygen: Create skeleton for Roxygen2 documentation populated with information scraped from within the package function scripts. makeImport: Create import calls for DESCRIPTION, NAMESPACE and Roxygen2 makeDictionary: Create an R file of all the unique roxygen parameter fields in a package R subdirectory.  makeOxygen Function that returns the skeleton for roxygen2 documentation including title, description, return, import and other fields populated with information scraped from the function script.</description>
+    </item>
+    
+    <item>
+      <title>ggedit 0.2.0</title>
+      <link>https://yonicd.github.io/post/2017-03-31-ggedit_cranpost/</link>
+      <pubDate>Fri, 31 Mar 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>https://yonicd.github.io/post/2017-03-31-ggedit_cranpost/</guid>
+      <description>We are pleased to announce the release of the ggedit package on CRAN.
+To install the package you can call the standard R command
+install.packages(&#39;ggedit&#39;)  The source version is still tracked on github, which has been reorganized to be easier to navigate.
+To install the dev version:
+devtools::install_github(&#39;metrumresearchgroup/ggedit&#39;)  What is ggedit? ggedit is an R package that is used to facilitate ggplot formatting. With ggedit, R users of all experience levels can easily move from creating ggplots to refining aesthetic details, all while maintaining portability for further reproducible research and collaboration.</description>
+    </item>
+    
+    <item>
+      <title>ggedit 0.1.1</title>
+      <link>https://yonicd.github.io/post/2017-02-22-ggedit3/</link>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>https://yonicd.github.io/post/2017-02-22-ggedit3/</guid>
+      <description>ggedit is a package that lets users interactively edit ggplot layer and theme aesthetics. In a previous post we showed you how to use it in a collaborative workflow using standard R scripts. More importantly, we highlighted that ggedit outputs to the user, after editing, updated: gg plots, layers, scales and themes as both self-contained objects and script that you can paste directly in your code.
+Installation devtools::install_github(&amp;quot;metrumresearchgroup/ggedit&amp;quot;,subdir=&amp;quot;ggedit&amp;quot;)  version 0.</description>
+    </item>
+    
+    <item>
+      <title>ggedit</title>
+      <link>https://yonicd.github.io/post/2016-12-13-ggedit/</link>
+      <pubDate>Tue, 13 Dec 2016 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>https://yonicd.github.io/post/2016-12-13-ggedit/</guid>
+      <description>ggplot2 has become the standard of plotting in R for many users. New users, however, may find the learning curve steep at first, and more experienced users may find it challenging to keep track of all the options (especially in the theme!).
+ggedit is a package that helps users bridge the gap between making a plot and getting all of those pesky plot aesthetics just right, all while keeping everything portable for further research and collaboration.</description>
+    </item>
+    
+  </channel>
+</rss>

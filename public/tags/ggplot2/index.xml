@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ggplot2 on Reproducible Random Thoughts</title>
+    <link>https://yonicd.github.io/tags/ggplot2/</link>
+    <description>Recent content in Ggplot2 on Reproducible Random Thoughts</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
+    <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
+    <lastBuildDate>Tue, 26 Sep 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://yonicd.github.io/tags/ggplot2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>What is the appropriate population scaling of the Affordable Care Act Funding?</title>
+      <link>https://yonicd.github.io/post/2017-09-26-aca/</link>
+      <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>https://yonicd.github.io/post/2017-09-26-aca/</guid>
+      <description>I have been trying to decipher for myself, what is in the current (well, yesterday&amp;rsquo;s) Graham-Cassidy health care bill. I saw this image on many news outlets a few days ago and my inner hate for pie charts bubbled up.
+This is a zoom in on the pie chart &amp;hellip; From what I can gather, these figures are attempting to say that there are specific states that are getting relatively more of the federal health care funds under the Afordable Care Act (ACA) than their relative state population.</description>
+    </item>
+    
+    <item>
+      <title>ggedit 0.2.0</title>
+      <link>https://yonicd.github.io/post/2017-03-31-ggedit_cranpost/</link>
+      <pubDate>Fri, 31 Mar 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>https://yonicd.github.io/post/2017-03-31-ggedit_cranpost/</guid>
+      <description>We are pleased to announce the release of the ggedit package on CRAN.
+To install the package you can call the standard R command
+install.packages(&#39;ggedit&#39;)  The source version is still tracked on github, which has been reorganized to be easier to navigate.
+To install the dev version:
+devtools::install_github(&#39;metrumresearchgroup/ggedit&#39;)  What is ggedit? ggedit is an R package that is used to facilitate ggplot formatting. With ggedit, R users of all experience levels can easily move from creating ggplots to refining aesthetic details, all while maintaining portability for further reproducible research and collaboration.</description>
+    </item>
+    
+    <item>
+      <title>ggedit 0.1.1</title>
+      <link>https://yonicd.github.io/post/2017-02-22-ggedit3/</link>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>https://yonicd.github.io/post/2017-02-22-ggedit3/</guid>
+      <description>ggedit is a package that lets users interactively edit ggplot layer and theme aesthetics. In a previous post we showed you how to use it in a collaborative workflow using standard R scripts. More importantly, we highlighted that ggedit outputs to the user, after editing, updated: gg plots, layers, scales and themes as both self-contained objects and script that you can paste directly in your code.
+Installation devtools::install_github(&amp;quot;metrumresearchgroup/ggedit&amp;quot;,subdir=&amp;quot;ggedit&amp;quot;)  version 0.</description>
+    </item>
+    
+    <item>
+      <title>ggedit</title>
+      <link>https://yonicd.github.io/post/2016-12-13-ggedit/</link>
+      <pubDate>Tue, 13 Dec 2016 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>https://yonicd.github.io/post/2016-12-13-ggedit/</guid>
+      <description>ggplot2 has become the standard of plotting in R for many users. New users, however, may find the learning curve steep at first, and more experienced users may find it challenging to keep track of all the options (especially in the theme!).
+ggedit is a package that helps users bridge the gap between making a plot and getting all of those pesky plot aesthetics just right, all while keeping everything portable for further research and collaboration.</description>
+    </item>
+    
+  </channel>
+</rss>

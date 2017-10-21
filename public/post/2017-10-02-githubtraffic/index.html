@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Combining Github Traffic Plots Across Repositories</title>
+  <meta property="og:title" content="Combining Github Traffic Plots Across Repositories" />
+  <meta name="twitter:title" content="Combining Github Traffic Plots Across Repositories" />
+  <meta name="description" content="This post will show how to use the RSelenium package to scrape your own github account to retrieve all that fun traffic data of clones and visits and create a single traffic plot for your account.
+For the single file you can find it in this gist file.
+Packages library(RSelenium) library(XML) library(ggplot2) library(reshape2) library(plyr) library(dplyr)  Fill in the relevant information for your account. The team is usually your username, but it can be different.">
+  <meta property="og:description" content="This post will show how to use the RSelenium package to scrape your own github account to retrieve all that fun traffic data of clones and visits and create a single traffic plot for your account.
+For the single file you can find it in this gist file.
+Packages library(RSelenium) library(XML) library(ggplot2) library(reshape2) library(plyr) library(dplyr)  Fill in the relevant information for your account. The team is usually your username, but it can be different.">
+  <meta name="twitter:description" content="This post will show how to use the RSelenium package to scrape your own github account to retrieve all that fun traffic data of clones and visits and create a single traffic plot for your account.
+For …">
+  <meta name="author" content="Jonathan Sidi"/>
+  <link href='https://yonicd.github.io/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://yonicd.github.io/img/cd-icon.png" />
+  <meta name="twitter:image" content="https://yonicd.github.io/img/cd-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@yoniceedee" />
+  <meta name="twitter:creator" content="@yoniceedee" />
+  <meta property="og:url" content="https://yonicd.github.io/post/2017-10-02-githubtraffic/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Reproducible Random Thoughts" />
+
+  <meta name="generator" content="Hugo 0.27.1" />
+  <link rel="canonical" href="https://yonicd.github.io/post/2017-10-02-githubtraffic/" />
+  <link rel="alternate" href="https://yonicd.github.io/index.xml" type="application/rss+xml" title="Reproducible Random Thoughts">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://yonicd.github.io/css/main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://yonicd.github.io/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="https://yonicd.github.io/css/highlight.min.css" />
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css" integrity="sha256-sCl5PUOGMLfFYctzDW3MtRib0ctyUvI9Qsmq2wXOeBY=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css" integrity="sha256-BFeI1V+Vh1Rk37wswuOYn5lsTcaU96hGaI7OUVCLjPc=" crossorigin="anonymous" />
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-84988961-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://yonicd.github.io">Reproducible Random Thoughts</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Projects" href="/page/projects/">Projects</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Resources</a>
+              <div class="navlinks-children">
+                
+                  <a href="http://www.metrumrg.com/">Metrum Research</a>
+                
+                  <a href="http://www.r-bloggers.com">R-bloggers</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="Reproducible Random Thoughts" href="https://yonicd.github.io">
+            <img class="avatar-img" src="https://yonicd.github.io/img/cd-icon.png" alt="Reproducible Random Thoughts" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              <h1>Combining Github Traffic Plots Across Repositories</h1>
+                
+                
+                  <span class="post-meta">
+  Posted on October 2, 2017
+  
+</span>
+
+
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+            <div>
+      
+ </div>
+ <div>
+ 
+ 
+    </div>
+
+      <article role="main" class="blog-post">
+        
+
+<p>This post will show how to use the <a href="https://cran.r-project.org/web/packages/RSelenium/vignettes/RSelenium-basics.html">RSelenium</a> package to scrape your own github account to retrieve all that fun traffic data of clones and visits and create a single traffic plot for your account.</p>
+
+<p><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/gh_traffic.jpg" alt="" /></p>
+
+<p>For the single file you can find it in this <a href="https://gist.github.com/yonicd/a05c4d85f7884c517a6cfa6aff24f59a">gist</a> file.</p>
+
+<h2 id="packages">Packages</h2>
+
+<pre><code class="language-r">library(RSelenium)
+library(XML)
+library(ggplot2)
+library(reshape2)
+library(plyr)
+library(dplyr)
+</code></pre>
+
+<p>Fill in the relevant information for your account. The team is usually your username, but it can be different. The repos can be a vector and since we are going in the front door of the site we can access the private repositories too!</p>
+
+<h2 id="setup">Setup</h2>
+
+<pre><code class="language-r">gh_user &lt;- '&lt;your github login name&gt;'
+gh_pass &lt;- '&lt;your github login password&gt;'
+
+gh_team &lt;- '&lt;team associated with account&gt;'
+repos &lt;- '&lt;repositories in team&gt;'
+</code></pre>
+
+<h2 id="the-function">The function</h2>
+
+<pre><code class="language-r">github_traffic &lt;- function(gh_user,gh_pass,gh_team,repos){
+
+#open the connection
+
+rD &lt;- RSelenium::rsDriver(verbose = FALSE)
+remDr &lt;- rD[[&quot;client&quot;]]
+
+#going to the first repo to invoke the login
+
+remDr$navigate(sprintf('https://github.com/%s/%s/graphs/traffic',gh_team,repos[1]))
+
+#entering the login information in the form and clicking the button. 
+
+webElem &lt;- remDr$findElement(using = 'id', value = &quot;login_field&quot;)
+webElem$setElementAttribute(attributeName = 'value',value = gh_user)
+webElem &lt;- remDr$findElement(using = 'id', value = &quot;password&quot;)
+webElem$setElementAttribute(attributeName = 'value',value = gh_pass)
+webElem=remDr$findElement(using = 'xpath','//*[@id=&quot;login&quot;]/form/div[4]/input[3]')
+webElem$clickElement()
+Sys.sleep(1)
+
+# Retrieve the plots into an html
+out &lt;- plyr::llply(repos,function(repo){
+  remDr$navigate(sprintf('https://github.com/%s/%s/graphs/traffic',gh_team,repo))
+  Sys.sleep(1)
+  out &lt;- XML::htmlParse(remDr$getPageSource(),asText = TRUE)
+  sapply(c('clones','visitors'),function(type){
+  XML::getNodeSet(out,sprintf(sprintf('//*[@id=&quot;js-%s-graph&quot;]/div/div[1]/svg/g/g',type)))
+},simplify = FALSE,USE.NAMES = TRUE)
+},.progress = 'text')
+
+# set the names (llply doesnt)
+names(out) &lt;- repos
+
+# that's it we dont need the connection anymore
+remDr$close()
+rD[[&quot;server&quot;]]$stop()
+
+# scrape the data from html into a data.frame
+
+plot_data &lt;- plyr::ldply(out,function(repo){
+  plyr::mdply(names(repo),function(type){
+    
+    dat &lt;- repo[[type]]
+  
+    if(is.null(dat)) return(NULL)
+    
+    # tick values we need for rescaling
+    yticks_total &lt;- as.numeric(sapply(getNodeSet(dat[[2]],'g'),XML::xmlValue))
+    yticks_unique &lt;- as.numeric(sapply(getNodeSet(dat[[5]],'g'),XML::xmlValue))
+    
+    x &lt;- data.frame(type=type,
+                    date = as.Date(sapply(getNodeSet(dat[[1]],'g'),XML::xmlValue),format = '%m/%d'),
+                    total = as.numeric(sapply(getNodeSet(dat[[3]],'circle'),XML::xmlGetAttr,name = 'cy')),
+                    unique = as.numeric(sapply(getNodeSet(dat[[4]],'circle'),XML::xmlGetAttr,name = 'cy')))
+    
+    # Because this is a d3.js object there are some technical details that
+    # I'm skipping here, but in short the y values need to be rescaled 
+    # to show the actual values that you need.
+    x$total &lt;- scales::rescale(x$total,rev(range(yticks_total)))
+    x$unique &lt;- scales::rescale(x$unique,rev(range(yticks_unique)))
+    
+    #rehape the data.frame from wide to long
+    x%&gt;%reshape2::melt(.,c('type','date'),variable.name=c('metric'))
+  })
+},.id='repo')
+
+#Create the plot
+
+ggplot(plot_data,aes(x=date,y=value,colour=repo))+
+  geom_point()+geom_line()+
+  facet_grid(type~metric,scales='free_y')+
+  scale_x_date(date_breaks = &quot;1 day&quot;,date_labels = &quot;%m/%d&quot;)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=90),legend.position = 'top')+
+  labs(title=sprintf('Github Team: %s',gh_team))
+}
+</code></pre>
+
+<h2 id="run-the-function">Run the function</h2>
+
+<pre><code class="language-r">traffic_plot &lt;- github_traffic(gh_user=gh_user,
+                               gh_pass=gh_pass,
+                               gh_team=gh_team,
+                               repos=repos)
+</code></pre>
+
+<h2 id="print-the-plot">Print the plot</h2>
+
+<pre><code class="language-r">traffic_plot
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/gh_traffic.jpg" alt="" /></p>
+
+<p>If the function fails for some reason this will release the port <code>RSelenium</code> is holding ransom.</p>
+
+<pre><code class="language-r">rD &lt;- RSelenium::rsDriver(verbose = FALSE,port=4444L)
+remDr &lt;- rD$client
+remDr$close()
+</code></pre>
+
+      </article>
+
+      <ul class="pager blog-pager">
+        
+          <li class="previous">
+            <a href="https://yonicd.github.io/post/2017-09-26-regexselect/" data-toggle="tooltip" data-placement="top" title="Regular Expression Searching within Shiny Selectize Objects">&larr; Previous Post</a>
+          </li>
+        
+        
+          <li class="next">
+            <a href="https://yonicd.github.io/post/jstree/" data-toggle="tooltip" data-placement="top" title="jsTree">Next Post &rarr;</a>
+          </li>
+        
+      </ul>
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yonicd" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:yonicd@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/yoniceedee" title="Facebook">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://plus.google.com/&#43;yonicd" title="Google&#43;">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/yonicd" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/yoniceedee" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/yonicd" title="LinkedIn">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="https://yonicd.github.io/index.xml" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="yonicd.github.io">Jonathan Sidi</a>
+                      
+          
+          
+          &nbsp;&bull;&nbsp;
+          2017
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://yonicd.github.io">Reproducible Random Thoughts</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.27.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://yonicd.github.io/js/main.js"></script>
+<script src="https://yonicd.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js" integrity="sha256-UplRCs9v4KXVJvVY+p+RSo5Q4ilAUXh7kpjyIP5odyc=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js" integrity="sha256-PWHOlUzc96pMc8ThwRIXPn8yH4NOLu42RQ0b9SpnpFk=" crossorigin="anonymous"></script>
+<script src="https://yonicd.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+    
+    
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    
+  </body>
+</html>
+

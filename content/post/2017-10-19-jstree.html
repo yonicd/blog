@@ -1,0 +1,134 @@
+---
+title: jsTree
+author: Jonathan Sidi
+date: '2017-10-19'
+slug: jstree
+categories: []
+tags:
+  - htmlwigdet
+cran: jsTree
+cran_badge: [status, downloads]
+gh_repo: metrumresearchgroup/jsTree
+gh_badge: [follow, star, issue]
+---
+
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/blazy/blazy.min.js"></script>
+<script src="/rmarkdown-libs/pymjs/pym.v1.js"></script>
+<script src="/rmarkdown-libs/widgetframe-binding/widgetframe.js"></script>
+
+
+<p>jsTree is a R package that is a standalone htmlwidget for the jsTree JavaScript library. It can be run from the R console directly into the Rstudio Viewer, be used in a Shiny application or be part of an Rmarkdown html output.</p>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<pre class="r"><code>#CRAN
+install.packages(&#39;jsTree&#39;)
+
+#Github
+devtools::install_github(&#39;metrumresearchgroup/jsTree&#39;)</code></pre>
+<p>The motivation for the package came from the <a href="https://github.com/trestletech/shinyTree">shinyTree</a> by Jeff Allen, which has an early version of the JavaScript library hardcoded into a Shiny application.</p>
+<p>The input for the htmlwidget is a character vector and the heirarchy is set by the ‘/’, as to mimic the delimiter of a file path.</p>
+<p>The main purpose of this package is vizualize folder hierarchy, much like in the <code>Files</code> tab in RStudio. But, instead of looking in local directories it will be used for remote repositories, such as github, bitbucket and svn repositories. This is implemented in the <a href="https://github.com/metrumresearchgroup/vcs">vcs</a> package and a future post will show utility that package gives.</p>
+<p>To show the basic functionality of jsTree we will use a toy dataset from the babynames package.</p>
+<pre class="r"><code>#install.packages(&#39;babynames&#39;)
+library(babynames)
+library(dplyr)
+library(jsTree)
+library(widgetframe)</code></pre>
+<p>Taking a random sample of names</p>
+<pre class="r"><code>set.seed(1234)
+
+x &lt;- babynames%&gt;%
+  sample_n(100)%&gt;%
+  select(-c(prop,n))%&gt;%
+  mutate(initial=substr(name,1,1),
+         sex=ifelse(sex==&#39;F&#39;,&#39;Female&#39;,&#39;Male&#39;))%&gt;%
+  select(year,sex,initial,name)
+  
+myx &lt;- apply(x,1,paste,collapse=&#39;/&#39;)
+
+j0 &lt;- jsTree(obj = myx)
+frameWidget(j0)</code></pre>
+<div id="htmlwidget-1" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex0.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>Initialize tree with checked boxes for certain fields</p>
+<pre class="r"><code>nodestate1 &lt;- x$year&lt;=1920
+
+j1 &lt;- jsTree(myx,nodestate=nodestate1)
+frameWidget(j1)</code></pre>
+<div id="htmlwidget-2" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"url":"/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex1.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>Change the order of the hierarchy</p>
+<pre class="r"><code> nested_string2 &lt;- apply(x[,c(3,1,2,4)],1,paste,collapse=&#39;/&#39;)
+ 
+j2 &lt;- jsTree(nested_string2)
+frameWidget(j2)</code></pre>
+<div id="htmlwidget-3" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3">{"x":{"url":"/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex2.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>Use the gender as a tooltip on the name</p>
+<pre class="r"><code> nested_string3 &lt;- apply(x[,-c(2)],1,paste,collapse=&#39;/&#39;)
+
+gender_label &lt;- x$sex
+names(gender_label) &lt;- x$name
+
+j3 &lt;- jsTree(nested_string3,tooltips = gender_label)
+frameWidget(j3)</code></pre>
+<div id="htmlwidget-4" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4">{"x":{"url":"/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex3.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="shiny" class="section level2">
+<h2>Shiny</h2>
+<p>jsTree can be used in Shiny applications and supplies observers so the Shiny can react to the tree.</p>
+<pre class="r"><code>ui &lt;- shiny::fluidPage(
+  
+  shiny::column(width=4,jsTree::jsTreeOutput(&#39;tree&#39;)),
+  
+  shiny::column(width=8,shiny::uiOutput(&#39;chosen&#39;))
+  
+)
+
+server &lt;- function(input, output,session) {
+  
+  network &lt;- shiny::reactiveValues()
+  
+  shiny::observeEvent(input$tree_update,{
+    
+    current_selection &lt;- input$tree_update$.current_tree
+    if(!is.null(current_selection)) 
+      network$tree &lt;- jsonlite::fromJSON(current_selection)
+    
+  })
+  
+  shiny::observeEvent(network$tree,{
+    
+    output$results &lt;- shiny::renderPrint({
+      
+      str.out &lt;- &#39;&#39;
+      
+      if(length(network$tree)&gt;0)
+        str.out=network$tree
+      
+      return(str.out)
+    })    
+  })
+  
+  output$chosen &lt;- shiny::renderUI({
+    
+    list(shiny::h3(&#39;Selected Items&#39;),
+         
+    shiny::verbatimTextOutput(outputId = &quot;results&quot;))
+    
+  })
+  
+  output$tree &lt;- jsTree::renderJsTree({
+    
+    nested_string &lt;- myx
+    
+    jsTree(nested_string)
+    
+  })
+  
+}
+
+shinyApp(ui, server)</code></pre>
+</div>

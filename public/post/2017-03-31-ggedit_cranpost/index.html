@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>ggedit 0.2.0</title>
+  <meta property="og:title" content="ggedit 0.2.0" />
+  <meta name="twitter:title" content="ggedit 0.2.0" />
+  <meta name="description" content="Crantastic!">
+  <meta property="og:description" content="Crantastic!">
+  <meta name="twitter:description" content="Crantastic!">
+  <meta name="author" content="Jonathan Sidi"/>
+  <link href='https://yonicd.github.io/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://yonicd.github.io/img/cd-icon.png" />
+  <meta name="twitter:image" content="https://yonicd.github.io/img/cd-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@yoniceedee" />
+  <meta name="twitter:creator" content="@yoniceedee" />
+  <meta property="og:url" content="https://yonicd.github.io/post/2017-03-31-ggedit_cranpost/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Reproducible Random Thoughts" />
+
+  <meta name="generator" content="Hugo 0.27.1" />
+  <link rel="canonical" href="https://yonicd.github.io/post/2017-03-31-ggedit_cranpost/" />
+  <link rel="alternate" href="https://yonicd.github.io/index.xml" type="application/rss+xml" title="Reproducible Random Thoughts">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://yonicd.github.io/css/main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://yonicd.github.io/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="https://yonicd.github.io/css/highlight.min.css" />
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css" integrity="sha256-sCl5PUOGMLfFYctzDW3MtRib0ctyUvI9Qsmq2wXOeBY=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css" integrity="sha256-BFeI1V+Vh1Rk37wswuOYn5lsTcaU96hGaI7OUVCLjPc=" crossorigin="anonymous" />
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-84988961-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://yonicd.github.io">Reproducible Random Thoughts</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Projects" href="/page/projects/">Projects</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Resources</a>
+              <div class="navlinks-children">
+                
+                  <a href="http://www.metrumrg.com/">Metrum Research</a>
+                
+                  <a href="http://www.r-bloggers.com">R-bloggers</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="Reproducible Random Thoughts" href="https://yonicd.github.io">
+            <img class="avatar-img" src="https://yonicd.github.io/img/cd-icon.png" alt="Reproducible Random Thoughts" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              <h1>ggedit 0.2.0</h1>
+                
+                  
+                    <h2 class="post-subheading">Crantastic!</h2>
+                  
+                
+                
+                  <span class="post-meta">
+  Posted on March 31, 2017
+  
+</span>
+
+
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+            <div>
+      
+      
+      
+      
+      
+      
+      
+          
+                
+                <a class="github-button" href="https://github.com/metrumresearchgroup" data-show-count="true" aria-label="Follow @metrumresearchgroup on GitHub">Follow @metrumresearchgroup</a>
+                
+                
+                
+                
+                
+                
+                
+          
+                
+                
+                
+                <a class="github-button" href="https://github.com/metrumresearchgroup/ggedit" data-show-count="true" aria-label="Star metrumresearchgroup/ggedit on GitHub">Star</a> 
+                
+                
+                
+                
+                
+          
+                
+                
+                
+                
+                <a class="github-button" href="https://github.com/metrumresearchgroup/ggedit/fork" data-show-count="true" aria-label="Fork metrumresearchgroup/ggedit on GitHub">Fork</a>
+                
+                
+                
+                
+          
+        
+        
+      
+ </div>
+ <div>
+ 
+ 
+       
+       
+          
+
+            
+              <a href="https://cran.r-project.org/package=ggedit"><img src="https://www.r-pkg.org/badges/version/ggedit?color=blue" alt="CRAN_Status_Badge" /></a>
+            
+          
+            
+            
+          
+
+            
+          
+            
+              <img src="https://cranlogs.r-pkg.org/badges/grand-total/ggedit" alt="downloads" />
+            
+            
+          
+        
+      
+    </div>
+
+      <article role="main" class="blog-post">
+        
+
+<p>We are pleased to announce the release of the ggedit package on <a href="https://cran.r-project.org/web/packages/ggedit/index.html">CRAN</a>.</p>
+
+<p>To install the package you can call the standard R command</p>
+
+<pre><code>install.packages('ggedit')
+</code></pre>
+
+<p>The source version is still tracked on <a href="https://github.com/metrumresearchgroup/ggedit">github</a>, which has been reorganized to be easier to navigate.</p>
+
+<p>To install the dev version:</p>
+
+<pre><code>devtools::install_github('metrumresearchgroup/ggedit')
+</code></pre>
+
+<h3 id="what-is-ggedit">What is ggedit?</h3>
+
+<p>ggedit is an R package that is used to facilitate ggplot formatting. With ggedit, R users of all experience levels can easily move from creating ggplots to refining aesthetic details, all while maintaining portability for further reproducible research and collaboration.</p>
+
+<p>ggedit is run from an R console or as a reactive object in any Shiny application. The user inputs a ggplot object or a list of objects. The application populates Bootstrap modals with all of the elements found in each layer, scale, and theme of the ggplot objects. The user can then edit these elements and interact with the plot as changes occur. During editing, a comparison of the script is logged, which can be directly copied and shared. The application output is a nested list containing the edited layers, scales, and themes in both object and script form, so you can apply the edited objects independent of the original plot using regular ggplot2 grammar.</p>
+
+<p>Why does it matter? ggedit promotes efficient collaboration. You can share your plots with team members to make formatting changes, and they can then send any objects they’ve edited back to you for implementation. No more email chains to change a circle to a triangle!</p>
+
+<h3 id="updates-in-ggedit-0-2-0">Updates in ggedit 0.2.0:</h3>
+
+<ul>
+<li>The layer modal (popups) elements have been reorganized for less clutter and easier navigation.</li>
+<li>The S3 method written to plot and compare themes has been removed from the package, but can still be found on the repo, see <a href="https://github.com/metrumresearchgroup/ggedit/blob/master/Miscellaneous/Utilities/plot.theme.R">plot.theme</a>.</li>
+</ul>
+
+<h3 id="deploying">Deploying</h3>
+
+<pre><code>- call from the console: `ggedit(p)`
+- call from the addin toolbar: highlight script of a plot object on the source editor window of RStudio and run from toolbar.
+- call as part of Shiny: use the Shiny module syntax to call the ggEdit UI elements.
+    - server: `callModule(ggEdit,'pUI',obj=reactive(p))`
+    - ui: `ggEditUI('pUI')`
+- if you have installed the package you can see an example of a Shiny app by executing `runApp(system.file('examples/shinyModule.R',package = 'ggedit'))`
+</code></pre>
+
+<h3 id="outputs">Outputs</h3>
+
+<p>ggedit returns a list containing 8 elements either to the global enviroment or as a reactive output in Shiny.</p>
+
+<ul>
+<li>updatedPlots
+
+<ul>
+<li>List containing updated ggplot objects</li>
+</ul></li>
+<li>updatedLayers
+
+<ul>
+<li>For each plot a list of updated layers (ggproto) objects</li>
+<li>Portable object</li>
+</ul></li>
+<li>updatedLayersElements
+
+<ul>
+<li>For each plot a list elements and their values in each layer</li>
+<li>Can be used to update the new values in the original code</li>
+</ul></li>
+<li>updatedLayerCalls
+
+<ul>
+<li>For each plot a list of scripts that can be run directly from the console to create a layer</li>
+</ul></li>
+<li>updatedThemes
+
+<ul>
+<li>For each plot a list of updated theme objects</li>
+<li>Portable object</li>
+<li>If the user doesn&rsquo;t edit the theme updatedThemes will not be returned</li>
+</ul></li>
+<li>updatedThemeCalls
+
+<ul>
+<li>For each plot a list of scripts that can be run directly from the console to create a theme</li>
+</ul></li>
+<li>updatedScales
+
+<ul>
+<li>For each plot a list of updated scales (ggproto) objects</li>
+<li>Portable object</li>
+</ul></li>
+<li>updatedScaleCalls
+
+<ul>
+<li>For each plot a list of scripts that can be run directly from the console to create a scale</li>
+</ul></li>
+</ul>
+
+<h3 id="short-clip-to-use-ggedit-in-shiny">Short Clip to use ggedit in Shiny</h3>
+
+<p><a href="https://www.youtube.com/embed/pJ1kbd_OVwg"><img src="http://img.youtube.com/vi/pJ1kbd_OVwg/0.jpg?image_play_button_size=2x&amp;image_crop_resized=960x540&amp;image_play_button=1&amp;image_play_button_color=71aadbe0" width="400" height="225" style="width: 400px; height: 225px;"></a></p>
+
+<hr>
+
+<p><em>
+Jonathan Sidi joined Metrum Research Group in 2016 after working for several years on problems in applied statistics, financial stress testing and economic forecasting in both industrial and academic settings.
+</em></p>
+
+<p><em>
+To learn more about additional open-source software packages developed by Metrum Research Group please visit the Metrum <a href="https://www.metrumrg.com/try-open-source-tools/" target="_blank">website</a>.
+</em></p>
+
+<p><em>
+Contact: For questions and comments, feel free to email me at: yonis@metrumrg.com or open an issue in <a href="https://github.com/metrumresearchgroup/ggedit/issues" target="_blank">github</a>.
+</em></p>
+
+<p>(post originally published on <a href="http://r-posts.com/ggedit-0-2-0-is-now-on-cran/">r-posts</a>)</p>
+
+      </article>
+
+      <ul class="pager blog-pager">
+        
+          <li class="previous">
+            <a href="https://yonicd.github.io/post/2017-02-22-ggedit3/" data-toggle="tooltip" data-placement="top" title="ggedit 0.1.1">&larr; Previous Post</a>
+          </li>
+        
+        
+          <li class="next">
+            <a href="https://yonicd.github.io/post/2017-04-07-slickr/" data-toggle="tooltip" data-placement="top" title="slickR">Next Post &rarr;</a>
+          </li>
+        
+      </ul>
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yonicd" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:yonicd@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/yoniceedee" title="Facebook">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://plus.google.com/&#43;yonicd" title="Google&#43;">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/yonicd" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/yoniceedee" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/yonicd" title="LinkedIn">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="https://yonicd.github.io/index.xml" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="yonicd.github.io">Jonathan Sidi</a>
+                      
+          
+          
+          &nbsp;&bull;&nbsp;
+          2017
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://yonicd.github.io">Reproducible Random Thoughts</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.27.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://yonicd.github.io/js/main.js"></script>
+<script src="https://yonicd.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js" integrity="sha256-UplRCs9v4KXVJvVY+p+RSo5Q4ilAUXh7kpjyIP5odyc=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js" integrity="sha256-PWHOlUzc96pMc8ThwRIXPn8yH4NOLu42RQ0b9SpnpFk=" crossorigin="anonymous"></script>
+<script src="https://yonicd.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+    
+    
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    
+  </body>
+</html>
+
