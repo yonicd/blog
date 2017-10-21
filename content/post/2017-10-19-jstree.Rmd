@@ -88,6 +88,8 @@ frameWidget(j3)
 
 jsTree can be used in Shiny applications and supplies observers so the Shiny can react to the tree.
 
+<iframe src="https://tranquil-escarpment-51788.herokuapp.com/" style="width: 800px; height: 500px"></iframe>
+
 ```{r,eval=FALSE}
 
 ui <- shiny::fluidPage(

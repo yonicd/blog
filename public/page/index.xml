@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on Reproducible Random Thoughts</title>
-    <link>https://yonicd.github.io/page/</link>
+    <link>/page/</link>
     <description>Recent content in Pages on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     
-	<atom:link href="https://yonicd.github.io/page/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/page/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>About me</title>
-      <link>https://yonicd.github.io/page/about/</link>
+      <link>/page/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.github.io/page/about/</guid>
+      <guid>/page/about/</guid>
       <description>Currently a graduate student at the Department of Statistics in the Hebrew University of Jerusalem (HUJI) and research associate at Metrum Research Group. Previously worked as statistician in the Research Department of the Bank of Israel, Matrix and a consultant to the Van Leer Jerusalem Institute.
  Obtained a BA in Economics and Statistics and an MA in Statistics from HUJI (Supervised by Ya&amp;rsquo;acov Ritov). My masters thesis dissertation involved creating a nowcasting model for the Gross Domestic Product of Israel via regularized regression models during my time as a research student in the Bank of Israel.</description>
     </item>
     
     <item>
       <title>Projects</title>
-      <link>https://yonicd.github.io/page/projects/</link>
+      <link>/page/projects/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.github.io/page/projects/</guid>
+      <guid>/page/projects/</guid>
       <description>This is a list of R packages that have been published on CRAN and/or are still being developed on Github. Many of the projects are part of open tools developed at Metrum Research Group.
 The icons at the end of each description show where the project is maintained and links are attached to each one to take you to the relevant page.
    Metrum Github CRAN bl.ocks            (Not in any logical order, just what came to mind when I wrote this&amp;hellip;)</description>

@@ -3,152 +3,152 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://yonicd.github.io/post/jstree/</loc>
+    <loc>/post/jstree/</loc>
     <lastmod>2017-10-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/post/2017-10-02-githubtraffic/</loc>
+    <loc>/post/2017-10-02-githubtraffic/</loc>
     <lastmod>2017-10-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/post/2017-09-26-regexselect/</loc>
+    <loc>/post/2017-09-26-regexselect/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/post/2017-09-26-aca/</loc>
+    <loc>/post/2017-09-26-aca/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/post/2017-09-18-sinew/</loc>
+    <loc>/post/2017-09-18-sinew/</loc>
     <lastmod>2017-09-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/post/2017-05-03-sinew/</loc>
+    <loc>/post/2017-05-03-sinew/</loc>
     <lastmod>2017-05-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/post/2017-04-07-slickr/</loc>
+    <loc>/post/2017-04-07-slickr/</loc>
     <lastmod>2017-04-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/post/2017-03-31-ggedit_cranpost/</loc>
+    <loc>/post/2017-03-31-ggedit_cranpost/</loc>
     <lastmod>2017-03-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/post/2017-02-22-ggedit3/</loc>
+    <loc>/post/2017-02-22-ggedit3/</loc>
     <lastmod>2017-02-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/post/2016-12-13-ggedit/</loc>
+    <loc>/post/2016-12-13-ggedit/</loc>
     <lastmod>2016-12-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/</loc>
+    <loc>/</loc>
     <lastmod>2017-10-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/page/about/</loc>
+    <loc>/page/about/</loc>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/categories/</loc>
+    <loc>/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/tags/geofacet/</loc>
+    <loc>/tags/geofacet/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/tags/ggplot2/</loc>
+    <loc>/tags/ggplot2/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/tags/healthcare/</loc>
+    <loc>/tags/healthcare/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/tags/htmlwigdet/</loc>
-    <lastmod>2017-10-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://yonicd.github.io/page/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://yonicd.github.io/post/</loc>
+    <loc>/tags/htmlwigdet/</loc>
     <lastmod>2017-10-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/page/projects/</loc>
+    <loc>/page/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/tags/regex/</loc>
+    <loc>/post/</loc>
+    <lastmod>2017-10-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/page/projects/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/regex/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/tags/reproducibility/</loc>
+    <loc>/tags/reproducibility/</loc>
     <lastmod>2017-09-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/tags/roxygen2/</loc>
+    <loc>/tags/roxygen2/</loc>
     <lastmod>2017-09-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/tags/rselenium/</loc>
+    <loc>/tags/rselenium/</loc>
     <lastmod>2017-10-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/tags/rstats/</loc>
+    <loc>/tags/rstats/</loc>
     <lastmod>2017-10-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/tags/shiny/</loc>
+    <loc>/tags/shiny/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/tags/</loc>
+    <loc>/tags/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://yonicd.github.io/tags/webscraping/</loc>
+    <loc>/tags/webscraping/</loc>
     <lastmod>2017-10-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

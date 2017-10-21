@@ -2,32 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Roxygen2 on Reproducible Random Thoughts</title>
-    <link>https://yonicd.github.io/tags/roxygen2/</link>
+    <link>/tags/roxygen2/</link>
     <description>Recent content in Roxygen2 on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Mon, 18 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://yonicd.github.io/tags/roxygen2/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/roxygen2/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Automating roxygen2 package documentation</title>
-      <link>https://yonicd.github.io/post/2017-09-18-sinew/</link>
+      <link>/post/2017-09-18-sinew/</link>
       <pubDate>Mon, 18 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.github.io/post/2017-09-18-sinew/</guid>
+      <guid>/post/2017-09-18-sinew/</guid>
       <description>Thinking of creating a new package? Dread the task of function documentation? Afraid to run devtools::check(build_args = &#39;--as-cran&#39;) and get bombarded by Errors, Warnings, and Notes (oh my!) ? Wait&amp;hellip;. breathe!
 After feeling all that anxiety and following all of Hadley&amp;rsquo;s directions online, I felt I was doing a lot of manual labour, and that a package should be doing all lot of this for me. So we wrote one - sinew (sin-yu).</description>
     </item>
     
     <item>
       <title>sinew</title>
-      <link>https://yonicd.github.io/post/2017-05-03-sinew/</link>
+      <link>/post/2017-05-03-sinew/</link>
       <pubDate>Wed, 03 May 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.github.io/post/2017-05-03-sinew/</guid>
+      <guid>/post/2017-05-03-sinew/</guid>
       <description>Sinew is a R package that generates a Roxygen skeleton populated with information scraped from the function script.
 Functionality  makeOxygen: Create skeleton for Roxygen2 documentation populated with information scraped from within the package function scripts. makeImport: Create import calls for DESCRIPTION, NAMESPACE and Roxygen2 makeDictionary: Create an R file of all the unique roxygen parameter fields in a package R subdirectory.  makeOxygen Function that returns the skeleton for roxygen2 documentation including title, description, return, import and other fields populated with information scraped from the function script.</description>
     </item>
