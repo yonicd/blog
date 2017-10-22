@@ -9,7 +9,7 @@
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Mon, 02 Oct 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/rselenium/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/rselenium/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,9 +18,138 @@
       <pubDate>Mon, 02 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2017-10-02-githubtraffic/</guid>
-      <description>This post will show how to use the RSelenium package to scrape your own github account to retrieve all that fun traffic data of clones and visits and create a single traffic plot for your account.
-For the single file you can find it in this gist file.
-Packages library(RSelenium) library(XML) library(ggplot2) library(reshape2) library(plyr) library(dplyr)  Fill in the relevant information for your account. The team is usually your username, but it can be different.</description>
+      <description>
+
+&lt;p&gt;This post will show how to use the &lt;a href=&#34;https://cran.r-project.org/web/packages/RSelenium/vignettes/RSelenium-basics.html&#34;&gt;RSelenium&lt;/a&gt; package to scrape your own github account to retrieve all that fun traffic data of clones and visits and create a single traffic plot for your account.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/gh_traffic.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For the single file you can find it in this &lt;a href=&#34;https://gist.github.com/yonicd/a05c4d85f7884c517a6cfa6aff24f59a&#34;&gt;gist&lt;/a&gt; file.&lt;/p&gt;
+
+&lt;h2 id=&#34;packages&#34;&gt;Packages&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(RSelenium)
+library(XML)
+library(ggplot2)
+library(reshape2)
+library(plyr)
+library(dplyr)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Fill in the relevant information for your account. The team is usually your username, but it can be different. The repos can be a vector and since we are going in the front door of the site we can access the private repositories too!&lt;/p&gt;
+
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;gh_user &amp;lt;- &#39;&amp;lt;your github login name&amp;gt;&#39;
+gh_pass &amp;lt;- &#39;&amp;lt;your github login password&amp;gt;&#39;
+
+gh_team &amp;lt;- &#39;&amp;lt;team associated with account&amp;gt;&#39;
+repos &amp;lt;- &#39;&amp;lt;repositories in team&amp;gt;&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;the-function&#34;&gt;The function&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;github_traffic &amp;lt;- function(gh_user,gh_pass,gh_team,repos){
+
+#open the connection
+
+rD &amp;lt;- RSelenium::rsDriver(verbose = FALSE)
+remDr &amp;lt;- rD[[&amp;quot;client&amp;quot;]]
+
+#going to the first repo to invoke the login
+
+remDr$navigate(sprintf(&#39;https://github.com/%s/%s/graphs/traffic&#39;,gh_team,repos[1]))
+
+#entering the login information in the form and clicking the button. 
+
+webElem &amp;lt;- remDr$findElement(using = &#39;id&#39;, value = &amp;quot;login_field&amp;quot;)
+webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_user)
+webElem &amp;lt;- remDr$findElement(using = &#39;id&#39;, value = &amp;quot;password&amp;quot;)
+webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_pass)
+webElem=remDr$findElement(using = &#39;xpath&#39;,&#39;//*[@id=&amp;quot;login&amp;quot;]/form/div[4]/input[3]&#39;)
+webElem$clickElement()
+Sys.sleep(1)
+
+# Retrieve the plots into an html
+out &amp;lt;- plyr::llply(repos,function(repo){
+  remDr$navigate(sprintf(&#39;https://github.com/%s/%s/graphs/traffic&#39;,gh_team,repo))
+  Sys.sleep(1)
+  out &amp;lt;- XML::htmlParse(remDr$getPageSource(),asText = TRUE)
+  sapply(c(&#39;clones&#39;,&#39;visitors&#39;),function(type){
+  XML::getNodeSet(out,sprintf(sprintf(&#39;//*[@id=&amp;quot;js-%s-graph&amp;quot;]/div/div[1]/svg/g/g&#39;,type)))
+},simplify = FALSE,USE.NAMES = TRUE)
+},.progress = &#39;text&#39;)
+
+# set the names (llply doesnt)
+names(out) &amp;lt;- repos
+
+# that&#39;s it we dont need the connection anymore
+remDr$close()
+rD[[&amp;quot;server&amp;quot;]]$stop()
+
+# scrape the data from html into a data.frame
+
+plot_data &amp;lt;- plyr::ldply(out,function(repo){
+  plyr::mdply(names(repo),function(type){
+    
+    dat &amp;lt;- repo[[type]]
+  
+    if(is.null(dat)) return(NULL)
+    
+    # tick values we need for rescaling
+    yticks_total &amp;lt;- as.numeric(sapply(getNodeSet(dat[[2]],&#39;g&#39;),XML::xmlValue))
+    yticks_unique &amp;lt;- as.numeric(sapply(getNodeSet(dat[[5]],&#39;g&#39;),XML::xmlValue))
+    
+    x &amp;lt;- data.frame(type=type,
+                    date = as.Date(sapply(getNodeSet(dat[[1]],&#39;g&#39;),XML::xmlValue),format = &#39;%m/%d&#39;),
+                    total = as.numeric(sapply(getNodeSet(dat[[3]],&#39;circle&#39;),XML::xmlGetAttr,name = &#39;cy&#39;)),
+                    unique = as.numeric(sapply(getNodeSet(dat[[4]],&#39;circle&#39;),XML::xmlGetAttr,name = &#39;cy&#39;)))
+    
+    # Because this is a d3.js object there are some technical details that
+    # I&#39;m skipping here, but in short the y values need to be rescaled 
+    # to show the actual values that you need.
+    x$total &amp;lt;- scales::rescale(x$total,rev(range(yticks_total)))
+    x$unique &amp;lt;- scales::rescale(x$unique,rev(range(yticks_unique)))
+    
+    #rehape the data.frame from wide to long
+    x%&amp;gt;%reshape2::melt(.,c(&#39;type&#39;,&#39;date&#39;),variable.name=c(&#39;metric&#39;))
+  })
+},.id=&#39;repo&#39;)
+
+#Create the plot
+
+ggplot(plot_data,aes(x=date,y=value,colour=repo))+
+  geom_point()+geom_line()+
+  facet_grid(type~metric,scales=&#39;free_y&#39;)+
+  scale_x_date(date_breaks = &amp;quot;1 day&amp;quot;,date_labels = &amp;quot;%m/%d&amp;quot;)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=90),legend.position = &#39;top&#39;)+
+  labs(title=sprintf(&#39;Github Team: %s&#39;,gh_team))
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;run-the-function&#34;&gt;Run the function&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;traffic_plot &amp;lt;- github_traffic(gh_user=gh_user,
+                               gh_pass=gh_pass,
+                               gh_team=gh_team,
+                               repos=repos)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;print-the-plot&#34;&gt;Print the plot&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;traffic_plot
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/gh_traffic.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If the function fails for some reason this will release the port &lt;code&gt;RSelenium&lt;/code&gt; is holding ransom.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;rD &amp;lt;- RSelenium::rsDriver(verbose = FALSE,port=4444L)
+remDr &amp;lt;- rD$client
+remDr$close()
+&lt;/code&gt;&lt;/pre&gt;
+</description>
     </item>
     
   </channel>

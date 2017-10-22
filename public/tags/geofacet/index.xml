@@ -9,7 +9,7 @@
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Tue, 26 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/geofacet/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/geofacet/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,8 +18,280 @@
       <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2017-09-26-aca/</guid>
-      <description>I have been trying to decipher for myself, what is in the current (well, yesterday&amp;rsquo;s) Graham-Cassidy health care bill. I saw this image on many news outlets a few days ago and my inner hate for pie charts bubbled up.
-This is a zoom in on the pie chart &amp;hellip; From what I can gather, these figures are attempting to say that there are specific states that are getting relatively more of the federal health care funds under the Afordable Care Act (ACA) than their relative state population.</description>
+      <description>
+
+&lt;p&gt;I have been trying to decipher for myself, what is in the current (well, yesterday&amp;rsquo;s) Graham-Cassidy health care bill. I saw this image on many news outlets a few days ago and my inner hate for pie charts bubbled up.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/ACA_pie_full.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is a zoom in on the pie chart &amp;hellip; From what I can gather, these figures are attempting to say that there are specific states that are getting relatively more of the federal health care funds under the Afordable Care Act (ACA) than their relative state population. Among the many things that are really hard to do with pie charts , comparing distributions ranks pretty high up there.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/ACA_pie.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It is common practice when comparing different geographical areas that have different populations levels to scale it using the rate per person (per capita) or per number of people, e.g. rate per 1,000 people. In this case it would be population adjusted state federal funding. The question that needs answering, what is the relevant population.&lt;/p&gt;
+
+&lt;p&gt;Many charts in the last week have scaled the funding adjusted to state population (as is alluded to in the figure above), but the funds are not actually being used by everyone in each state, most people have health care from their employer. So, what is the actual population that is being serviced by the federal funding for the ACA? How much of a different picture does that paint from the original figure?&lt;/p&gt;
+
+&lt;p&gt;Hopefully this post will help motivate readers to start looking around for more data on what is the effect of the proposed bill on the approprations of federal funds on the state level.&lt;/p&gt;
+
+&lt;p&gt;My sources of information is the Kaiser Family Foundation site that have a great database for data on the ACA and the proposed bill, and Wikipedia for auxilary population data. We will end up with the following figure, but along the way I learned a number of things that I didn&amp;rsquo;t know from reading online and seeing the news on TV.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-17-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;p&gt;A quick note before you proceed - This is not meant to be an all encompassing analysis of the predicted effects of the Graham-Cassidy bill, as it has been said before: &amp;ldquo;Healthcare is hard&amp;hellip;&amp;rdquo;, and if I made any bad assumptions I apologize in advanced and welcome any comments and suggestions to better understand the subject matter.&lt;/p&gt;
+
+&lt;p&gt;Saying that, let&amp;rsquo;s continue:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(xml2)
+library(rvest)
+library(dplyr)
+library(ggplot2)
+library(geofacet)
+knitr::opts_chunk$set(fig.height=7,fig.width=12,warning=FALSE,message=FALSE)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;scraping-the-relevant-information&#34;&gt;Scraping the relevant information&lt;/h2&gt;
+
+&lt;h3 id=&#34;kaiser-family-foundation&#34;&gt;Kaiser Family Foundation&lt;/h3&gt;
+
+&lt;h4 id=&#34;aca-and-graham-cassidy-federal-spending-by-state&#34;&gt;ACA and Graham-Cassidy federal spending by state.&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;kf_spending &amp;lt;- (xml2::read_html(&#39;http://www.kff.org/health-reform/issue-brief/state-by-state-estimates-of-changes-in-federal-spending-on-health-care-under-the-graham-cassidy-bill/&#39;)%&amp;gt;%
+  rvest::html_table())[[2]][-c(1,2,3,55),]
+
+names(kf_spending) &amp;lt;- c(&#39;Location&#39;,&#39;ACA&#39;,&#39;GC&#39;,&#39;DIFF&#39;,&#39;PCT&#39;)
+
+kf_spending$Location[which(kf_spending$Location==&#39;DC&#39;)]=&#39;District of Columbia&#39;
+
+kf_spending &amp;lt;- kf_spending%&amp;gt;%mutate_at(.vars=vars(ACA,GC,DIFF,PCT),.funs=funs(as.numeric(gsub(&#39;[,%]&#39;,&#39;&#39;,.))))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;aca-medicare-expansion-by-state&#34;&gt;ACA medicare expansion by state&lt;/h4&gt;
+
+&lt;p&gt;The decision of each state to accept medicare expansion will have a large affect on the net affect of GC on the redistribution of federal funds. States that did not accept medicare expansion are expected to have a net positive increase of federal funds.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#http://www.kff.org/health-reform/state-indicator/state-activity-around-expanding-medicaid-under-the-affordable-care-act/?currentTimeframe=0&amp;amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
+kf_expansion &amp;lt;- read.csv(&#39;data/kf_expansion.csv&#39;,stringsAsFactors = FALSE,skip = 2)
+kf_expansion &amp;lt;- kf_expansion[-c(1,53:61),-3]
+names(kf_expansion)[2] &amp;lt;- &#39;Expansion&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;population-of-aca-enrollment-by-state&#34;&gt;Population of ACA enrollment by state.&lt;/h4&gt;
+
+&lt;p&gt;The target population that will be used to scale the federal funds is the total marketplace enrollment for each state. We also add the characteristic of type of marketplace applied in the state to check if that has any effect.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Federally-Facilitated Market&lt;/li&gt;
+&lt;li&gt;State-based Marketplace&lt;/li&gt;
+&lt;li&gt;State-based Marketplace (using HealthCare.gov)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#http://www.kff.org/health-reform/state-indicator/total-marketplace-enrollment/?currentTimeframe=0&amp;amp;sortModel=%7B%22colId%22:%22Total%20Individuals%20Who%20Have%20Selected%20a%20Marketplace%20Plan%22,%22sort%22:%22asc%22%7D
+kf_marketplace_pop &amp;lt;- read.csv(&#39;data/kf_marketplace_pop.csv&#39;,stringsAsFactors = FALSE,skip = 2)
+kf_marketplace_pop &amp;lt;- kf_marketplace_pop[-c(1,53:59),]
+names(kf_marketplace_pop)[c(2,3)] &amp;lt;- c(&#39;Marketplace_Type&#39;,&#39;N&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;wikipedia&#34;&gt;Wikipedia&lt;/h3&gt;
+
+&lt;h4 id=&#34;state-characteristics-2016-elections-and-general-population&#34;&gt;State characteristics (2016 elections and general population)&lt;/h4&gt;
+
+&lt;p&gt;To gather more characteristics of each state are the 2016 general election results and the total population in each state, so the prevalent scaling can be used as a comparison.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;wiki_elections &amp;lt;- (xml2::read_html(&#39;https://en.wikipedia.org/wiki/United_States_presidential_election,_2016&#39;)%&amp;gt;%
+        rvest::xml_nodes(xpath=&#39;//*[@id=&amp;quot;mw-content-text&amp;quot;]/div/div[40]/table&#39;)%&amp;gt;%
+        rvest::html_table())[[1]][-c(1,58),c(1,3,6,23)]
+
+names(wiki_elections) &amp;lt;- c(&#39;Location&#39;,&#39;Clinton&#39;,&#39;Trump&#39;,&#39;Total&#39;)
+
+wiki_elections$Location[grep(&#39;^Nebraska&#39;,wiki_elections$Location)] &amp;lt;- &#39;Nebraska&#39;
+wiki_elections$Location[grep(&#39;^Maine&#39;,wiki_elections$Location)] &amp;lt;- &#39;Maine&#39;
+
+wiki_elections &amp;lt;- wiki_elections%&amp;gt;%
+  mutate_at(.vars = vars(Clinton,Trump,Total),.funs=funs(as.numeric(gsub(&#39;[,]&#39;,&#39;&#39;,.))))%&amp;gt;%
+  group_by(Location)%&amp;gt;%summarise_at(.vars = vars(Clinton,Trump,Total),.funs = funs(sum))%&amp;gt;%
+  mutate(ClintonPct=Clinton/Total,TrumpPct=Trump/Total,TrumpWin=ifelse(TrumpPct&amp;gt;ClintonPct,&#39;Trump Win&#39;,&#39;Clinton Win&#39;))
+
+wiki_pop &amp;lt;- (xml2::read_html(&#39;https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_population&#39;)%&amp;gt;%
+        rvest::xml_nodes(xpath=&#39;//*[@id=&amp;quot;mw-content-text&amp;quot;]/div/table[1]&#39;)%&amp;gt;%
+        rvest::html_table())[[1]][-c(30,53:64),c(3,4)]
+
+names(wiki_pop) &amp;lt;- c(&#39;Location&#39;,&#39;Total_N&#39;)
+
+wiki_pop$Total_N &amp;lt;- as.numeric(gsub(&#39;[,]&#39;,&#39;&#39;,wiki_pop$Total_N))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;join-all-the-data-sets&#34;&gt;Join all the data sets&lt;/h3&gt;
+
+&lt;p&gt;We join all the information and create a new variable - the change in federal funds from ACA to GC. This is done for the rate per 1,000 individuals who have selected a market based plan and the broader per 1,000 individuals state total. The former assumes that this the more consice defition of the population better reflects what is the population serviced by the federal funding, and that it is the potential population that would be serviced by the GC bill.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;kf &amp;lt;- kf_marketplace_pop%&amp;gt;%
+  left_join(kf_expansion,by=&#39;Location&#39;)%&amp;gt;%
+  left_join(wiki_pop,by=&#39;Location&#39;)
+
+kf &amp;lt;- kf_spending%&amp;gt;%left_join(kf, by = c(&#39;Location&#39;))%&amp;gt;%
+  mutate(ratio_ACA=1000*ACA/N,ratio_GC=1000*GC/N,ratio_DIFF = ratio_GC-ratio_ACA,
+         tot_ratio_ACA=1000*ACA/Total_N,tot_ratio_GC=1000*GC/Total_N,tot_ratio_DIFF = tot_ratio_GC-tot_ratio_ACA)%&amp;gt;%
+  arrange(desc(ratio_DIFF))
+
+kf &amp;lt;- kf%&amp;gt;%left_join(wiki_elections,by=&#39;Location&#39;)
+
+kf$Expansion &amp;lt;- sprintf(&#39;Medicaid Expansion %s&#39;,kf$Expansion)
+
+kf$Location &amp;lt;- factor(kf$Location,levels = kf$Location)
+
+kf$Marketplace_Type &amp;lt;- factor(kf$Marketplace_Type,labels=c(&#39;Federally-Facilitated Market&#39;,&#39;State-based Marketplace&#39;,&#39;State-based Marketplace (using HealthCare.gov)&#39;))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;plots&#34;&gt;Plots&lt;/h2&gt;
+
+&lt;h3 id=&#34;percent-of-state-population-enrolled-in-aca&#34;&gt;Percent of state population enrolled in ACA&lt;/h3&gt;
+
+&lt;p&gt;First we want to see what is the scope of the population in each state that have selected an ACA market based plan. (note California&amp;hellip; not quite 12% of the US population)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;kf%&amp;gt;%
+  mutate(pop_pct=100*N/Total_N)%&amp;gt;%
+  arrange(desc(pop_pct))%&amp;gt;%
+  mutate(Location=factor(Location,levels=Location))%&amp;gt;%
+  ggplot(aes(x=Location,y=pop_pct))+
+  geom_point()+
+  coord_flip()+
+  labs(y=&#39;Percent of Population that have selected an ACA market based plan&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-7-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;overall-distribution-by-medicare-expansion&#34;&gt;Overall distribution by Medicare Expansion&lt;/h3&gt;
+
+&lt;p&gt;We then check that there really is a difference between states that expanded and did not expand medicaid under the ACA and if being a state that voted Republican compared to Democratic.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;boxplot_dat &amp;lt;- kf%&amp;gt;%
+  dplyr::select(Expansion,Marketplace_Type,TrumpWin, ratio_DIFF,tot_ratio_DIFF)%&amp;gt;%
+  reshape2::melt(.,id=c(&#39;Marketplace_Type&#39;,&#39;Expansion&#39;,&#39;TrumpWin&#39;))
+
+levels(boxplot_dat$variable) &amp;lt;- c(&#39;per 1,000 Individuals who have\nselected a market based plan&#39;,&#39;per 1,000 Individuals&#39;)
+
+  boxplot_dat%&amp;gt;%
+    ggplot(aes(x=Expansion,
+             y=value,
+             fill=TrumpWin))+
+  geom_boxplot()+
+  geom_hline(aes(yintercept=0),linetype=2)+
+  facet_wrap(~variable,ncol=1,scales=&#39;free_y&#39;)+
+  labs(title=&#39;Change in Federal Funds ACA vs Graham-Cassidy, 2020-2026&#39;,
+         y=&#39;Change in Federal Funds ($ Millions) per 1,000 individuals&#39;)+
+  theme_bw()+
+  theme(legend.position = &#39;bottom&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-8-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;p&gt;Drilling down to state level figures we show for each state the change from ACA funding to the proposed GC funding per 1,000 persons who selected a market based ACA plan. The arrows move from ACA to GC funding and the y-axis is ordered by the increasing net difference. This comparison is faceted among the different characteristics scrapped from above.&lt;/p&gt;
+
+&lt;p&gt;Some things to look for:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;New York has the largest negative net funding per 1,000 persons.&lt;/li&gt;
+&lt;li&gt;Kentucky has the largest negative net funding per 1,000 persons among Republican leaning states.&lt;/li&gt;
+&lt;li&gt;The net increase in funding per 1,000 persons for states that did not expand medicaid is mostly minimal.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;p &amp;lt;- kf%&amp;gt;%ggplot(aes(x=Location,xend=Location,yend=ratio_GC,y=ratio_ACA,colour=ratio_DIFF))+
+  geom_segment(arrow = arrow(length = unit(0.02, &amp;quot;npc&amp;quot;)))+
+  coord_flip()+
+  scale_colour_gradient(low = &#39;red&#39;,high = &#39;blue&#39;,name=&#39;Difference&#39;)+
+  labs(title=&#39;Change in Federal Funds per 1,000 Individuals who have\nselected a market based plan ACA vs Graham-Cassidy, 2020-2026&#39;,
+       subtitle=&#39;Arrow pointing to movement from ACA to Graham-Cassidy&#39;,
+       caption=&#39;Source: Kaiser Family Foundation&#39;,
+       y=&#39;Federal Funds ($ Millions) per 1,000 individuals who have selected a market based plan&#39;)+
+  theme_bw()+
+  theme(legend.position = &#39;bottom&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;policial-leaning&#34;&gt;Policial Leaning&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;p + facet_wrap(~ TrumpWin , scales=&#39;free_y&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-10-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;aca-medicare-expansion&#34;&gt;ACA Medicare expansion&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;p + facet_wrap(~ Expansion , scales=&#39;free_y&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-11-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;aca-medicare-expansion-and-political-leaning&#34;&gt;ACA Medicare expansion and Political Leaning&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;p + facet_wrap(~ Expansion + TrumpWin , scales=&#39;free_y&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-12-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;state-marketplace-type&#34;&gt;State Marketplace Type&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;p + facet_wrap(~ Marketplace_Type, scales=&#39;free_y&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-13-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;aca-medicare-expansion-and-state-marketplace-type&#34;&gt;ACA Medicare expansion and State Marketplace Type&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;p + facet_wrap(~ Expansion + Marketplace_Type , scales=&#39;free_y&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-14-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;geofaceting&#34;&gt;Geofaceting&lt;/h3&gt;
+
+&lt;p&gt;Lastly, we construct geographic representation of the difference between the ACA and the GC bill using &lt;a href=&#34;https://twitter.com/hafenstats&#34;&gt;Ryan Hafen&amp;rsquo;s&lt;/a&gt;  &lt;a href=&#34;https://CRAN.R-project.org/package=geofacet&#34;&gt;geofacet&lt;/a&gt; package.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;states_facet &amp;lt;- state_ranks%&amp;gt;%left_join(kf%&amp;gt;%rename(name=Location),by=&#39;name&#39;)
+
+states_facet$Expansion &amp;lt;- factor(states_facet$Expansion,labels=c(&#39;Expansion&#39;,&#39;No Expansion&#39;))
+
+states_facet$tile_lbl &amp;lt;- sprintf(&#39;%s\n%s&#39;,states_facet$Expansion,states_facet$TrumpWin)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;total-state-population&#34;&gt;Total State Population&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;states_facet%&amp;gt;%
+  ggplot(aes(x=&#39;1&#39;, y=&#39;1&#39;,fill=tot_ratio_DIFF)) +
+  geom_tile() +
+  geom_text(aes(label=tile_lbl),size=2)+
+  theme_bw() +
+  facet_geo( ~ state)+
+  scale_fill_gradient2(low=&#39;red&#39;,mid=&#39;white&#39;,high=&#39;green&#39;,name=&#39;Difference&#39;) +
+  theme(legend.position = &#39;bottom&#39;,
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank())+
+  labs(title=&#39;Change in Federal Funds per 1,000 Individuals, 2020-2026&#39;,
+       caption=&#39;Source: Kaiser Family Foundation&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-16-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;aca-enrollment-population&#34;&gt;ACA enrollment population&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;states_facet%&amp;gt;%
+  ggplot(aes(x=&#39;1&#39;, y=&#39;1&#39;,fill=ratio_DIFF)) +
+  geom_tile() +
+  geom_text(aes(label=tile_lbl),size=2)+
+  theme_bw() +
+  facet_geo( ~ state)+
+  scale_fill_gradient2(low=&#39;red&#39;,mid=&#39;white&#39;,high=&#39;green&#39;,name=&#39;Difference&#39;) +
+  theme(legend.position = &#39;bottom&#39;,
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank())+
+  labs(title=&#39;Change in Federal Funds per 1,000 Individuals who have\nselected a market based plan ACA vs Graham-Cassidy, 2020-2026&#39;,
+       caption=&#39;Source: Kaiser Family Foundation&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-17-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+</description>
     </item>
     
   </channel>

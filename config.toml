@@ -8,6 +8,7 @@ pygmentCodeFences = true
 ignoreFiles = ["defaults$","\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 disqusShortname = "yonicd"
 googleAnalytics = "UA-84988961-2"
+rssLimit = 20
 
 [Params]
   subtitle = "Je T'aime Terminal"

@@ -9,7 +9,7 @@
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Tue, 26 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/regex/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/regex/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,9 +18,136 @@
       <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2017-09-26-regexselect/</guid>
-      <description>regexSelect is a small package that uses Shiny modules to solve a problem in Shiny selectize objects - regular expression (regex) searching. You can quickly filter the values in the selectize object, while being able to add that new regex query to the selectize list.
-This is great for long lists, since you can return multiple item simultaneously without needing to endlessly click items in a list!
-Install install.packages(&#39;regexSelect&#39;) #devtools::install_github(&#39;yonicd/regexSelect&#39;)  Below are two examples of using regular expressions to quickly populate multiple items in a ggplot and a datatable.</description>
+      <description>
+
+&lt;p&gt;regexSelect is a small package that uses &lt;a href=&#34;https://shiny.rstudio.com/articles/modules.html&#34;&gt;Shiny modules&lt;/a&gt; to solve a problem in Shiny selectize objects - &lt;a href=&#34;https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf&#34;&gt;regular expression&lt;/a&gt; (regex) searching. You can quickly filter the values in the selectize object, while being able to add that new regex query to the selectize list.&lt;/p&gt;
+
+&lt;p&gt;This is great for long lists, since you can return multiple item simultaneously without needing to endlessly click items in a list!&lt;/p&gt;
+
+&lt;h2 id=&#34;install&#34;&gt;Install&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;install.packages(&#39;regexSelect&#39;)
+#devtools::install_github(&#39;yonicd/regexSelect&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Below are two examples of using regular expressions to quickly populate multiple items in a &lt;code&gt;ggplot&lt;/code&gt; and a &lt;code&gt;datatable&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;regexselect-with-plots&#34;&gt;regexSelect with Plots&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/regexSelect/master/Miscellaneous/gifs/regexSelectPlot.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The shiny module works with two main functions:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# server side: 
+  callModule(module=regexSelect, id=&#39;myId&#39;, reactive(&amp;lt;selectizeInput Choices&amp;gt;))
+  
+# ui side: 
+  regexSelectUI(id = &amp;quot;myId&amp;quot;, label = &#39;myLabel&#39;, choices = &amp;lt;selectizeInput Choices&amp;gt;)
+````
+
+regexSelect comes with controls placed in a group checkbox below the selectize object. When calling regexSelect you can show or hide the checkbox controls (hidden by default), as to make it look like a normal selectize object, and save valuable UI real estate.
+
+While the shiny app is running regexSelect properties can be manipulated through the checkbox controls giving greater flexibilty to:
+  - Toggle regexSelect to work as a standard selectize object.
+  - Retain the regex search as a new value the selectize object.
+  - Change arguments that are passed to [base::grep](https://www.rdocumentation.org/packages/base/versions/3.4.1/topics/grep) : `ignore.case`, `perl`, `fixed`, `invert`.
+  
+```r
+library(shiny)
+library(ggplot2)
+
+ui &amp;lt;- fluidPage(
+
+  selectInput(&#39;var&#39;,
+              &#39;Choose Variable&#39;,
+              choices = names(diamonds)[sapply(diamonds,function(x){
+              inherits(x,c(&#39;character&#39;,&#39;factor&#39;)))]
+              },
+              selected = &#39;clarity&#39;),
+              
+  uiOutput(&#39;regexchoose&#39;),
+  
+  plotOutput(&amp;quot;data&amp;quot;)
+  
+  )
+  
+server &amp;lt;- function(input, output, session) {
+  
+  output$regexchoose&amp;lt;-shiny::renderUI({
+  
+  regexSelectUI(id = &amp;quot;a&amp;quot;, 
+                label = input$var,
+                choices = unique(diamonds[[input$var]]), 
+                checkbox.show = TRUE)
+  })
+  
+  observeEvent(input$var,{
+  
+    curr_cols &amp;lt;- callModule(module = regexSelect, 
+                            id = &amp;quot;a&amp;quot;,
+                            shiny::reactive(unique(diamonds[[input$var]]))
+                            )
+    
+    observeEvent(curr_cols(),{
+      
+      cols_now &amp;lt;- curr_cols()
+      
+      output$data &amp;lt;- shiny::renderPlot({
+      
+        ggplot(diamonds[diamonds[[input$var]]%in%cols_now,],
+        aes_string(x=&#39;table&#39;,y=&#39;carat&#39;,colour=input$var))+
+        geom_point()
+        
+      })
+    })    
+  })
+  
+}
+  
+shinyApp(ui, server)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;regexselect-with-tables&#34;&gt;regexSelect with Tables&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/regexSelect/master/Miscellaneous/gifs/regexSelectTable.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ui &amp;lt;- shiny::fluidPage(
+
+  regexSelectUI(id = &amp;quot;a&amp;quot;, 
+                label = &amp;quot;Variable:&amp;quot;,
+                choices = names(iris)
+                ),
+  
+  shiny::tableOutput(&amp;quot;data&amp;quot;)
+
+)
+
+server &amp;lt;- function(input, output, session) {
+
+  curr_cols &amp;lt;- callModule(module = regexSelect, 
+                          id = &amp;quot;a&amp;quot;,
+                          shiny::reactive(names(iris))
+                          )
+  
+  observeEvent(curr_cols(),{
+  
+    cols_now &amp;lt;- curr_cols()
+  
+    if( length(cols_now)==0 ) 
+        cols_now &amp;lt;- names(iris)
+  
+    output$data &amp;lt;- shiny::renderTable({
+    
+      iris[,cols_now , drop = FALSE]
+      
+    }, rownames = TRUE)
+    
+  })
+}
+
+shiny::shinyApp(ui, server)
+&lt;/code&gt;&lt;/pre&gt;
+</description>
     </item>
     
   </channel>

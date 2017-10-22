@@ -9,7 +9,7 @@
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Mon, 02 Oct 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/rstats/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/rstats/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,9 +18,138 @@
       <pubDate>Mon, 02 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2017-10-02-githubtraffic/</guid>
-      <description>This post will show how to use the RSelenium package to scrape your own github account to retrieve all that fun traffic data of clones and visits and create a single traffic plot for your account.
-For the single file you can find it in this gist file.
-Packages library(RSelenium) library(XML) library(ggplot2) library(reshape2) library(plyr) library(dplyr)  Fill in the relevant information for your account. The team is usually your username, but it can be different.</description>
+      <description>
+
+&lt;p&gt;This post will show how to use the &lt;a href=&#34;https://cran.r-project.org/web/packages/RSelenium/vignettes/RSelenium-basics.html&#34;&gt;RSelenium&lt;/a&gt; package to scrape your own github account to retrieve all that fun traffic data of clones and visits and create a single traffic plot for your account.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/gh_traffic.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For the single file you can find it in this &lt;a href=&#34;https://gist.github.com/yonicd/a05c4d85f7884c517a6cfa6aff24f59a&#34;&gt;gist&lt;/a&gt; file.&lt;/p&gt;
+
+&lt;h2 id=&#34;packages&#34;&gt;Packages&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(RSelenium)
+library(XML)
+library(ggplot2)
+library(reshape2)
+library(plyr)
+library(dplyr)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Fill in the relevant information for your account. The team is usually your username, but it can be different. The repos can be a vector and since we are going in the front door of the site we can access the private repositories too!&lt;/p&gt;
+
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;gh_user &amp;lt;- &#39;&amp;lt;your github login name&amp;gt;&#39;
+gh_pass &amp;lt;- &#39;&amp;lt;your github login password&amp;gt;&#39;
+
+gh_team &amp;lt;- &#39;&amp;lt;team associated with account&amp;gt;&#39;
+repos &amp;lt;- &#39;&amp;lt;repositories in team&amp;gt;&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;the-function&#34;&gt;The function&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;github_traffic &amp;lt;- function(gh_user,gh_pass,gh_team,repos){
+
+#open the connection
+
+rD &amp;lt;- RSelenium::rsDriver(verbose = FALSE)
+remDr &amp;lt;- rD[[&amp;quot;client&amp;quot;]]
+
+#going to the first repo to invoke the login
+
+remDr$navigate(sprintf(&#39;https://github.com/%s/%s/graphs/traffic&#39;,gh_team,repos[1]))
+
+#entering the login information in the form and clicking the button. 
+
+webElem &amp;lt;- remDr$findElement(using = &#39;id&#39;, value = &amp;quot;login_field&amp;quot;)
+webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_user)
+webElem &amp;lt;- remDr$findElement(using = &#39;id&#39;, value = &amp;quot;password&amp;quot;)
+webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_pass)
+webElem=remDr$findElement(using = &#39;xpath&#39;,&#39;//*[@id=&amp;quot;login&amp;quot;]/form/div[4]/input[3]&#39;)
+webElem$clickElement()
+Sys.sleep(1)
+
+# Retrieve the plots into an html
+out &amp;lt;- plyr::llply(repos,function(repo){
+  remDr$navigate(sprintf(&#39;https://github.com/%s/%s/graphs/traffic&#39;,gh_team,repo))
+  Sys.sleep(1)
+  out &amp;lt;- XML::htmlParse(remDr$getPageSource(),asText = TRUE)
+  sapply(c(&#39;clones&#39;,&#39;visitors&#39;),function(type){
+  XML::getNodeSet(out,sprintf(sprintf(&#39;//*[@id=&amp;quot;js-%s-graph&amp;quot;]/div/div[1]/svg/g/g&#39;,type)))
+},simplify = FALSE,USE.NAMES = TRUE)
+},.progress = &#39;text&#39;)
+
+# set the names (llply doesnt)
+names(out) &amp;lt;- repos
+
+# that&#39;s it we dont need the connection anymore
+remDr$close()
+rD[[&amp;quot;server&amp;quot;]]$stop()
+
+# scrape the data from html into a data.frame
+
+plot_data &amp;lt;- plyr::ldply(out,function(repo){
+  plyr::mdply(names(repo),function(type){
+    
+    dat &amp;lt;- repo[[type]]
+  
+    if(is.null(dat)) return(NULL)
+    
+    # tick values we need for rescaling
+    yticks_total &amp;lt;- as.numeric(sapply(getNodeSet(dat[[2]],&#39;g&#39;),XML::xmlValue))
+    yticks_unique &amp;lt;- as.numeric(sapply(getNodeSet(dat[[5]],&#39;g&#39;),XML::xmlValue))
+    
+    x &amp;lt;- data.frame(type=type,
+                    date = as.Date(sapply(getNodeSet(dat[[1]],&#39;g&#39;),XML::xmlValue),format = &#39;%m/%d&#39;),
+                    total = as.numeric(sapply(getNodeSet(dat[[3]],&#39;circle&#39;),XML::xmlGetAttr,name = &#39;cy&#39;)),
+                    unique = as.numeric(sapply(getNodeSet(dat[[4]],&#39;circle&#39;),XML::xmlGetAttr,name = &#39;cy&#39;)))
+    
+    # Because this is a d3.js object there are some technical details that
+    # I&#39;m skipping here, but in short the y values need to be rescaled 
+    # to show the actual values that you need.
+    x$total &amp;lt;- scales::rescale(x$total,rev(range(yticks_total)))
+    x$unique &amp;lt;- scales::rescale(x$unique,rev(range(yticks_unique)))
+    
+    #rehape the data.frame from wide to long
+    x%&amp;gt;%reshape2::melt(.,c(&#39;type&#39;,&#39;date&#39;),variable.name=c(&#39;metric&#39;))
+  })
+},.id=&#39;repo&#39;)
+
+#Create the plot
+
+ggplot(plot_data,aes(x=date,y=value,colour=repo))+
+  geom_point()+geom_line()+
+  facet_grid(type~metric,scales=&#39;free_y&#39;)+
+  scale_x_date(date_breaks = &amp;quot;1 day&amp;quot;,date_labels = &amp;quot;%m/%d&amp;quot;)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=90),legend.position = &#39;top&#39;)+
+  labs(title=sprintf(&#39;Github Team: %s&#39;,gh_team))
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;run-the-function&#34;&gt;Run the function&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;traffic_plot &amp;lt;- github_traffic(gh_user=gh_user,
+                               gh_pass=gh_pass,
+                               gh_team=gh_team,
+                               repos=repos)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;print-the-plot&#34;&gt;Print the plot&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;traffic_plot
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/gh_traffic.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If the function fails for some reason this will release the port &lt;code&gt;RSelenium&lt;/code&gt; is holding ransom.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;rD &amp;lt;- RSelenium::rsDriver(verbose = FALSE,port=4444L)
+remDr &amp;lt;- rD$client
+remDr$close()
+&lt;/code&gt;&lt;/pre&gt;
+</description>
     </item>
     
     <item>
@@ -29,9 +158,136 @@ Packages library(RSelenium) library(XML) library(ggplot2) library(reshape2) libr
       <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2017-09-26-regexselect/</guid>
-      <description>regexSelect is a small package that uses Shiny modules to solve a problem in Shiny selectize objects - regular expression (regex) searching. You can quickly filter the values in the selectize object, while being able to add that new regex query to the selectize list.
-This is great for long lists, since you can return multiple item simultaneously without needing to endlessly click items in a list!
-Install install.packages(&#39;regexSelect&#39;) #devtools::install_github(&#39;yonicd/regexSelect&#39;)  Below are two examples of using regular expressions to quickly populate multiple items in a ggplot and a datatable.</description>
+      <description>
+
+&lt;p&gt;regexSelect is a small package that uses &lt;a href=&#34;https://shiny.rstudio.com/articles/modules.html&#34;&gt;Shiny modules&lt;/a&gt; to solve a problem in Shiny selectize objects - &lt;a href=&#34;https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf&#34;&gt;regular expression&lt;/a&gt; (regex) searching. You can quickly filter the values in the selectize object, while being able to add that new regex query to the selectize list.&lt;/p&gt;
+
+&lt;p&gt;This is great for long lists, since you can return multiple item simultaneously without needing to endlessly click items in a list!&lt;/p&gt;
+
+&lt;h2 id=&#34;install&#34;&gt;Install&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;install.packages(&#39;regexSelect&#39;)
+#devtools::install_github(&#39;yonicd/regexSelect&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Below are two examples of using regular expressions to quickly populate multiple items in a &lt;code&gt;ggplot&lt;/code&gt; and a &lt;code&gt;datatable&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;regexselect-with-plots&#34;&gt;regexSelect with Plots&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/regexSelect/master/Miscellaneous/gifs/regexSelectPlot.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The shiny module works with two main functions:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# server side: 
+  callModule(module=regexSelect, id=&#39;myId&#39;, reactive(&amp;lt;selectizeInput Choices&amp;gt;))
+  
+# ui side: 
+  regexSelectUI(id = &amp;quot;myId&amp;quot;, label = &#39;myLabel&#39;, choices = &amp;lt;selectizeInput Choices&amp;gt;)
+````
+
+regexSelect comes with controls placed in a group checkbox below the selectize object. When calling regexSelect you can show or hide the checkbox controls (hidden by default), as to make it look like a normal selectize object, and save valuable UI real estate.
+
+While the shiny app is running regexSelect properties can be manipulated through the checkbox controls giving greater flexibilty to:
+  - Toggle regexSelect to work as a standard selectize object.
+  - Retain the regex search as a new value the selectize object.
+  - Change arguments that are passed to [base::grep](https://www.rdocumentation.org/packages/base/versions/3.4.1/topics/grep) : `ignore.case`, `perl`, `fixed`, `invert`.
+  
+```r
+library(shiny)
+library(ggplot2)
+
+ui &amp;lt;- fluidPage(
+
+  selectInput(&#39;var&#39;,
+              &#39;Choose Variable&#39;,
+              choices = names(diamonds)[sapply(diamonds,function(x){
+              inherits(x,c(&#39;character&#39;,&#39;factor&#39;)))]
+              },
+              selected = &#39;clarity&#39;),
+              
+  uiOutput(&#39;regexchoose&#39;),
+  
+  plotOutput(&amp;quot;data&amp;quot;)
+  
+  )
+  
+server &amp;lt;- function(input, output, session) {
+  
+  output$regexchoose&amp;lt;-shiny::renderUI({
+  
+  regexSelectUI(id = &amp;quot;a&amp;quot;, 
+                label = input$var,
+                choices = unique(diamonds[[input$var]]), 
+                checkbox.show = TRUE)
+  })
+  
+  observeEvent(input$var,{
+  
+    curr_cols &amp;lt;- callModule(module = regexSelect, 
+                            id = &amp;quot;a&amp;quot;,
+                            shiny::reactive(unique(diamonds[[input$var]]))
+                            )
+    
+    observeEvent(curr_cols(),{
+      
+      cols_now &amp;lt;- curr_cols()
+      
+      output$data &amp;lt;- shiny::renderPlot({
+      
+        ggplot(diamonds[diamonds[[input$var]]%in%cols_now,],
+        aes_string(x=&#39;table&#39;,y=&#39;carat&#39;,colour=input$var))+
+        geom_point()
+        
+      })
+    })    
+  })
+  
+}
+  
+shinyApp(ui, server)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;regexselect-with-tables&#34;&gt;regexSelect with Tables&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/regexSelect/master/Miscellaneous/gifs/regexSelectTable.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ui &amp;lt;- shiny::fluidPage(
+
+  regexSelectUI(id = &amp;quot;a&amp;quot;, 
+                label = &amp;quot;Variable:&amp;quot;,
+                choices = names(iris)
+                ),
+  
+  shiny::tableOutput(&amp;quot;data&amp;quot;)
+
+)
+
+server &amp;lt;- function(input, output, session) {
+
+  curr_cols &amp;lt;- callModule(module = regexSelect, 
+                          id = &amp;quot;a&amp;quot;,
+                          shiny::reactive(names(iris))
+                          )
+  
+  observeEvent(curr_cols(),{
+  
+    cols_now &amp;lt;- curr_cols()
+  
+    if( length(cols_now)==0 ) 
+        cols_now &amp;lt;- names(iris)
+  
+    output$data &amp;lt;- shiny::renderTable({
+    
+      iris[,cols_now , drop = FALSE]
+      
+    }, rownames = TRUE)
+    
+  })
+}
+
+shiny::shinyApp(ui, server)
+&lt;/code&gt;&lt;/pre&gt;
+</description>
     </item>
     
     <item>
@@ -40,8 +296,280 @@ Install install.packages(&#39;regexSelect&#39;) #devtools::install_github(&#39;y
       <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2017-09-26-aca/</guid>
-      <description>I have been trying to decipher for myself, what is in the current (well, yesterday&amp;rsquo;s) Graham-Cassidy health care bill. I saw this image on many news outlets a few days ago and my inner hate for pie charts bubbled up.
-This is a zoom in on the pie chart &amp;hellip; From what I can gather, these figures are attempting to say that there are specific states that are getting relatively more of the federal health care funds under the Afordable Care Act (ACA) than their relative state population.</description>
+      <description>
+
+&lt;p&gt;I have been trying to decipher for myself, what is in the current (well, yesterday&amp;rsquo;s) Graham-Cassidy health care bill. I saw this image on many news outlets a few days ago and my inner hate for pie charts bubbled up.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/ACA_pie_full.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is a zoom in on the pie chart &amp;hellip; From what I can gather, these figures are attempting to say that there are specific states that are getting relatively more of the federal health care funds under the Afordable Care Act (ACA) than their relative state population. Among the many things that are really hard to do with pie charts , comparing distributions ranks pretty high up there.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/ACA_pie.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It is common practice when comparing different geographical areas that have different populations levels to scale it using the rate per person (per capita) or per number of people, e.g. rate per 1,000 people. In this case it would be population adjusted state federal funding. The question that needs answering, what is the relevant population.&lt;/p&gt;
+
+&lt;p&gt;Many charts in the last week have scaled the funding adjusted to state population (as is alluded to in the figure above), but the funds are not actually being used by everyone in each state, most people have health care from their employer. So, what is the actual population that is being serviced by the federal funding for the ACA? How much of a different picture does that paint from the original figure?&lt;/p&gt;
+
+&lt;p&gt;Hopefully this post will help motivate readers to start looking around for more data on what is the effect of the proposed bill on the approprations of federal funds on the state level.&lt;/p&gt;
+
+&lt;p&gt;My sources of information is the Kaiser Family Foundation site that have a great database for data on the ACA and the proposed bill, and Wikipedia for auxilary population data. We will end up with the following figure, but along the way I learned a number of things that I didn&amp;rsquo;t know from reading online and seeing the news on TV.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-17-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;p&gt;A quick note before you proceed - This is not meant to be an all encompassing analysis of the predicted effects of the Graham-Cassidy bill, as it has been said before: &amp;ldquo;Healthcare is hard&amp;hellip;&amp;rdquo;, and if I made any bad assumptions I apologize in advanced and welcome any comments and suggestions to better understand the subject matter.&lt;/p&gt;
+
+&lt;p&gt;Saying that, let&amp;rsquo;s continue:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(xml2)
+library(rvest)
+library(dplyr)
+library(ggplot2)
+library(geofacet)
+knitr::opts_chunk$set(fig.height=7,fig.width=12,warning=FALSE,message=FALSE)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;scraping-the-relevant-information&#34;&gt;Scraping the relevant information&lt;/h2&gt;
+
+&lt;h3 id=&#34;kaiser-family-foundation&#34;&gt;Kaiser Family Foundation&lt;/h3&gt;
+
+&lt;h4 id=&#34;aca-and-graham-cassidy-federal-spending-by-state&#34;&gt;ACA and Graham-Cassidy federal spending by state.&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;kf_spending &amp;lt;- (xml2::read_html(&#39;http://www.kff.org/health-reform/issue-brief/state-by-state-estimates-of-changes-in-federal-spending-on-health-care-under-the-graham-cassidy-bill/&#39;)%&amp;gt;%
+  rvest::html_table())[[2]][-c(1,2,3,55),]
+
+names(kf_spending) &amp;lt;- c(&#39;Location&#39;,&#39;ACA&#39;,&#39;GC&#39;,&#39;DIFF&#39;,&#39;PCT&#39;)
+
+kf_spending$Location[which(kf_spending$Location==&#39;DC&#39;)]=&#39;District of Columbia&#39;
+
+kf_spending &amp;lt;- kf_spending%&amp;gt;%mutate_at(.vars=vars(ACA,GC,DIFF,PCT),.funs=funs(as.numeric(gsub(&#39;[,%]&#39;,&#39;&#39;,.))))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;aca-medicare-expansion-by-state&#34;&gt;ACA medicare expansion by state&lt;/h4&gt;
+
+&lt;p&gt;The decision of each state to accept medicare expansion will have a large affect on the net affect of GC on the redistribution of federal funds. States that did not accept medicare expansion are expected to have a net positive increase of federal funds.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#http://www.kff.org/health-reform/state-indicator/state-activity-around-expanding-medicaid-under-the-affordable-care-act/?currentTimeframe=0&amp;amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
+kf_expansion &amp;lt;- read.csv(&#39;data/kf_expansion.csv&#39;,stringsAsFactors = FALSE,skip = 2)
+kf_expansion &amp;lt;- kf_expansion[-c(1,53:61),-3]
+names(kf_expansion)[2] &amp;lt;- &#39;Expansion&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;population-of-aca-enrollment-by-state&#34;&gt;Population of ACA enrollment by state.&lt;/h4&gt;
+
+&lt;p&gt;The target population that will be used to scale the federal funds is the total marketplace enrollment for each state. We also add the characteristic of type of marketplace applied in the state to check if that has any effect.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Federally-Facilitated Market&lt;/li&gt;
+&lt;li&gt;State-based Marketplace&lt;/li&gt;
+&lt;li&gt;State-based Marketplace (using HealthCare.gov)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#http://www.kff.org/health-reform/state-indicator/total-marketplace-enrollment/?currentTimeframe=0&amp;amp;sortModel=%7B%22colId%22:%22Total%20Individuals%20Who%20Have%20Selected%20a%20Marketplace%20Plan%22,%22sort%22:%22asc%22%7D
+kf_marketplace_pop &amp;lt;- read.csv(&#39;data/kf_marketplace_pop.csv&#39;,stringsAsFactors = FALSE,skip = 2)
+kf_marketplace_pop &amp;lt;- kf_marketplace_pop[-c(1,53:59),]
+names(kf_marketplace_pop)[c(2,3)] &amp;lt;- c(&#39;Marketplace_Type&#39;,&#39;N&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;wikipedia&#34;&gt;Wikipedia&lt;/h3&gt;
+
+&lt;h4 id=&#34;state-characteristics-2016-elections-and-general-population&#34;&gt;State characteristics (2016 elections and general population)&lt;/h4&gt;
+
+&lt;p&gt;To gather more characteristics of each state are the 2016 general election results and the total population in each state, so the prevalent scaling can be used as a comparison.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;wiki_elections &amp;lt;- (xml2::read_html(&#39;https://en.wikipedia.org/wiki/United_States_presidential_election,_2016&#39;)%&amp;gt;%
+        rvest::xml_nodes(xpath=&#39;//*[@id=&amp;quot;mw-content-text&amp;quot;]/div/div[40]/table&#39;)%&amp;gt;%
+        rvest::html_table())[[1]][-c(1,58),c(1,3,6,23)]
+
+names(wiki_elections) &amp;lt;- c(&#39;Location&#39;,&#39;Clinton&#39;,&#39;Trump&#39;,&#39;Total&#39;)
+
+wiki_elections$Location[grep(&#39;^Nebraska&#39;,wiki_elections$Location)] &amp;lt;- &#39;Nebraska&#39;
+wiki_elections$Location[grep(&#39;^Maine&#39;,wiki_elections$Location)] &amp;lt;- &#39;Maine&#39;
+
+wiki_elections &amp;lt;- wiki_elections%&amp;gt;%
+  mutate_at(.vars = vars(Clinton,Trump,Total),.funs=funs(as.numeric(gsub(&#39;[,]&#39;,&#39;&#39;,.))))%&amp;gt;%
+  group_by(Location)%&amp;gt;%summarise_at(.vars = vars(Clinton,Trump,Total),.funs = funs(sum))%&amp;gt;%
+  mutate(ClintonPct=Clinton/Total,TrumpPct=Trump/Total,TrumpWin=ifelse(TrumpPct&amp;gt;ClintonPct,&#39;Trump Win&#39;,&#39;Clinton Win&#39;))
+
+wiki_pop &amp;lt;- (xml2::read_html(&#39;https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_population&#39;)%&amp;gt;%
+        rvest::xml_nodes(xpath=&#39;//*[@id=&amp;quot;mw-content-text&amp;quot;]/div/table[1]&#39;)%&amp;gt;%
+        rvest::html_table())[[1]][-c(30,53:64),c(3,4)]
+
+names(wiki_pop) &amp;lt;- c(&#39;Location&#39;,&#39;Total_N&#39;)
+
+wiki_pop$Total_N &amp;lt;- as.numeric(gsub(&#39;[,]&#39;,&#39;&#39;,wiki_pop$Total_N))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;join-all-the-data-sets&#34;&gt;Join all the data sets&lt;/h3&gt;
+
+&lt;p&gt;We join all the information and create a new variable - the change in federal funds from ACA to GC. This is done for the rate per 1,000 individuals who have selected a market based plan and the broader per 1,000 individuals state total. The former assumes that this the more consice defition of the population better reflects what is the population serviced by the federal funding, and that it is the potential population that would be serviced by the GC bill.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;kf &amp;lt;- kf_marketplace_pop%&amp;gt;%
+  left_join(kf_expansion,by=&#39;Location&#39;)%&amp;gt;%
+  left_join(wiki_pop,by=&#39;Location&#39;)
+
+kf &amp;lt;- kf_spending%&amp;gt;%left_join(kf, by = c(&#39;Location&#39;))%&amp;gt;%
+  mutate(ratio_ACA=1000*ACA/N,ratio_GC=1000*GC/N,ratio_DIFF = ratio_GC-ratio_ACA,
+         tot_ratio_ACA=1000*ACA/Total_N,tot_ratio_GC=1000*GC/Total_N,tot_ratio_DIFF = tot_ratio_GC-tot_ratio_ACA)%&amp;gt;%
+  arrange(desc(ratio_DIFF))
+
+kf &amp;lt;- kf%&amp;gt;%left_join(wiki_elections,by=&#39;Location&#39;)
+
+kf$Expansion &amp;lt;- sprintf(&#39;Medicaid Expansion %s&#39;,kf$Expansion)
+
+kf$Location &amp;lt;- factor(kf$Location,levels = kf$Location)
+
+kf$Marketplace_Type &amp;lt;- factor(kf$Marketplace_Type,labels=c(&#39;Federally-Facilitated Market&#39;,&#39;State-based Marketplace&#39;,&#39;State-based Marketplace (using HealthCare.gov)&#39;))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;plots&#34;&gt;Plots&lt;/h2&gt;
+
+&lt;h3 id=&#34;percent-of-state-population-enrolled-in-aca&#34;&gt;Percent of state population enrolled in ACA&lt;/h3&gt;
+
+&lt;p&gt;First we want to see what is the scope of the population in each state that have selected an ACA market based plan. (note California&amp;hellip; not quite 12% of the US population)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;kf%&amp;gt;%
+  mutate(pop_pct=100*N/Total_N)%&amp;gt;%
+  arrange(desc(pop_pct))%&amp;gt;%
+  mutate(Location=factor(Location,levels=Location))%&amp;gt;%
+  ggplot(aes(x=Location,y=pop_pct))+
+  geom_point()+
+  coord_flip()+
+  labs(y=&#39;Percent of Population that have selected an ACA market based plan&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-7-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;overall-distribution-by-medicare-expansion&#34;&gt;Overall distribution by Medicare Expansion&lt;/h3&gt;
+
+&lt;p&gt;We then check that there really is a difference between states that expanded and did not expand medicaid under the ACA and if being a state that voted Republican compared to Democratic.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;boxplot_dat &amp;lt;- kf%&amp;gt;%
+  dplyr::select(Expansion,Marketplace_Type,TrumpWin, ratio_DIFF,tot_ratio_DIFF)%&amp;gt;%
+  reshape2::melt(.,id=c(&#39;Marketplace_Type&#39;,&#39;Expansion&#39;,&#39;TrumpWin&#39;))
+
+levels(boxplot_dat$variable) &amp;lt;- c(&#39;per 1,000 Individuals who have\nselected a market based plan&#39;,&#39;per 1,000 Individuals&#39;)
+
+  boxplot_dat%&amp;gt;%
+    ggplot(aes(x=Expansion,
+             y=value,
+             fill=TrumpWin))+
+  geom_boxplot()+
+  geom_hline(aes(yintercept=0),linetype=2)+
+  facet_wrap(~variable,ncol=1,scales=&#39;free_y&#39;)+
+  labs(title=&#39;Change in Federal Funds ACA vs Graham-Cassidy, 2020-2026&#39;,
+         y=&#39;Change in Federal Funds ($ Millions) per 1,000 individuals&#39;)+
+  theme_bw()+
+  theme(legend.position = &#39;bottom&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-8-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;p&gt;Drilling down to state level figures we show for each state the change from ACA funding to the proposed GC funding per 1,000 persons who selected a market based ACA plan. The arrows move from ACA to GC funding and the y-axis is ordered by the increasing net difference. This comparison is faceted among the different characteristics scrapped from above.&lt;/p&gt;
+
+&lt;p&gt;Some things to look for:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;New York has the largest negative net funding per 1,000 persons.&lt;/li&gt;
+&lt;li&gt;Kentucky has the largest negative net funding per 1,000 persons among Republican leaning states.&lt;/li&gt;
+&lt;li&gt;The net increase in funding per 1,000 persons for states that did not expand medicaid is mostly minimal.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;p &amp;lt;- kf%&amp;gt;%ggplot(aes(x=Location,xend=Location,yend=ratio_GC,y=ratio_ACA,colour=ratio_DIFF))+
+  geom_segment(arrow = arrow(length = unit(0.02, &amp;quot;npc&amp;quot;)))+
+  coord_flip()+
+  scale_colour_gradient(low = &#39;red&#39;,high = &#39;blue&#39;,name=&#39;Difference&#39;)+
+  labs(title=&#39;Change in Federal Funds per 1,000 Individuals who have\nselected a market based plan ACA vs Graham-Cassidy, 2020-2026&#39;,
+       subtitle=&#39;Arrow pointing to movement from ACA to Graham-Cassidy&#39;,
+       caption=&#39;Source: Kaiser Family Foundation&#39;,
+       y=&#39;Federal Funds ($ Millions) per 1,000 individuals who have selected a market based plan&#39;)+
+  theme_bw()+
+  theme(legend.position = &#39;bottom&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;policial-leaning&#34;&gt;Policial Leaning&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;p + facet_wrap(~ TrumpWin , scales=&#39;free_y&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-10-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;aca-medicare-expansion&#34;&gt;ACA Medicare expansion&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;p + facet_wrap(~ Expansion , scales=&#39;free_y&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-11-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;aca-medicare-expansion-and-political-leaning&#34;&gt;ACA Medicare expansion and Political Leaning&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;p + facet_wrap(~ Expansion + TrumpWin , scales=&#39;free_y&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-12-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;state-marketplace-type&#34;&gt;State Marketplace Type&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;p + facet_wrap(~ Marketplace_Type, scales=&#39;free_y&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-13-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;aca-medicare-expansion-and-state-marketplace-type&#34;&gt;ACA Medicare expansion and State Marketplace Type&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;p + facet_wrap(~ Expansion + Marketplace_Type , scales=&#39;free_y&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-14-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;geofaceting&#34;&gt;Geofaceting&lt;/h3&gt;
+
+&lt;p&gt;Lastly, we construct geographic representation of the difference between the ACA and the GC bill using &lt;a href=&#34;https://twitter.com/hafenstats&#34;&gt;Ryan Hafen&amp;rsquo;s&lt;/a&gt;  &lt;a href=&#34;https://CRAN.R-project.org/package=geofacet&#34;&gt;geofacet&lt;/a&gt; package.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;states_facet &amp;lt;- state_ranks%&amp;gt;%left_join(kf%&amp;gt;%rename(name=Location),by=&#39;name&#39;)
+
+states_facet$Expansion &amp;lt;- factor(states_facet$Expansion,labels=c(&#39;Expansion&#39;,&#39;No Expansion&#39;))
+
+states_facet$tile_lbl &amp;lt;- sprintf(&#39;%s\n%s&#39;,states_facet$Expansion,states_facet$TrumpWin)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;total-state-population&#34;&gt;Total State Population&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;states_facet%&amp;gt;%
+  ggplot(aes(x=&#39;1&#39;, y=&#39;1&#39;,fill=tot_ratio_DIFF)) +
+  geom_tile() +
+  geom_text(aes(label=tile_lbl),size=2)+
+  theme_bw() +
+  facet_geo( ~ state)+
+  scale_fill_gradient2(low=&#39;red&#39;,mid=&#39;white&#39;,high=&#39;green&#39;,name=&#39;Difference&#39;) +
+  theme(legend.position = &#39;bottom&#39;,
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank())+
+  labs(title=&#39;Change in Federal Funds per 1,000 Individuals, 2020-2026&#39;,
+       caption=&#39;Source: Kaiser Family Foundation&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-16-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;aca-enrollment-population&#34;&gt;ACA enrollment population&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;states_facet%&amp;gt;%
+  ggplot(aes(x=&#39;1&#39;, y=&#39;1&#39;,fill=ratio_DIFF)) +
+  geom_tile() +
+  geom_text(aes(label=tile_lbl),size=2)+
+  theme_bw() +
+  facet_geo( ~ state)+
+  scale_fill_gradient2(low=&#39;red&#39;,mid=&#39;white&#39;,high=&#39;green&#39;,name=&#39;Difference&#39;) +
+  theme(legend.position = &#39;bottom&#39;,
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank())+
+  labs(title=&#39;Change in Federal Funds per 1,000 Individuals who have\nselected a market based plan ACA vs Graham-Cassidy, 2020-2026&#39;,
+       caption=&#39;Source: Kaiser Family Foundation&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/aca/unnamed-chunk-17-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -50,8 +578,201 @@ This is a zoom in on the pie chart &amp;hellip; From what I can gather, these fi
       <pubDate>Mon, 18 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2017-09-18-sinew/</guid>
-      <description>Thinking of creating a new package? Dread the task of function documentation? Afraid to run devtools::check(build_args = &#39;--as-cran&#39;) and get bombarded by Errors, Warnings, and Notes (oh my!) ? Wait&amp;hellip;. breathe!
-After feeling all that anxiety and following all of Hadley&amp;rsquo;s directions online, I felt I was doing a lot of manual labour, and that a package should be doing all lot of this for me. So we wrote one - sinew (sin-yu).</description>
+      <description>
+
+&lt;p&gt;Thinking of creating a new package? Dread the task of function documentation? Afraid to run &lt;code&gt;devtools::check(build_args = &#39;--as-cran&#39;)&lt;/code&gt; and get bombarded by Errors, Warnings, and Notes (oh my!) ? Wait&amp;hellip;. breathe!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://media.giphy.com/media/pWYReekqQW72U/giphy.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After feeling all that anxiety and following all of Hadley&amp;rsquo;s &lt;a href=&#34;http://r-pkgs.had.co.nz/man.html&#34;&gt;directions&lt;/a&gt; online, I felt I was doing a lot of manual labour, and that a package should be doing all lot of this for me. So we wrote one - &lt;code&gt;sinew&lt;/code&gt; (sin-yu).&lt;/p&gt;
+
+&lt;h2 id=&#34;tl-dr-sinew-is-an-automatic-roxygen2-documentation-creator&#34;&gt;tl;dr: &lt;code&gt;sinew&lt;/code&gt; is an automatic roxygen2 documentation creator&lt;/h2&gt;
+
+&lt;p&gt;Quick example, run it in R:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt; install.packages(&amp;quot;sinew&amp;quot;) # or devtools::install_github(&#39;metrumresearchgroup/sinew&#39;)
+ 
+ # simple function
+ 
+ myFun &amp;lt;- function(h=1){
+   utils::head(rnorm(10),h)
+ }
+ 
+ library(sinew)
+ makeOxygen(myFun)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will produce the following output (which you can then append above your definition of &lt;code&gt;myFun&lt;/code&gt;):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeOxygen(myFun)
+
+#&#39; @title FUNCTION_TITLE
+#&#39; @description FUNCTION_DESCRIPTION
+#&#39; @param h PARAM_DESCRIPTION, Default: 1
+#&#39; @return OUTPUT_DESCRIPTION
+#&#39; @details DETAILS
+#&#39; @examples 
+#&#39; \dontrun{
+#&#39; if(interactive()){
+#&#39;  #EXAMPLE1
+#&#39;  }
+#&#39; }
+#&#39; @seealso 
+#&#39;  \code{\link[utils]{head}}
+#&#39; @rdname myFun
+#&#39; @export 
+#&#39; @importFrom utils head
+myFun &amp;lt;- function(h=1){
+  utils::head(h)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or document functions interactively with the shiny gadget:&lt;/p&gt;
+
+&lt;iframe width=&#34;100%&#34; height=&#34;400&#34; src=&#34;https://www.youtube.com/embed/cabOtf191OQ&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt;For more details read the rest of the post, or skip straight to the gitbook: &lt;a href=&#34;https://metrumresearchgroup.github.io/sinew/&#34;&gt;https://metrumresearchgroup.github.io/sinew/&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;why-sinew&#34;&gt;Why sinew?&lt;/h2&gt;
+
+&lt;p&gt;Let me explain by example&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;The current way to start down the documentation path is to create a function, I&amp;rsquo;ll use &lt;code&gt;myFun&lt;/code&gt; defined above. Next I would use the skeleton provided by RStudio (In the toolbar Code=&amp;gt;Insert Roxygen Skeleton).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#&#39; Title
+#&#39;
+#&#39; @param h 
+#&#39;
+#&#39; @return
+#&#39; @export
+#&#39;
+#&#39; @examples
+myFun &amp;lt;- function(h=1){
+  utils::head(h)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This gets me on my way, but there is information nested within the function itself that can be useful to document and manage the namespace&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the default value of &lt;code&gt;h&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;the function &lt;code&gt;head&lt;/code&gt; needs to be imported from the package &lt;code&gt;utils&lt;/code&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I could just add that manually but this is just a toy example, actual functions have many parameters and you can import many functions from a number of different packages.&lt;/p&gt;
+
+&lt;p&gt;Trying to do the documentation bookkeeping as you develop the function will make you lose your train of thought, and make you forget that great idea you just had. Or you could write the full function and then at the end try to figure out what functions you need to import what packages they are from, should they get a seealso field, what parameters you used and so on&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;Sinew will do this for you. It will parse your full function for relevant information that can fill in the blanks in the roxygen2 documentation and manage your import fields for you.
+Think of it as connecting the meat of your function to the Roxygen2 skeleton - or just the &lt;a href=&#34;https://en.wikipedia.org/wiki/Tendon&#34;&gt;definition&lt;/a&gt; of the term sinew (again sin-yu). Added bonus it will help keep your package CRAN ready as you develop.&lt;/p&gt;
+
+&lt;p&gt;So how would that skeleton look after running it with sinew?&lt;/p&gt;
+
+&lt;p&gt;The workhorse of sinew is &lt;code&gt;makeOxygen&lt;/code&gt;, it takes functions and returns Roxygen2 headers.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeOxygen(myFun)
+
+#&#39; @title FUNCTION_TITLE
+#&#39; @description FUNCTION_DESCRIPTION
+#&#39; @param h PARAM_DESCRIPTION, Default: 1
+#&#39; @return OUTPUT_DESCRIPTION
+#&#39; @details DETAILS
+#&#39; @examples 
+#&#39; \dontrun{
+#&#39; if(interactive()){
+#&#39;  #EXAMPLE1
+#&#39;  }
+#&#39; }
+#&#39; @seealso 
+#&#39;  \code{\link[utils]{head}}
+#&#39; @rdname myFun
+#&#39; @export 
+#&#39; @importFrom utils head
+myFun &amp;lt;- function(h=1){
+  utils::head(h)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That little function had a lot of information embbeded in it to make your documentation well rounded.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Each field has it&amp;rsquo;s own &lt;em&gt;placeholder&lt;/em&gt; that will guide you to what is expected.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;param&lt;/strong&gt; has the default value built in.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;examples&lt;/strong&gt;  is populated with a more current layout to support htmlwidget and shiny examples.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;utils&lt;/code&gt; was found and was added to &lt;strong&gt;importFrom&lt;/strong&gt; automatically as was it&amp;rsquo;s &lt;strong&gt;seealso&lt;/strong&gt; counterpart.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rdname&lt;/strong&gt; was added with the name of the function.
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now lets take a real function - &lt;code&gt;lm&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeOxygen(lm)
+
+#&#39; @title FUNCTION_TITLE
+#&#39; @description FUNCTION_DESCRIPTION
+#&#39; @param formula PARAM_DESCRIPTION
+#&#39; @param data PARAM_DESCRIPTION
+#&#39; @param subset PARAM_DESCRIPTION
+#&#39; @param weights PARAM_DESCRIPTION
+#&#39; @param na.action PARAM_DESCRIPTION
+#&#39; @param method PARAM_DESCRIPTION, Default: &#39;qr&#39;
+#&#39; @param model PARAM_DESCRIPTION, Default: TRUE
+#&#39; @param x PARAM_DESCRIPTION, Default: FALSE
+#&#39; @param y PARAM_DESCRIPTION, Default: FALSE
+#&#39; @param qr PARAM_DESCRIPTION, Default: TRUE
+#&#39; @param singular.ok PARAM_DESCRIPTION, Default: TRUE
+#&#39; @param contrasts PARAM_DESCRIPTION, Default: NULL
+#&#39; @param offset PARAM_DESCRIPTION
+#&#39; @param ... PARAM_DESCRIPTION
+#&#39; @return OUTPUT_DESCRIPTION
+#&#39; @details DETAILS
+#&#39; @examples 
+#&#39; \dontrun{
+#&#39; if(interactive()){
+#&#39;  #EXAMPLE1
+#&#39;  }
+#&#39; }
+#&#39; @seealso 
+#&#39;  \code{\link[stats]{model.frame}}
+#&#39; @rdname lm
+#&#39; @export 
+#&#39; @importFrom stats model.frame
+lm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That would of been a pain to do by hand, all that is left to do is replace the placeholders with relevant information and you&amp;rsquo;re done. Also notice the layout is consistent so other people (and you) can easily navigate the help across the package functions.&lt;/p&gt;
+
+&lt;h2 id=&#34;a-few-features-and-use-cases&#34;&gt;A few features and use cases:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Setting package options persistent during a session is done using &lt;code&gt;sinew_opts&lt;/code&gt; (much like &lt;code&gt;knitr::opts_chunk&lt;/code&gt;).&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;For keeping settings persistent across sessions during package development sinew reads from the working directory on load a file named &lt;code&gt;_sinewconfig.yml&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To run &lt;code&gt;makeOxygen&lt;/code&gt; in batch mode (like a whole &lt;code&gt;./R&lt;/code&gt; package subdirectory) use the function &lt;code&gt;makeOxyFile&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To convert a long single file with multiple functions interwoven with a body script into multiple single function files, and keeping the script body intact,  use &lt;code&gt;untangle&lt;/code&gt;. If a function within the long file already has roxygen2 headers then they will be carried over to the new file.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To quickly run through a whole package and create the DESCRIPTION file &lt;code&gt;Imports:&lt;/code&gt; field use &lt;code&gt;makeImport(&#39;./R&#39;,format=&#39;description&#39;)&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;After updating a function the documentation gets out of synch and needs updating. &lt;code&gt;moga&lt;/code&gt; (make oxygen great again!) will cross check the current documentation of an R script and the current function script itself and update/add any parameters/defaults/imports discrepancies.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Setting &lt;code&gt;cut&lt;/code&gt; to an integer value in &lt;code&gt;makeOxygen&lt;/code&gt; to return &lt;strong&gt;import package&lt;/strong&gt; instead of &lt;strong&gt;importFrom package function1 [function2 &amp;hellip;]&lt;/strong&gt; for packages that call more than the value assigned to &lt;code&gt;cut&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;interactive-documentation&#34;&gt;Interactive Documentation&lt;/h2&gt;
+
+&lt;p&gt;A Shiny gadget was built to combine all this into an easy to use interface. Highlight text (preferably a function) in source editor of RStudio and then deploy the addin from the addins menu.&lt;/p&gt;
+
+&lt;p&gt;The gadget can read in almost any source you have the function in: unsourced functions, functions in the global environment, in a loaded package, in an installed package that you didn&amp;rsquo;t load yet.&lt;/p&gt;
+
+&lt;iframe width=&#34;100%&#34; height=&#34;400&#34; src=&#34;https://www.youtube.com/embed/S8dAOwrvoDw&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt;The gadget will allow you to preview the roxygen header, add and remove roxygen2 fields with checkboxes and control the level of &lt;code&gt;cut&lt;/code&gt;. When you&amp;rsquo;re ready insert what you see in the preview pane into the editor. When you&amp;rsquo;re done with one function highlight another one and continue to work, if you need to move to another file tab&amp;hellip; that&amp;rsquo;s ok too!&lt;/p&gt;
+
+&lt;p&gt;If there is already documentation move into &lt;strong&gt;update mode&lt;/strong&gt;, and touch up any changes that need to be made through &lt;code&gt;moga&lt;/code&gt;.&lt;/p&gt;
+</description>
     </item>
     
   </channel>

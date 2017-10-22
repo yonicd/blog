@@ -9,7 +9,7 @@
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Thu, 19 Oct 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/htmlwigdet/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/htmlwigdet/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,8 +18,129 @@
       <pubDate>Thu, 19 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/jstree/</guid>
-      <description>jsTree is a R package that is a standalone htmlwidget for the jsTree JavaScript library. It can be run from the R console directly into the Rstudio Viewer, be used in a Shiny application or be part of an Rmarkdown html output.
-Installation #CRAN install.packages(&amp;#39;jsTree&amp;#39;) #Github devtools::install_github(&amp;#39;metrumresearchgroup/jsTree&amp;#39;) The motivation for the package came from the shinyTree by Jeff Allen, which has an early version of the JavaScript library hardcoded into a Shiny application.</description>
+      <description>&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/blazy/blazy.min.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;jsTree is a R package that is a standalone htmlwidget for the jsTree JavaScript library. It can be run from the R console directly into the Rstudio Viewer, be used in a Shiny application or be part of an Rmarkdown html output.&lt;/p&gt;
+&lt;div id=&#34;installation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Installation&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#CRAN
+install.packages(&amp;#39;jsTree&amp;#39;)
+
+#Github
+devtools::install_github(&amp;#39;metrumresearchgroup/jsTree&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The motivation for the package came from the &lt;a href=&#34;https://github.com/trestletech/shinyTree&#34;&gt;shinyTree&lt;/a&gt; by Jeff Allen, which has an early version of the JavaScript library hardcoded into a Shiny application.&lt;/p&gt;
+&lt;p&gt;The input for the htmlwidget is a character vector and the heirarchy is set by the ‘/’, as to mimic the delimiter of a file path.&lt;/p&gt;
+&lt;p&gt;The main purpose of this package is vizualize folder hierarchy, much like in the &lt;code&gt;Files&lt;/code&gt; tab in RStudio. But, instead of looking in local directories it will be used for remote repositories, such as github, bitbucket and svn repositories. This is implemented in the &lt;a href=&#34;https://github.com/metrumresearchgroup/vcs&#34;&gt;vcs&lt;/a&gt; package and a future post will show utility that package gives.&lt;/p&gt;
+&lt;p&gt;To show the basic functionality of jsTree we will use a toy dataset from the babynames package.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#install.packages(&amp;#39;babynames&amp;#39;)
+library(babynames)
+library(dplyr)
+library(jsTree)
+library(widgetframe)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Taking a random sample of names&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(1234)
+
+x &amp;lt;- babynames%&amp;gt;%
+  sample_n(100)%&amp;gt;%
+  select(-c(prop,n))%&amp;gt;%
+  mutate(initial=substr(name,1,1),
+         sex=ifelse(sex==&amp;#39;F&amp;#39;,&amp;#39;Female&amp;#39;,&amp;#39;Male&amp;#39;))%&amp;gt;%
+  select(year,sex,initial,name)
+  
+myx &amp;lt;- apply(x,1,paste,collapse=&amp;#39;/&amp;#39;)
+
+j0 &amp;lt;- jsTree(obj = myx)
+frameWidget(j0)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:100%;height:480px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex0.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;Initialize tree with checked boxes for certain fields&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;nodestate1 &amp;lt;- x$year&amp;lt;=1920
+
+j1 &amp;lt;- jsTree(myx,nodestate=nodestate1)
+frameWidget(j1)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-2&#34; style=&#34;width:100%;height:480px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-2&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex1.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;Change the order of the hierarchy&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; nested_string2 &amp;lt;- apply(x[,c(3,1,2,4)],1,paste,collapse=&amp;#39;/&amp;#39;)
+ 
+j2 &amp;lt;- jsTree(nested_string2)
+frameWidget(j2)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-3&#34; style=&#34;width:100%;height:480px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-3&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex2.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;Use the gender as a tooltip on the name&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; nested_string3 &amp;lt;- apply(x[,-c(2)],1,paste,collapse=&amp;#39;/&amp;#39;)
+
+gender_label &amp;lt;- x$sex
+names(gender_label) &amp;lt;- x$name
+
+j3 &amp;lt;- jsTree(nested_string3,tooltips = gender_label)
+frameWidget(j3)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-4&#34; style=&#34;width:100%;height:480px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-4&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex3.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;/div&gt;
+&lt;div id=&#34;shiny&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Shiny&lt;/h2&gt;
+&lt;p&gt;jsTree can be used in Shiny applications and supplies observers so the Shiny can react to the tree.&lt;/p&gt;
+&lt;iframe src=&#34;https://tranquil-escarpment-51788.herokuapp.com/&#34; style=&#34;width: 800px; height: 500px&#34;&gt;
+&lt;/iframe&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ui &amp;lt;- shiny::fluidPage(
+  
+  shiny::column(width=4,jsTree::jsTreeOutput(&amp;#39;tree&amp;#39;)),
+  
+  shiny::column(width=8,shiny::uiOutput(&amp;#39;chosen&amp;#39;))
+  
+)
+
+server &amp;lt;- function(input, output,session) {
+  
+  network &amp;lt;- shiny::reactiveValues()
+  
+  shiny::observeEvent(input$tree_update,{
+    
+    current_selection &amp;lt;- input$tree_update$.current_tree
+    if(!is.null(current_selection)) 
+      network$tree &amp;lt;- jsonlite::fromJSON(current_selection)
+    
+  })
+  
+  shiny::observeEvent(network$tree,{
+    
+    output$results &amp;lt;- shiny::renderPrint({
+      
+      str.out &amp;lt;- &amp;#39;&amp;#39;
+      
+      if(length(network$tree)&amp;gt;0)
+        str.out=network$tree
+      
+      return(str.out)
+    })    
+  })
+  
+  output$chosen &amp;lt;- shiny::renderUI({
+    
+    list(shiny::h3(&amp;#39;Selected Items&amp;#39;),
+         
+    shiny::verbatimTextOutput(outputId = &amp;quot;results&amp;quot;))
+    
+  })
+  
+  output$tree &amp;lt;- jsTree::renderJsTree({
+    
+    nested_string &amp;lt;- myx
+    
+    jsTree(nested_string)
+    
+  })
+  
+}
+
+shinyApp(ui, server)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
     </item>
     
     <item>
@@ -28,7 +149,256 @@ Installation #CRAN install.packages(&amp;#39;jsTree&amp;#39;) #Github devtools::
       <pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2017-04-07-slickr/</guid>
-      <description>We are happy to bring the slick JavaScript library to R. It is self described as &amp;ldquo;the last carousel you&amp;rsquo;ll ever need&amp;rdquo;. This carousel is based on putting the elements of the carousel in a div HTML tag. This makes the carousel very versatile in what can be placed inside. Regular objects that are placed in a carousel can be for example: images, plots, tables, gifs, videos, iframes and even htmlwidgets.</description>
+      <description>
+
+&lt;p&gt;We are happy to bring the &lt;a href=&#34;http://kenwheeler.github.io/slick/&#34;&gt;slick&lt;/a&gt; JavaScript library to R. It is self described as &amp;ldquo;the last carousel you&amp;rsquo;ll ever need&amp;rdquo;. This carousel is based on putting the elements of the carousel in a &lt;a href=&#34;https://www.w3schools.com/tags/tag_div.asp&#34;&gt;div&lt;/a&gt; HTML tag. This makes the carousel very versatile in what can be placed inside. Regular objects that are placed in a carousel can be for example: images, plots, tables, gifs, videos, iframes and even htmlwidgets.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/slickR/master/Miscellaneous/Multimedia/gif/slickRnestingWidgets.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This tool helps review multiple outputs in an efficient manner and saves much needed space in documents and Shiny applications, while creating a user friendly experience.&lt;/p&gt;
+
+&lt;p&gt;These carousels can be used directly from the R console, from RStudio, in Shiny apps and R Markdown documents.&lt;/p&gt;
+
+&lt;h1 id=&#34;installation&#34;&gt;Installation&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://cran.r-project.org/web/packages/slickR/index.html&#34;&gt;CRAN&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;install.packages(&#39;slickR&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/slickR&#34;&gt;Github&lt;/a&gt; (dev)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;devtools::install_github(&#39;metrumresearchgroup/slickR&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;examples&#34;&gt;Examples&lt;/h1&gt;
+
+&lt;p&gt;There are many options within the slick carousel, to get get started with the basics we will show a few examples in the rest of the post. If you want to try out any of the examples you can go to this &lt;a href=&#34;metrumresearchgroup.github.io/slickR&#34;&gt;site&lt;/a&gt; where they are rendered and can be tested out.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(svglite)
+library(lattice)
+library(ggplot2)
+library(rvest) 
+library(reshape2)
+library(dplyr)
+library(htmlwidgets)
+library(slickR)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;images&#34;&gt;Images&lt;/h1&gt;
+
+&lt;p&gt;Some web scraping for the images example&amp;hellip;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#NBA Team Logos
+nbaTeams=c(&amp;quot;ATL&amp;quot;,&amp;quot;BOS&amp;quot;,&amp;quot;BKN&amp;quot;,&amp;quot;CHA&amp;quot;,&amp;quot;CHI&amp;quot;,&amp;quot;CLE&amp;quot;,&amp;quot;DAL&amp;quot;,&amp;quot;DEN&amp;quot;,&amp;quot;DET&amp;quot;,&amp;quot;GSW&amp;quot;,
+    &amp;quot;HOU&amp;quot;,&amp;quot;IND&amp;quot;,&amp;quot;LAC&amp;quot;,&amp;quot;LAL&amp;quot;,&amp;quot;MEM&amp;quot;,&amp;quot;MIA&amp;quot;,&amp;quot;MIL&amp;quot;,&amp;quot;MIN&amp;quot;,&amp;quot;NOP&amp;quot;,&amp;quot;NYK&amp;quot;,
+    &amp;quot;OKC&amp;quot;,&amp;quot;ORL&amp;quot;,&amp;quot;PHI&amp;quot;,&amp;quot;PHX&amp;quot;,&amp;quot;POR&amp;quot;,&amp;quot;SAC&amp;quot;,&amp;quot;SAS&amp;quot;,&amp;quot;TOR&amp;quot;,&amp;quot;UTA&amp;quot;,&amp;quot;WAS&amp;quot;)
+teamImg=sprintf(&amp;quot;https://i.cdn.turner.com/nba/nba/.element/img/4.0/global/logos/512x512/bg.white/svg/%s.svg&amp;quot;,nbaTeams)
+
+#Player Images
+a1=read_html(&#39;http://www.espn.com/nba/depth&#39;)%&amp;gt;%html_nodes(css = &#39;#my-teams-table a&#39;)
+a2=a1%&amp;gt;%html_attr(&#39;href&#39;)
+a3=a1%&amp;gt;%html_text()
+team_table=read_html(&#39;http://www.espn.com/nba/depth&#39;)%&amp;gt;%html_table()
+team_table=team_table[[1]][-c(1,2),]
+playerTable=team_table%&amp;gt;%melt(,id=&#39;X1&#39;)%&amp;gt;%arrange(X1,variable)
+playerName=a2[grepl(&#39;[0-9]&#39;,a2)]
+playerId=do.call(&#39;rbind&#39;,lapply(strsplit(playerName,&#39;[/]&#39;),function(x) x[c(8,9)]))
+playerId=playerId[playerId[,1]!=&#39;phi&#39;,]
+playerTable$img=sprintf(&#39;http://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/%s.png&amp;amp;w=350&amp;amp;h=254&#39;,playerId[,1])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;simple-carousel&#34;&gt;Simple carousel&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s start easy: show the team logos one at a time with dots underneath&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;slickR(obj = teamImg,slideId = &#39;ex1&#39;,height = 100,width=&#39;100%&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/slickR/master/Miscellaneous/blogPost/ex1.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;grouped-images&#34;&gt;Grouped Images&lt;/h2&gt;
+
+&lt;p&gt;There are players on each team, so lets group the starting five together and have each dot correspond with a team:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;slickR(
+  obj = playerTable$img,
+  slideId = c(&#39;ex2&#39;),
+  slickOpts = list(
+    initialSlide = 0,
+    slidesToShow = 5,
+    slidesToScroll = 5,
+    focusOnSelect = T,
+    dots = T
+  ),
+  height = 100,width=&#39;100%&#39;
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/slickR/master/Miscellaneous/blogPost/ex2.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;replacing-the-dots&#34;&gt;Replacing the dots&lt;/h2&gt;
+
+&lt;p&gt;Sometimes the dots won&amp;rsquo;t be informative enough so we can switch them with an HTML object, such as text or other images. We can pass to the customPaging argument javascript code using the &lt;code&gt;htmlwidgets::JS&lt;/code&gt; function.&lt;/p&gt;
+
+&lt;h3 id=&#34;replace-dots-with-text&#34;&gt;Replace dots with text&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;
+cP1=JS(&amp;quot;function(slick,index) {return &#39;&amp;lt;a&amp;gt;&#39;+(index+1)+&#39;&amp;lt;/a&amp;gt;&#39;;}&amp;quot;)
+
+slickR(
+  obj = playerTable$img,
+  slideId = &#39;ex3&#39;,
+  dotObj = teamImg,
+  slickOpts = list(
+    initialSlide = 0,
+    slidesToShow = 5,
+    slidesToScroll = 5,
+    focusOnSelect = T,
+    dots = T,
+    customPaging = cP1
+  ),
+  height=100,width=&#39;100%&#39;
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/slickR/master/Miscellaneous/blogPost/ex3.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;replace-dots-with-images&#34;&gt;Replace dots with Images&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;
+cP2=JS(&amp;quot;function(slick,index) {return &#39;&amp;lt;a&amp;gt;&amp;lt;img src= &#39; + dotObj[index] + &#39;  width=100% height=100%&amp;gt;&amp;lt;/a&amp;gt;&#39;;}&amp;quot;)
+
+
+#Replace dots with Images
+s1 &amp;lt;- slickR(
+  obj = playerTable$img,
+  dotObj = teamImg,
+  slickOpts = list(
+    initialSlide = 0,
+    slidesToShow = 5,
+    slidesToScroll = 5,
+    focusOnSelect = T,
+    dots = T,
+    customPaging = cP2
+  ),height = 100,width=&#39;100%&#39;
+)
+
+#Putting it all together in one slickR call
+s2 &amp;lt;- htmltools::tags$script(
+  sprintf(&amp;quot;var dotObj = %s&amp;quot;, 
+          jsonlite::toJSON(teamImg))
+)
+
+htmltools::browsable(htmltools::tagList(s2, s1))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/slickR/master/Miscellaneous/blogPost/ex7.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;plots&#34;&gt;Plots&lt;/h1&gt;
+
+&lt;p&gt;To place plots directly into slickR we use svglite to convert a plot into svg code using xmlSVG and then convert it into a character object&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;plotsToSVG=list(
+  #Standard Plot
+    xmlSVG({plot(1:10)},standalone=TRUE),
+  #lattice xyplot
+    xmlSVG({print(xyplot(x~x,data.frame(x=1:10),type=&amp;quot;l&amp;quot;))},standalone=TRUE),
+  #ggplot
+    xmlSVG({show(ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width,colour=Species))+
+                   geom_point())},standalone=TRUE), 
+  #lattice dotplot
+    xmlSVG({print(dotplot(variety ~ yield | site , data = barley, groups = year,
+                          key = simpleKey(levels(barley$year), space = &amp;quot;right&amp;quot;),
+                          xlab = &amp;quot;Barley Yield (bushels/acre) &amp;quot;,
+                          aspect=0.5, layout = c(1,6), ylab=NULL))
+            },standalone=TRUE) 
+)
+
+#make the plot self contained SVG to pass into slickR 
+s.in=sapply(plotsToSVG,function(sv){paste0(&amp;quot;data:image/svg+xml;utf8,&amp;quot;,as.character(sv))})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;slickR(s.in,slideId = &#39;ex4&#39;,slickOpts = list(dots=T), height = 200,width = &#39;100%&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/slickR/master/Miscellaneous/blogPost/ex4.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;synching-carousels&#34;&gt;Synching Carousels&lt;/h2&gt;
+
+&lt;p&gt;There are instances when you have many outputs at once and do not want to go through all, so you can combine two carousels one for viewing and one for searching.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;slickR(rep(s.in,each=5),slideId = c(&#39;ex5up&#39;,&#39;ex5down&#39;),
+       slideIdx = list(1:20,1:20),
+       synchSlides = c(&#39;ex5up&#39;,&#39;ex5down&#39;),
+       slideType = rep(&#39;img&#39;,4),
+       slickOpts = list(list(slidesToShow=1,slidesToScroll=1),
+                        list(dots=F,slidesToScroll=1,slidesToShow=5,
+                             centerMode=T,focusOnSelect=T)
+                        ),
+       height=100,width = &#39;100%&#39;
+       )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/slickR/master/Miscellaneous/blogPost/ex5.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;iframes&#34;&gt;Iframes&lt;/h1&gt;
+
+&lt;p&gt;Since the carousel can accept any html element we can place iframes in the carousel.&lt;/p&gt;
+
+&lt;p&gt;There are times when you would want to put in different DOMs than an image in slick. Using slideType you can specify which DOM is used in the slides.&lt;/p&gt;
+
+&lt;p&gt;For example lets put the help Rd files from ggplot2 into a slider using the helper function getHelp. (Dont forget to open the output to an browser to view the iframe contents).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;geom_filenames=ls(&amp;quot;package:ggplot2&amp;quot;,pattern = &#39;^geom&#39;)
+
+slickR(unlist(lapply(geom_filenames,getHelp,pkg = &#39;ggplot2&#39;)),slideId = &#39;ex6&#39;,slideType = &#39;iframe&#39;,height = &#39;400px&#39;,width=&#39;100%&#39;,slickOpts = list(dots=T,slidesToShow=2,slidesToScroll=2))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/slickR/master/Miscellaneous/blogPost/ex6.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;htmlwidgets&#34;&gt;htmlwidgets&lt;/h2&gt;
+
+&lt;p&gt;Finally, we can really leverage R and place self contained htmlwidgets in iframes (like leaflets and plotly) and use them in a carousel. This solves a problem of how to run many htmlwidgets at once outside of Shiny.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(leaflet)
+library(plotly)
+
+l &amp;lt;- leaflet() %&amp;gt;% addTiles()
+htmlwidgets::saveWidget(l,&#39;leaflet.html&#39;)
+
+p &amp;lt;- iris%&amp;gt;%ggplot(aes(x=Sepal.Length,y=Sepal.Width))+geom_point()
+pL= ggplotly(p)
+htmlwidgets::saveWidget(pL,&#39;ggplotly.html&#39;)
+
+slickR(c(rep(paste0(readLines(&#39;leaflet.html&#39;),collapse=&#39;\n&#39;),4),
+         rep(paste0(readLines(&#39;ggplotly.html&#39;),collapse=&#39;\n&#39;),4)),
+       slideId = c(&#39;leaf&#39;,&#39;plot&#39;),
+       slideIdx = list(1:4,5:8),
+       slideType = rep(&#39;iframe&#39;,2),
+       slickOpts = list(list(dots=T,slidesToShow=2,slidesToScroll=2),
+                        list(dots=T,slidesToShow=2,slidesToScroll=2)),
+       height=&#39;200px&#39;,width=&#39;100%&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/slickR/master/Miscellaneous/Multimedia/gif/slickRnestingWidgets.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;&lt;em&gt;
+Jonathan Sidi joined Metrum Research Group in 2016 after working for several years on problems in applied statistics, financial stress testing and economic forecasting in both industrial and academic settings.
+&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;
+To learn more about additional open-source software packages developed by Metrum Research Group please visit the Metrum &lt;a href=&#34;https://www.metrumrg.com/try-open-source-tools/&#34; target=&#34;_blank&#34;&gt;website&lt;/a&gt;.
+&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;
+Contact: For questions and comments, feel free to email me at: yonis@metrumrg.com or open an issue in &lt;a href=&#34;https://github.com/metrumresearchgroup/ggedit/issues&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;.
+&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;(post originally published on &lt;a href=&#34;http://r-posts.com/slickr/&#34;&gt;r-posts&lt;/a&gt;)&lt;/p&gt;
+</description>
     </item>
     
   </channel>

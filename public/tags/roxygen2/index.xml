@@ -9,7 +9,7 @@
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Mon, 18 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/roxygen2/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/roxygen2/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,8 +18,201 @@
       <pubDate>Mon, 18 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2017-09-18-sinew/</guid>
-      <description>Thinking of creating a new package? Dread the task of function documentation? Afraid to run devtools::check(build_args = &#39;--as-cran&#39;) and get bombarded by Errors, Warnings, and Notes (oh my!) ? Wait&amp;hellip;. breathe!
-After feeling all that anxiety and following all of Hadley&amp;rsquo;s directions online, I felt I was doing a lot of manual labour, and that a package should be doing all lot of this for me. So we wrote one - sinew (sin-yu).</description>
+      <description>
+
+&lt;p&gt;Thinking of creating a new package? Dread the task of function documentation? Afraid to run &lt;code&gt;devtools::check(build_args = &#39;--as-cran&#39;)&lt;/code&gt; and get bombarded by Errors, Warnings, and Notes (oh my!) ? Wait&amp;hellip;. breathe!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://media.giphy.com/media/pWYReekqQW72U/giphy.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After feeling all that anxiety and following all of Hadley&amp;rsquo;s &lt;a href=&#34;http://r-pkgs.had.co.nz/man.html&#34;&gt;directions&lt;/a&gt; online, I felt I was doing a lot of manual labour, and that a package should be doing all lot of this for me. So we wrote one - &lt;code&gt;sinew&lt;/code&gt; (sin-yu).&lt;/p&gt;
+
+&lt;h2 id=&#34;tl-dr-sinew-is-an-automatic-roxygen2-documentation-creator&#34;&gt;tl;dr: &lt;code&gt;sinew&lt;/code&gt; is an automatic roxygen2 documentation creator&lt;/h2&gt;
+
+&lt;p&gt;Quick example, run it in R:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt; install.packages(&amp;quot;sinew&amp;quot;) # or devtools::install_github(&#39;metrumresearchgroup/sinew&#39;)
+ 
+ # simple function
+ 
+ myFun &amp;lt;- function(h=1){
+   utils::head(rnorm(10),h)
+ }
+ 
+ library(sinew)
+ makeOxygen(myFun)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will produce the following output (which you can then append above your definition of &lt;code&gt;myFun&lt;/code&gt;):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeOxygen(myFun)
+
+#&#39; @title FUNCTION_TITLE
+#&#39; @description FUNCTION_DESCRIPTION
+#&#39; @param h PARAM_DESCRIPTION, Default: 1
+#&#39; @return OUTPUT_DESCRIPTION
+#&#39; @details DETAILS
+#&#39; @examples 
+#&#39; \dontrun{
+#&#39; if(interactive()){
+#&#39;  #EXAMPLE1
+#&#39;  }
+#&#39; }
+#&#39; @seealso 
+#&#39;  \code{\link[utils]{head}}
+#&#39; @rdname myFun
+#&#39; @export 
+#&#39; @importFrom utils head
+myFun &amp;lt;- function(h=1){
+  utils::head(h)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or document functions interactively with the shiny gadget:&lt;/p&gt;
+
+&lt;iframe width=&#34;100%&#34; height=&#34;400&#34; src=&#34;https://www.youtube.com/embed/cabOtf191OQ&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt;For more details read the rest of the post, or skip straight to the gitbook: &lt;a href=&#34;https://metrumresearchgroup.github.io/sinew/&#34;&gt;https://metrumresearchgroup.github.io/sinew/&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;why-sinew&#34;&gt;Why sinew?&lt;/h2&gt;
+
+&lt;p&gt;Let me explain by example&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;The current way to start down the documentation path is to create a function, I&amp;rsquo;ll use &lt;code&gt;myFun&lt;/code&gt; defined above. Next I would use the skeleton provided by RStudio (In the toolbar Code=&amp;gt;Insert Roxygen Skeleton).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#&#39; Title
+#&#39;
+#&#39; @param h 
+#&#39;
+#&#39; @return
+#&#39; @export
+#&#39;
+#&#39; @examples
+myFun &amp;lt;- function(h=1){
+  utils::head(h)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This gets me on my way, but there is information nested within the function itself that can be useful to document and manage the namespace&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the default value of &lt;code&gt;h&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;the function &lt;code&gt;head&lt;/code&gt; needs to be imported from the package &lt;code&gt;utils&lt;/code&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I could just add that manually but this is just a toy example, actual functions have many parameters and you can import many functions from a number of different packages.&lt;/p&gt;
+
+&lt;p&gt;Trying to do the documentation bookkeeping as you develop the function will make you lose your train of thought, and make you forget that great idea you just had. Or you could write the full function and then at the end try to figure out what functions you need to import what packages they are from, should they get a seealso field, what parameters you used and so on&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;Sinew will do this for you. It will parse your full function for relevant information that can fill in the blanks in the roxygen2 documentation and manage your import fields for you.
+Think of it as connecting the meat of your function to the Roxygen2 skeleton - or just the &lt;a href=&#34;https://en.wikipedia.org/wiki/Tendon&#34;&gt;definition&lt;/a&gt; of the term sinew (again sin-yu). Added bonus it will help keep your package CRAN ready as you develop.&lt;/p&gt;
+
+&lt;p&gt;So how would that skeleton look after running it with sinew?&lt;/p&gt;
+
+&lt;p&gt;The workhorse of sinew is &lt;code&gt;makeOxygen&lt;/code&gt;, it takes functions and returns Roxygen2 headers.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeOxygen(myFun)
+
+#&#39; @title FUNCTION_TITLE
+#&#39; @description FUNCTION_DESCRIPTION
+#&#39; @param h PARAM_DESCRIPTION, Default: 1
+#&#39; @return OUTPUT_DESCRIPTION
+#&#39; @details DETAILS
+#&#39; @examples 
+#&#39; \dontrun{
+#&#39; if(interactive()){
+#&#39;  #EXAMPLE1
+#&#39;  }
+#&#39; }
+#&#39; @seealso 
+#&#39;  \code{\link[utils]{head}}
+#&#39; @rdname myFun
+#&#39; @export 
+#&#39; @importFrom utils head
+myFun &amp;lt;- function(h=1){
+  utils::head(h)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That little function had a lot of information embbeded in it to make your documentation well rounded.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Each field has it&amp;rsquo;s own &lt;em&gt;placeholder&lt;/em&gt; that will guide you to what is expected.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;param&lt;/strong&gt; has the default value built in.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;examples&lt;/strong&gt;  is populated with a more current layout to support htmlwidget and shiny examples.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;utils&lt;/code&gt; was found and was added to &lt;strong&gt;importFrom&lt;/strong&gt; automatically as was it&amp;rsquo;s &lt;strong&gt;seealso&lt;/strong&gt; counterpart.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rdname&lt;/strong&gt; was added with the name of the function.
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now lets take a real function - &lt;code&gt;lm&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeOxygen(lm)
+
+#&#39; @title FUNCTION_TITLE
+#&#39; @description FUNCTION_DESCRIPTION
+#&#39; @param formula PARAM_DESCRIPTION
+#&#39; @param data PARAM_DESCRIPTION
+#&#39; @param subset PARAM_DESCRIPTION
+#&#39; @param weights PARAM_DESCRIPTION
+#&#39; @param na.action PARAM_DESCRIPTION
+#&#39; @param method PARAM_DESCRIPTION, Default: &#39;qr&#39;
+#&#39; @param model PARAM_DESCRIPTION, Default: TRUE
+#&#39; @param x PARAM_DESCRIPTION, Default: FALSE
+#&#39; @param y PARAM_DESCRIPTION, Default: FALSE
+#&#39; @param qr PARAM_DESCRIPTION, Default: TRUE
+#&#39; @param singular.ok PARAM_DESCRIPTION, Default: TRUE
+#&#39; @param contrasts PARAM_DESCRIPTION, Default: NULL
+#&#39; @param offset PARAM_DESCRIPTION
+#&#39; @param ... PARAM_DESCRIPTION
+#&#39; @return OUTPUT_DESCRIPTION
+#&#39; @details DETAILS
+#&#39; @examples 
+#&#39; \dontrun{
+#&#39; if(interactive()){
+#&#39;  #EXAMPLE1
+#&#39;  }
+#&#39; }
+#&#39; @seealso 
+#&#39;  \code{\link[stats]{model.frame}}
+#&#39; @rdname lm
+#&#39; @export 
+#&#39; @importFrom stats model.frame
+lm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That would of been a pain to do by hand, all that is left to do is replace the placeholders with relevant information and you&amp;rsquo;re done. Also notice the layout is consistent so other people (and you) can easily navigate the help across the package functions.&lt;/p&gt;
+
+&lt;h2 id=&#34;a-few-features-and-use-cases&#34;&gt;A few features and use cases:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Setting package options persistent during a session is done using &lt;code&gt;sinew_opts&lt;/code&gt; (much like &lt;code&gt;knitr::opts_chunk&lt;/code&gt;).&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;For keeping settings persistent across sessions during package development sinew reads from the working directory on load a file named &lt;code&gt;_sinewconfig.yml&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To run &lt;code&gt;makeOxygen&lt;/code&gt; in batch mode (like a whole &lt;code&gt;./R&lt;/code&gt; package subdirectory) use the function &lt;code&gt;makeOxyFile&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To convert a long single file with multiple functions interwoven with a body script into multiple single function files, and keeping the script body intact,  use &lt;code&gt;untangle&lt;/code&gt;. If a function within the long file already has roxygen2 headers then they will be carried over to the new file.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To quickly run through a whole package and create the DESCRIPTION file &lt;code&gt;Imports:&lt;/code&gt; field use &lt;code&gt;makeImport(&#39;./R&#39;,format=&#39;description&#39;)&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;After updating a function the documentation gets out of synch and needs updating. &lt;code&gt;moga&lt;/code&gt; (make oxygen great again!) will cross check the current documentation of an R script and the current function script itself and update/add any parameters/defaults/imports discrepancies.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Setting &lt;code&gt;cut&lt;/code&gt; to an integer value in &lt;code&gt;makeOxygen&lt;/code&gt; to return &lt;strong&gt;import package&lt;/strong&gt; instead of &lt;strong&gt;importFrom package function1 [function2 &amp;hellip;]&lt;/strong&gt; for packages that call more than the value assigned to &lt;code&gt;cut&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;interactive-documentation&#34;&gt;Interactive Documentation&lt;/h2&gt;
+
+&lt;p&gt;A Shiny gadget was built to combine all this into an easy to use interface. Highlight text (preferably a function) in source editor of RStudio and then deploy the addin from the addins menu.&lt;/p&gt;
+
+&lt;p&gt;The gadget can read in almost any source you have the function in: unsourced functions, functions in the global environment, in a loaded package, in an installed package that you didn&amp;rsquo;t load yet.&lt;/p&gt;
+
+&lt;iframe width=&#34;100%&#34; height=&#34;400&#34; src=&#34;https://www.youtube.com/embed/S8dAOwrvoDw&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt;The gadget will allow you to preview the roxygen header, add and remove roxygen2 fields with checkboxes and control the level of &lt;code&gt;cut&lt;/code&gt;. When you&amp;rsquo;re ready insert what you see in the preview pane into the editor. When you&amp;rsquo;re done with one function highlight another one and continue to work, if you need to move to another file tab&amp;hellip; that&amp;rsquo;s ok too!&lt;/p&gt;
+
+&lt;p&gt;If there is already documentation move into &lt;strong&gt;update mode&lt;/strong&gt;, and touch up any changes that need to be made through &lt;code&gt;moga&lt;/code&gt;.&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -28,8 +221,297 @@ After feeling all that anxiety and following all of Hadley&amp;rsquo;s direction
       <pubDate>Wed, 03 May 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2017-05-03-sinew/</guid>
-      <description>Sinew is a R package that generates a Roxygen skeleton populated with information scraped from the function script.
-Functionality  makeOxygen: Create skeleton for Roxygen2 documentation populated with information scraped from within the package function scripts. makeImport: Create import calls for DESCRIPTION, NAMESPACE and Roxygen2 makeDictionary: Create an R file of all the unique roxygen parameter fields in a package R subdirectory.  makeOxygen Function that returns the skeleton for roxygen2 documentation including title, description, return, import and other fields populated with information scraped from the function script.</description>
+      <description>
+
+&lt;p&gt;Sinew is a R package that generates a Roxygen skeleton populated with information scraped from the function script.&lt;/p&gt;
+
+&lt;h2 id=&#34;functionality&#34;&gt;Functionality&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/sinew#makeoxygen&#34;&gt;makeOxygen&lt;/a&gt;: Create skeleton for Roxygen2 documentation populated with information scraped from within the package function scripts.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/sinew#makeimport&#34;&gt;makeImport&lt;/a&gt;: Create import calls for DESCRIPTION, NAMESPACE and Roxygen2&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/sinew#makedictionary&#34;&gt;makeDictionary&lt;/a&gt;: Create an R file of all the unique roxygen parameter fields in a package R subdirectory.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;makeoxygen&#34;&gt;makeOxygen&lt;/h2&gt;
+
+&lt;p&gt;Function that returns the skeleton for &lt;a href=&#34;https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html&#34;&gt;roxygen2&lt;/a&gt; documentation including title, description, return, import and other fields populated with information scraped from the function script.&lt;/p&gt;
+
+&lt;p&gt;The addin &lt;code&gt;createOxygen&lt;/code&gt; uses highlighted text in the active document of  RStudio as the object argument.&lt;/p&gt;
+
+&lt;h3 id=&#34;basic-usage&#34;&gt;Basic Usage&lt;/h3&gt;
+
+&lt;p&gt;makeOxygen is the main function in the package. Running the default setting returns a skeleton with minimal required fields to run &lt;code&gt;devtools::check(build_args = &#39;--as-cran&#39;)&lt;/code&gt;: title, description, and param.&lt;/p&gt;
+
+&lt;h4 id=&#34;adding-some-meat-to-the-bones&#34;&gt;Adding Some Meat to the Bones&amp;hellip;&lt;/h4&gt;
+
+&lt;p&gt;The added value of sinew is that it scrapes the script and fills in many important holes in the documentation:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;param default values:
+
+&lt;ul&gt;
+&lt;li&gt;if a default value is set for a function parameter it will be added to the end  &lt;code&gt;@param&lt;/code&gt; line.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;import/importFrom
+
+&lt;ul&gt;
+&lt;li&gt;It is assumed that the developer is abiding by the CRAN rules and uses the proper namespace syntax &lt;code&gt;package::function&lt;/code&gt; when calling functions in the script. The package scrapes the script with &lt;code&gt;makeImport&lt;/code&gt; to create the proper calls for &lt;code&gt;@import&lt;/code&gt; and &lt;code&gt;@importFrom&lt;/code&gt; which are placed at the bottom of the output. The user has control the number of functions that are listed in &lt;code&gt;importFrom package function1 [ function2 ...]&lt;/code&gt; until only &lt;code&gt;@import package&lt;/code&gt; is returned (more below).&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;seealso
+
+&lt;ul&gt;
+&lt;li&gt;linking to other packages is also taken care of when adding the field &lt;code&gt;@seealso&lt;/code&gt;. Any functions that are included in &lt;code&gt;@importFrom&lt;/code&gt; will have a link to them by default.
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Examples showing different parameter specification in makeOxygen&lt;/p&gt;
+
+&lt;h4 id=&#34;basic&#34;&gt;Basic&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeOxygen(lm)
+#&#39; @title FUNCTION_TITLE
+#&#39; @description FUNCTION_DESCRIPTION
+#&#39; @param formula PARAM_DESCRIPTION
+#&#39; @param data PARAM_DESCRIPTION
+#&#39; @param subset PARAM_DESCRIPTION
+#&#39; @param weights PARAM_DESCRIPTION
+#&#39; @param na.action PARAM_DESCRIPTION
+#&#39; @param method PARAM_DESCRIPTION, Default: &#39;qr&#39;
+#&#39; @param model PARAM_DESCRIPTION, Default: TRUE
+#&#39; @param x PARAM_DESCRIPTION, Default: FALSE
+#&#39; @param y PARAM_DESCRIPTION, Default: FALSE
+#&#39; @param qr PARAM_DESCRIPTION, Default: TRUE
+#&#39; @param singular.ok PARAM_DESCRIPTION, Default: TRUE
+#&#39; @param contrasts PARAM_DESCRIPTION, Default: NULL
+#&#39; @param offset PARAM_DESCRIPTION
+#&#39; @param ... PARAM_DESCRIPTION
+#&#39; @return OUTPUT_DESCRIPTION
+#&#39; @importFrom stats model.frame
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;add-fields&#34;&gt;Add_fields&lt;/h4&gt;
+
+&lt;p&gt;Control over which roxygen2 fields are added to the header is passed through &lt;code&gt;add_fields&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeOxygen(colourpicker:::colourPickerGadget,add_fields = c(&#39;export&#39;,&#39;details&#39;,&#39;examples&#39;))
+#&#39; @title FUNCTION_TITLE
+#&#39; @description FUNCTION_DESCRIPTION
+#&#39; @param numCols PARAM_DESCRIPTION, Default: 3
+#&#39; @return OUTPUT_DESCRIPTION
+#&#39; @export
+#&#39; @details DETAILS
+#&#39; @examples
+#&#39; EXAMPLE1 
+#&#39; @importFrom colourpicker colourInput updateColourInput
+#&#39; @importFrom grDevices colours
+#&#39; @importFrom shiny addResourcePath dialogViewer runGadget shinyApp
+#&#39; @importFrom shinyjs useShinyjs extendShinyjs toggleState disable onclick alert
+#&#39; @importFrom utils packageVersion
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;cut&#34;&gt;Cut&lt;/h4&gt;
+
+&lt;p&gt;Passing &lt;code&gt;cut&lt;/code&gt; to makeOxygen to return &lt;code&gt;import package&lt;/code&gt; instead of &lt;code&gt;importFrom package funtion1 [function2 ...]&lt;/code&gt; for packages that call more than the value assigned to cut&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; makeOxygen(colourpicker:::colourPickerGadget,add_fields = c(&#39;export&#39;,&#39;details&#39;,&#39;examples&#39;),cut=3)
+#&#39; @title FUNCTION_TITLE
+#&#39; @description FUNCTION_DESCRIPTION
+#&#39; @param numCols PARAM_DESCRIPTION, Default: 3
+#&#39; @return OUTPUT_DESCRIPTION
+#&#39; @export
+#&#39; @details DETAILS
+#&#39; @examples
+#&#39; EXAMPLE1 
+#&#39; @importFrom colourpicker colourInput updateColourInput
+#&#39; @importFrom grDevices colours
+#&#39; @import shiny
+#&#39; @import shinyjs
+#&#39; @importFrom utils packageVersion
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;seealso&#34;&gt;Seealso&lt;/h4&gt;
+
+&lt;p&gt;When calling &lt;code&gt;addfields(&#39;seealso&#39;)&lt;/code&gt; the function will give a guess of which functions to add conditional on what value cut it set to. That is any function returned with importFrom will also have a seealso link created for it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; makeOxygen(shinyHeatmaply:::heatmaplyGadget,cut=3,add_fields = &#39;seealso&#39;)
+#&#39; @title FUNCTION_TITLE
+#&#39; @description FUNCTION_DESCRIPTION
+#&#39; @param obj PARAM_DESCRIPTION
+#&#39; @param plotHeight PARAM_DESCRIPTION, Default: 800
+#&#39; @param viewerType PARAM_DESCRIPTION, Default: &#39;paneViewer&#39;
+#&#39; @param ... PARAM_DESCRIPTION
+#&#39; @return OUTPUT_DESCRIPTION
+#&#39; @seealso
+#&#39;  \code{\link[DT]{dataTableOutput}},\code{\link[DT]{renderDataTable}}
+#&#39;  \code{\link[tools]{file_path_sans_ext}}
+#&#39;  \code{\link[xtable]{xtable}}
+#&#39; @importFrom DT dataTableOutput renderDataTable
+#&#39; @import heatmaply
+#&#39; @import htmltools
+#&#39; @import plotly
+#&#39; @import shiny
+#&#39; @import stats
+#&#39; @importFrom tools file_path_sans_ext
+#&#39; @importFrom xtable xtable
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;dictionary&#34;&gt;Dictionary&lt;/h4&gt;
+
+&lt;p&gt;A dictionary is an R file produced with &lt;a href=&#34;https://github.com/metrumresearchgroup/sinew#makedictionary&#34;&gt;makeDictionary&lt;/a&gt;. This R file contains  all the unique roxygen parameter fields in a package R subdirectory.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeOxygen(tabular,add_fields = c(&#39;examples&#39;,&#39;export&#39;))
+
+#&#39; @title FUNCTION_TITLE
+#&#39; @description FUNCTION_DESCRIPTION
+#&#39; @param df PARAM_DESCRIPTION
+#&#39; @param header PARAM_DESCRIPTION, Default: TRUE
+#&#39; @param ... PARAM_DESCRIPTION
+#&#39; @return OUTPUT_DESCRIPTION
+#&#39; @examples 
+#&#39; EXAMPLE1 
+#&#39;
+#&#39; @export 
+
+dict_loc=&#39;https://raw.githubusercontent.com/metrumresearchgroup/sinew/master/man-roxygen/Dictionary-1.R&#39;
+
+makeOxygen(tabular,use_dictionary = dict_loc,add_fields = c(&#39;examples&#39;,&#39;export&#39;))
+
+#&#39; @title FUNCTION_TITLE
+#&#39; @description FUNCTION_DESCRIPTION
+#&#39; @param df data.frame to convert to table
+#&#39; @param header boolean to control if header is created from names(df), Default: TRUE
+#&#39; @param ...
+#&#39; @return OUTPUT_DESCRIPTION
+#&#39; @examples 
+#&#39; EXAMPLE1 
+#&#39;
+#&#39; @export 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;data-frames&#34;&gt;Data.frames&lt;/h4&gt;
+
+&lt;p&gt;makeOxygen also creates documentation for data.frames and tibble objects&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeOxygen(iris)
+#&#39; @title DATASET_TITLE
+#&#39; @description DATASET_DESCRIPTION
+#&#39; @format A data frame with 150 rows and 5 variables:
+#&#39; \describe{
+#&#39;   \item{\code{Sepal.Length}}{double COLUMN_DESCRIPTION}
+#&#39;   \item{\code{Sepal.Width}}{double COLUMN_DESCRIPTION}
+#&#39;   \item{\code{Petal.Length}}{double COLUMN_DESCRIPTION}
+#&#39;   \item{\code{Petal.Width}}{double COLUMN_DESCRIPTION}
+#&#39;   \item{\code{Species}}{integer COLUMN_DESCRIPTION} 
+#&#39;}
+&amp;quot;iris&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;makeimport&#34;&gt;makeImport&lt;/h2&gt;
+
+&lt;p&gt;When you are building a package to submit to cran and you need to have namespace calls for any function that is being imported. It is a pain to manually parse through the code looking for all the &lt;code&gt;*::*&lt;/code&gt; and writing it in the roxygen header. This function does that for you.&lt;/p&gt;
+
+&lt;p&gt;You can write normally your script with the namespace calls and in the end run the function and you can paste the output into the header. (or use it as part of &lt;code&gt;makeOxygen&lt;/code&gt;)&lt;/p&gt;
+
+&lt;p&gt;The function is written to work on single files or whole directories, like a package R subdirectory.&lt;/p&gt;
+
+&lt;p&gt;The output can be set to return the format needed for either an roxygen header, NAMESPACE or the DESCRIPTION&lt;/p&gt;
+
+&lt;h3 id=&#34;description&#34;&gt;DESCRIPTION&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeImport(script=list.files(&#39;R&#39;,full.names = T),print = T,format = &#39;description&#39;)
+Imports: rstudioapi,utils
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;namespace&#34;&gt;NAMESPACE&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeImport(script=list.files(&#39;R&#39;,full.names = T),print = T,format = &#39;namespace&#39;)
+ 
+importFrom(rstudioapi,getActiveDocumentContext)
+importFrom(rstudioapi,insertText)
+importFrom(utils,installed.packages)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;roxygen&#34;&gt;Roxygen&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeImport(script=list.files(&#39;R&#39;,full.names = T),print = T,format = &#39;oxygen&#39;)
+ 
+R/importAddin.R
+#&#39; @importFrom rstudioapi getActiveDocumentContext
+ 
+R/makeImport.R
+#&#39; @importFrom utils installed.packages
+ 
+R/makeOxygen.R
+
+ 
+R/makeSeeAlso.R
+
+ 
+R/oxygenAddin.R
+#&#39; @importFrom rstudioapi getActiveDocumentContext insertText
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;importfrom-cutoff&#34;&gt;importFrom cutoff&lt;/h4&gt;
+
+&lt;p&gt;Setting cut to a value allows for control of how many functions to list in a package before concatenating the &lt;code&gt;importFrom&lt;/code&gt; to an &lt;code&gt;import&lt;/code&gt;. This is useful when there are many functions being used throughout the package from the same library and it is practically the same as just importing the whole library&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeImport(script=&#39;R/oxygenAddin.R&#39;,print = T,format = &#39;oxygen&#39;)
+
+R/oxygenAddin.R
+#&#39; @importFrom rstudioapi getActiveDocumentContext insertText
+ 
+makeImport(script=&#39;R/oxygenAddin.R&#39;,print = T,format = &#39;oxygen&#39;,cut=2)
+ 
+R/oxygenAddin.R
+#&#39; @import rstudioapi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;makedictionary&#34;&gt;makeDictionary&lt;/h3&gt;
+
+&lt;p&gt;This function takes the idea of roxygen templates, but repurposes their use. It creates an R file of all the unique roxygen parameter fields in a package R subdirectory. This serves a few functions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Creates a general template for regular use with Roxygen2&lt;/li&gt;
+&lt;li&gt;Simple way to check that there are no redundant parameter descriptions and that they are consistent.&lt;/li&gt;
+&lt;li&gt;When present, this is used internally with &lt;strong&gt;ls_param&lt;/strong&gt; to call parameter descriptions in bulk from a centralized template to populate makeOxygen skeletons.
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For example in the &lt;a href=&#34;https://github.com/metrumresearchgroup/sinew/tree/master/man-roxygen&#34;&gt;man-roxygen&lt;/a&gt; there is a Dictionary-1.R file that was created by &lt;strong&gt;makeDictionary&lt;/strong&gt;. Using &lt;strong&gt;ls_param&lt;/strong&gt; a query is run on the dictionary to return the param fields that intersect with the formals call to the functions.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;dict_loc=&#39;https://raw.githubusercontent.com/metrumresearchgroup/sinew/master/man-roxygen/Dictionary-1.R&#39;
+
+ls_param(makeOxygen,dictionary = dict_loc)
+
+#&#39; @param obj function or name of function
+#&#39; @param add_default boolean to add defaults values to the end of the PARAM fields, Default: TRUE
+#&#39; @param add_fields character vector to add additional roxygen fields, Default: NULL
+#&#39; @param print boolean print output to console, Default: TRUE
+#&#39; @param ... 
+
+names(formals(makeOxygen))
+[1] &amp;quot;obj&amp;quot;         &amp;quot;add_default&amp;quot; &amp;quot;add_fields&amp;quot;  &amp;quot;print&amp;quot;       &amp;quot;...&amp;quot; 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;&lt;em&gt;
+Jonathan Sidi joined Metrum Research Group in 2016 after working for several years on problems in applied statistics, financial stress testing and economic forecasting in both industrial and academic settings.
+&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;
+To learn more about additional open-source software packages developed by Metrum Research Group please visit the Metrum &lt;a href=&#34;https://www.metrumrg.com/try-open-source-tools/&#34; target=&#34;_blank&#34;&gt;website&lt;/a&gt;.
+&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;
+Contact: For questions and comments, feel free to email me at: yonis@metrumrg.com or open an issue in &lt;a href=&#34;https://github.com/metrumresearchgroup/ggedit/issues&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;.
+&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;(post originally published on &lt;a href=&#34;http://r-posts.com/adding-sinew-to-roxygen2-skeletons/&#34;&gt;r-posts&lt;/a&gt;)&lt;/p&gt;
+</description>
     </item>
     
   </channel>

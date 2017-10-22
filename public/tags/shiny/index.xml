@@ -9,7 +9,7 @@
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Tue, 26 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/shiny/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/shiny/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,9 +18,136 @@
       <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2017-09-26-regexselect/</guid>
-      <description>regexSelect is a small package that uses Shiny modules to solve a problem in Shiny selectize objects - regular expression (regex) searching. You can quickly filter the values in the selectize object, while being able to add that new regex query to the selectize list.
-This is great for long lists, since you can return multiple item simultaneously without needing to endlessly click items in a list!
-Install install.packages(&#39;regexSelect&#39;) #devtools::install_github(&#39;yonicd/regexSelect&#39;)  Below are two examples of using regular expressions to quickly populate multiple items in a ggplot and a datatable.</description>
+      <description>
+
+&lt;p&gt;regexSelect is a small package that uses &lt;a href=&#34;https://shiny.rstudio.com/articles/modules.html&#34;&gt;Shiny modules&lt;/a&gt; to solve a problem in Shiny selectize objects - &lt;a href=&#34;https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf&#34;&gt;regular expression&lt;/a&gt; (regex) searching. You can quickly filter the values in the selectize object, while being able to add that new regex query to the selectize list.&lt;/p&gt;
+
+&lt;p&gt;This is great for long lists, since you can return multiple item simultaneously without needing to endlessly click items in a list!&lt;/p&gt;
+
+&lt;h2 id=&#34;install&#34;&gt;Install&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;install.packages(&#39;regexSelect&#39;)
+#devtools::install_github(&#39;yonicd/regexSelect&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Below are two examples of using regular expressions to quickly populate multiple items in a &lt;code&gt;ggplot&lt;/code&gt; and a &lt;code&gt;datatable&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;regexselect-with-plots&#34;&gt;regexSelect with Plots&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/regexSelect/master/Miscellaneous/gifs/regexSelectPlot.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The shiny module works with two main functions:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# server side: 
+  callModule(module=regexSelect, id=&#39;myId&#39;, reactive(&amp;lt;selectizeInput Choices&amp;gt;))
+  
+# ui side: 
+  regexSelectUI(id = &amp;quot;myId&amp;quot;, label = &#39;myLabel&#39;, choices = &amp;lt;selectizeInput Choices&amp;gt;)
+````
+
+regexSelect comes with controls placed in a group checkbox below the selectize object. When calling regexSelect you can show or hide the checkbox controls (hidden by default), as to make it look like a normal selectize object, and save valuable UI real estate.
+
+While the shiny app is running regexSelect properties can be manipulated through the checkbox controls giving greater flexibilty to:
+  - Toggle regexSelect to work as a standard selectize object.
+  - Retain the regex search as a new value the selectize object.
+  - Change arguments that are passed to [base::grep](https://www.rdocumentation.org/packages/base/versions/3.4.1/topics/grep) : `ignore.case`, `perl`, `fixed`, `invert`.
+  
+```r
+library(shiny)
+library(ggplot2)
+
+ui &amp;lt;- fluidPage(
+
+  selectInput(&#39;var&#39;,
+              &#39;Choose Variable&#39;,
+              choices = names(diamonds)[sapply(diamonds,function(x){
+              inherits(x,c(&#39;character&#39;,&#39;factor&#39;)))]
+              },
+              selected = &#39;clarity&#39;),
+              
+  uiOutput(&#39;regexchoose&#39;),
+  
+  plotOutput(&amp;quot;data&amp;quot;)
+  
+  )
+  
+server &amp;lt;- function(input, output, session) {
+  
+  output$regexchoose&amp;lt;-shiny::renderUI({
+  
+  regexSelectUI(id = &amp;quot;a&amp;quot;, 
+                label = input$var,
+                choices = unique(diamonds[[input$var]]), 
+                checkbox.show = TRUE)
+  })
+  
+  observeEvent(input$var,{
+  
+    curr_cols &amp;lt;- callModule(module = regexSelect, 
+                            id = &amp;quot;a&amp;quot;,
+                            shiny::reactive(unique(diamonds[[input$var]]))
+                            )
+    
+    observeEvent(curr_cols(),{
+      
+      cols_now &amp;lt;- curr_cols()
+      
+      output$data &amp;lt;- shiny::renderPlot({
+      
+        ggplot(diamonds[diamonds[[input$var]]%in%cols_now,],
+        aes_string(x=&#39;table&#39;,y=&#39;carat&#39;,colour=input$var))+
+        geom_point()
+        
+      })
+    })    
+  })
+  
+}
+  
+shinyApp(ui, server)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;regexselect-with-tables&#34;&gt;regexSelect with Tables&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/regexSelect/master/Miscellaneous/gifs/regexSelectTable.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ui &amp;lt;- shiny::fluidPage(
+
+  regexSelectUI(id = &amp;quot;a&amp;quot;, 
+                label = &amp;quot;Variable:&amp;quot;,
+                choices = names(iris)
+                ),
+  
+  shiny::tableOutput(&amp;quot;data&amp;quot;)
+
+)
+
+server &amp;lt;- function(input, output, session) {
+
+  curr_cols &amp;lt;- callModule(module = regexSelect, 
+                          id = &amp;quot;a&amp;quot;,
+                          shiny::reactive(names(iris))
+                          )
+  
+  observeEvent(curr_cols(),{
+  
+    cols_now &amp;lt;- curr_cols()
+  
+    if( length(cols_now)==0 ) 
+        cols_now &amp;lt;- names(iris)
+  
+    output$data &amp;lt;- shiny::renderTable({
+    
+      iris[,cols_now , drop = FALSE]
+      
+    }, rownames = TRUE)
+    
+  })
+}
+
+shiny::shinyApp(ui, server)
+&lt;/code&gt;&lt;/pre&gt;
+</description>
     </item>
     
     <item>
@@ -29,8 +156,201 @@ Install install.packages(&#39;regexSelect&#39;) #devtools::install_github(&#39;y
       <pubDate>Mon, 18 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2017-09-18-sinew/</guid>
-      <description>Thinking of creating a new package? Dread the task of function documentation? Afraid to run devtools::check(build_args = &#39;--as-cran&#39;) and get bombarded by Errors, Warnings, and Notes (oh my!) ? Wait&amp;hellip;. breathe!
-After feeling all that anxiety and following all of Hadley&amp;rsquo;s directions online, I felt I was doing a lot of manual labour, and that a package should be doing all lot of this for me. So we wrote one - sinew (sin-yu).</description>
+      <description>
+
+&lt;p&gt;Thinking of creating a new package? Dread the task of function documentation? Afraid to run &lt;code&gt;devtools::check(build_args = &#39;--as-cran&#39;)&lt;/code&gt; and get bombarded by Errors, Warnings, and Notes (oh my!) ? Wait&amp;hellip;. breathe!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://media.giphy.com/media/pWYReekqQW72U/giphy.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After feeling all that anxiety and following all of Hadley&amp;rsquo;s &lt;a href=&#34;http://r-pkgs.had.co.nz/man.html&#34;&gt;directions&lt;/a&gt; online, I felt I was doing a lot of manual labour, and that a package should be doing all lot of this for me. So we wrote one - &lt;code&gt;sinew&lt;/code&gt; (sin-yu).&lt;/p&gt;
+
+&lt;h2 id=&#34;tl-dr-sinew-is-an-automatic-roxygen2-documentation-creator&#34;&gt;tl;dr: &lt;code&gt;sinew&lt;/code&gt; is an automatic roxygen2 documentation creator&lt;/h2&gt;
+
+&lt;p&gt;Quick example, run it in R:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt; install.packages(&amp;quot;sinew&amp;quot;) # or devtools::install_github(&#39;metrumresearchgroup/sinew&#39;)
+ 
+ # simple function
+ 
+ myFun &amp;lt;- function(h=1){
+   utils::head(rnorm(10),h)
+ }
+ 
+ library(sinew)
+ makeOxygen(myFun)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will produce the following output (which you can then append above your definition of &lt;code&gt;myFun&lt;/code&gt;):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeOxygen(myFun)
+
+#&#39; @title FUNCTION_TITLE
+#&#39; @description FUNCTION_DESCRIPTION
+#&#39; @param h PARAM_DESCRIPTION, Default: 1
+#&#39; @return OUTPUT_DESCRIPTION
+#&#39; @details DETAILS
+#&#39; @examples 
+#&#39; \dontrun{
+#&#39; if(interactive()){
+#&#39;  #EXAMPLE1
+#&#39;  }
+#&#39; }
+#&#39; @seealso 
+#&#39;  \code{\link[utils]{head}}
+#&#39; @rdname myFun
+#&#39; @export 
+#&#39; @importFrom utils head
+myFun &amp;lt;- function(h=1){
+  utils::head(h)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or document functions interactively with the shiny gadget:&lt;/p&gt;
+
+&lt;iframe width=&#34;100%&#34; height=&#34;400&#34; src=&#34;https://www.youtube.com/embed/cabOtf191OQ&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt;For more details read the rest of the post, or skip straight to the gitbook: &lt;a href=&#34;https://metrumresearchgroup.github.io/sinew/&#34;&gt;https://metrumresearchgroup.github.io/sinew/&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;why-sinew&#34;&gt;Why sinew?&lt;/h2&gt;
+
+&lt;p&gt;Let me explain by example&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;The current way to start down the documentation path is to create a function, I&amp;rsquo;ll use &lt;code&gt;myFun&lt;/code&gt; defined above. Next I would use the skeleton provided by RStudio (In the toolbar Code=&amp;gt;Insert Roxygen Skeleton).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#&#39; Title
+#&#39;
+#&#39; @param h 
+#&#39;
+#&#39; @return
+#&#39; @export
+#&#39;
+#&#39; @examples
+myFun &amp;lt;- function(h=1){
+  utils::head(h)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This gets me on my way, but there is information nested within the function itself that can be useful to document and manage the namespace&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the default value of &lt;code&gt;h&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;the function &lt;code&gt;head&lt;/code&gt; needs to be imported from the package &lt;code&gt;utils&lt;/code&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I could just add that manually but this is just a toy example, actual functions have many parameters and you can import many functions from a number of different packages.&lt;/p&gt;
+
+&lt;p&gt;Trying to do the documentation bookkeeping as you develop the function will make you lose your train of thought, and make you forget that great idea you just had. Or you could write the full function and then at the end try to figure out what functions you need to import what packages they are from, should they get a seealso field, what parameters you used and so on&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;Sinew will do this for you. It will parse your full function for relevant information that can fill in the blanks in the roxygen2 documentation and manage your import fields for you.
+Think of it as connecting the meat of your function to the Roxygen2 skeleton - or just the &lt;a href=&#34;https://en.wikipedia.org/wiki/Tendon&#34;&gt;definition&lt;/a&gt; of the term sinew (again sin-yu). Added bonus it will help keep your package CRAN ready as you develop.&lt;/p&gt;
+
+&lt;p&gt;So how would that skeleton look after running it with sinew?&lt;/p&gt;
+
+&lt;p&gt;The workhorse of sinew is &lt;code&gt;makeOxygen&lt;/code&gt;, it takes functions and returns Roxygen2 headers.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeOxygen(myFun)
+
+#&#39; @title FUNCTION_TITLE
+#&#39; @description FUNCTION_DESCRIPTION
+#&#39; @param h PARAM_DESCRIPTION, Default: 1
+#&#39; @return OUTPUT_DESCRIPTION
+#&#39; @details DETAILS
+#&#39; @examples 
+#&#39; \dontrun{
+#&#39; if(interactive()){
+#&#39;  #EXAMPLE1
+#&#39;  }
+#&#39; }
+#&#39; @seealso 
+#&#39;  \code{\link[utils]{head}}
+#&#39; @rdname myFun
+#&#39; @export 
+#&#39; @importFrom utils head
+myFun &amp;lt;- function(h=1){
+  utils::head(h)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That little function had a lot of information embbeded in it to make your documentation well rounded.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Each field has it&amp;rsquo;s own &lt;em&gt;placeholder&lt;/em&gt; that will guide you to what is expected.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;param&lt;/strong&gt; has the default value built in.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;examples&lt;/strong&gt;  is populated with a more current layout to support htmlwidget and shiny examples.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;utils&lt;/code&gt; was found and was added to &lt;strong&gt;importFrom&lt;/strong&gt; automatically as was it&amp;rsquo;s &lt;strong&gt;seealso&lt;/strong&gt; counterpart.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rdname&lt;/strong&gt; was added with the name of the function.
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now lets take a real function - &lt;code&gt;lm&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;makeOxygen(lm)
+
+#&#39; @title FUNCTION_TITLE
+#&#39; @description FUNCTION_DESCRIPTION
+#&#39; @param formula PARAM_DESCRIPTION
+#&#39; @param data PARAM_DESCRIPTION
+#&#39; @param subset PARAM_DESCRIPTION
+#&#39; @param weights PARAM_DESCRIPTION
+#&#39; @param na.action PARAM_DESCRIPTION
+#&#39; @param method PARAM_DESCRIPTION, Default: &#39;qr&#39;
+#&#39; @param model PARAM_DESCRIPTION, Default: TRUE
+#&#39; @param x PARAM_DESCRIPTION, Default: FALSE
+#&#39; @param y PARAM_DESCRIPTION, Default: FALSE
+#&#39; @param qr PARAM_DESCRIPTION, Default: TRUE
+#&#39; @param singular.ok PARAM_DESCRIPTION, Default: TRUE
+#&#39; @param contrasts PARAM_DESCRIPTION, Default: NULL
+#&#39; @param offset PARAM_DESCRIPTION
+#&#39; @param ... PARAM_DESCRIPTION
+#&#39; @return OUTPUT_DESCRIPTION
+#&#39; @details DETAILS
+#&#39; @examples 
+#&#39; \dontrun{
+#&#39; if(interactive()){
+#&#39;  #EXAMPLE1
+#&#39;  }
+#&#39; }
+#&#39; @seealso 
+#&#39;  \code{\link[stats]{model.frame}}
+#&#39; @rdname lm
+#&#39; @export 
+#&#39; @importFrom stats model.frame
+lm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That would of been a pain to do by hand, all that is left to do is replace the placeholders with relevant information and you&amp;rsquo;re done. Also notice the layout is consistent so other people (and you) can easily navigate the help across the package functions.&lt;/p&gt;
+
+&lt;h2 id=&#34;a-few-features-and-use-cases&#34;&gt;A few features and use cases:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Setting package options persistent during a session is done using &lt;code&gt;sinew_opts&lt;/code&gt; (much like &lt;code&gt;knitr::opts_chunk&lt;/code&gt;).&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;For keeping settings persistent across sessions during package development sinew reads from the working directory on load a file named &lt;code&gt;_sinewconfig.yml&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To run &lt;code&gt;makeOxygen&lt;/code&gt; in batch mode (like a whole &lt;code&gt;./R&lt;/code&gt; package subdirectory) use the function &lt;code&gt;makeOxyFile&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To convert a long single file with multiple functions interwoven with a body script into multiple single function files, and keeping the script body intact,  use &lt;code&gt;untangle&lt;/code&gt;. If a function within the long file already has roxygen2 headers then they will be carried over to the new file.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To quickly run through a whole package and create the DESCRIPTION file &lt;code&gt;Imports:&lt;/code&gt; field use &lt;code&gt;makeImport(&#39;./R&#39;,format=&#39;description&#39;)&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;After updating a function the documentation gets out of synch and needs updating. &lt;code&gt;moga&lt;/code&gt; (make oxygen great again!) will cross check the current documentation of an R script and the current function script itself and update/add any parameters/defaults/imports discrepancies.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Setting &lt;code&gt;cut&lt;/code&gt; to an integer value in &lt;code&gt;makeOxygen&lt;/code&gt; to return &lt;strong&gt;import package&lt;/strong&gt; instead of &lt;strong&gt;importFrom package function1 [function2 &amp;hellip;]&lt;/strong&gt; for packages that call more than the value assigned to &lt;code&gt;cut&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;interactive-documentation&#34;&gt;Interactive Documentation&lt;/h2&gt;
+
+&lt;p&gt;A Shiny gadget was built to combine all this into an easy to use interface. Highlight text (preferably a function) in source editor of RStudio and then deploy the addin from the addins menu.&lt;/p&gt;
+
+&lt;p&gt;The gadget can read in almost any source you have the function in: unsourced functions, functions in the global environment, in a loaded package, in an installed package that you didn&amp;rsquo;t load yet.&lt;/p&gt;
+
+&lt;iframe width=&#34;100%&#34; height=&#34;400&#34; src=&#34;https://www.youtube.com/embed/S8dAOwrvoDw&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt;The gadget will allow you to preview the roxygen header, add and remove roxygen2 fields with checkboxes and control the level of &lt;code&gt;cut&lt;/code&gt;. When you&amp;rsquo;re ready insert what you see in the preview pane into the editor. When you&amp;rsquo;re done with one function highlight another one and continue to work, if you need to move to another file tab&amp;hellip; that&amp;rsquo;s ok too!&lt;/p&gt;
+
+&lt;p&gt;If there is already documentation move into &lt;strong&gt;update mode&lt;/strong&gt;, and touch up any changes that need to be made through &lt;code&gt;moga&lt;/code&gt;.&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -39,11 +359,119 @@ After feeling all that anxiety and following all of Hadley&amp;rsquo;s direction
       <pubDate>Fri, 31 Mar 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2017-03-31-ggedit_cranpost/</guid>
-      <description>We are pleased to announce the release of the ggedit package on CRAN.
-To install the package you can call the standard R command
-install.packages(&#39;ggedit&#39;)  The source version is still tracked on github, which has been reorganized to be easier to navigate.
-To install the dev version:
-devtools::install_github(&#39;metrumresearchgroup/ggedit&#39;)  What is ggedit? ggedit is an R package that is used to facilitate ggplot formatting. With ggedit, R users of all experience levels can easily move from creating ggplots to refining aesthetic details, all while maintaining portability for further reproducible research and collaboration.</description>
+      <description>
+
+&lt;p&gt;We are pleased to announce the release of the ggedit package on &lt;a href=&#34;https://cran.r-project.org/web/packages/ggedit/index.html&#34;&gt;CRAN&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;To install the package you can call the standard R command&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;install.packages(&#39;ggedit&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The source version is still tracked on &lt;a href=&#34;https://github.com/metrumresearchgroup/ggedit&#34;&gt;github&lt;/a&gt;, which has been reorganized to be easier to navigate.&lt;/p&gt;
+
+&lt;p&gt;To install the dev version:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;devtools::install_github(&#39;metrumresearchgroup/ggedit&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;what-is-ggedit&#34;&gt;What is ggedit?&lt;/h3&gt;
+
+&lt;p&gt;ggedit is an R package that is used to facilitate ggplot formatting. With ggedit, R users of all experience levels can easily move from creating ggplots to refining aesthetic details, all while maintaining portability for further reproducible research and collaboration.&lt;/p&gt;
+
+&lt;p&gt;ggedit is run from an R console or as a reactive object in any Shiny application. The user inputs a ggplot object or a list of objects. The application populates Bootstrap modals with all of the elements found in each layer, scale, and theme of the ggplot objects. The user can then edit these elements and interact with the plot as changes occur. During editing, a comparison of the script is logged, which can be directly copied and shared. The application output is a nested list containing the edited layers, scales, and themes in both object and script form, so you can apply the edited objects independent of the original plot using regular ggplot2 grammar.&lt;/p&gt;
+
+&lt;p&gt;Why does it matter? ggedit promotes efficient collaboration. You can share your plots with team members to make formatting changes, and they can then send any objects they’ve edited back to you for implementation. No more email chains to change a circle to a triangle!&lt;/p&gt;
+
+&lt;h3 id=&#34;updates-in-ggedit-0-2-0&#34;&gt;Updates in ggedit 0.2.0:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The layer modal (popups) elements have been reorganized for less clutter and easier navigation.&lt;/li&gt;
+&lt;li&gt;The S3 method written to plot and compare themes has been removed from the package, but can still be found on the repo, see &lt;a href=&#34;https://github.com/metrumresearchgroup/ggedit/blob/master/Miscellaneous/Utilities/plot.theme.R&#34;&gt;plot.theme&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;deploying&#34;&gt;Deploying&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;- call from the console: `ggedit(p)`
+- call from the addin toolbar: highlight script of a plot object on the source editor window of RStudio and run from toolbar.
+- call as part of Shiny: use the Shiny module syntax to call the ggEdit UI elements.
+    - server: `callModule(ggEdit,&#39;pUI&#39;,obj=reactive(p))`
+    - ui: `ggEditUI(&#39;pUI&#39;)`
+- if you have installed the package you can see an example of a Shiny app by executing `runApp(system.file(&#39;examples/shinyModule.R&#39;,package = &#39;ggedit&#39;))`
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;outputs&#34;&gt;Outputs&lt;/h3&gt;
+
+&lt;p&gt;ggedit returns a list containing 8 elements either to the global enviroment or as a reactive output in Shiny.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;updatedPlots
+
+&lt;ul&gt;
+&lt;li&gt;List containing updated ggplot objects&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;updatedLayers
+
+&lt;ul&gt;
+&lt;li&gt;For each plot a list of updated layers (ggproto) objects&lt;/li&gt;
+&lt;li&gt;Portable object&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;updatedLayersElements
+
+&lt;ul&gt;
+&lt;li&gt;For each plot a list elements and their values in each layer&lt;/li&gt;
+&lt;li&gt;Can be used to update the new values in the original code&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;updatedLayerCalls
+
+&lt;ul&gt;
+&lt;li&gt;For each plot a list of scripts that can be run directly from the console to create a layer&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;updatedThemes
+
+&lt;ul&gt;
+&lt;li&gt;For each plot a list of updated theme objects&lt;/li&gt;
+&lt;li&gt;Portable object&lt;/li&gt;
+&lt;li&gt;If the user doesn&amp;rsquo;t edit the theme updatedThemes will not be returned&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;updatedThemeCalls
+
+&lt;ul&gt;
+&lt;li&gt;For each plot a list of scripts that can be run directly from the console to create a theme&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;updatedScales
+
+&lt;ul&gt;
+&lt;li&gt;For each plot a list of updated scales (ggproto) objects&lt;/li&gt;
+&lt;li&gt;Portable object&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;updatedScaleCalls
+
+&lt;ul&gt;
+&lt;li&gt;For each plot a list of scripts that can be run directly from the console to create a scale&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;short-clip-to-use-ggedit-in-shiny&#34;&gt;Short Clip to use ggedit in Shiny&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/embed/pJ1kbd_OVwg&#34;&gt;&lt;img src=&#34;http://img.youtube.com/vi/pJ1kbd_OVwg/0.jpg?image_play_button_size=2x&amp;amp;image_crop_resized=960x540&amp;amp;image_play_button=1&amp;amp;image_play_button_color=71aadbe0&#34; width=&#34;400&#34; height=&#34;225&#34; style=&#34;width: 400px; height: 225px;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;&lt;em&gt;
+Jonathan Sidi joined Metrum Research Group in 2016 after working for several years on problems in applied statistics, financial stress testing and economic forecasting in both industrial and academic settings.
+&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;
+To learn more about additional open-source software packages developed by Metrum Research Group please visit the Metrum &lt;a href=&#34;https://www.metrumrg.com/try-open-source-tools/&#34; target=&#34;_blank&#34;&gt;website&lt;/a&gt;.
+&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;
+Contact: For questions and comments, feel free to email me at: yonis@metrumrg.com or open an issue in &lt;a href=&#34;https://github.com/metrumresearchgroup/ggedit/issues&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;.
+&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;(post originally published on &lt;a href=&#34;http://r-posts.com/ggedit-0-2-0-is-now-on-cran/&#34;&gt;r-posts&lt;/a&gt;)&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -52,8 +480,131 @@ devtools::install_github(&#39;metrumresearchgroup/ggedit&#39;)  What is ggedit? 
       <pubDate>Wed, 22 Feb 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2017-02-22-ggedit3/</guid>
-      <description>ggedit is a package that lets users interactively edit ggplot layer and theme aesthetics. In a previous post we showed you how to use it in a collaborative workflow using standard R scripts. More importantly, we highlighted that ggedit outputs to the user, after editing, updated: gg plots, layers, scales and themes as both self-contained objects and script that you can paste directly in your code.
-Installation devtools::install_github(&amp;quot;metrumresearchgroup/ggedit&amp;quot;,subdir=&amp;quot;ggedit&amp;quot;)  version 0.</description>
+      <description>
+
+&lt;p&gt;ggedit is a package that lets users interactively edit ggplot layer and theme aesthetics.  In a previous &lt;a href=&#34;https://yonicd.github.io/2016-12-13-ggedit/&#34;&gt;post&lt;/a&gt; we showed you how to use it in a collaborative workflow using standard R scripts. More importantly, we &lt;a href=&#34;https://www.r-bloggers.com/ggedit-0-0-2-a-gui-for-advanced-editing-of-ggplot2-objects/&#34;&gt;highlighted&lt;/a&gt; that ggedit outputs to the user, after editing, updated: gg plots, layers, scales and themes as both self-contained objects &lt;em&gt;and&lt;/em&gt; script that you can paste directly in your code.&lt;/p&gt;
+
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;devtools::install_github(&amp;quot;metrumresearchgroup/ggedit&amp;quot;,subdir=&amp;quot;ggedit&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;version-0-1-1-updates&#34;&gt;version 0.1.1 Updates&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ggEdit Shiny module&lt;/strong&gt;: use ggedit as part of any Shiny application.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;gglsave&lt;/strong&gt;: generalization of ggsave to save multiple outputs of ggplot to single file and multiple files in a single call to various graphics devices.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;ggedit-shiny-module&#34;&gt;ggEdit Shiny module&lt;/h2&gt;
+
+&lt;p&gt;This post will demonstrate a new method to use ggedit, &lt;a href=&#34;https://shiny.rstudio.com/articles/modules.html&#34;&gt;Shiny modules&lt;/a&gt;. A Shiny module is a chunk of Shiny code that can be reused many times in the same application, but generic enough so it can be applied in any Shiny app (in simplest terms think of it as a Shiny function). By making ggedit a Shiny module we can now replace any &lt;a href=&#34;https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html&#34;&gt;renderPlot()&lt;/a&gt; call that inputs a ggplot and outputs in the UI &lt;a href=&#34;https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html&#34;&gt;plotOutput()&lt;/a&gt;, with an interactive ggedit layout. The analogy between how to use the ggEdit module in comparison to a standard renderPlot call can be seen in the table below.&lt;/p&gt;
+
+&lt;p&gt;&lt;center&gt;&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;standard Shiny&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Shiny Module&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Server&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;output$id=renderPlot(p)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;reactiveOutput=callModule(ggEdit,id,reactive(p))&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;UI&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;plotOutput(id)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;ggEditUI(id)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;/center&gt;&lt;/p&gt;
+
+&lt;p&gt;We can see that there are a few differences in the calls. To call a module you need to run a Shiny function  &lt;a href=&#34;https://shiny.rstudio.com/reference/shiny/latest/callModule.html&#34;&gt;callModule&lt;/a&gt;, in this case ggEdit. Next, a character id for the elements the module will create in the Shiny environment and finally the arguments that are expected by the module, in this case a reactive object that outputs a ggplot or list of ggplots. This is coupled with ggEditUI, which together create a ggedit environment to edit the plots during a regular Shiny app.&lt;/p&gt;
+
+&lt;p&gt;In addition to the output UI the user also gets a reactive output that has all the objects that are in the regular ggedit package (plots, layers, scales, themes) both in object and script forms. This has great advantages if you want to let users edit plots while keeping track of what they are changing. A realistic example of this would be clients (be it industry or academia) that are shown a set of default plots, with the appropriate data, and then they are given the opportunity to customize according to their specifications. Once they finish editing, the script is automatically saved to the server, updating the clients portfolio with their preferred aesthetics. No more email chains on changing a blue point to an aqua star!&lt;/p&gt;
+
+&lt;p&gt;Below is a small example of a static ggplot using renderPlot/plotOutput and how to call the same plot and a list of plots using ggEdit/ggeditUI. We added a small reactive text output so you can see the real-time changes of the aesthetic editing being returned to the server.&lt;/p&gt;
+
+&lt;p&gt;&lt;center&gt;
+&lt;!---
+&lt;a href=&#34;http://www.youtube.com/watch?v=pJ1kbd_OVwg&#34; target=&#34;_blank&#34; &gt;&lt;img src=&#34;http://img.youtube.com/vi/pJ1kbd_OVwg/0.jpg&#34; alt=&#34;ggEdit Shiny module&#34;&gt;&lt;/a&gt;
+---&gt;&lt;/p&gt;
+
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/pJ1kbd_OVwg&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;/center&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;source-code-for-example&#34;&gt;Source Code for example&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(ggedit)
+
+server &amp;lt;- function(input, output,session) {
+  p1=ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width,colour=Species))+geom_point()
+  p2=ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width,colour=Species))+geom_line()+geom_point()
+  p3=list(p1=p1,p2=p2)
+
+  output$p&amp;lt;-renderPlot({p1})
+  outp1&amp;lt;-callModule(ggEdit,&#39;pOut1&#39;,obj=reactive(list(p1=p1)))
+  outp2&amp;lt;-callModule(ggEdit,&#39;pOut2&#39;,obj=reactive(p3))
+
+  output$x1&amp;lt;-renderUI({
+    layerTxt=outp1()$UpdatedLayerCalls$p1[[1]]
+            aceEditor(outputId = &#39;layerAce&#39;,value=layerTxt,
+                      mode = &amp;quot;r&amp;quot;, theme = &amp;quot;chrome&amp;quot;, 
+                      height = &amp;quot;100px&amp;quot;, fontSize = 12,wordWrap = T)
+         })  
+  
+  output$x2&amp;lt;-renderUI({
+    themeTxt=outp1()$UpdatedThemeCalls$p1
+            aceEditor(outputId = &#39;themeAce&#39;,value=themeTxt,
+                      mode = &amp;quot;r&amp;quot;, theme = &amp;quot;chrome&amp;quot;, 
+                      height = &amp;quot;100px&amp;quot;, fontSize = 12,wordWrap = T)
+  })  
+
+}
+
+ui &amp;lt;-fluidPage(
+  conditionalPanel(&amp;quot;input.tbPanel==&#39;tab2&#39;&amp;quot;,
+  sidebarPanel(uiOutput(&#39;x1&#39;),uiOutput(&#39;x2&#39;))),
+  mainPanel(
+    tabsetPanel(id = &#39;tbPanel&#39;,
+      tabPanel(&#39;renderPlot/plotOutput&#39;,value = &#39;tab1&#39;,plotOutput(&#39;p&#39;)),
+      tabPanel(&#39;ggEdit/ggEditUI&#39;,value = &#39;tab2&#39;,ggEditUI(&amp;quot;pOut1&amp;quot;)),
+      tabPanel(&#39;ggEdit/ggEditUI with lists of plots&#39;,value = &#39;tab3&#39;,ggEditUI(&amp;quot;pOut2&amp;quot;))
+      )
+    )
+  )
+
+
+shinyApp(ui, server)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;&lt;em&gt;
+Jonathan Sidi joined Metrum Research Group in 2016 after working for several years on problems in applied statistics, financial stress testing and economic forecasting in both industrial and academic settings.
+&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;
+To learn more about additional open-source software packages developed by Metrum Research Group please visit the Metrum &lt;a href=&#34;https://www.metrumrg.com/try-open-source-tools/&#34; target=&#34;_blank&#34;&gt;website&lt;/a&gt;.
+&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;
+Contact: For questions and comments, feel free to email me at: yonis@metrumrg.com or open an issue in &lt;a href=&#34;https://github.com/metrumresearchgroup/ggedit/issues&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;.
+&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;(post originally published on &lt;a href=&#34;http://r-posts.com/ggedit-0-1-1-shiny-module-to-interactvely-edit-ggplots-within-shiny-applications/&#34;&gt;r-posts&lt;/a&gt;)&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -62,8 +613,119 @@ Installation devtools::install_github(&amp;quot;metrumresearchgroup/ggedit&amp;q
       <pubDate>Tue, 13 Dec 2016 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2016-12-13-ggedit/</guid>
-      <description>ggplot2 has become the standard of plotting in R for many users. New users, however, may find the learning curve steep at first, and more experienced users may find it challenging to keep track of all the options (especially in the theme!).
-ggedit is a package that helps users bridge the gap between making a plot and getting all of those pesky plot aesthetics just right, all while keeping everything portable for further research and collaboration.</description>
+      <description>
+
+&lt;p&gt;ggplot2 has become the standard of plotting in R for many users. New users, however, may find the learning curve steep at first, and more experienced users may find it challenging to keep track of all the options (especially in the theme!).&lt;/p&gt;
+
+&lt;p&gt;ggedit is a package that helps users bridge the gap between making a plot and getting all of those pesky plot aesthetics just right, all while keeping everything portable for further research and collaboration.&lt;/p&gt;
+
+&lt;p&gt;ggedit is powered by a Shiny gadget where the user inputs a ggplot plot object or a list of ggplot objects. You can run ggedit directly from the console from the Addin menu within RStudio.&lt;/p&gt;
+
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;devtools::install_github(&amp;quot;metrumresearchgroup/ggedit&amp;quot;,subdir=&amp;quot;ggedit&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;layers&#34;&gt;Layers&lt;/h2&gt;
+
+&lt;p&gt;The gadget creates a popup window which is populated by the information found in each layer. You can edit the aesthetic values found in a layer and see the changes happen in real time.&lt;/p&gt;
+
+&lt;iframe width=&#34;854&#34; height=&#34;480&#34; src=&#34;https://www.youtube.com/embed/OvMWCHpCmaI&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt;You can edit the aesthetic layers while still preserving the original plot, because the changed layers are cloned from the original plot object and are independent of it. The edited layers are provided in the output as objects, so you can use the layers independent of the plot using regular ggplot2 grammar. This is a great advantage when collaborating with other people, where you can send a plot to team members to edit the layers aesthetics and they can send you back just the new layers for you to implement them.&lt;/p&gt;
+
+&lt;h2 id=&#34;themes&#34;&gt;Themes&lt;/h2&gt;
+
+&lt;p&gt;ggedit also has a theme editor inside. You can edit any element in the theme and see the changes in real time, making the trial and error process quick and easy. Once you are satisfied with the edited theme you can apply it to other plots in the plot list with one click or even make it the &lt;em&gt;session&lt;/em&gt; theme regardless of the gadget. As with layers, the new theme object is part of the output, making collaboration easy.&lt;/p&gt;
+
+&lt;iframe width=&#34;854&#34; height=&#34;480&#34; src=&#34;https://www.youtube.com/embed/813QxbsrvLM&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;h2 id=&#34;outputs&#34;&gt;Outputs&lt;/h2&gt;
+
+&lt;p&gt;The gadget returns a list containing 4 elements&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;updatedPlots
+
+&lt;ul&gt;
+&lt;li&gt;List containing updated ggplot objects&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;updatedLayers
+
+&lt;ul&gt;
+&lt;li&gt;For each plot a list of updated layers (ggproto) objects&lt;/li&gt;
+&lt;li&gt;Portable object&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;updatedLayersElements
+
+&lt;ul&gt;
+&lt;li&gt;For each plot a list elements and their values in each layer&lt;/li&gt;
+&lt;li&gt;Can be used to update the new values in the original code&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;updatedThemes
+
+&lt;ul&gt;
+&lt;li&gt;For each plot a list of updated theme objects&lt;/li&gt;
+&lt;li&gt;Portable object&lt;/li&gt;
+&lt;li&gt;If the user doesn&amp;rsquo;t edit the theme updatedThemes will not be returned&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;rgg&#34;&gt;rgg&lt;/h2&gt;
+
+&lt;p&gt;After you finish editing the plots the natural progression is to use them in the rest of the script. In ggedit there is the function rgg (remove and replace ggplot). Using this function you can chain into the original code changes to the plot without multiplying script needlessly.&lt;/p&gt;
+
+&lt;iframe width=&#34;854&#34; height=&#34;480&#34; src=&#34;https://www.youtube.com/embed/0QmJHwoWQWM&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt;With this function you can&lt;/p&gt;
+
+&lt;p&gt;Specify which layer you want to remove from a plot:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;ggObj%&amp;gt;%rgg(&#39;line&#39;)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Provide an index to a specific layer, in instances where there are more than one layer of the same type in the plot&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;ggObj%&amp;gt;%rgg(&#39;line&#39;,2)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Remove a layer from ggObj and replace it with a new one from the ggedit output p.out&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;ggObj%&amp;gt;%rgg(&#39;line&#39;,newLayer = p.out$UpdatedLayers)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Remove a layer and replace it with a new one and the new theme&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;ggObj%&amp;gt;%rgg(&#39;line&#39;,newLayer = p.out$UpdatedLayers)+p.out$UpdatedThemes&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;There is also a plotting function for ggedit objects that creates a grid.view for you and finds the best grid size for the amount of plots you have in the list. And for the exotic layouts you can give specific positions and the rest will be done for you. If you didn&amp;rsquo;t use ggedit, you can still add the class to any ggplot and use the plotting function just the same.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;plot(as.ggedit(list(p0,p1,p2,p3)),list(list(rows=1,cols=1:3),
+                                       list(rows=2,cols=2),
+                                       list(rows=2,cols=1),
+                                       list(rows=2,cols=3))
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;addin-launch&#34;&gt;Addin Launch&lt;/h2&gt;
+
+&lt;p&gt;To launch the Shiny gadget from the addin menu highlight the code that creates the plot object or the plot name in the source pane of Rstudio, then click on the ggedit addin from the Addins the dropdown menu.&lt;/p&gt;
+
+&lt;iframe width=&#34;854&#34; height=&#34;480&#34; src=&#34;https://www.youtube.com/embed/693XhHt8fug&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;&lt;em&gt;
+Jonathan Sidi joined Metrum Research Group in 2016 after working for several years on problems in applied statistics, financial stress testing and economic forecasting in both industrial and academic settings.
+&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;
+To learn more about additional open-source software packages developed by Metrum Research Group please visit the Metrum &lt;a href=&#34;https://www.metrumrg.com/try-open-source-tools/&#34; target=&#34;_blank&#34;&gt;website&lt;/a&gt;.
+&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;
+Contact: For questions and comments, feel free to email me at: yonis@metrumrg.com or open an issue in &lt;a href=&#34;https://github.com/metrumresearchgroup/ggedit/issues&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;.
+&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;(post originally published on &lt;a href=&#34;https://www.r-statistics.com/2016/11/ggedit-interactive-ggplot-aesthetic-and-theme-editor/&#34;&gt;r-statistics&lt;/a&gt;)&lt;/p&gt;
+</description>
     </item>
     
   </channel>
