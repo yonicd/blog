@@ -14,6 +14,7 @@ p1 <- slickR::slickR(obj=objs,
                      slickOpts = list(autoplay=TRUE,
                                       autoplaySpeed=5000,
                                       dots=TRUE),
+                     width='auto',
                      height=300)
 
 frameWidget(p1)
