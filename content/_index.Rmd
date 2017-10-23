@@ -10,12 +10,15 @@ objs <- c(
   'https://raw.githubusercontent.com/yonicd/slickR/master/Miscellaneous/Multimedia/gif/slickRnestingWidgets.gif',
   'https://raw.githubusercontent.com/metrumresearchgroup/texPreview/master/Miscellaneous/Multimedia/texPreviewPanZoom.gif','https://raw.githubusercontent.com/metrumresearchgroup/shinyCanvas/master/gifs/plotSize.gif')
 
+myopts <- widgetframe::frameOptions()
+myopts$align <- '"center"'
+
 p1 <- slickR::slickR(obj=objs,
                      slickOpts = list(autoplay=TRUE,
                                       autoplaySpeed=5000,
                                       dots=TRUE),
-                     width='auto',
+                     width='75%',
                      height=300)
 
-frameWidget(p1)
+widgetframe::frameWidget(p1,width = '90%',options = myopts)
 ```
