@@ -14,10 +14,12 @@ objs <- c(
 
 p1 <- slickR::slickR(obj=objs,
                      slickOpts = list(autoplay=TRUE,
+                                      infinite=TRUE,
                                       autoplaySpeed=5000,
                                       swipeToSlide=TRUE,
-                                      dots=TRUE),
-                     height=300)
+                                      draggable=TRUE,
+                                      dots=TRUE),height=200,width='80%')
 
-widgetframe::frameWidget(targetWidget = p1)
+p2 <- widgetframe::frameWidget(targetWidget = p1,width='90%')
+slickR:::style_widget(hw=p2, "margin-left:auto;margin-right:auto;margin-bottom:auto")
 ```
