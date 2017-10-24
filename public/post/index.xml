@@ -7,15 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
-    <lastBuildDate>Thu, 19 Oct 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Oct 2017 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>jsTree</title>
+      <title>jsTree htmlwidget</title>
       <link>/post/jstree/</link>
-      <pubDate>Thu, 19 Oct 2017 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 24 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/jstree/</guid>
       <description>&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
@@ -35,52 +35,115 @@ devtools::install_github(&amp;#39;metrumresearchgroup/jsTree&amp;#39;)&lt;/code&
 &lt;p&gt;The motivation for the package came from the &lt;a href=&#34;https://github.com/trestletech/shinyTree&#34;&gt;shinyTree&lt;/a&gt; by Jeff Allen, which has an early version of the JavaScript library hardcoded into a Shiny application.&lt;/p&gt;
 &lt;p&gt;The input for the htmlwidget is a character vector and the heirarchy is set by the ‘/’, as to mimic the delimiter of a file path.&lt;/p&gt;
 &lt;p&gt;The main purpose of this package is vizualize folder hierarchy, much like in the &lt;code&gt;Files&lt;/code&gt; tab in RStudio. But, instead of looking in local directories it will be used for remote repositories, such as github, bitbucket and svn repositories. This is implemented in the &lt;a href=&#34;https://github.com/metrumresearchgroup/vcs&#34;&gt;vcs&lt;/a&gt; package and a future post will show utility that package gives.&lt;/p&gt;
-&lt;p&gt;To show the basic functionality of jsTree we will use a toy dataset from the babynames package.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#install.packages(&amp;#39;babynames&amp;#39;)
-library(babynames)
-library(dplyr)
+&lt;p&gt;To show the basic functionality of jsTree we will use a dataset that contains all superfund sites from the &lt;a href=&#34;https://www.epa.gov/superfund/search-superfund-sites-where-you-live&#34;&gt;EPA&lt;/a&gt;. You can access the tibble &lt;a href=&#34;https://github.com/yonicd/blog/blob/master/data/superfundsite.Rds&#34;&gt;here&lt;/a&gt;. The data&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(htmlTable)
 library(jsTree)
 library(widgetframe)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Taking a random sample of names&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(1234)
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Read in the data
+superfundsite &amp;lt;- readRDS(&amp;#39;../../data/superfundsite.Rds&amp;#39;)
 
-x &amp;lt;- babynames%&amp;gt;%
-  sample_n(100)%&amp;gt;%
-  select(-c(prop,n))%&amp;gt;%
-  mutate(initial=substr(name,1,1),
-         sex=ifelse(sex==&amp;#39;F&amp;#39;,&amp;#39;Female&amp;#39;,&amp;#39;Male&amp;#39;))%&amp;gt;%
-  select(year,sex,initial,name)
-  
-myx &amp;lt;- apply(x,1,paste,collapse=&amp;#39;/&amp;#39;)
+htmlTable::htmlTable(head(superfundsite),rnames=FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#39;gmisc_table&#39; style=&#39;border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;&#39; &gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#39;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#39;&gt;Region&lt;/th&gt;
+&lt;th style=&#39;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#39;&gt;State&lt;/th&gt;
+&lt;th style=&#39;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#39;&gt;City&lt;/th&gt;
+&lt;th style=&#39;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#39;&gt;County&lt;/th&gt;
+&lt;th style=&#39;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#39;&gt;Zip Code&lt;/th&gt;
+&lt;th style=&#39;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#39;&gt;Site Name&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;01&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;Massachusetts&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;ACTON&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;MIDDLESEX&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;01720&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;W.R. GRACE &amp; CO., INC. (ACTON PLANT)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;01&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;Massachusetts&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;AMESBURY&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;ESSEX&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;01913&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;MICROFAB INC (FORMER)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;01&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;Massachusetts&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;ASHLAND&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;MIDDLESEX&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;01721&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;NYANZA CHEMICAL WASTE DUMP&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;01&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;Massachusetts&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;ATTLEBORO&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;BRISTOL&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;02703&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;WALTON &amp; LONSBURY INC.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;01&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;Maine&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;AUGUSTA&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;KENNEBEC&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;04330&lt;/td&gt;
+&lt;td style=&#39;text-align: center;&#39;&gt;O&#39;CONNOR CO.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#39;border-bottom: 2px solid grey; text-align: center;&#39;&gt;01&lt;/td&gt;
+&lt;td style=&#39;border-bottom: 2px solid grey; text-align: center;&#39;&gt;Connecticut&lt;/td&gt;
+&lt;td style=&#39;border-bottom: 2px solid grey; text-align: center;&#39;&gt;BARKHAMSTED&lt;/td&gt;
+&lt;td style=&#39;border-bottom: 2px solid grey; text-align: center;&#39;&gt;LITCHFIELD&lt;/td&gt;
+&lt;td style=&#39;border-bottom: 2px solid grey; text-align: center;&#39;&gt;06063&lt;/td&gt;
+&lt;td style=&#39;border-bottom: 2px solid grey; text-align: center;&#39;&gt;BARKHAMSTED-NEW HARTFORD LANDFILL&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;basic-usage&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Basic Usage&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# collapse columns to be delimited by &amp;#39;/&amp;#39;
+myx &amp;lt;- apply(superfundsite,1,function(x) paste(x,collapse = &amp;#39;/&amp;#39;))
 
+# call jsTree
 j0 &amp;lt;- jsTree(obj = myx)
+
+# place widget in iframe to use in blog post 
+# (not needed in regular usage)
 frameWidget(j0)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:100%;height:480px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex0.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
-&lt;p&gt;Initialize tree with checked boxes for certain fields&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;nodestate1 &amp;lt;- x$year&amp;lt;=1920
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2017-10-24-jstree_files/figure-html//widgets/widget_ex0.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;/div&gt;
+&lt;div id=&#34;initialize-tree-with-checked-boxes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Initialize tree with checked boxes&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;nodestate1 &amp;lt;- superfundsite$State==&amp;#39;California&amp;#39;
 
 j1 &amp;lt;- jsTree(myx,nodestate=nodestate1)
+
 frameWidget(j1)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;htmlwidget-2&#34; style=&#34;width:100%;height:480px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-2&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex1.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
-&lt;p&gt;Change the order of the hierarchy&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; nested_string2 &amp;lt;- apply(x[,c(3,1,2,4)],1,paste,collapse=&amp;#39;/&amp;#39;)
- 
-j2 &amp;lt;- jsTree(nested_string2)
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-2&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2017-10-24-jstree_files/figure-html//widgets/widget_ex1.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tooltips&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Tooltips&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Use the zipcode as a tooltip on the county name
+
+myx2 &amp;lt;- apply(superfundsite[,-c(5)],1,paste,collapse=&amp;#39;/&amp;#39;)
+
+zipcode_label &amp;lt;- superfundsite$`Zip Code`
+names(zipcode_label) &amp;lt;- superfundsite$County
+
+j2 &amp;lt;- jsTree(myx2,tooltips = zipcode_label)
+
 frameWidget(j2)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;htmlwidget-3&#34; style=&#34;width:100%;height:480px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-3&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex2.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
-&lt;p&gt;Use the gender as a tooltip on the name&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; nested_string3 &amp;lt;- apply(x[,-c(2)],1,paste,collapse=&amp;#39;/&amp;#39;)
-
-gender_label &amp;lt;- x$sex
-names(gender_label) &amp;lt;- x$name
-
-j3 &amp;lt;- jsTree(nested_string3,tooltips = gender_label)
-frameWidget(j3)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;htmlwidget-4&#34; style=&#34;width:100%;height:480px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-4&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex3.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-3&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2017-10-24-jstree_files/figure-html//widgets/widget_ex2.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
 &lt;/div&gt;
 &lt;div id=&#34;shiny&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Shiny&lt;/h2&gt;

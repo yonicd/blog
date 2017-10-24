@@ -5,16 +5,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>jsTree</title>
-  <meta property="og:title" content="jsTree" />
-  <meta name="twitter:title" content="jsTree" />
+  <title>jsTree htmlwidget</title>
+  <meta property="og:title" content="jsTree htmlwidget" />
+  <meta name="twitter:title" content="jsTree htmlwidget" />
   <meta name="description" content="jsTree is a R package that is a standalone htmlwidget for the jsTree JavaScript library. It can be run from the R console directly into the Rstudio Viewer, be used in a Shiny application or be part of an Rmarkdown html output.
 Installation #CRAN install.packages(&#39;jsTree&#39;) #Github devtools::install_github(&#39;metrumresearchgroup/jsTree&#39;) The motivation for the package came from the shinyTree by Jeff Allen, which has an early version of the JavaScript library hardcoded into a Shiny application.">
   <meta property="og:description" content="jsTree is a R package that is a standalone htmlwidget for the jsTree JavaScript library. It can be run from the R console directly into the Rstudio Viewer, be used in a Shiny application or be part of an Rmarkdown html output.
 Installation #CRAN install.packages(&#39;jsTree&#39;) #Github devtools::install_github(&#39;metrumresearchgroup/jsTree&#39;) The motivation for the package came from the shinyTree by Jeff Allen, which has an early version of the JavaScript library hardcoded into a Shiny application.">
   <meta name="twitter:description" content="jsTree is a R package that is a standalone htmlwidget for the jsTree JavaScript library. It can be run from the R console directly into the Rstudio Viewer, be used in a Shiny application or be part of …">
   <meta name="author" content="Jonathan Sidi"/>
-  <link href='/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <link href='/img/cd-favicon.ico' rel='icon' type='image/x-icon'/>
   <meta property="og:image" content="/img/cd-icon.png" />
   <meta name="twitter:image" content="/img/cd-icon.png" />
   <meta name="twitter:card" content="summary" />
@@ -191,11 +191,11 @@ ga('send', 'pageview');
         <div class="row">
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="post-heading">
-              <h1>jsTree</h1>
+              <h1>jsTree htmlwidget</h1>
                 
                 
                   <span class="post-meta">
-  Posted on October 19, 2017
+  Posted on October 24, 2017
   
 </span>
 
@@ -301,52 +301,115 @@ devtools::install_github(&#39;metrumresearchgroup/jsTree&#39;)</code></pre>
 <p>The motivation for the package came from the <a href="https://github.com/trestletech/shinyTree">shinyTree</a> by Jeff Allen, which has an early version of the JavaScript library hardcoded into a Shiny application.</p>
 <p>The input for the htmlwidget is a character vector and the heirarchy is set by the ‘/’, as to mimic the delimiter of a file path.</p>
 <p>The main purpose of this package is vizualize folder hierarchy, much like in the <code>Files</code> tab in RStudio. But, instead of looking in local directories it will be used for remote repositories, such as github, bitbucket and svn repositories. This is implemented in the <a href="https://github.com/metrumresearchgroup/vcs">vcs</a> package and a future post will show utility that package gives.</p>
-<p>To show the basic functionality of jsTree we will use a toy dataset from the babynames package.</p>
-<pre class="r"><code>#install.packages(&#39;babynames&#39;)
-library(babynames)
-library(dplyr)
+<p>To show the basic functionality of jsTree we will use a dataset that contains all superfund sites from the <a href="https://www.epa.gov/superfund/search-superfund-sites-where-you-live">EPA</a>. You can access the tibble <a href="https://github.com/yonicd/blog/blob/master/data/superfundsite.Rds">here</a>. The data</p>
+<pre class="r"><code>library(htmlTable)
 library(jsTree)
 library(widgetframe)</code></pre>
-<p>Taking a random sample of names</p>
-<pre class="r"><code>set.seed(1234)
+<pre class="r"><code># Read in the data
+superfundsite &lt;- readRDS(&#39;../../data/superfundsite.Rds&#39;)
 
-x &lt;- babynames%&gt;%
-  sample_n(100)%&gt;%
-  select(-c(prop,n))%&gt;%
-  mutate(initial=substr(name,1,1),
-         sex=ifelse(sex==&#39;F&#39;,&#39;Female&#39;,&#39;Male&#39;))%&gt;%
-  select(year,sex,initial,name)
-  
-myx &lt;- apply(x,1,paste,collapse=&#39;/&#39;)
+htmlTable::htmlTable(head(superfundsite),rnames=FALSE)</code></pre>
+<table class='gmisc_table' style='border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;' >
+<thead>
+<tr>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>Region</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>State</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>City</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>County</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>Zip Code</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>Site Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='text-align: center;'>01</td>
+<td style='text-align: center;'>Massachusetts</td>
+<td style='text-align: center;'>ACTON</td>
+<td style='text-align: center;'>MIDDLESEX</td>
+<td style='text-align: center;'>01720</td>
+<td style='text-align: center;'>W.R. GRACE & CO., INC. (ACTON PLANT)</td>
+</tr>
+<tr>
+<td style='text-align: center;'>01</td>
+<td style='text-align: center;'>Massachusetts</td>
+<td style='text-align: center;'>AMESBURY</td>
+<td style='text-align: center;'>ESSEX</td>
+<td style='text-align: center;'>01913</td>
+<td style='text-align: center;'>MICROFAB INC (FORMER)</td>
+</tr>
+<tr>
+<td style='text-align: center;'>01</td>
+<td style='text-align: center;'>Massachusetts</td>
+<td style='text-align: center;'>ASHLAND</td>
+<td style='text-align: center;'>MIDDLESEX</td>
+<td style='text-align: center;'>01721</td>
+<td style='text-align: center;'>NYANZA CHEMICAL WASTE DUMP</td>
+</tr>
+<tr>
+<td style='text-align: center;'>01</td>
+<td style='text-align: center;'>Massachusetts</td>
+<td style='text-align: center;'>ATTLEBORO</td>
+<td style='text-align: center;'>BRISTOL</td>
+<td style='text-align: center;'>02703</td>
+<td style='text-align: center;'>WALTON & LONSBURY INC.</td>
+</tr>
+<tr>
+<td style='text-align: center;'>01</td>
+<td style='text-align: center;'>Maine</td>
+<td style='text-align: center;'>AUGUSTA</td>
+<td style='text-align: center;'>KENNEBEC</td>
+<td style='text-align: center;'>04330</td>
+<td style='text-align: center;'>O'CONNOR CO.</td>
+</tr>
+<tr>
+<td style='border-bottom: 2px solid grey; text-align: center;'>01</td>
+<td style='border-bottom: 2px solid grey; text-align: center;'>Connecticut</td>
+<td style='border-bottom: 2px solid grey; text-align: center;'>BARKHAMSTED</td>
+<td style='border-bottom: 2px solid grey; text-align: center;'>LITCHFIELD</td>
+<td style='border-bottom: 2px solid grey; text-align: center;'>06063</td>
+<td style='border-bottom: 2px solid grey; text-align: center;'>BARKHAMSTED-NEW HARTFORD LANDFILL</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="basic-usage" class="section level2">
+<h2>Basic Usage</h2>
+<pre class="r"><code># collapse columns to be delimited by &#39;/&#39;
+myx &lt;- apply(superfundsite,1,function(x) paste(x,collapse = &#39;/&#39;))
 
+# call jsTree
 j0 &lt;- jsTree(obj = myx)
+
+# place widget in iframe to use in blog post 
+# (not needed in regular usage)
 frameWidget(j0)</code></pre>
 <div id="htmlwidget-1" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex0.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
-<p>Initialize tree with checked boxes for certain fields</p>
-<pre class="r"><code>nodestate1 &lt;- x$year&lt;=1920
+<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"/post/2017-10-24-jstree_files/figure-html//widgets/widget_ex0.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="initialize-tree-with-checked-boxes" class="section level2">
+<h2>Initialize tree with checked boxes</h2>
+<pre class="r"><code>nodestate1 &lt;- superfundsite$State==&#39;California&#39;
 
 j1 &lt;- jsTree(myx,nodestate=nodestate1)
+
 frameWidget(j1)</code></pre>
 <div id="htmlwidget-2" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2">{"x":{"url":"/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex1.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
-<p>Change the order of the hierarchy</p>
-<pre class="r"><code> nested_string2 &lt;- apply(x[,c(3,1,2,4)],1,paste,collapse=&#39;/&#39;)
- 
-j2 &lt;- jsTree(nested_string2)
+<script type="application/json" data-for="htmlwidget-2">{"x":{"url":"/post/2017-10-24-jstree_files/figure-html//widgets/widget_ex1.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="tooltips" class="section level2">
+<h2>Tooltips</h2>
+<pre class="r"><code># Use the zipcode as a tooltip on the county name
+
+myx2 &lt;- apply(superfundsite[,-c(5)],1,paste,collapse=&#39;/&#39;)
+
+zipcode_label &lt;- superfundsite$`Zip Code`
+names(zipcode_label) &lt;- superfundsite$County
+
+j2 &lt;- jsTree(myx2,tooltips = zipcode_label)
+
 frameWidget(j2)</code></pre>
 <div id="htmlwidget-3" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3">{"x":{"url":"/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex2.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
-<p>Use the gender as a tooltip on the name</p>
-<pre class="r"><code> nested_string3 &lt;- apply(x[,-c(2)],1,paste,collapse=&#39;/&#39;)
-
-gender_label &lt;- x$sex
-names(gender_label) &lt;- x$name
-
-j3 &lt;- jsTree(nested_string3,tooltips = gender_label)
-frameWidget(j3)</code></pre>
-<div id="htmlwidget-4" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4">{"x":{"url":"/post/2017-10-19-jstree_files/figure-html//widgets/widget_ex3.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-3">{"x":{"url":"/post/2017-10-24-jstree_files/figure-html//widgets/widget_ex2.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="shiny" class="section level2">
 <h2>Shiny</h2>

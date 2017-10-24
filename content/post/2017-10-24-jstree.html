@@ -1,0 +1,198 @@
+---
+title: jsTree htmlwidget
+author: Jonathan Sidi
+date: '2017-10-24'
+slug: jstree
+categories: []
+tags: [htmlwigdet, rstats]
+cran: jsTree
+cran_badge: [status, downloads]
+gh_repo: metrumresearchgroup/jsTree
+gh_badge: [follow, star, issue]
+---
+
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/blazy/blazy.min.js"></script>
+<script src="/rmarkdown-libs/pymjs/pym.v1.js"></script>
+<script src="/rmarkdown-libs/widgetframe-binding/widgetframe.js"></script>
+
+
+<p>jsTree is a R package that is a standalone htmlwidget for the jsTree JavaScript library. It can be run from the R console directly into the Rstudio Viewer, be used in a Shiny application or be part of an Rmarkdown html output.</p>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<pre class="r"><code>#CRAN
+install.packages(&#39;jsTree&#39;)
+
+#Github
+devtools::install_github(&#39;metrumresearchgroup/jsTree&#39;)</code></pre>
+<p>The motivation for the package came from the <a href="https://github.com/trestletech/shinyTree">shinyTree</a> by Jeff Allen, which has an early version of the JavaScript library hardcoded into a Shiny application.</p>
+<p>The input for the htmlwidget is a character vector and the heirarchy is set by the ‘/’, as to mimic the delimiter of a file path.</p>
+<p>The main purpose of this package is vizualize folder hierarchy, much like in the <code>Files</code> tab in RStudio. But, instead of looking in local directories it will be used for remote repositories, such as github, bitbucket and svn repositories. This is implemented in the <a href="https://github.com/metrumresearchgroup/vcs">vcs</a> package and a future post will show utility that package gives.</p>
+<p>To show the basic functionality of jsTree we will use a dataset that contains all superfund sites from the <a href="https://www.epa.gov/superfund/search-superfund-sites-where-you-live">EPA</a>. You can access the tibble <a href="https://github.com/yonicd/blog/blob/master/data/superfundsite.Rds">here</a>. The data</p>
+<pre class="r"><code>library(htmlTable)
+library(jsTree)
+library(widgetframe)</code></pre>
+<pre class="r"><code># Read in the data
+superfundsite &lt;- readRDS(&#39;../../data/superfundsite.Rds&#39;)
+
+htmlTable::htmlTable(head(superfundsite),rnames=FALSE)</code></pre>
+<table class='gmisc_table' style='border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;' >
+<thead>
+<tr>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>Region</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>State</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>City</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>County</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>Zip Code</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>Site Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='text-align: center;'>01</td>
+<td style='text-align: center;'>Massachusetts</td>
+<td style='text-align: center;'>ACTON</td>
+<td style='text-align: center;'>MIDDLESEX</td>
+<td style='text-align: center;'>01720</td>
+<td style='text-align: center;'>W.R. GRACE & CO., INC. (ACTON PLANT)</td>
+</tr>
+<tr>
+<td style='text-align: center;'>01</td>
+<td style='text-align: center;'>Massachusetts</td>
+<td style='text-align: center;'>AMESBURY</td>
+<td style='text-align: center;'>ESSEX</td>
+<td style='text-align: center;'>01913</td>
+<td style='text-align: center;'>MICROFAB INC (FORMER)</td>
+</tr>
+<tr>
+<td style='text-align: center;'>01</td>
+<td style='text-align: center;'>Massachusetts</td>
+<td style='text-align: center;'>ASHLAND</td>
+<td style='text-align: center;'>MIDDLESEX</td>
+<td style='text-align: center;'>01721</td>
+<td style='text-align: center;'>NYANZA CHEMICAL WASTE DUMP</td>
+</tr>
+<tr>
+<td style='text-align: center;'>01</td>
+<td style='text-align: center;'>Massachusetts</td>
+<td style='text-align: center;'>ATTLEBORO</td>
+<td style='text-align: center;'>BRISTOL</td>
+<td style='text-align: center;'>02703</td>
+<td style='text-align: center;'>WALTON & LONSBURY INC.</td>
+</tr>
+<tr>
+<td style='text-align: center;'>01</td>
+<td style='text-align: center;'>Maine</td>
+<td style='text-align: center;'>AUGUSTA</td>
+<td style='text-align: center;'>KENNEBEC</td>
+<td style='text-align: center;'>04330</td>
+<td style='text-align: center;'>O'CONNOR CO.</td>
+</tr>
+<tr>
+<td style='border-bottom: 2px solid grey; text-align: center;'>01</td>
+<td style='border-bottom: 2px solid grey; text-align: center;'>Connecticut</td>
+<td style='border-bottom: 2px solid grey; text-align: center;'>BARKHAMSTED</td>
+<td style='border-bottom: 2px solid grey; text-align: center;'>LITCHFIELD</td>
+<td style='border-bottom: 2px solid grey; text-align: center;'>06063</td>
+<td style='border-bottom: 2px solid grey; text-align: center;'>BARKHAMSTED-NEW HARTFORD LANDFILL</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="basic-usage" class="section level2">
+<h2>Basic Usage</h2>
+<pre class="r"><code># collapse columns to be delimited by &#39;/&#39;
+myx &lt;- apply(superfundsite,1,function(x) paste(x,collapse = &#39;/&#39;))
+
+# call jsTree
+j0 &lt;- jsTree(obj = myx)
+
+# place widget in iframe to use in blog post 
+# (not needed in regular usage)
+frameWidget(j0)</code></pre>
+<div id="htmlwidget-1" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"/post/2017-10-24-jstree_files/figure-html//widgets/widget_ex0.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="initialize-tree-with-checked-boxes" class="section level2">
+<h2>Initialize tree with checked boxes</h2>
+<pre class="r"><code>nodestate1 &lt;- superfundsite$State==&#39;California&#39;
+
+j1 &lt;- jsTree(myx,nodestate=nodestate1)
+
+frameWidget(j1)</code></pre>
+<div id="htmlwidget-2" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"url":"/post/2017-10-24-jstree_files/figure-html//widgets/widget_ex1.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="tooltips" class="section level2">
+<h2>Tooltips</h2>
+<pre class="r"><code># Use the zipcode as a tooltip on the county name
+
+myx2 &lt;- apply(superfundsite[,-c(5)],1,paste,collapse=&#39;/&#39;)
+
+zipcode_label &lt;- superfundsite$`Zip Code`
+names(zipcode_label) &lt;- superfundsite$County
+
+j2 &lt;- jsTree(myx2,tooltips = zipcode_label)
+
+frameWidget(j2)</code></pre>
+<div id="htmlwidget-3" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3">{"x":{"url":"/post/2017-10-24-jstree_files/figure-html//widgets/widget_ex2.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="shiny" class="section level2">
+<h2>Shiny</h2>
+<p>jsTree can be used in Shiny applications and supplies observers so the Shiny can react to the tree.</p>
+<iframe src="https://tranquil-escarpment-51788.herokuapp.com/" style="width: 800px; height: 500px">
+</iframe>
+<pre class="r"><code>ui &lt;- shiny::fluidPage(
+  
+  shiny::column(width=4,jsTree::jsTreeOutput(&#39;tree&#39;)),
+  
+  shiny::column(width=8,shiny::uiOutput(&#39;chosen&#39;))
+  
+)
+
+server &lt;- function(input, output,session) {
+  
+  network &lt;- shiny::reactiveValues()
+  
+  shiny::observeEvent(input$tree_update,{
+    
+    current_selection &lt;- input$tree_update$.current_tree
+    if(!is.null(current_selection)) 
+      network$tree &lt;- jsonlite::fromJSON(current_selection)
+    
+  })
+  
+  shiny::observeEvent(network$tree,{
+    
+    output$results &lt;- shiny::renderPrint({
+      
+      str.out &lt;- &#39;&#39;
+      
+      if(length(network$tree)&gt;0)
+        str.out=network$tree
+      
+      return(str.out)
+    })    
+  })
+  
+  output$chosen &lt;- shiny::renderUI({
+    
+    list(shiny::h3(&#39;Selected Items&#39;),
+         
+    shiny::verbatimTextOutput(outputId = &quot;results&quot;))
+    
+  })
+  
+  output$tree &lt;- jsTree::renderJsTree({
+    
+    nested_string &lt;- myx
+    
+    jsTree(nested_string)
+    
+  })
+  
+}
+
+shinyApp(ui, server)</code></pre>
+</div>

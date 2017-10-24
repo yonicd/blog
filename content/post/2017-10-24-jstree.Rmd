@@ -1,11 +1,10 @@
 ---
-title: jsTree
+title: jsTree htmlwidget
 author: Jonathan Sidi
-date: '2017-10-19'
+date: '2017-10-24'
 slug: jstree
 categories: []
-tags:
-  - htmlwigdet
+tags: [htmlwigdet, rstats]
 cran: jsTree
 cran_badge: [status, downloads]
 gh_repo: metrumresearchgroup/jsTree
@@ -30,58 +29,55 @@ The input for the htmlwidget is a character vector and the heirarchy is set by t
 
 The main purpose of this package is vizualize folder hierarchy, much like in the `Files` tab in RStudio. But, instead of looking in local directories it will be used for remote repositories, such as github, bitbucket and svn repositories. This is implemented in the [vcs](https://github.com/metrumresearchgroup/vcs) package and a future post will show utility that package gives.
 
-To show the basic functionality of jsTree we will use a toy dataset from the babynames package.
+To show the basic functionality of jsTree we will use a dataset that contains all superfund sites from the [EPA](https://www.epa.gov/superfund/search-superfund-sites-where-you-live). You can access the tibble [here](https://github.com/yonicd/blog/blob/master/data/superfundsite.Rds). The data
 
 ```{r,message=FALSE,warning=FALSE}
-#install.packages('babynames')
-library(babynames)
-library(dplyr)
+library(htmlTable)
 library(jsTree)
 library(widgetframe)
 ```
 
-Taking a random sample of names
+```{r,results='asis'}
+# Read in the data
+superfundsite <- readRDS('../../data/superfundsite.Rds')
+
+htmlTable::htmlTable(head(superfundsite),rnames=FALSE)
+```
+
+## Basic Usage
 ```{r ex0}
-set.seed(1234)
+# collapse columns to be delimited by '/'
+myx <- apply(superfundsite,1,function(x) paste(x,collapse = '/'))
 
-x <- babynames%>%
-  sample_n(100)%>%
-  select(-c(prop,n))%>%
-  mutate(initial=substr(name,1,1),
-         sex=ifelse(sex=='F','Female','Male'))%>%
-  select(year,sex,initial,name)
-  
-myx <- apply(x,1,paste,collapse='/')
-
+# call jsTree
 j0 <- jsTree(obj = myx)
+
+# place widget in iframe to use in blog post 
+# (not needed in regular usage)
 frameWidget(j0)
 ```
 
-Initialize tree with checked boxes for certain fields
+## Initialize tree with checked boxes
 ```{r ex1}
-nodestate1 <- x$year<=1920
+nodestate1 <- superfundsite$State=='California'
 
 j1 <- jsTree(myx,nodestate=nodestate1)
+
 frameWidget(j1)
 ```
 
-Change the order of the hierarchy
+## Tooltips
 ```{r ex2}
- nested_string2 <- apply(x[,c(3,1,2,4)],1,paste,collapse='/')
- 
-j2 <- jsTree(nested_string2)
+# Use the zipcode as a tooltip on the county name
+
+myx2 <- apply(superfundsite[,-c(5)],1,paste,collapse='/')
+
+zipcode_label <- superfundsite$`Zip Code`
+names(zipcode_label) <- superfundsite$County
+
+j2 <- jsTree(myx2,tooltips = zipcode_label)
+
 frameWidget(j2)
-```
-
-Use the gender as a tooltip on the name
-```{r ex3}
- nested_string3 <- apply(x[,-c(2)],1,paste,collapse='/')
-
-gender_label <- x$sex
-names(gender_label) <- x$name
-
-j3 <- jsTree(nested_string3,tooltips = gender_label)
-frameWidget(j3)
 ```
 
 ## Shiny

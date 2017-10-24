@@ -13,7 +13,7 @@ rssLimit = 20
 [Params]
   subtitle = "Je T'aime Terminal"
   logo = "img/cd-icon.png"
-  favicon = "img/favicon.ico"
+  favicon = "img/cd-favicon.ico"
   dateFormat = "January 2, 2006"
   commit = false
   rss = true

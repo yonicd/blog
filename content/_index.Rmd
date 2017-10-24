@@ -18,7 +18,7 @@ p1 <- slickR::slickR(obj=objs,
                                       autoplaySpeed=5000,
                                       swipeToSlide=TRUE,
                                       draggable=TRUE,
-                                      dots=TRUE),height=200,width='80%')
+                                      dots=TRUE),height=250,width='80%')
 
 p2 <- widgetframe::frameWidget(targetWidget = p1,width='90%')
 slickR:::style_widget(hw=p2, "margin-left:auto;margin-right:auto;margin-bottom:auto")
