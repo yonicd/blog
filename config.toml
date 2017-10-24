@@ -1,4 +1,4 @@
-baseurl = "https://yonicd.netlify.com"
+baseurl = "https://yonicd.netlify.com/"
 DefaultContentLanguage = "en"
 title = "Reproducible Random Thoughts"
 theme = "beautifulhugo"
