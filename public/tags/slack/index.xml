@@ -32,10 +32,6 @@
 &lt;/ul&gt;
 &lt;p&gt;This lets us interact with R and Slack in new ways, by getting active updates on long simulations directly to your (and your team’s) mobile device and multitask away from your computer.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;devtools::install_github(&amp;#39;hrbrmstr/slackr&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Warning in strptime(x, fmt, tz = &amp;quot;GMT&amp;quot;): unknown timezone &amp;#39;default/America/
-## New_York&amp;#39;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Skipping install of &amp;#39;slackr&amp;#39; from a github remote, the SHA1 (11701220) has not changed since last install.
-##   Use `force = TRUE` to force installation&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;progress-bars&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Progress Bars&lt;/h2&gt;
 &lt;p&gt;Create text progress bar that is sent directly to a Slack channel.&lt;/p&gt;

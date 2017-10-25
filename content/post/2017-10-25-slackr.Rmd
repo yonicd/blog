@@ -23,7 +23,7 @@ The [slackr](https://github.com/hrbrmstr/slackr) package, by [Bob Rudis](https:/
   
 This lets us interact with R and Slack in new ways, by getting active updates on long simulations directly to your (and your team's) mobile device and multitask away from your computer. 
 
-```{r,eval=FALSE}
+```{r,eval=FALSE,message=FALSE,warning=FALSE}
 devtools::install_github('hrbrmstr/slackr')
 ```
 
