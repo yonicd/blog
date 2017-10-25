@@ -7,10 +7,94 @@
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
-    <lastBuildDate>Tue, 24 Oct 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Oct 2017 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Extending slackr</title>
+      <link>/post/slackr/</link>
+      <pubDate>Wed, 25 Oct 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>/post/slackr/</guid>
+      <description>&lt;p&gt;The &lt;a href=&#34;https://github.com/hrbrmstr/slackr&#34;&gt;slackr&lt;/a&gt; package, by &lt;a href=&#34;https://rud.is/b/&#34;&gt;Bob Rudis&lt;/a&gt;, contains functions that make it possible to interact with the Slack messaging platform. The great part of Slack is that it has mobile devices application interface. We take advantage of this by extending slackr’s interaction with with the server:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Write&lt;/strong&gt; to a channel (current) - &lt;code&gt;slackr&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;Compile TeX snippets directly to a channel - &lt;code&gt;tex_slackr&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tex_slackr(xtable::xtable(mtcars))&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;This function uses the &lt;a href=&#34;https://github.com/metrumresearchgroup/texPreview&#34;&gt;texPreview&lt;/a&gt; package to compile and generate the TeX output.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Read&lt;/strong&gt; channel history (new) - &lt;code&gt;history_slackr&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Edit&lt;/strong&gt; messages on a channel (new) - &lt;code&gt;edit_slackr&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Delete&lt;/strong&gt; channel messages (new) - &lt;code&gt;delete_slackr&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This lets us interact with R and Slack in new ways, by getting active updates on long simulations directly to your (and your team’s) mobile device and multitask away from your computer.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;devtools::install_github(&amp;#39;hrbrmstr/slackr&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning in strptime(x, fmt, tz = &amp;quot;GMT&amp;quot;): unknown timezone &amp;#39;default/America/
+## New_York&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Skipping install of &amp;#39;slackr&amp;#39; from a github remote, the SHA1 (11701220) has not changed since last install.
+##   Use `force = TRUE` to force installation&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;progress-bars&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Progress Bars&lt;/h2&gt;
+&lt;p&gt;Create text progress bar that is sent directly to a Slack channel.&lt;/p&gt;
+&lt;p&gt;&lt;img width=&#34;500px&#34; height=&#34;auto&#34; src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/slackr/slackr_progress.gif&#34;&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;progress_slackr &amp;lt;- function(x){
+  text_slackr(&amp;#39;0%&amp;#39;)
+  s &amp;lt;- c(0,x,1)
+  for(i in 1:length(s)){
+    Sys.sleep(0.5)
+    edit_slackr(sprintf(&amp;#39;%s%%&amp;#39;,round(100*i/length(s),1)))
+  }
+  Sys.sleep(0.5)
+}
+
+set.seed(1234)
+progress_slackr(sort(runif(10)))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This also solves a long standing problem of tracking the progress of parallel jobs on a server. We use slackr with the &lt;a href=&#34;https://bitbucket.org/metrumrg/qapply/src&#34;&gt;qapply&lt;/a&gt; package, which runs jobs on an Open Grid Scheduler/Engine. We can track each node&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/slackr/slackr_qapply.gif&#34;&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;onexit&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Onexit&lt;/h2&gt;
+&lt;p&gt;Attach &lt;code&gt;on.exit&lt;/code&gt; expressions to any function in R and the output will be sent to the Slack channel.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/slackr/slackr_expr.gif&#34;&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ctl &amp;lt;- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt &amp;lt;- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+group &amp;lt;- gl(2, 10, 20, labels = c(&amp;quot;Ctl&amp;quot;,&amp;quot;Trt&amp;quot;))
+weight &amp;lt;- c(ctl, trt)
+
+#pass a message to Slack channel &amp;#39;general&amp;#39;
+register_onexit(lm,&amp;#39;bazinga!&amp;#39;,channel=&amp;quot;#general&amp;quot;)
+
+lm.D9 &amp;lt;- slack_lm(weight ~ group)
+
+#test that output keeps inheritance
+summary(lm.D9)
+
+#pass a message to Slack channel &amp;#39;general&amp;#39; with a header message to begin output
+register_onexit(lm,&amp;#39;bazinga!&amp;#39;,
+channel=&amp;quot;#general&amp;quot;,
+header_msg=&amp;#39;This is a message to begin&amp;#39;)
+
+lm.D9 &amp;lt;- slack_lm(weight ~ group)
+
+#onexit with an expression that calls lm.plot
+register_onexit(lm,{
+ par(mfrow = c(2, 2), oma = c(0, 0, 2, 0))
+ plot(z)
+},
+channel=&amp;quot;#general&amp;quot;,
+header_msg = &amp;#39;This is a plot just for this output&amp;#39;,
+use_device = TRUE)
+
+lm.D9 &amp;lt;- slack_lm(weight ~ group)
+
+#clean up slack channel from examples
+delete_slackr(count = 6,channel = &amp;#39;#general&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>jsTree htmlwidget</title>
@@ -1918,6 +2002,20 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
 
 &lt;li&gt;&lt;p&gt;Enjoy integrating different languages with R like JavaScript and C++, to improve workflows.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Datasets</title>
+      <link>/page/datasets/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>/page/datasets/</guid>
+      <description>&lt;p&gt;This page includes source data used in blog posts and packages.&lt;/p&gt;
+
+&lt;p&gt;|Dataset|Object Type|Source|Description|
+  |:&amp;ndash;:|:&amp;ndash;:|:&amp;ndash;:|:&amp;ndash;:|
+  |superfundsite|tibble|&lt;a href=&#34;https://www.epa.gov/superfund/search-superfund-sites-where-you-live&#34;&gt;EPA&lt;/a&gt;|Superfund sites containing&lt;/p&gt;
 </description>
     </item>
     

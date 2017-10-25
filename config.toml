@@ -46,14 +46,14 @@ rssLimit = 20
     weight = 1
 
 [[menu.main]]
-    name = "About"
-    url = "page/about/"
-    weight = 3
-
-[[menu.main]]
     name = "Projects"
     url = "page/projects/"
     weight = 2
+
+[[menu.main]]
+    name = "About"
+    url = "page/about/"
+    weight = 3
 
 [[menu.main]]
     identifier = "resources"

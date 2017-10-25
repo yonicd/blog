@@ -32,6 +32,20 @@
     </item>
     
     <item>
+      <title>Datasets</title>
+      <link>/page/datasets/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>/page/datasets/</guid>
+      <description>&lt;p&gt;This page includes source data used in blog posts and packages.&lt;/p&gt;
+
+&lt;p&gt;|Dataset|Object Type|Source|Description|
+  |:&amp;ndash;:|:&amp;ndash;:|:&amp;ndash;:|:&amp;ndash;:|
+  |superfundsite|tibble|&lt;a href=&#34;https://www.epa.gov/superfund/search-superfund-sites-where-you-live&#34;&gt;EPA&lt;/a&gt;|Superfund sites containing&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Projects</title>
       <link>/page/projects/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

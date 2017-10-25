@@ -1,0 +1,98 @@
+---
+title: Extending slackr
+author: Jonathan Sidi
+date: '2017-10-25'
+slug: slackr
+categories: []
+tags: [Slack,utility]
+cran: slackr
+cran_badge: [status, downloads]
+gh_repo: hrbrmstr/slackr
+gh_badge: [follow, star, issue]
+---
+
+The [slackr](https://github.com/hrbrmstr/slackr) package, by [Bob Rudis](https://rud.is/b/), contains functions that make it possible to interact with the Slack messaging platform. The great part of Slack is that it has mobile devices application interface. We take advantage of this by extending slackr's interaction with with the server:
+
+  - **Write** to a channel (current) - `slackr`
+    - Compile TeX snippets directly to a channel - `tex_slackr`
+    - `tex_slackr(xtable::xtable(mtcars))`
+    - This function uses the [texPreview](https://github.com/metrumresearchgroup/texPreview) package to compile and generate the TeX output.
+  - **Read** channel history (new) - `history_slackr`
+  - **Edit** messages on a channel (new) - `edit_slackr`
+  - **Delete** channel messages (new) - `delete_slackr`
+  
+This lets us interact with R and Slack in new ways, by getting active updates on long simulations directly to your (and your team's) mobile device and multitask away from your computer. 
+
+```{r,eval=FALSE}
+devtools::install_github('hrbrmstr/slackr')
+```
+
+## Progress Bars
+
+Create text progress bar that is sent directly to a Slack channel.
+
+<img width="500px" height="auto" src="https://raw.githubusercontent.com/yonicd/blog/master/img/slackr/slackr_progress.gif">
+
+```{r,eval=FALSE}
+progress_slackr <- function(x){
+  text_slackr('0%')
+  s <- c(0,x,1)
+  for(i in 1:length(s)){
+    Sys.sleep(0.5)
+    edit_slackr(sprintf('%s%%',round(100*i/length(s),1)))
+  }
+  Sys.sleep(0.5)
+}
+
+set.seed(1234)
+progress_slackr(sort(runif(10)))
+```
+
+This also solves a long standing problem of tracking the progress of parallel jobs on a server. We use slackr with the [qapply](https://bitbucket.org/metrumrg/qapply/src) package, which runs jobs on an Open Grid Scheduler/Engine. We can track each node 
+
+<img src="https://raw.githubusercontent.com/yonicd/blog/master/img/slackr/slackr_qapply.gif">
+
+## Onexit
+
+Attach `on.exit` expressions to any function in R and the output will be sent to the Slack channel.
+
+<img src="https://raw.githubusercontent.com/yonicd/blog/master/img/slackr/slackr_expr.gif">
+
+
+```{r,eval=FALSE}
+ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
+weight <- c(ctl, trt)
+
+#pass a message to Slack channel 'general'
+register_onexit(lm,'bazinga!',channel="#general")
+
+lm.D9 <- slack_lm(weight ~ group)
+
+#test that output keeps inheritance
+summary(lm.D9)
+
+#pass a message to Slack channel 'general' with a header message to begin output
+register_onexit(lm,'bazinga!',
+channel="#general",
+header_msg='This is a message to begin')
+
+lm.D9 <- slack_lm(weight ~ group)
+
+#onexit with an expression that calls lm.plot
+register_onexit(lm,{
+ par(mfrow = c(2, 2), oma = c(0, 0, 2, 0))
+ plot(z)
+},
+channel="#general",
+header_msg = 'This is a plot just for this output',
+use_device = TRUE)
+
+lm.D9 <- slack_lm(weight ~ group)
+
+#clean up slack channel from examples
+delete_slackr(count = 6,channel = '#general')
+```
+
+  
