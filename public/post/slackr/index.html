@@ -319,7 +319,8 @@ progress_slackr(sort(runif(10)))</code></pre>
 </div>
 <div id="onexit" class="section level2">
 <h2>Onexit</h2>
-<p>Attach <code>on.exit</code> expressions to any function in R and the output will be sent to the Slack channel.</p>
+<p>Attach <code>on.exit</code> expressions to any function in R and at the end of the original function an output will be sent to the Slack channel.</p>
+<p>This is useful for letting you know when a simulation is done, but also to be able to send to the Slack channel a relevant summary to see that the simulation did as intended.</p>
 <p><img src="https://raw.githubusercontent.com/yonicd/blog/master/img/slackr/slackr_expr.gif"></p>
 <pre class="r"><code>ctl &lt;- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
 trt &lt;- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)

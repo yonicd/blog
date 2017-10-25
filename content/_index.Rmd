@@ -7,7 +7,8 @@ library(widgetframe)
 objs <- c(
   'https://raw.githubusercontent.com/yonicd/regexSelect/master/Miscellaneous/gifs/regexSelectPlot.gif',
   'https://raw.githubusercontent.com/yonicd/slickR/master/Miscellaneous/Multimedia/gif/slickRnestingWidgets.gif',
-  'https://raw.githubusercontent.com/metrumresearchgroup/texPreview/master/Miscellaneous/Multimedia/texPreviewPanZoom.gif','https://raw.githubusercontent.com/metrumresearchgroup/shinyCanvas/master/gifs/plotSize.gif')
+  'https://raw.githubusercontent.com/metrumresearchgroup/texPreview/master/Miscellaneous/Multimedia/texPreviewPanZoom.gif','https://raw.githubusercontent.com/metrumresearchgroup/shinyCanvas/master/gifs/plotSize.gif',
+  'https://raw.githubusercontent.com/yonicd/blog/master/img/slackr/slackr_progress.gif')
 
 #style="width:80%;height:300px;margin-left:100px"
 

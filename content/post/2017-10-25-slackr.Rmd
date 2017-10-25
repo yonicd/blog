@@ -4,7 +4,7 @@ author: Jonathan Sidi
 date: '2017-10-25'
 slug: slackr
 categories: []
-tags: [Slack,utility]
+tags: [Slack,utility,rstats]
 cran: slackr
 cran_badge: [status, downloads]
 gh_repo: hrbrmstr/slackr
@@ -54,7 +54,9 @@ This also solves a long standing problem of tracking the progress of parallel jo
 
 ## Onexit
 
-Attach `on.exit` expressions to any function in R and the output will be sent to the Slack channel.
+Attach `on.exit` expressions to any function in R and at the end of the original function an output will be sent to the Slack channel. 
+
+This is useful for letting you know when a simulation is done, but also to be able to send to the Slack channel a relevant summary to see that the simulation did as intended. 
 
 <img src="https://raw.githubusercontent.com/yonicd/blog/master/img/slackr/slackr_expr.gif">
 
