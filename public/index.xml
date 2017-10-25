@@ -18,7 +18,7 @@
       <pubDate>Wed, 25 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/slackr/</guid>
-      <description>&lt;p&gt;The &lt;a href=&#34;https://github.com/hrbrmstr/slackr&#34;&gt;slackr&lt;/a&gt; package, by &lt;a href=&#34;https://rud.is/b/&#34;&gt;Bob Rudis&lt;/a&gt;, contains functions that make it possible to interact with the Slack messaging platform. The great part of Slack is that it has mobile devices application interface. We take advantage of this by extending slackr’s interaction with with the server:&lt;/p&gt;
+      <description>&lt;p&gt;The &lt;a href=&#34;https://github.com/hrbrmstr/slackr&#34;&gt;slackr&lt;/a&gt; package, by &lt;a href=&#34;https://rud.is/b/&#34;&gt;Bob Rudis&lt;/a&gt;, contains functions that make it possible to interact with the Slack messaging platform. The great part of Slack is that it has mobile devices application interface. We take advantage of this by extending slackr’s interaction with the server:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Write&lt;/strong&gt; to a channel (current) - &lt;code&gt;slackr&lt;/code&gt;
 &lt;ul&gt;
