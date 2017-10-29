@@ -114,8 +114,8 @@ p <- plot_data_df%>%
         panel.grid.minor = element_blank(),
         axis.title = element_blank())
 
-ggsave('github_traffic.svg',device = 'svg',path = file.path(getwd(),'github_traffic/ggplot'))
-htmlwidgets::saveWidget(plotly::ggplotly(p),file = file.path(getwd(),'github_traffic/github_traffic.html'),selfcontained = TRUE)
+ggsave('github_traffic.svg',device = 'svg',path = file.path(getwd(),'img'))
+htmlwidgets::saveWidget(plotly::ggplotly(p),file = file.path(getwd(),'content/gh_traffic.html'),selfcontained = TRUE)
 
 system('git add github_traffic')
 system('git commit -m "update traffic"')

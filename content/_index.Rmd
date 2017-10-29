@@ -5,6 +5,7 @@ library(widgetframe)
 
 ```{r,echo=FALSE}
 objs <- c(
+  '../img/github_traffic.svg',
   'https://raw.githubusercontent.com/yonicd/regexSelect/master/Miscellaneous/gifs/regexSelectPlot.gif',
   'https://raw.githubusercontent.com/yonicd/slickR/master/Miscellaneous/Multimedia/gif/slickRnestingWidgets.gif',
   'https://raw.githubusercontent.com/metrumresearchgroup/texPreview/master/Miscellaneous/Multimedia/texPreviewPanZoom.gif','https://raw.githubusercontent.com/metrumresearchgroup/shinyCanvas/master/gifs/plotSize.gif',
