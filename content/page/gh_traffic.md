@@ -29,7 +29,8 @@ gh_pass <- 'github pass'
 gh_team <- rep(c('yonicd','metrumresearchgroup'),c(5,7))
 
 repos <- c('shinyHeatmaply','regexSelect','rpdf','gunflow','lmmen',
-           'ggedit','slickR','sinew','d3Tree','texPreview','shinyCanvas','jsTree')
+           'ggedit','slickR','sinew','d3Tree','texPreview','shinyCanvas',
+           'jsTree')
 
 repos <- file.path(gh_team,repos)
 ```
@@ -47,7 +48,8 @@ webElem <- remDr$findElement(using = 'id', value = "login_field")
 webElem$setElementAttribute(attributeName = 'value',value = gh_user)
 webElem <- remDr$findElement(using = 'id', value = "password")
 webElem$setElementAttribute(attributeName = 'value',value = gh_pass)
-webElem=remDr$findElement(using = 'xpath','//*[@id="login"]/form/div[4]/input[3]')
+webElem=remDr$findElement(using = 'xpath',
+'//*[@id="login"]/form/div[4]/input[3]')
 webElem$clickElement()
 Sys.sleep(1)
 
@@ -56,7 +58,8 @@ out <- plyr::llply(repos,function(repo){
   Sys.sleep(1)
   out <- XML::htmlParse(remDr$getPageSource(),asText = TRUE)
   sapply(c('clones','visitors'),function(type){
-  XML::getNodeSet(out,sprintf(sprintf('//*[@id="js-%s-graph"]/div/div[1]/svg/g/g',type)))
+  XML::getNodeSet(out,
+  sprintf(sprintf('//*[@id="js-%s-graph"]/div/div[1]/svg/g/g',type)))
 },simplify = FALSE,USE.NAMES = TRUE)
 },.progress = 'text')
 
@@ -93,15 +96,24 @@ plot_data <- plyr::ldply(plot_data_html,function(repo){
     if(is.null(dat)) return(NULL)
     
     yticks_total <- as.numeric(sapply(getNodeSet(dat[[2]],'g'),XML::xmlValue))
+    y_mult_total <- as.numeric(gsub('[)]','',gsub('^(.*?),','',
+    xmlAttrs(tail(getNodeSet(dat[[2]],'g'),1)[[1]])[2])))
+    
     yticks_unique <- as.numeric(sapply(getNodeSet(dat[[5]],'g'),XML::xmlValue))
+    y_mult_unique <- as.numeric(gsub('[)]','',gsub('^(.*?),','',
+    xmlAttrs(tail(getNodeSet(dat[[5]],'g'),1)[[1]])[2])))
+    
     
     x <- data.frame(type=type,
                     date = as.Date(sapply(getNodeSet(dat[[1]],'g'),XML::xmlValue),format = '%m/%d'),
                     total = as.numeric(sapply(getNodeSet(dat[[3]],'circle'),XML::xmlGetAttr,name = 'cy')),
                     unique = as.numeric(sapply(getNodeSet(dat[[4]],'circle'),XML::xmlGetAttr,name = 'cy')))
+
+    x$total <- scales::rescale(x$total,
+    rev(range(yticks_total))/((193-y_mult_total)/193))
     
-    x$total <- scales::rescale(x$total,rev(range(yticks_total)))
-    x$unique <- scales::rescale(x$unique,rev(range(yticks_unique)))
+    x$unique <- scales::rescale(x$unique,
+    rev(range(yticks_unique))/((193-y_mult_unique)/193))
     
     x%>%reshape2::melt(.,c('type','date'),variable.name=c('metric'))
   })

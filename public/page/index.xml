@@ -80,7 +80,8 @@ gh_pass &amp;lt;- &#39;github pass&#39;
 &lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;gh_team &amp;lt;- rep(c(&#39;yonicd&#39;,&#39;metrumresearchgroup&#39;),c(5,7))
 
 repos &amp;lt;- c(&#39;shinyHeatmaply&#39;,&#39;regexSelect&#39;,&#39;rpdf&#39;,&#39;gunflow&#39;,&#39;lmmen&#39;,
-           &#39;ggedit&#39;,&#39;slickR&#39;,&#39;sinew&#39;,&#39;d3Tree&#39;,&#39;texPreview&#39;,&#39;shinyCanvas&#39;,&#39;jsTree&#39;)
+           &#39;ggedit&#39;,&#39;slickR&#39;,&#39;sinew&#39;,&#39;d3Tree&#39;,&#39;texPreview&#39;,&#39;shinyCanvas&#39;,
+           &#39;jsTree&#39;)
 
 repos &amp;lt;- file.path(gh_team,repos)
 &lt;/code&gt;&lt;/pre&gt;
@@ -97,7 +98,8 @@ webElem &amp;lt;- remDr$findElement(using = &#39;id&#39;, value = &amp;quot;logi
 webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_user)
 webElem &amp;lt;- remDr$findElement(using = &#39;id&#39;, value = &amp;quot;password&amp;quot;)
 webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_pass)
-webElem=remDr$findElement(using = &#39;xpath&#39;,&#39;//*[@id=&amp;quot;login&amp;quot;]/form/div[4]/input[3]&#39;)
+webElem=remDr$findElement(using = &#39;xpath&#39;,
+&#39;//*[@id=&amp;quot;login&amp;quot;]/form/div[4]/input[3]&#39;)
 webElem$clickElement()
 Sys.sleep(1)
 
@@ -106,7 +108,8 @@ out &amp;lt;- plyr::llply(repos,function(repo){
   Sys.sleep(1)
   out &amp;lt;- XML::htmlParse(remDr$getPageSource(),asText = TRUE)
   sapply(c(&#39;clones&#39;,&#39;visitors&#39;),function(type){
-  XML::getNodeSet(out,sprintf(sprintf(&#39;//*[@id=&amp;quot;js-%s-graph&amp;quot;]/div/div[1]/svg/g/g&#39;,type)))
+  XML::getNodeSet(out,
+  sprintf(sprintf(&#39;//*[@id=&amp;quot;js-%s-graph&amp;quot;]/div/div[1]/svg/g/g&#39;,type)))
 },simplify = FALSE,USE.NAMES = TRUE)
 },.progress = &#39;text&#39;)
 
@@ -143,15 +146,24 @@ return(out)
     if(is.null(dat)) return(NULL)
     
     yticks_total &amp;lt;- as.numeric(sapply(getNodeSet(dat[[2]],&#39;g&#39;),XML::xmlValue))
+    y_mult_total &amp;lt;- as.numeric(gsub(&#39;[)]&#39;,&#39;&#39;,gsub(&#39;^(.*?),&#39;,&#39;&#39;,
+    xmlAttrs(tail(getNodeSet(dat[[2]],&#39;g&#39;),1)[[1]])[2])))
+    
     yticks_unique &amp;lt;- as.numeric(sapply(getNodeSet(dat[[5]],&#39;g&#39;),XML::xmlValue))
+    y_mult_unique &amp;lt;- as.numeric(gsub(&#39;[)]&#39;,&#39;&#39;,gsub(&#39;^(.*?),&#39;,&#39;&#39;,
+    xmlAttrs(tail(getNodeSet(dat[[5]],&#39;g&#39;),1)[[1]])[2])))
+    
     
     x &amp;lt;- data.frame(type=type,
                     date = as.Date(sapply(getNodeSet(dat[[1]],&#39;g&#39;),XML::xmlValue),format = &#39;%m/%d&#39;),
                     total = as.numeric(sapply(getNodeSet(dat[[3]],&#39;circle&#39;),XML::xmlGetAttr,name = &#39;cy&#39;)),
                     unique = as.numeric(sapply(getNodeSet(dat[[4]],&#39;circle&#39;),XML::xmlGetAttr,name = &#39;cy&#39;)))
+
+    x$total &amp;lt;- scales::rescale(x$total,
+    rev(range(yticks_total))/((193-y_mult_total)/193))
     
-    x$total &amp;lt;- scales::rescale(x$total,rev(range(yticks_total)))
-    x$unique &amp;lt;- scales::rescale(x$unique,rev(range(yticks_unique)))
+    x$unique &amp;lt;- scales::rescale(x$unique,
+    rev(range(yticks_unique))/((193-y_mult_unique)/193))
     
     x%&amp;gt;%reshape2::melt(.,c(&#39;type&#39;,&#39;date&#39;),variable.name=c(&#39;metric&#39;))
   })
