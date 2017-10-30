@@ -136,7 +136,7 @@ print(pl,plot.layout=list(list(rows=1,cols=1:2),list(rows=2,cols=1:2)))
 dev.off()
 
 system('git add public')
-system('git add traffic')
+system('git add github_traffic')
 system('git commit -m "update traffic"')
 system('git push origin master')
 
