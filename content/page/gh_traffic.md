@@ -1,5 +1,5 @@
 ---
-title: Github Waffle Heatmap
+title: GitHub Waffle Heatmap
 ---
 
 ![](https://yonicd.netlify.com/img/github_traffic.svg)
@@ -9,6 +9,7 @@ title: Github Waffle Heatmap
 ## Load libraries  
 ```r
 library(RSelenium)
+library(yaml)
 library(ggedit)
 library(svglite)
 library(viridis)
@@ -18,13 +19,17 @@ library(plyr)
 library(dplyr)
 ```
 
-## Retrieve GitHub Credentials
+## Set GitHub Credentials
 ```r
 list2env(yaml::yaml.load_file('github_traffic/_ghcred.yml'),
          envir = environment())
+         
+# this will set 
+ # github_user <- 'myuser'
+ # github_pass <- 'mypass'
 ```
 
-## Define the Github repos
+## Define the GitHub repos
 ```r
 gh_team <- rep(c('yonicd','metrumresearchgroup'),c(5,7))
 
@@ -132,7 +137,7 @@ plot_data_df <- plot_data_df%>%
          val=ceiling(value))
 ```
 
-## Create waffle heatplot
+## Create waffle heatmap
 
 ```r
 plot_list <- plyr::dlply(plot_data_df,c('type'),.fun = function(dat){
@@ -154,7 +159,7 @@ plot_list <- plyr::dlply(plot_data_df,c('type'),.fun = function(dat){
  
  if(dat$type[1] =='clones'){
    p <- p +
-     labs(title=sprintf('Github Team: %s | %s',
+     labs(title=sprintf('GitHub Team: %s | %s',
      paste0(unique(dat$team),collapse = ','),Sys.time()),
           subtitle='Clones')
  }else{
