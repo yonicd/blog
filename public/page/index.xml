@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on Reproducible Random Thoughts</title>
-    <link>https://yonicd.netlify.com/page/</link>
+    <link>/page/</link>
     <description>Recent content in Pages on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     
-        <atom:link href="https://yonicd.netlify.com/page/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/page/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>About me</title>
-      <link>https://yonicd.netlify.com/page/about/</link>
+      <link>/page/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/page/about/</guid>
+      <guid>/page/about/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;Currently a graduate student at the &lt;a href=&#34;http://en.stat.huji.ac.il/&#34;&gt;Department of Statistics&lt;/a&gt; in the Hebrew University of Jerusalem (HUJI) and  research associate at &lt;a href=&#34;https://www.metrumrg.com/&#34;&gt;Metrum Research Group&lt;/a&gt;. Previously worked as statistician in the Research Department of the &lt;a href=&#34;http://www.boi.org.il/en/Pages/Default.aspx&#34;&gt;Bank of Israel&lt;/a&gt;, &lt;a href=&#34;http://www.matrix.co.il/en/Pages/default.aspx&#34;&gt;Matrix&lt;/a&gt; and a consultant to the &lt;a href=&#34;http://www.vanleer.org.il/en&#34;&gt;Van Leer Jerusalem Institute&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
 
@@ -33,10 +33,10 @@
     
     <item>
       <title>Datasets</title>
-      <link>https://yonicd.netlify.com/page/datasets/</link>
+      <link>/page/datasets/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/page/datasets/</guid>
+      <guid>/page/datasets/</guid>
       <description>&lt;p&gt;This page includes source data used in blog posts and packages.&lt;/p&gt;
 
 &lt;p&gt;|Dataset|Object Type|Source|Description|
@@ -46,11 +46,11 @@
     </item>
     
     <item>
-      <title>Github Waffle Heatmap</title>
-      <link>https://yonicd.netlify.com/page/gh_traffic/</link>
+      <title>GitHub Waffle Heatmap</title>
+      <link>/page/gh_traffic/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/page/gh_traffic/</guid>
+      <guid>/page/gh_traffic/</guid>
       <description>
 
 &lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/img/github_traffic.svg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
@@ -69,13 +69,13 @@ library(plyr)
 library(dplyr)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;retrieve-github-credentials&#34;&gt;Retrieve GitHub Credentials&lt;/h2&gt;
+&lt;h2 id=&#34;set-github-credentials&#34;&gt;Set GitHub Credentials&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;list2env(yaml::yaml.load_file(&#39;github_traffic/_ghcred.yml&#39;),
-         envir = environment())
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;github_user &amp;lt;- &#39;github user&#39;
+github_pass &amp;lt;- &#39;github pass&#39;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;define-the-github-repos&#34;&gt;Define the Github repos&lt;/h2&gt;
+&lt;h2 id=&#34;define-the-github-repos&#34;&gt;Define the GitHub repos&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;gh_team &amp;lt;- rep(c(&#39;yonicd&#39;,&#39;metrumresearchgroup&#39;),c(5,7))
 
@@ -85,7 +85,7 @@ repos &amp;lt;- c(&#39;shinyHeatmaply&#39;,&#39;regexSelect&#39;,&#39;rpdf&#39;,
 repos &amp;lt;- file.path(gh_team,repos)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;rselenium-data-from-github-traffic&#34;&gt;RSelenium data from GitHub traffic&lt;/h2&gt;
+&lt;h2 id=&#34;retrieve-data-from-github-traffic-using-rselenium&#34;&gt;Retrieve data from GitHub traffic using RSelenium&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;github_traffic &amp;lt;- function(gh_user,gh_pass,repos){
 
@@ -182,7 +182,7 @@ plot_data_df &amp;lt;- plot_data_df%&amp;gt;%
          val=ceiling(value))
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;create-waffle-heatplot&#34;&gt;Create waffle heatplot&lt;/h2&gt;
+&lt;h2 id=&#34;create-waffle-heatmap&#34;&gt;Create waffle heatmap&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;plot_list &amp;lt;- plyr::dlply(plot_data_df,c(&#39;type&#39;),.fun = function(dat){
  p &amp;lt;- dat%&amp;gt;%
@@ -203,7 +203,7 @@ plot_data_df &amp;lt;- plot_data_df%&amp;gt;%
  
  if(dat$type[1] ==&#39;clones&#39;){
    p &amp;lt;- p +
-     labs(title=sprintf(&#39;Github Team: %s | %s&#39;,
+     labs(title=sprintf(&#39;GitHub Team: %s | %s&#39;,
      paste0(unique(dat$team),collapse = &#39;,&#39;),Sys.time()),
           subtitle=&#39;Clones&#39;)
  }else{
@@ -229,10 +229,10 @@ dev.off()
     
     <item>
       <title>Projects</title>
-      <link>https://yonicd.netlify.com/page/projects/</link>
+      <link>/page/projects/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/page/projects/</guid>
+      <guid>/page/projects/</guid>
       <description>&lt;p&gt;This is a list of R packages that have been published on CRAN and/or are still being developed on Github. Many of the projects are part of &lt;a href=&#34;https://www.metrumrg.com/try-open-source-tools/&#34;&gt;open tools&lt;/a&gt; developed at Metrum Research Group.&lt;/p&gt;
 
 &lt;!-- https://img.shields.io/badge/METRUM-opentools-brightgreen.svg?link=https://www.metrumrg.com/&amp;link=https://www.metrumrg.com/open-science/ --&gt;

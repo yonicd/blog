@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Regex on Reproducible Random Thoughts</title>
-    <link>https://yonicd.netlify.com/tags/regex/</link>
+    <link>/tags/regex/</link>
     <description>Recent content in Regex on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Tue, 26 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://yonicd.netlify.com/tags/regex/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/regex/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Regular Expression Searching within Shiny Selectize Objects</title>
-      <link>https://yonicd.netlify.com/post/2017-09-26-regexselect/</link>
+      <link>/post/2017-09-26-regexselect/</link>
       <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/post/2017-09-26-regexselect/</guid>
+      <guid>/post/2017-09-26-regexselect/</guid>
       <description>
 
 &lt;p&gt;regexSelect is a small package that uses &lt;a href=&#34;https://shiny.rstudio.com/articles/modules.html&#34;&gt;Shiny modules&lt;/a&gt; to solve a problem in Shiny selectize objects - &lt;a href=&#34;https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf&#34;&gt;regular expression&lt;/a&gt; (regex) searching. You can quickly filter the values in the selectize object, while being able to add that new regex query to the selectize list.&lt;/p&gt;

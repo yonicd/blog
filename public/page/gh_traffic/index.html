@@ -5,9 +5,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Rselenium</title>
-  <meta property="og:title" content="Rselenium" />
-  <meta name="twitter:title" content="Rselenium" />
+  <title>GitHub Waffle Heatmap</title>
+  <meta property="og:title" content="GitHub Waffle Heatmap" />
+  <meta name="twitter:title" content="GitHub Waffle Heatmap" />
+  <meta name="description" content="How we got this: Load libraries library(RSelenium) library(ggedit) library(svglite) library(viridis) library(XML) library(ggplot2) library(plyr) library(dplyr)  Set GitHub Credentials github_user &lt;- &#39;github user&#39; github_pass &lt;- &#39;github pass&#39;  Define the GitHub repos gh_team &lt;- rep(c(&#39;yonicd&#39;,&#39;metrumresearchgroup&#39;),c(5,7)) repos &lt;- c(&#39;shinyHeatmaply&#39;,&#39;regexSelect&#39;,&#39;rpdf&#39;,&#39;gunflow&#39;,&#39;lmmen&#39;, &#39;ggedit&#39;,&#39;slickR&#39;,&#39;sinew&#39;,&#39;d3Tree&#39;,&#39;texPreview&#39;,&#39;shinyCanvas&#39;,&#39;jsTree&#39;) repos &lt;- file.path(gh_team,repos)  Retrieve data from GitHub traffic using RSelenium github_traffic &lt;- function(gh_user,gh_pass,repos){ rD &lt;- rsDriver(verbose = FALSE) remDr &lt;- rD[[&quot;client&quot;]] remDr$navigate(sprintf(&#39;https://github.com/%s/graphs/traffic&#39;,repos[1])) webElem &lt;- remDr$findElement(using = &#39;id&#39;, value = &quot;login_field&quot;) webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_user) webElem &lt;- remDr$findElement(using = &#39;id&#39;, value = &quot;password&quot;) webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_pass) webElem=remDr$findElement(using = &#39;xpath&#39;,&#39;//*[@id=&quot;login&quot;]/form/div[4]/input[3]&#39;) webElem$clickElement() Sys.">
+  <meta property="og:description" content="How we got this: Load libraries library(RSelenium) library(ggedit) library(svglite) library(viridis) library(XML) library(ggplot2) library(plyr) library(dplyr)  Set GitHub Credentials github_user &lt;- &#39;github user&#39; github_pass &lt;- &#39;github pass&#39;  Define the GitHub repos gh_team &lt;- rep(c(&#39;yonicd&#39;,&#39;metrumresearchgroup&#39;),c(5,7)) repos &lt;- c(&#39;shinyHeatmaply&#39;,&#39;regexSelect&#39;,&#39;rpdf&#39;,&#39;gunflow&#39;,&#39;lmmen&#39;, &#39;ggedit&#39;,&#39;slickR&#39;,&#39;sinew&#39;,&#39;d3Tree&#39;,&#39;texPreview&#39;,&#39;shinyCanvas&#39;,&#39;jsTree&#39;) repos &lt;- file.path(gh_team,repos)  Retrieve data from GitHub traffic using RSelenium github_traffic &lt;- function(gh_user,gh_pass,repos){ rD &lt;- rsDriver(verbose = FALSE) remDr &lt;- rD[[&quot;client&quot;]] remDr$navigate(sprintf(&#39;https://github.com/%s/graphs/traffic&#39;,repos[1])) webElem &lt;- remDr$findElement(using = &#39;id&#39;, value = &quot;login_field&quot;) webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_user) webElem &lt;- remDr$findElement(using = &#39;id&#39;, value = &quot;password&quot;) webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_pass) webElem=remDr$findElement(using = &#39;xpath&#39;,&#39;//*[@id=&quot;login&quot;]/form/div[4]/input[3]&#39;) webElem$clickElement() Sys.">
+  <meta name="twitter:description" content="How we got this: Load libraries library(RSelenium) library(ggedit) library(svglite) library(viridis) library(XML) library(ggplot2) library(plyr) library(dplyr)  Set GitHub Credentials github_user …">
   <meta name="author" content="Jonathan Sidi"/>
   <link href='/img/cd-favicon.ico' rel='icon' type='image/x-icon'/>
   <meta property="og:image" content="/img/cd-icon.png" />
@@ -15,12 +18,12 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@yoniceedee" />
   <meta name="twitter:creator" content="@yoniceedee" />
-  <meta property="og:url" content="/tags/rselenium/" />
+  <meta property="og:url" content="/page/gh_traffic/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Reproducible Random Thoughts" />
 
   <meta name="generator" content="Hugo 0.27.1" />
-  <link rel="canonical" href="/tags/rselenium/" />
+  <link rel="canonical" href="/page/gh_traffic/" />
   <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Reproducible Random Thoughts">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -176,14 +179,26 @@ ga('send', 'pageview');
 
 
     
+  
+  
+  
+
+
+
+
+  
+
   <header class="header-section ">
+    
     <div class="intro-header no-img">
+      
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="page-heading">
-              <h1>#Rselenium</h1>
-              <hr class="small">
+              <h1>GitHub Waffle Heatmap</h1>
+                
+                
             </div>
           </div>
         </div>
@@ -191,51 +206,240 @@ ga('send', 'pageview');
     </div>
   </header>
 
+
     
-  <div class="container" role="main">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+            <div>
+      
+ </div>
+ <div>
+ 
+ 
+    </div>
+
+      <article role="main" class="blog-post">
         
-        <div class="posts-list">
-          
-            <article class="post-preview">
-              <a href="/post/2017-10-02-githubtraffic/">
-                <h2 class="post-title">Combining Github Traffic Plots Across Repositories</h2>
 
-                
-              </a>
+<p><img src="https://yonicd.netlify.com/img/github_traffic.svg" alt="" /></p>
 
-              <p class="post-meta">
-                Posted on October 2, 2017
-              </p>
-              <div class="post-entry">
-                
-                  This post will show how to use the RSelenium package to scrape your own github account to retrieve all that fun traffic data of clones and visits and create a single traffic plot for your account.
-For the single file you can find it in this gist file.
-Packages library(RSelenium) library(XML) library(ggplot2) library(reshape2) library(plyr) library(dplyr)  Fill in the relevant information for your account. The team is usually your username, but it can be different.
-                  <a href="/post/2017-10-02-githubtraffic/" class="post-read-more">[Read More]</a>
-                
-              </div>
+<h1 id="how-we-got-this">How we got this:</h1>
 
-              
-                <span class="post-meta">
-                  
-                    #<a href="/tags/rstats/">rstats</a>&nbsp;
-                  
-                    #<a href="/tags/rselenium/">RSelenium</a>&nbsp;
-                  
-                    #<a href="/tags/webscraping/">webscraping</a>&nbsp;
-                  
-                </span>
-              
+<h2 id="load-libraries">Load libraries</h2>
 
-            </article>
-          
-        </div>
+<pre><code class="language-r">library(RSelenium)
+library(ggedit)
+library(svglite)
+library(viridis)
+library(XML)
+library(ggplot2)
+library(plyr)
+library(dplyr)
+</code></pre>
+
+<h2 id="set-github-credentials">Set GitHub Credentials</h2>
+
+<pre><code class="language-r">github_user &lt;- 'github user'
+github_pass &lt;- 'github pass'
+</code></pre>
+
+<h2 id="define-the-github-repos">Define the GitHub repos</h2>
+
+<pre><code class="language-r">gh_team &lt;- rep(c('yonicd','metrumresearchgroup'),c(5,7))
+
+repos &lt;- c('shinyHeatmaply','regexSelect','rpdf','gunflow','lmmen',
+           'ggedit','slickR','sinew','d3Tree','texPreview','shinyCanvas','jsTree')
+
+repos &lt;- file.path(gh_team,repos)
+</code></pre>
+
+<h2 id="retrieve-data-from-github-traffic-using-rselenium">Retrieve data from GitHub traffic using RSelenium</h2>
+
+<pre><code class="language-r">github_traffic &lt;- function(gh_user,gh_pass,repos){
+
+rD &lt;- rsDriver(verbose = FALSE)
+remDr &lt;- rD[[&quot;client&quot;]]
+
+remDr$navigate(sprintf('https://github.com/%s/graphs/traffic',repos[1]))
+webElem &lt;- remDr$findElement(using = 'id', value = &quot;login_field&quot;)
+webElem$setElementAttribute(attributeName = 'value',value = gh_user)
+webElem &lt;- remDr$findElement(using = 'id', value = &quot;password&quot;)
+webElem$setElementAttribute(attributeName = 'value',value = gh_pass)
+webElem=remDr$findElement(using = 'xpath','//*[@id=&quot;login&quot;]/form/div[4]/input[3]')
+webElem$clickElement()
+Sys.sleep(1)
+
+out &lt;- plyr::llply(repos,function(repo){
+  remDr$navigate(sprintf('https://github.com/%s/graphs/traffic',repo))
+  Sys.sleep(1)
+  out &lt;- XML::htmlParse(remDr$getPageSource(),asText = TRUE)
+  sapply(c('clones','visitors'),function(type){
+  XML::getNodeSet(out,sprintf(sprintf('//*[@id=&quot;js-%s-graph&quot;]/div/div[1]/svg/g/g',type)))
+},simplify = FALSE,USE.NAMES = TRUE)
+},.progress = 'text')
+
+names(out) &lt;- repos
+
+remDr$close()
+rD[[&quot;server&quot;]]$stop()
+
+return(out)
+}
+</code></pre>
+
+<h3 id="run-the-function">Run the function</h3>
+
+<pre><code class="language-r">plot_data_html &lt;- github_traffic(gh_user=gh_user,
+                            gh_pass=gh_pass,
+                            repos=repos)
+</code></pre>
+
+<h2 id="failsafe-if-rselenium-crashes">Failsafe if Rselenium Crashes</h2>
+
+<pre><code class="language-r"># rD &lt;- rsDriver(verbose = FALSE,port=4444L)
+# remDr &lt;- rD$client
+# remDr$close()
+</code></pre>
+
+<h2 id="transform-d3-scales-to-r-scales">Transform d3 scales to R scales</h2>
+
+<pre><code class="language-r">plot_data &lt;- plyr::ldply(plot_data_html,function(repo){
+  plyr::mdply(names(repo),function(type){
+    
+    dat &lt;- repo[[type]]
+  
+    if(is.null(dat)) return(NULL)
+    
+    yticks_total &lt;- as.numeric(sapply(getNodeSet(dat[[2]],'g'),XML::xmlValue))
+    yticks_unique &lt;- as.numeric(sapply(getNodeSet(dat[[5]],'g'),XML::xmlValue))
+    
+    x &lt;- data.frame(type=type,
+                    date = as.Date(sapply(getNodeSet(dat[[1]],'g'),XML::xmlValue),format = '%m/%d'),
+                    total = as.numeric(sapply(getNodeSet(dat[[3]],'circle'),XML::xmlGetAttr,name = 'cy')),
+                    unique = as.numeric(sapply(getNodeSet(dat[[4]],'circle'),XML::xmlGetAttr,name = 'cy')))
+    
+    x$total &lt;- scales::rescale(x$total,rev(range(yticks_total)))
+    x$unique &lt;- scales::rescale(x$unique,rev(range(yticks_unique)))
+    
+    x%&gt;%reshape2::melt(.,c('type','date'),variable.name=c('metric'))
+  })
+},.id='repo')%&gt;%select(-X1)
+</code></pre>
+
+<h2 id="save-file-to-disk-as-rds">Save file to disk as RDS</h2>
+
+<pre><code class="language-r">saveRDS(plot_data,file = sprintf('github_traffic/data/%s_gh_traffic.rds',
+                                 format(Sys.time(),format = '%Y%m%d_%H%M')))
+</code></pre>
+
+<h2 id="read-in-all-historical-data">Read in all historical data</h2>
+
+<pre><code class="language-r">myfile &lt;- list.files('github_traffic/data',full.names = TRUE)
+
+plot_data_df &lt;- plyr::mdply(myfile,readRDS)
+
+levels(plot_data_df$X1) &lt;- gsub('_gh(.*?)$','',basename(myfile))
+
+names(plot_data_df)[1] &lt;- 'fetch_date'
+
+plot_data_df &lt;- plot_data_df%&gt;%
+  group_by(repo,type,date,metric)%&gt;%
+  do(.,tail(.,1))%&gt;%
+  ungroup()%&gt;%
+  mutate(repo=gsub('^(.*?)/','',repo),
+         val=ceiling(value))
+</code></pre>
+
+<h2 id="create-waffle-heatmap">Create waffle heatmap</h2>
+
+<pre><code class="language-r">plot_list &lt;- plyr::dlply(plot_data_df,c('type'),.fun = function(dat){
+ p &lt;- dat%&gt;%
+    ggplot(aes(x=date,
+               y=repo,
+               fill=val))+
+    geom_tile(colour='white',width=.95)+
+    geom_hline(yintercept = c(0,(1:length(unique(dat$repo)))+0.5),colour='grey90')+
+    scale_fill_viridis(name='Count')+
+    facet_grid(.~metric)+
+    # uncomment if you want every date on x-axis
+    # scale_x_date(date_breaks = &quot;1 day&quot;,date_labels = &quot;%m/%d&quot;)+
+    theme_minimal()+
+    theme(panel.grid.major  = element_blank(),
+          axis.text.x = element_text(angle=90),
+          panel.grid.minor = element_blank(),
+          axis.title = element_blank())
+ 
+ if(dat$type[1] =='clones'){
+   p &lt;- p +
+     labs(title=sprintf('GitHub Team: %s | %s',
+     paste0(unique(dat$team),collapse = ','),Sys.time()),
+          subtitle='Clones')
+ }else{
+   p &lt;- p +
+     labs(subtitle='Visitors')
+ }
+ 
+ p
+})
+</code></pre>
+
+<h2 id="save-to-disk">Save to disk</h2>
+
+<pre><code class="language-r">pl &lt;- ggedit::as.gglist(plot_list)
+svglite(file.path(getwd(),'public/img/github_traffic.svg'),standalone = TRUE)
+print(pl,plot.layout=list(list(rows=1,cols=1:2),list(rows=2,cols=1:2)))
+dev.off()
+</code></pre>
+
+<p><img src="https://yonicd.netlify.com/img/github_traffic.svg" alt="" /></p>
+
+      </article>
+
+      <ul class="pager blog-pager">
         
-      </div>
+          <li class="previous">
+            <a href="/page/projects/" data-toggle="tooltip" data-placement="top" title="Projects">&larr; Previous Post</a>
+          </li>
+        
+        
+          <li class="next">
+            <a href="/page/datasets/" data-toggle="tooltip" data-placement="top" title="Datasets">Next Post &rarr;</a>
+          </li>
+        
+      </ul>
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yonicd" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+      
+
     </div>
   </div>
+</div>
 
     <footer>
   <div class="container">

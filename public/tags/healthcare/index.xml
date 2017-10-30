@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Healthcare on Reproducible Random Thoughts</title>
-    <link>https://yonicd.netlify.com/tags/healthcare/</link>
+    <link>/tags/healthcare/</link>
     <description>Recent content in Healthcare on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Tue, 26 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://yonicd.netlify.com/tags/healthcare/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/healthcare/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>What is the appropriate population scaling of the Affordable Care Act Funding?</title>
-      <link>https://yonicd.netlify.com/post/2017-09-26-aca/</link>
+      <link>/post/2017-09-26-aca/</link>
       <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/post/2017-09-26-aca/</guid>
+      <guid>/post/2017-09-26-aca/</guid>
       <description>
 
 &lt;p&gt;I have been trying to decipher for myself, what is in the current (well, yesterday&amp;rsquo;s) Graham-Cassidy health care bill. I saw this image on many news outlets a few days ago and my inner hate for pie charts bubbled up.&lt;/p&gt;

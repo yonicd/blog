@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Htmlwigdet on Reproducible Random Thoughts</title>
-    <link>https://yonicd.netlify.com/tags/htmlwigdet/</link>
+    <link>/tags/htmlwigdet/</link>
     <description>Recent content in Htmlwigdet on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Tue, 24 Oct 2017 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://yonicd.netlify.com/tags/htmlwigdet/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/htmlwigdet/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>jsTree htmlwidget</title>
-      <link>https://yonicd.netlify.com/post/jstree/</link>
+      <link>/post/jstree/</link>
       <pubDate>Tue, 24 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/post/jstree/</guid>
-      <description>&lt;script src=&#34;https://yonicd.netlify.com/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;https://yonicd.netlify.com/rmarkdown-libs/blazy/blazy.min.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;https://yonicd.netlify.com/rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;https://yonicd.netlify.com/rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
+      <guid>/post/jstree/</guid>
+      <description>&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/blazy/blazy.min.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;jsTree is a R package that is a standalone htmlwidget for the jsTree JavaScript library. It can be run from the R console directly into the Rstudio Viewer, be used in a Shiny application or be part of an Rmarkdown html output.&lt;/p&gt;
@@ -208,10 +208,10 @@ shinyApp(ui, server)&lt;/code&gt;&lt;/pre&gt;
     
     <item>
       <title>slickR</title>
-      <link>https://yonicd.netlify.com/post/2017-04-07-slickr/</link>
+      <link>/post/2017-04-07-slickr/</link>
       <pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/post/2017-04-07-slickr/</guid>
+      <guid>/post/2017-04-07-slickr/</guid>
       <description>
 
 &lt;p&gt;We are happy to bring the &lt;a href=&#34;http://kenwheeler.github.io/slick/&#34;&gt;slick&lt;/a&gt; JavaScript library to R. It is self described as &amp;ldquo;the last carousel you&amp;rsquo;ll ever need&amp;rdquo;. This carousel is based on putting the elements of the carousel in a &lt;a href=&#34;https://www.w3schools.com/tags/tag_div.asp&#34;&gt;div&lt;/a&gt; HTML tag. This makes the carousel very versatile in what can be placed inside. Regular objects that are placed in a carousel can be for example: images, plots, tables, gifs, videos, iframes and even htmlwidgets.&lt;/p&gt;

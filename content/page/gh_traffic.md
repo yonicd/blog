@@ -9,7 +9,6 @@ title: GitHub Waffle Heatmap
 ## Load libraries  
 ```r
 library(RSelenium)
-library(yaml)
 library(ggedit)
 library(svglite)
 library(viridis)
@@ -21,12 +20,8 @@ library(dplyr)
 
 ## Set GitHub Credentials
 ```r
-list2env(yaml::yaml.load_file('github_traffic/_ghcred.yml'),
-         envir = environment())
-         
-# this will set 
- # github_user <- 'myuser'
- # github_pass <- 'mypass'
+github_user <- 'github user'
+github_pass <- 'github pass'
 ```
 
 ## Define the GitHub repos

@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Webscraping on Reproducible Random Thoughts</title>
-    <link>https://yonicd.netlify.com/tags/webscraping/</link>
+    <link>/tags/webscraping/</link>
     <description>Recent content in Webscraping on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Mon, 02 Oct 2017 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://yonicd.netlify.com/tags/webscraping/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/webscraping/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Combining Github Traffic Plots Across Repositories</title>
-      <link>https://yonicd.netlify.com/post/2017-10-02-githubtraffic/</link>
+      <link>/post/2017-10-02-githubtraffic/</link>
       <pubDate>Mon, 02 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/post/2017-10-02-githubtraffic/</guid>
+      <guid>/post/2017-10-02-githubtraffic/</guid>
       <description>
 
 &lt;p&gt;This post will show how to use the &lt;a href=&#34;https://cran.r-project.org/web/packages/RSelenium/vignettes/RSelenium-basics.html&#34;&gt;RSelenium&lt;/a&gt; package to scrape your own github account to retrieve all that fun traffic data of clones and visits and create a single traffic plot for your account.&lt;/p&gt;
