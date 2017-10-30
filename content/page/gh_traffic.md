@@ -20,8 +20,8 @@ library(dplyr)
 
 ## Set GitHub Credentials
 ```r
-github_user <- 'github user'
-github_pass <- 'github pass'
+gh_user <- 'github user'
+gh_pass <- 'github pass'
 ```
 
 ## Define the GitHub repos

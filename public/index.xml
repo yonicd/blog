@@ -2074,8 +2074,8 @@ library(dplyr)
 
 &lt;h2 id=&#34;set-github-credentials&#34;&gt;Set GitHub Credentials&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;github_user &amp;lt;- &#39;github user&#39;
-github_pass &amp;lt;- &#39;github pass&#39;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;gh_user &amp;lt;- &#39;github user&#39;
+gh_pass &amp;lt;- &#39;github pass&#39;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&#34;define-the-github-repos&#34;&gt;Define the GitHub repos&lt;/h2&gt;
