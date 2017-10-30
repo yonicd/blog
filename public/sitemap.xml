@@ -3,177 +3,181 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/post/slackr/</loc>
+    <loc>https://yonicd.netlify.com/post/slackr/</loc>
     <lastmod>2017-10-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/jstree/</loc>
+    <loc>https://yonicd.netlify.com/post/jstree/</loc>
     <lastmod>2017-10-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2017-10-02-githubtraffic/</loc>
+    <loc>https://yonicd.netlify.com/post/2017-10-02-githubtraffic/</loc>
     <lastmod>2017-10-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2017-09-26-regexselect/</loc>
+    <loc>https://yonicd.netlify.com/post/2017-09-26-regexselect/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2017-09-26-aca/</loc>
+    <loc>https://yonicd.netlify.com/post/2017-09-26-aca/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2017-09-18-sinew/</loc>
+    <loc>https://yonicd.netlify.com/post/2017-09-18-sinew/</loc>
     <lastmod>2017-09-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2017-05-03-sinew/</loc>
+    <loc>https://yonicd.netlify.com/post/2017-05-03-sinew/</loc>
     <lastmod>2017-05-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2017-04-07-slickr/</loc>
+    <loc>https://yonicd.netlify.com/post/2017-04-07-slickr/</loc>
     <lastmod>2017-04-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2017-03-31-ggedit_cranpost/</loc>
+    <loc>https://yonicd.netlify.com/post/2017-03-31-ggedit_cranpost/</loc>
     <lastmod>2017-03-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2017-02-22-ggedit3/</loc>
+    <loc>https://yonicd.netlify.com/post/2017-02-22-ggedit3/</loc>
     <lastmod>2017-02-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2016-12-13-ggedit/</loc>
+    <loc>https://yonicd.netlify.com/post/2016-12-13-ggedit/</loc>
     <lastmod>2016-12-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>https://yonicd.netlify.com/</loc>
     <lastmod>2017-10-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/gh_traffic/</loc>
+    <loc>https://yonicd.netlify.com/gh_traffic/</loc>
   </url>
   
   <url>
-    <loc>/page/about/</loc>
+    <loc>https://yonicd.netlify.com/page/about/</loc>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>https://yonicd.netlify.com/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/page/datasets/</loc>
+    <loc>https://yonicd.netlify.com/page/datasets/</loc>
   </url>
   
   <url>
-    <loc>/tags/geofacet/</loc>
+    <loc>https://yonicd.netlify.com/tags/geofacet/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/ggplot2/</loc>
+    <loc>https://yonicd.netlify.com/tags/ggplot2/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/healthcare/</loc>
+    <loc>https://yonicd.netlify.com/page/gh_traffic/</loc>
+  </url>
+  
+  <url>
+    <loc>https://yonicd.netlify.com/tags/healthcare/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/htmlwigdet/</loc>
+    <loc>https://yonicd.netlify.com/tags/htmlwigdet/</loc>
     <lastmod>2017-10-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/page/</loc>
+    <loc>https://yonicd.netlify.com/page/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/</loc>
+    <loc>https://yonicd.netlify.com/post/</loc>
     <lastmod>2017-10-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/page/projects/</loc>
+    <loc>https://yonicd.netlify.com/page/projects/</loc>
   </url>
   
   <url>
-    <loc>/tags/regex/</loc>
+    <loc>https://yonicd.netlify.com/tags/regex/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/reproducibility/</loc>
+    <loc>https://yonicd.netlify.com/tags/reproducibility/</loc>
     <lastmod>2017-09-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/roxygen2/</loc>
+    <loc>https://yonicd.netlify.com/tags/roxygen2/</loc>
     <lastmod>2017-09-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/rselenium/</loc>
+    <loc>https://yonicd.netlify.com/tags/rselenium/</loc>
     <lastmod>2017-10-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/rstats/</loc>
+    <loc>https://yonicd.netlify.com/tags/rstats/</loc>
     <lastmod>2017-10-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/shiny/</loc>
+    <loc>https://yonicd.netlify.com/tags/shiny/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/slack/</loc>
+    <loc>https://yonicd.netlify.com/tags/slack/</loc>
     <lastmod>2017-10-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://yonicd.netlify.com/tags/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/utility/</loc>
+    <loc>https://yonicd.netlify.com/tags/utility/</loc>
     <lastmod>2017-10-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/webscraping/</loc>
+    <loc>https://yonicd.netlify.com/tags/webscraping/</loc>
     <lastmod>2017-10-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Reproducibility on Reproducible Random Thoughts</title>
-    <link>/tags/reproducibility/</link>
+    <link>https://yonicd.netlify.com/tags/reproducibility/</link>
     <description>Recent content in Reproducibility on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Mon, 18 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/tags/reproducibility/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://yonicd.netlify.com/tags/reproducibility/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Automating roxygen2 package documentation</title>
-      <link>/post/2017-09-18-sinew/</link>
+      <link>https://yonicd.netlify.com/post/2017-09-18-sinew/</link>
       <pubDate>Mon, 18 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2017-09-18-sinew/</guid>
+      <guid>https://yonicd.netlify.com/post/2017-09-18-sinew/</guid>
       <description>
 
 &lt;p&gt;Thinking of creating a new package? Dread the task of function documentation? Afraid to run &lt;code&gt;devtools::check(build_args = &#39;--as-cran&#39;)&lt;/code&gt; and get bombarded by Errors, Warnings, and Notes (oh my!) ? Wait&amp;hellip;. breathe!&lt;/p&gt;
@@ -217,10 +217,10 @@ lm
     
     <item>
       <title>sinew</title>
-      <link>/post/2017-05-03-sinew/</link>
+      <link>https://yonicd.netlify.com/post/2017-05-03-sinew/</link>
       <pubDate>Wed, 03 May 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2017-05-03-sinew/</guid>
+      <guid>https://yonicd.netlify.com/post/2017-05-03-sinew/</guid>
       <description>
 
 &lt;p&gt;Sinew is a R package that generates a Roxygen skeleton populated with information scraped from the function script.&lt;/p&gt;
@@ -516,10 +516,10 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
     
     <item>
       <title>ggedit 0.2.0</title>
-      <link>/post/2017-03-31-ggedit_cranpost/</link>
+      <link>https://yonicd.netlify.com/post/2017-03-31-ggedit_cranpost/</link>
       <pubDate>Fri, 31 Mar 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2017-03-31-ggedit_cranpost/</guid>
+      <guid>https://yonicd.netlify.com/post/2017-03-31-ggedit_cranpost/</guid>
       <description>
 
 &lt;p&gt;We are pleased to announce the release of the ggedit package on &lt;a href=&#34;https://cran.r-project.org/web/packages/ggedit/index.html&#34;&gt;CRAN&lt;/a&gt;.&lt;/p&gt;
@@ -637,10 +637,10 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
     
     <item>
       <title>ggedit 0.1.1</title>
-      <link>/post/2017-02-22-ggedit3/</link>
+      <link>https://yonicd.netlify.com/post/2017-02-22-ggedit3/</link>
       <pubDate>Wed, 22 Feb 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2017-02-22-ggedit3/</guid>
+      <guid>https://yonicd.netlify.com/post/2017-02-22-ggedit3/</guid>
       <description>
 
 &lt;p&gt;ggedit is a package that lets users interactively edit ggplot layer and theme aesthetics.  In a previous &lt;a href=&#34;https://yonicd.github.io/2016-12-13-ggedit/&#34;&gt;post&lt;/a&gt; we showed you how to use it in a collaborative workflow using standard R scripts. More importantly, we &lt;a href=&#34;https://www.r-bloggers.com/ggedit-0-0-2-a-gui-for-advanced-editing-of-ggplot2-objects/&#34;&gt;highlighted&lt;/a&gt; that ggedit outputs to the user, after editing, updated: gg plots, layers, scales and themes as both self-contained objects &lt;em&gt;and&lt;/em&gt; script that you can paste directly in your code.&lt;/p&gt;
@@ -770,10 +770,10 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
     
     <item>
       <title>ggedit</title>
-      <link>/post/2016-12-13-ggedit/</link>
+      <link>https://yonicd.netlify.com/post/2016-12-13-ggedit/</link>
       <pubDate>Tue, 13 Dec 2016 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2016-12-13-ggedit/</guid>
+      <guid>https://yonicd.netlify.com/post/2016-12-13-ggedit/</guid>
       <description>
 
 &lt;p&gt;ggplot2 has become the standard of plotting in R for many users. New users, however, may find the learning curve steep at first, and more experienced users may find it challenging to keep track of all the options (especially in the theme!).&lt;/p&gt;

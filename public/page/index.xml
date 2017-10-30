@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on Reproducible Random Thoughts</title>
-    <link>/page/</link>
+    <link>https://yonicd.netlify.com/page/</link>
     <description>Recent content in Pages on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     
-        <atom:link href="/page/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://yonicd.netlify.com/page/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>About me</title>
-      <link>/page/about/</link>
+      <link>https://yonicd.netlify.com/page/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/about/</guid>
+      <guid>https://yonicd.netlify.com/page/about/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;Currently a graduate student at the &lt;a href=&#34;http://en.stat.huji.ac.il/&#34;&gt;Department of Statistics&lt;/a&gt; in the Hebrew University of Jerusalem (HUJI) and  research associate at &lt;a href=&#34;https://www.metrumrg.com/&#34;&gt;Metrum Research Group&lt;/a&gt;. Previously worked as statistician in the Research Department of the &lt;a href=&#34;http://www.boi.org.il/en/Pages/Default.aspx&#34;&gt;Bank of Israel&lt;/a&gt;, &lt;a href=&#34;http://www.matrix.co.il/en/Pages/default.aspx&#34;&gt;Matrix&lt;/a&gt; and a consultant to the &lt;a href=&#34;http://www.vanleer.org.il/en&#34;&gt;Van Leer Jerusalem Institute&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
 
@@ -33,10 +33,10 @@
     
     <item>
       <title>Datasets</title>
-      <link>/page/datasets/</link>
+      <link>https://yonicd.netlify.com/page/datasets/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/datasets/</guid>
+      <guid>https://yonicd.netlify.com/page/datasets/</guid>
       <description>&lt;p&gt;This page includes source data used in blog posts and packages.&lt;/p&gt;
 
 &lt;p&gt;|Dataset|Object Type|Source|Description|
@@ -46,11 +46,193 @@
     </item>
     
     <item>
-      <title>Projects</title>
-      <link>/page/projects/</link>
+      <title>Github Waffle Heatmap</title>
+      <link>https://yonicd.netlify.com/page/gh_traffic/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/projects/</guid>
+      <guid>https://yonicd.netlify.com/page/gh_traffic/</guid>
+      <description>
+
+&lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/img/github_traffic.svg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;how-we-got-this&#34;&gt;How we got this:&lt;/h1&gt;
+
+&lt;h2 id=&#34;load-libraries&#34;&gt;Load libraries&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(RSelenium)
+library(ggedit)
+library(svglite)
+library(viridis)
+library(XML)
+library(ggplot2)
+library(plyr)
+library(dplyr)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;retrieve-github-credentials&#34;&gt;Retrieve GitHub Credentials&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;list2env(yaml::yaml.load_file(&#39;github_traffic/_ghcred.yml&#39;),
+         envir = environment())
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;define-the-github-repos&#34;&gt;Define the Github repos&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;gh_team &amp;lt;- rep(c(&#39;yonicd&#39;,&#39;metrumresearchgroup&#39;),c(5,7))
+
+repos &amp;lt;- c(&#39;shinyHeatmaply&#39;,&#39;regexSelect&#39;,&#39;rpdf&#39;,&#39;gunflow&#39;,&#39;lmmen&#39;,
+           &#39;ggedit&#39;,&#39;slickR&#39;,&#39;sinew&#39;,&#39;d3Tree&#39;,&#39;texPreview&#39;,&#39;shinyCanvas&#39;,&#39;jsTree&#39;)
+
+repos &amp;lt;- file.path(gh_team,repos)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;rselenium-data-from-github-traffic&#34;&gt;RSelenium data from GitHub traffic&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;github_traffic &amp;lt;- function(gh_user,gh_pass,repos){
+
+rD &amp;lt;- rsDriver(verbose = FALSE)
+remDr &amp;lt;- rD[[&amp;quot;client&amp;quot;]]
+
+remDr$navigate(sprintf(&#39;https://github.com/%s/graphs/traffic&#39;,repos[1]))
+webElem &amp;lt;- remDr$findElement(using = &#39;id&#39;, value = &amp;quot;login_field&amp;quot;)
+webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_user)
+webElem &amp;lt;- remDr$findElement(using = &#39;id&#39;, value = &amp;quot;password&amp;quot;)
+webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_pass)
+webElem=remDr$findElement(using = &#39;xpath&#39;,&#39;//*[@id=&amp;quot;login&amp;quot;]/form/div[4]/input[3]&#39;)
+webElem$clickElement()
+Sys.sleep(1)
+
+out &amp;lt;- plyr::llply(repos,function(repo){
+  remDr$navigate(sprintf(&#39;https://github.com/%s/graphs/traffic&#39;,repo))
+  Sys.sleep(1)
+  out &amp;lt;- XML::htmlParse(remDr$getPageSource(),asText = TRUE)
+  sapply(c(&#39;clones&#39;,&#39;visitors&#39;),function(type){
+  XML::getNodeSet(out,sprintf(sprintf(&#39;//*[@id=&amp;quot;js-%s-graph&amp;quot;]/div/div[1]/svg/g/g&#39;,type)))
+},simplify = FALSE,USE.NAMES = TRUE)
+},.progress = &#39;text&#39;)
+
+names(out) &amp;lt;- repos
+
+remDr$close()
+rD[[&amp;quot;server&amp;quot;]]$stop()
+
+return(out)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;run-the-function&#34;&gt;Run the function&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;plot_data_html &amp;lt;- github_traffic(gh_user=gh_user,
+                            gh_pass=gh_pass,
+                            repos=repos)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;failsafe-if-rselenium-crashes&#34;&gt;Failsafe if Rselenium Crashes&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# rD &amp;lt;- rsDriver(verbose = FALSE,port=4444L)
+# remDr &amp;lt;- rD$client
+# remDr$close()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;transform-d3-scales-to-r-scales&#34;&gt;Transform d3 scales to R scales&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;plot_data &amp;lt;- plyr::ldply(plot_data_html,function(repo){
+  plyr::mdply(names(repo),function(type){
+    
+    dat &amp;lt;- repo[[type]]
+  
+    if(is.null(dat)) return(NULL)
+    
+    yticks_total &amp;lt;- as.numeric(sapply(getNodeSet(dat[[2]],&#39;g&#39;),XML::xmlValue))
+    yticks_unique &amp;lt;- as.numeric(sapply(getNodeSet(dat[[5]],&#39;g&#39;),XML::xmlValue))
+    
+    x &amp;lt;- data.frame(type=type,
+                    date = as.Date(sapply(getNodeSet(dat[[1]],&#39;g&#39;),XML::xmlValue),format = &#39;%m/%d&#39;),
+                    total = as.numeric(sapply(getNodeSet(dat[[3]],&#39;circle&#39;),XML::xmlGetAttr,name = &#39;cy&#39;)),
+                    unique = as.numeric(sapply(getNodeSet(dat[[4]],&#39;circle&#39;),XML::xmlGetAttr,name = &#39;cy&#39;)))
+    
+    x$total &amp;lt;- scales::rescale(x$total,rev(range(yticks_total)))
+    x$unique &amp;lt;- scales::rescale(x$unique,rev(range(yticks_unique)))
+    
+    x%&amp;gt;%reshape2::melt(.,c(&#39;type&#39;,&#39;date&#39;),variable.name=c(&#39;metric&#39;))
+  })
+},.id=&#39;repo&#39;)%&amp;gt;%select(-X1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;save-file-to-disk-as-rds&#34;&gt;Save file to disk as RDS&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;saveRDS(plot_data,file = sprintf(&#39;github_traffic/data/%s_gh_traffic.rds&#39;,
+                                 format(Sys.time(),format = &#39;%Y%m%d_%H%M&#39;)))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;read-in-all-historical-data&#34;&gt;Read in all historical data&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;myfile &amp;lt;- list.files(&#39;github_traffic/data&#39;,full.names = TRUE)
+
+plot_data_df &amp;lt;- plyr::mdply(myfile,readRDS)
+
+levels(plot_data_df$X1) &amp;lt;- gsub(&#39;_gh(.*?)$&#39;,&#39;&#39;,basename(myfile))
+
+names(plot_data_df)[1] &amp;lt;- &#39;fetch_date&#39;
+
+plot_data_df &amp;lt;- plot_data_df%&amp;gt;%
+  group_by(repo,type,date,metric)%&amp;gt;%
+  do(.,tail(.,1))%&amp;gt;%
+  ungroup()%&amp;gt;%
+  mutate(repo=gsub(&#39;^(.*?)/&#39;,&#39;&#39;,repo),
+         val=ceiling(value))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;create-waffle-heatplot&#34;&gt;Create waffle heatplot&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;plot_list &amp;lt;- plyr::dlply(plot_data_df,c(&#39;type&#39;),.fun = function(dat){
+ p &amp;lt;- dat%&amp;gt;%
+    ggplot(aes(x=date,
+               y=repo,
+               fill=val))+
+    geom_tile(colour=&#39;white&#39;,width=.95)+
+    geom_hline(yintercept = c(0,(1:length(unique(dat$repo)))+0.5),colour=&#39;grey90&#39;)+
+    scale_fill_viridis(name=&#39;Count&#39;)+
+    facet_grid(.~metric)+
+    # uncomment if you want every date on x-axis
+    # scale_x_date(date_breaks = &amp;quot;1 day&amp;quot;,date_labels = &amp;quot;%m/%d&amp;quot;)+
+    theme_minimal()+
+    theme(panel.grid.major  = element_blank(),
+          axis.text.x = element_text(angle=90),
+          panel.grid.minor = element_blank(),
+          axis.title = element_blank())
+ 
+ if(dat$type[1] ==&#39;clones&#39;){
+   p &amp;lt;- p +
+     labs(title=sprintf(&#39;Github Team: %s | %s&#39;,
+     paste0(unique(dat$team),collapse = &#39;,&#39;),Sys.time()),
+          subtitle=&#39;Clones&#39;)
+ }else{
+   p &amp;lt;- p +
+     labs(subtitle=&#39;Visitors&#39;)
+ }
+ 
+ p
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;save-to-disk&#34;&gt;Save to disk&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;pl &amp;lt;- ggedit::as.gglist(plot_list)
+svglite(file.path(getwd(),&#39;public/img/github_traffic.svg&#39;),standalone = TRUE)
+print(pl,plot.layout=list(list(rows=1,cols=1:2),list(rows=2,cols=1:2)))
+dev.off()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/img/github_traffic.svg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Projects</title>
+      <link>https://yonicd.netlify.com/page/projects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>https://yonicd.netlify.com/page/projects/</guid>
       <description>&lt;p&gt;This is a list of R packages that have been published on CRAN and/or are still being developed on Github. Many of the projects are part of &lt;a href=&#34;https://www.metrumrg.com/try-open-source-tools/&#34;&gt;open tools&lt;/a&gt; developed at Metrum Research Group.&lt;/p&gt;
 
 &lt;!-- https://img.shields.io/badge/METRUM-opentools-brightgreen.svg?link=https://www.metrumrg.com/&amp;link=https://www.metrumrg.com/open-science/ --&gt;

@@ -2,130 +2,130 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Reproducible Random Thoughts</title>
-    <link>/tags/</link>
+    <link>https://yonicd.netlify.com/tags/</link>
     <description>Recent content in Tags on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Tue, 26 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://yonicd.netlify.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Geofacet</title>
-      <link>/tags/geofacet/</link>
+      <link>https://yonicd.netlify.com/tags/geofacet/</link>
       <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/tags/geofacet/</guid>
+      <guid>https://yonicd.netlify.com/tags/geofacet/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ggplot2</title>
-      <link>/tags/ggplot2/</link>
+      <link>https://yonicd.netlify.com/tags/ggplot2/</link>
       <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/tags/ggplot2/</guid>
+      <guid>https://yonicd.netlify.com/tags/ggplot2/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Healthcare</title>
-      <link>/tags/healthcare/</link>
+      <link>https://yonicd.netlify.com/tags/healthcare/</link>
       <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/tags/healthcare/</guid>
+      <guid>https://yonicd.netlify.com/tags/healthcare/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Htmlwigdet</title>
-      <link>/tags/htmlwigdet/</link>
+      <link>https://yonicd.netlify.com/tags/htmlwigdet/</link>
       <pubDate>Tue, 24 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/tags/htmlwigdet/</guid>
+      <guid>https://yonicd.netlify.com/tags/htmlwigdet/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Regex</title>
-      <link>/tags/regex/</link>
+      <link>https://yonicd.netlify.com/tags/regex/</link>
       <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/tags/regex/</guid>
+      <guid>https://yonicd.netlify.com/tags/regex/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Reproducibility</title>
-      <link>/tags/reproducibility/</link>
+      <link>https://yonicd.netlify.com/tags/reproducibility/</link>
       <pubDate>Mon, 18 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/tags/reproducibility/</guid>
+      <guid>https://yonicd.netlify.com/tags/reproducibility/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Roxygen2</title>
-      <link>/tags/roxygen2/</link>
+      <link>https://yonicd.netlify.com/tags/roxygen2/</link>
       <pubDate>Mon, 18 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/tags/roxygen2/</guid>
+      <guid>https://yonicd.netlify.com/tags/roxygen2/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Rselenium</title>
-      <link>/tags/rselenium/</link>
+      <link>https://yonicd.netlify.com/tags/rselenium/</link>
       <pubDate>Mon, 02 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/tags/rselenium/</guid>
+      <guid>https://yonicd.netlify.com/tags/rselenium/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Rstats</title>
-      <link>/tags/rstats/</link>
+      <link>https://yonicd.netlify.com/tags/rstats/</link>
       <pubDate>Wed, 25 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/tags/rstats/</guid>
+      <guid>https://yonicd.netlify.com/tags/rstats/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Shiny</title>
-      <link>/tags/shiny/</link>
+      <link>https://yonicd.netlify.com/tags/shiny/</link>
       <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/tags/shiny/</guid>
+      <guid>https://yonicd.netlify.com/tags/shiny/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Slack</title>
-      <link>/tags/slack/</link>
+      <link>https://yonicd.netlify.com/tags/slack/</link>
       <pubDate>Wed, 25 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/tags/slack/</guid>
+      <guid>https://yonicd.netlify.com/tags/slack/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Utility</title>
-      <link>/tags/utility/</link>
+      <link>https://yonicd.netlify.com/tags/utility/</link>
       <pubDate>Wed, 25 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/tags/utility/</guid>
+      <guid>https://yonicd.netlify.com/tags/utility/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Webscraping</title>
-      <link>/tags/webscraping/</link>
+      <link>https://yonicd.netlify.com/tags/webscraping/</link>
       <pubDate>Mon, 02 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/tags/webscraping/</guid>
+      <guid>https://yonicd.netlify.com/tags/webscraping/</guid>
       <description></description>
     </item>
     

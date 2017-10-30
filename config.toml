@@ -59,7 +59,7 @@ rssLimit = 20
 [[menu.main]]
     parent = "projects"
     name = "Github Traffic"
-    url = "gh_traffic"
+    url = "page/gh_traffic"
     weight = 2
 
 [[menu.main]]
