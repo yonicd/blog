@@ -12,9 +12,9 @@ list2env(yaml::yaml.load_file('github_traffic/_ghcred.yml'),
 
 repos <- c('shinyHeatmaply','regexSelect','rpdf','gunflow','lmmen',
            'ggedit','slickR','sinew','d3Tree','texPreview','shinyCanvas',
-           'jsTree','slackr')
+           'jsTree')
 
-gh_team <- rep(c('yonicd','metrumresearchgroup','hrbrmstr'),c(5,7,1))
+gh_team <- rep(c('yonicd','metrumresearchgroup'),c(5,7))
 
 repos <- file.path(gh_team,repos)
 
@@ -110,7 +110,7 @@ plot_list <- plyr::dlply(plot_data_df,c('type'),.fun = function(dat){
  p <- dat%>%
     ggplot(aes(x=date,
                y=repo,
-               fill=val))+
+               fill=log(val+1)))+
     geom_tile(colour='white',width=.95)+
     geom_hline(yintercept = c(0,(1:length(unique(dat$repo)))+0.5),colour='grey90')+
     scale_fill_viridis(name='Count')+
