@@ -11,9 +11,10 @@ list2env(yaml::yaml.load_file('github_traffic/_ghcred.yml'),
          envir = environment())
 
 repos <- c('shinyHeatmaply','regexSelect','rpdf','gunflow','lmmen',
-           'ggedit','slickR','sinew','d3Tree','texPreview','shinyCanvas','jsTree')
+           'ggedit','slickR','sinew','d3Tree','texPreview','shinyCanvas',
+           'jsTree','slackr')
 
-gh_team <- rep(c('yonicd','metrumresearchgroup'),c(5,7))
+gh_team <- rep(c('yonicd','metrumresearchgroup','hrbrmstr'),c(5,7,1))
 
 repos <- file.path(gh_team,repos)
 
