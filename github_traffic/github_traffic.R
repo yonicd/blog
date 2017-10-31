@@ -110,10 +110,10 @@ plot_list <- plyr::dlply(plot_data_df,c('type'),.fun = function(dat){
  p <- dat%>%
     ggplot(aes(x=date,
                y=repo,
-               fill=log(val+1)))+
-    geom_tile(colour='white',width=.95)+
+               fill=val))+
+    geom_tile(colour='white',width=.95,alpha=0.75)+
     geom_hline(yintercept = c(0,(1:length(unique(dat$repo)))+0.5),colour='grey90')+
-    scale_fill_viridis(name='Count')+
+    scale_fill_viridis(name='Count',direction = -1)+
     facet_grid(.~metric)+
     #scale_x_date(date_breaks = "1 day",date_labels = "%m/%d")+
     theme_minimal()+
@@ -124,7 +124,7 @@ plot_list <- plyr::dlply(plot_data_df,c('type'),.fun = function(dat){
  
  if(dat$type[1] =='clones'){
    p <- p +
-     labs(title=sprintf('Github Team: %s | %s',paste0(unique(dat$team),collapse = ','),Sys.time()),
+     labs(title=sprintf('Github Team: %s | %s',paste0(unique(gh_team),collapse = ','),Sys.time()),
           subtitle='Clones')
  }else{
    p <- p +
