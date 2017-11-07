@@ -223,6 +223,46 @@ ga('send', 'pageview');
 
             <div>
       
+      
+      
+      
+      
+      
+      
+          
+                
+                <a class="github-button" href="https://github.com/yonicd" data-show-count="true" aria-label="Follow @yonicd on GitHub">Follow @yonicd</a>
+                
+                
+                
+                
+                
+                
+                
+          
+                
+                
+                
+                <a class="github-button" href="https://github.com/yonicd/gunflow" data-show-count="true" aria-label="Star yonicd/gunflow on GitHub">Star</a> 
+                
+                
+                
+                
+                
+          
+                
+                
+                
+                
+                
+                <a class="github-button" href="https://github.com/yonicd/gunflow/issues" data-show-count="true" aria-label="Issue yonicd/gunflow on GitHub">Issue</a>
+                
+                
+                
+          
+        
+        
+      
  </div>
  <div>
  
@@ -245,7 +285,7 @@ ga('send', 'pageview');
 </div>
 <p>The shiny app can be run directly</p>
 <pre class="r"><code>pkgs &lt;- c(&#39;reshape2&#39;,&#39;geojson&#39;,&#39;readxl&#39;,&#39;ggplot2&#39;,
-&#39;leaflet&#39;,&#39;httr&#39;,&#39;rgeolocate&#39;,&#39;shiny&#39;,&#39;sp&#39;,&#39;dplyr&#39;)
+&#39;leaflet&#39;,&#39;httr&#39;,&#39;rgeolocate&#39;,&#39;shiny&#39;,&#39;sp&#39;,&#39;dplyr&#39;,&#39;ggraph&#39;,&#39;igraph&#39;)
 
 check &lt;- sapply(pkgs,require,warn.conflicts = TRUE,character.only = TRUE)
 
@@ -272,6 +312,7 @@ shiny::runGitHub(&#39;yonicd/gunflow&#39;)</code></pre>
 <li>atf_data: total firearm registration with adult state population to calculate ratios per 100 persons.</li>
 <li>gun_ranking: State firearm regulation ranking from the <a href="http://lawcenter.giffords.org/scorecard/">Law Center To Prevent Gun Violence</a>.</li>
 </ul>
+<p>All the raw data can be found in the project home repo <a href="https://github.com/yonicd/gunflow" class="uri">https://github.com/yonicd/gunflow</a>.</p>
 <pre class="r"><code>states &lt;- geojsonio::geojson_read(&#39;https://github.com/yonicd/gunflow/blob/master/www/us-states.geojson?raw=true&#39;, what = &quot;sp&quot;)
 f &lt;- tempfile()
 for(FILE in c(&#39;gun_mat&#39;,&#39;atf_data&#39;,&#39;gun_ranking&#39;)){
@@ -370,7 +411,9 @@ tot$grade_round &lt;- gsub(&#39;[+-]&#39;,&#39;&#39;,tot$grade)</code></pre>
 <img src="https://github.com/yonicd/blog/blob/master/img/gunflow/power.gif?raw=true" />
 
 </div>
-<p>This exploratory analysis will hopefully be a good starting point for some modeling of firearm flow between states and developing sound models to predict the flow of firearms between states using R.</p>
+<p>This exploratory analysis attempted to start to answer the question can states unilaterally regulate firearms effictively. My impression is that it is nearly impossible to do so when neighboring states do not share the same regulatory framework. This manifests itself in changes in flow of interstate firearm flow do reach a new steady state of firearms regardless of within state regulation.</p>
+<p>Hopefully this will be a good starting point for some modeling of firearm flow between states and developing more effective state and federal policy through the prediction of the flow of firearms between states.</p>
+<p>Any thoughts on the analysis is always welcome, especially if you think I erred in any way, or want have any ideas on how to model such a problem.</p>
 </div>
 
       </article>

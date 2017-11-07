@@ -1,7 +1,10 @@
 ---
 title: "Firearms Sourced and Recovered in the United States and Territories 2010-2016"
 author: "Jonathan Sidi"
-date: 2017-11-06
+date: 2017-11-07
+tags: [htmlwigdet, leaflet, ggraph, firearms, rstats]
+gh_repo: yonicd/gunflow
+gh_badge: [follow, star, issue]
 ---
 
 <script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
@@ -19,7 +22,7 @@ date: 2017-11-06
 </div>
 <p>The shiny app can be run directly</p>
 <pre class="r"><code>pkgs &lt;- c(&#39;reshape2&#39;,&#39;geojson&#39;,&#39;readxl&#39;,&#39;ggplot2&#39;,
-&#39;leaflet&#39;,&#39;httr&#39;,&#39;rgeolocate&#39;,&#39;shiny&#39;,&#39;sp&#39;,&#39;dplyr&#39;)
+&#39;leaflet&#39;,&#39;httr&#39;,&#39;rgeolocate&#39;,&#39;shiny&#39;,&#39;sp&#39;,&#39;dplyr&#39;,&#39;ggraph&#39;,&#39;igraph&#39;)
 
 check &lt;- sapply(pkgs,require,warn.conflicts = TRUE,character.only = TRUE)
 
@@ -46,6 +49,7 @@ shiny::runGitHub(&#39;yonicd/gunflow&#39;)</code></pre>
 <li>atf_data: total firearm registration with adult state population to calculate ratios per 100 persons.</li>
 <li>gun_ranking: State firearm regulation ranking from the <a href="http://lawcenter.giffords.org/scorecard/">Law Center To Prevent Gun Violence</a>.</li>
 </ul>
+<p>All the raw data can be found in the project home repo <a href="https://github.com/yonicd/gunflow" class="uri">https://github.com/yonicd/gunflow</a>.</p>
 <pre class="r"><code>states &lt;- geojsonio::geojson_read(&#39;https://github.com/yonicd/gunflow/blob/master/www/us-states.geojson?raw=true&#39;, what = &quot;sp&quot;)
 f &lt;- tempfile()
 for(FILE in c(&#39;gun_mat&#39;,&#39;atf_data&#39;,&#39;gun_ranking&#39;)){
@@ -84,7 +88,7 @@ tot$grade_round &lt;- gsub(&#39;[+-]&#39;,&#39;&#39;,tot$grade)</code></pre>
 <p>The leafet is a great way to show interactively an adjacency matrix. To reproduce this map use the script <a href="https://github.com/yonicd/blog/blob/master/gunflow_scripts/leaflet.R">here</a>. In the following output, when hovering above a state you can see information regarding the total firearms recovered in Connecticut, the total amount of firearms imorted into Connecticut in 2016 and what percent each state is of the imported total.In the shiny app you can control what state is selected and if the direction of flow is importing or exporting, as well if the colour scale is on the state level of national level.</p>
 <p>In the app it is easy to see that since the Sandy Hook mass shooting high regulation has caused a large net inflow of firearms into Connecticut. Since these are only the recovered firearms by authorities it is a proxy of the amount of weapons entering the state from other states.</p>
 <div id="htmlwidget-1" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"/post/2017-11-06-gunflow_files/figure-html//widgets/widget_unnamed-chunk-5.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"/post/2017-11-07-gunflow_files/figure-html//widgets/widget_unnamed-chunk-5.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="trends-of-firearm-registration-2010-2016" class="section level2">
 <h2>Trends of firearm registration 2010-2016</h2>
@@ -144,5 +148,7 @@ tot$grade_round &lt;- gsub(&#39;[+-]&#39;,&#39;&#39;,tot$grade)</code></pre>
 <img src="https://github.com/yonicd/blog/blob/master/img/gunflow/power.gif?raw=true" />
 
 </div>
-<p>This exploratory analysis will hopefully be a good starting point for some modeling of firearm flow between states and developing sound models to predict the flow of firearms between states using R.</p>
+<p>This exploratory analysis attempted to start to answer the question can states unilaterally regulate firearms effictively. My impression is that it is nearly impossible to do so when neighboring states do not share the same regulatory framework. This manifests itself in changes of interstate firearm flow to reach a new steady state of firearms regardless of within state regulation.</p>
+<p>Hopefully this will be a good starting point for some modeling of firearm flow between states and developing more effective state and federal policy through the prediction of the flow of firearms between states.</p>
+<p>Any thoughts on the analysis is always welcome, especially if you think I erred in any way, or want have any ideas on how to model such a problem.</p>
 </div>

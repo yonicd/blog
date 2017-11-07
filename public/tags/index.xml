@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
-    <lastBuildDate>Tue, 26 Sep 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Nov 2017 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Firearms</title>
+      <link>/tags/firearms/</link>
+      <pubDate>Tue, 07 Nov 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>/tags/firearms/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Geofacet</title>
@@ -31,6 +40,15 @@
     </item>
     
     <item>
+      <title>Ggraph</title>
+      <link>/tags/ggraph/</link>
+      <pubDate>Tue, 07 Nov 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>/tags/ggraph/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Healthcare</title>
       <link>/tags/healthcare/</link>
       <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
@@ -42,9 +60,18 @@
     <item>
       <title>Htmlwigdet</title>
       <link>/tags/htmlwigdet/</link>
-      <pubDate>Tue, 24 Oct 2017 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 07 Nov 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/tags/htmlwigdet/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Leaflet</title>
+      <link>/tags/leaflet/</link>
+      <pubDate>Tue, 07 Nov 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>/tags/leaflet/</guid>
       <description></description>
     </item>
     
@@ -87,7 +114,7 @@
     <item>
       <title>Rstats</title>
       <link>/tags/rstats/</link>
-      <pubDate>Wed, 25 Oct 2017 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 07 Nov 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/tags/rstats/</guid>
       <description></description>

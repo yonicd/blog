@@ -1,7 +1,10 @@
 ---
 title: "Firearms Sourced and Recovered in the United States and Territories 2010-2016"
 author: "Jonathan Sidi"
-date: 2017-11-06
+date: 2017-11-07
+tags: [htmlwigdet, leaflet, ggraph, firearms, rstats]
+gh_repo: yonicd/gunflow
+gh_badge: [follow, star, issue]
 ---
 
 ```{r setup, include=FALSE}
@@ -21,7 +24,7 @@ The shiny app can be run directly
 
 ```{r,eval=FALSE}
 pkgs <- c('reshape2','geojson','readxl','ggplot2',
-'leaflet','httr','rgeolocate','shiny','sp','dplyr')
+'leaflet','httr','rgeolocate','shiny','sp','dplyr','ggraph','igraph')
 
 check <- sapply(pkgs,require,warn.conflicts = TRUE,character.only = TRUE)
 
@@ -51,6 +54,8 @@ We read in the data sources
   - gun_mat: weighted adjency matrices from the ATF site
   - atf_data: total firearm registration with adult state population to calculate ratios per 100 persons. 
   - gun_ranking: State firearm regulation ranking from the [Law Center To Prevent Gun Violence](http://lawcenter.giffords.org/scorecard/).
+
+All the raw data can be found in the project home repo https://github.com/yonicd/gunflow.
 
 ```{r,include=FALSE}
 pkgs <- c('reshape2','geojson','readxl','ggplot2','widgetframe',
@@ -266,4 +271,8 @@ Finally we try and see if we can locate states that have a strong centrality pow
 
 ![](https://github.com/yonicd/blog/blob/master/img/gunflow/power.gif?raw=true)
 
-This exploratory analysis will hopefully be a good starting point for some modeling of firearm flow between states and developing sound models to predict the flow of firearms between states using R.
+This exploratory analysis attempted to start to answer the question can states unilaterally regulate firearms effictively. My impression is that it is nearly impossible to do so when neighboring states do not share the same regulatory framework. This manifests itself in changes of interstate firearm flow to reach a new steady state of firearms regardless of within state regulation.
+
+Hopefully this will be a good starting point for some modeling of firearm flow between states and developing more effective state and federal policy through the prediction of the flow of firearms between states.
+
+Any thoughts on the analysis is always welcome, especially if you think I erred in any way, or want have any ideas on how to model such a problem.
