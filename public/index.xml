@@ -22,7 +22,7 @@
 &lt;p&gt;Since there is not an open electronic federal database for firearm ownership and transactions, one important source of information is the &lt;a href=&#34;https://www.atf.gov/resource-center/firearms-trace-data-2016&#34;&gt;Bureau of Alcohol, Tobacco and Firearms&lt;/a&gt;, (ATF). They publish the trace of firearms that were recovered every year, and when &lt;em&gt;possible&lt;/em&gt; trace the state where the firearm originated. This creates a weighted adjaceny matrix that is similar to what in economics is called &lt;a href=&#34;http://www.imf.org/external/pubs/cat/longres.aspx?sk=20096&#34;&gt;Direction of Trade&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;In this &lt;a href=&#34;https://www.atf.gov/docs/undefined/sourcerecoverybystatecy2016xlsx/download&#34;&gt;matrix&lt;/a&gt; the rows depict the source and the columns depict the destination. This lets one get an idea where firearms that are confiscated by the ATF orginated from. From this we can also infer which states are net importers of firearms and which states are net exporters. I will explore this matrix in an attempt to better understand if firearms are more likely to flow between geographically adjacent states. In the end I will get to a shiny app that ties everything together, for those who want to stop here…&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/Users/jonathans/projects/blog/img/gunflow/gunflow_slick.gif&#34; /&gt;
+&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/public/img/gunflow/gunflow_slick.gif?raw=true&#34; /&gt;
 
 &lt;/div&gt;
 &lt;p&gt;Below is the script to run the app from R&lt;/p&gt;
@@ -105,7 +105,7 @@ this_atf &amp;lt;- atf_data
              x = &amp;#39;Year&amp;#39;,
              y = &amp;#39;Rate per 100 Individuals (age&amp;gt;17)&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/Users/jonathans/projects/blog/img/gunflow/atf_plot.svg&#34; /&gt;
+&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_plot.svg&#34; /&gt;
 
 &lt;/div&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
@@ -133,7 +133,7 @@ this_atf &amp;lt;- atf_data
              y = &amp;#39;Rate of Change (Base year 2010)&amp;#39;)
     &lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;../../img/gunflow/atf_plot_base.svg&#34; /&gt;
+&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_base_plot.svg&#34; /&gt;
 
 &lt;/div&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;this_net_flow &amp;lt;- net_flow%&amp;gt;%filter(year==2016)
@@ -165,7 +165,7 @@ this_atf &amp;lt;- atf_data
                      yend=pmax(0,this_net_flow$ratio_net[idx1]), 
                      arrow = arrow(length = unit(0.5, &amp;quot;cm&amp;quot;)))&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/Users/jonathans/projects/blog/img/gunflow/net_flow.gif&#34; /&gt;
+&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/net_flow.gif?raw=true&#34; /&gt;
 
 &lt;/div&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
@@ -184,7 +184,7 @@ this_tot &amp;lt;- tot%&amp;gt;%filter(year==2016)
              caption = &amp;quot;Sources: Bureau of Alcohol, Firearms and Explosives (2016)\n Law Center To Prevent Gun Violence&amp;quot;,
              x=&amp;#39;Outflow Rate&amp;#39;,y=&amp;#39;Inflow Rate&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/Users/jonathans/projects/blog/img/gunflow/scatter_flow.gif&#34; /&gt;
+&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/scatter_flow.gif?raw=true&#34; /&gt;
 
 &lt;/div&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
@@ -210,7 +210,7 @@ this_net_dat &amp;lt;- network_dat[[6]]
                           collapse=&amp;#39;\n&amp;#39;),
            caption = sprintf(&amp;quot;Source: Bureau of Alcohol, Firearms and Explosives (2016)&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/Users/jonathans/projects/blog/img/gunflow/power.gif&#34; /&gt;
+&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/power.gif?raw=true&#34; /&gt;
 
 &lt;/div&gt;
 </description>

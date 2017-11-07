@@ -234,7 +234,7 @@ ga('send', 'pageview');
 <p>Since there is not an open electronic federal database for firearm ownership and transactions, one important source of information is the <a href="https://www.atf.gov/resource-center/firearms-trace-data-2016">Bureau of Alcohol, Tobacco and Firearms</a>, (ATF). They publish the trace of firearms that were recovered every year, and when <em>possible</em> trace the state where the firearm originated. This creates a weighted adjaceny matrix that is similar to what in economics is called <a href="http://www.imf.org/external/pubs/cat/longres.aspx?sk=20096">Direction of Trade</a>.</p>
 <p>In this <a href="https://www.atf.gov/docs/undefined/sourcerecoverybystatecy2016xlsx/download">matrix</a> the rows depict the source and the columns depict the destination. This lets one get an idea where firearms that are confiscated by the ATF orginated from. From this we can also infer which states are net importers of firearms and which states are net exporters. I will explore this matrix in an attempt to better understand if firearms are more likely to flow between geographically adjacent states. In the end I will get to a shiny app that ties everything together, for those who want to stop here…</p>
 <div class="figure">
-<img src="/Users/jonathans/projects/blog/img/gunflow/gunflow_slick.gif" />
+<img src="https://github.com/yonicd/blog/blob/master/public/img/gunflow/gunflow_slick.gif?raw=true" />
 
 </div>
 <p>Below is the script to run the app from R</p>
@@ -317,7 +317,7 @@ this_atf &lt;- atf_data
              x = &#39;Year&#39;,
              y = &#39;Rate per 100 Individuals (age&gt;17)&#39;)</code></pre>
 <div class="figure">
-<img src="/Users/jonathans/projects/blog/img/gunflow/atf_plot.svg" />
+<img src="https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_plot.svg" />
 
 </div>
 <pre class="r"><code>
@@ -345,7 +345,7 @@ this_atf &lt;- atf_data
              y = &#39;Rate of Change (Base year 2010)&#39;)
     </code></pre>
 <div class="figure">
-<img src="../../img/gunflow/atf_plot_base.svg" />
+<img src="https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_base_plot.svg" />
 
 </div>
 <pre class="r"><code>this_net_flow &lt;- net_flow%&gt;%filter(year==2016)
@@ -377,7 +377,7 @@ this_atf &lt;- atf_data
                      yend=pmax(0,this_net_flow$ratio_net[idx1]), 
                      arrow = arrow(length = unit(0.5, &quot;cm&quot;)))</code></pre>
 <div class="figure">
-<img src="/Users/jonathans/projects/blog/img/gunflow/net_flow.gif" />
+<img src="https://github.com/yonicd/blog/blob/master/img/gunflow/net_flow.gif?raw=true" />
 
 </div>
 <pre class="r"><code>
@@ -396,7 +396,7 @@ this_tot &lt;- tot%&gt;%filter(year==2016)
              caption = &quot;Sources: Bureau of Alcohol, Firearms and Explosives (2016)\n Law Center To Prevent Gun Violence&quot;,
              x=&#39;Outflow Rate&#39;,y=&#39;Inflow Rate&#39;)</code></pre>
 <div class="figure">
-<img src="/Users/jonathans/projects/blog/img/gunflow/scatter_flow.gif" />
+<img src="https://github.com/yonicd/blog/blob/master/img/gunflow/scatter_flow.gif?raw=true" />
 
 </div>
 <pre class="r"><code>
@@ -422,7 +422,7 @@ this_net_dat &lt;- network_dat[[6]]
                           collapse=&#39;\n&#39;),
            caption = sprintf(&quot;Source: Bureau of Alcohol, Firearms and Explosives (2016)&quot;))</code></pre>
 <div class="figure">
-<img src="/Users/jonathans/projects/blog/img/gunflow/power.gif" />
+<img src="https://github.com/yonicd/blog/blob/master/img/gunflow/power.gif?raw=true" />
 
 </div>
 

@@ -15,7 +15,7 @@ Since there is not an open electronic federal database for firearm ownership and
 In this [matrix](https://www.atf.gov/docs/undefined/sourcerecoverybystatecy2016xlsx/download) the rows depict the source and the columns depict the destination. This lets one get an idea where firearms that are confiscated by the ATF orginated from. From this we can also infer which states are net importers of firearms and which states are net exporters. 
 I will explore this matrix in an attempt to better understand if firearms are more likely to flow between geographically adjacent states. In the end I will get to a shiny app that ties everything together, for those who want to stop here...
 
-![](../../img/gunflow/gunflow_slick.gif)
+![](https://github.com/yonicd/blog/blob/master/public/img/gunflow/gunflow_slick.gif?raw=true)
 
 Below is the script to run the app from R
 
@@ -111,7 +111,7 @@ this_atf <- atf_data
              y = 'Rate per 100 Individuals (age>17)')
 ```
 
-![](../../img/gunflow/atf_plot.svg)
+![](https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_plot.svg)
 
 ```{r,eval=FALSE}
 
@@ -140,7 +140,7 @@ this_atf <- atf_data
     
 ```
 
-![](../../img/gunflow/atf_plot_base.svg)
+![](https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_base_plot.svg)
 
 ```{r,eval=FALSE}
 this_net_flow <- net_flow%>%filter(year==2016)
@@ -173,7 +173,7 @@ this_net_flow <- net_flow%>%filter(year==2016)
                      arrow = arrow(length = unit(0.5, "cm")))
 ```
 
-![](../../img/gunflow/net_flow.gif)
+![](https://github.com/yonicd/blog/blob/master/img/gunflow/net_flow.gif?raw=true)
 
 ```{r,eval=FALSE}
 
@@ -193,7 +193,7 @@ this_tot <- tot%>%filter(year==2016)
              x='Outflow Rate',y='Inflow Rate')
 ```
 
-![](../../img/gunflow/scatter_flow.gif)
+![](https://github.com/yonicd/blog/blob/master/img/gunflow/scatter_flow.gif?raw=true)
 
 ```{r,eval=FALSE}
 
@@ -220,4 +220,4 @@ this_net_dat <- network_dat[[6]]
            caption = sprintf("Source: Bureau of Alcohol, Firearms and Explosives (2016)"))
 ```
 
-![](../../img/gunflow/power.gif)
+![](https://github.com/yonicd/blog/blob/master/img/gunflow/power.gif?raw=true)
