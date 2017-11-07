@@ -1,5 +1,5 @@
 ---
-title: "Gunflow"
+title: "Firearms Sourced and Recovered in the United States and Territories 2010-2016"
 author: "Jonathan Sidi"
 date: 2017-11-06
 ---
@@ -8,38 +8,72 @@ date: 2017-11-06
 knitr::opts_chunk$set(collapse = TRUE)
 ```
 
-I want to try and probe a question that was raised since Las Vegas and now revived due to Sutherland Springs,TX: Can a state regulate firearms on it's own, given the free trade between jurisdictions. This post will try to start to give an answer to this question using R.
+I want to try and probe a question that was raised since Las Vegas and now revived due to the tragedy in Sutherland Springs,TX: Given the free trade between states, can a state unilaterally regulate firearms. This post will try to start to give an answer to this question using R.
 
 Since there is not an open electronic federal database for firearm ownership and transactions, one important source of information is the [Bureau of Alcohol, Tobacco and Firearms](https://www.atf.gov/resource-center/firearms-trace-data-2016), (ATF). They publish the trace of firearms that were recovered every year, and when *possible* trace the state where the firearm originated. This creates a weighted adjaceny matrix that is similar to what in economics is called [Direction of Trade](http://www.imf.org/external/pubs/cat/longres.aspx?sk=20096). 
 
 In this [matrix](https://www.atf.gov/docs/undefined/sourcerecoverybystatecy2016xlsx/download) the rows depict the source and the columns depict the destination. This lets one get an idea where firearms that are confiscated by the ATF orginated from. From this we can also infer which states are net importers of firearms and which states are net exporters. 
 I will explore this matrix in an attempt to better understand if firearms are more likely to flow between geographically adjacent states. In the end I will get to a shiny app that ties everything together, for those who want to stop here...
 
-![](https://github.com/yonicd/blog/blob/master/public/img/gunflow/gunflow_slick.gif?raw=true)
+![](https://github.com/yonicd/blog/blob/master/img/gunflow/gunflow_slick.gif?raw=true)
 
-Below is the script to run the app from R
+The shiny app can be run directly
 
 ```{r,eval=FALSE}
-#https://ysidi.shinyapps.io/gunflow/
 pkgs <- c('reshape2','geojson','readxl','ggplot2',
 'leaflet','httr','rgeolocate','shiny','sp','dplyr')
 
 check <- sapply(pkgs,require,warn.conflicts = TRUE,character.only = TRUE)
 
-if(any(!check)){
+if( any(!check) ) {
+  
   pkgs.missing <- pkgs[!check]
   install.packages(pkgs.missing)
-  check <- sapply(pkgs.missing,require,warn.conflicts = TRUE,character.only = TRUE)
-  }
+  invisible(sapply(pkgs.missing,
+                   require,
+                   warn.conflicts = TRUE,
+                   character.only = TRUE)
+            )
+}
+
+shiny::runGitHub('yonicd/gunflow')
 ```
 
-So we start by loading all the pacakges we need
+Or accessed through [shinyapps.io](https://ysidi.shinyapps.io/gunflow/). 
 
-```{r,eval=FALSE}
-pkgs <- c('reshape2','geojson','readxl','ggplot2','ggraph',
-'igraph','leaflet','httr','rgeolocate','shiny','sp','slickR','dplyr','widgetframe')
+**Please deploy from R console as to not deplete the account on shinyapps.io. Thank you!**
 
-invisible(sapply(pkgs,require,character.only = TRUE))
+## Data sources
+
+We read in the data sources
+
+  - us-states.geojson: for the leaflet, 
+  - gun_mat: weighted adjency matrices from the ATF site
+  - atf_data: total firearm registration with adult state population to calculate ratios per 100 persons. 
+  - gun_ranking: State firearm regulation ranking from the [Law Center To Prevent Gun Violence](http://lawcenter.giffords.org/scorecard/).
+
+```{r,include=FALSE}
+pkgs <- c('reshape2','geojson','readxl','ggplot2','widgetframe',
+'leaflet','httr','rgeolocate','shiny','sp','dplyr','ggraph','igraph')
+
+check <- sapply(pkgs,require,warn.conflicts = TRUE,character.only = TRUE)
+```
+
+```{r}
+states <- geojsonio::geojson_read('https://github.com/yonicd/gunflow/blob/master/www/us-states.geojson?raw=true', what = "sp")
+f <- tempfile()
+for(FILE in c('gun_mat','atf_data','gun_ranking')){
+download.file(sprintf('https://github.com/yonicd/gunflow/blob/master/www/%s.rda?raw=true',FILE),destfile = f)
+load(f)
+}
+unlink(f)
+```
+
+## Helper functions
+
+To save some space we load helper functions from the [project repo](https://github.com/yonicd/gunflow).
+
+```{r}
 
 source('https://github.com/yonicd/gunflow/blob/master/funs.R?raw=true')
 
@@ -48,19 +82,6 @@ plot_size = 7
 capitalize=function(x){
   gsub("(^|[[:space:]])([[:alpha:]])", "\\1\\U\\2", x, perl=TRUE)
 }
-
-```
-
-Read in the data
-
-```{r,eval=FALSE}
-states <- geojsonio::geojson_read('https://github.com/yonicd/gunflow/blob/master/www/us-states.geojson?raw=true', what = "sp")
-f <- tempfile()
-for(FILE in c('gun_mat','atf_data','gun_ranking')){
-download.file(sprintf('https://github.com/yonicd/gunflow/blob/master/www/%s.rda?raw=true',FILE),destfile = f)
-load(f)
-}
-unlink(f)
 
 net_flow <- calc(side = 'from')%>%
   left_join(calc(side = 'to'),by=c('year','state'))%>%
@@ -77,147 +98,172 @@ tot$grade_round <- gsub('[+-]','',tot$grade)
 
 ```
 
-```{r,eval=FALSE}
-thisstate <- 'Connecticut'
+## Leaflet
 
-this_atf <- atf_data
+The leafet is a great way to show interactively an adjacency matrix. To reproduce this map use the script [here](https://github.com/yonicd/blog/blob/master/gunflow_scripts/leaflet.R). In the following output, when hovering above a state you can see information regarding the total firearms recovered in Connecticut, the total amount of firearms imorted into Connecticut in 2016 and what percent each state is of the imported total.In the shiny app you can control what state is selected and if the direction of flow is importing or exporting, as well if the colour scale is on the state level of national level. 
 
-# removed for scaling (Wyoming has 30 firearms per 100 persons in 2016)
-      if(thisstate!='Wyoming') 
-         this_atf <- this_atf%>%filter(state!='Wyoming')
-      
-      this_atf$chosen <- this_atf$state==thisstate
-      
-      atf_marginal <- this_atf%>%
-        filter(year==2016)%>%
-        filter(rate>3|state==thisstate)%>%
-        mutate(chosen=state==thisstate)
-      
-      this_atf%>% 
-        ggplot(aes(x=year,y=rate,group=state.abb))+
-        geom_line()+
-        ggrepel::geom_label_repel(aes(label=state.abb,fill=chosen),
-                                  data=atf_marginal,
-                                  show.legend = FALSE,
-                                  segment.alpha = .3,
-                                  segment.colour = 'blue')+
-        facet_wrap(~Division)+
-        scale_x_continuous(breaks=2010:2016,labels = 10:16,limits = c(2010,2017))+
-        theme_minimal()+
-        labs(title = 'Rate of Firearm Registration Per 100 individuals (age>17)',
-             subtitle = 'Label indicates states in 2016 with rate above 3 Firearms per 100 (Blue is selected state)',
-             caption = 'Source: Bureau of Alcohol, Firearms and Explosives',
-             x = 'Year',
-             y = 'Rate per 100 Individuals (age>17)')
-```
+In the app it is easy to see that since the Sandy Hook mass shooting high regulation has caused a large net inflow of firearms into Connecticut. Since these are only the recovered firearms by authorities it is a proxy of the amount of weapons entering the state from other states. 
 
-![](https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_plot.svg)
+```{r,echo=FALSE}
 
-```{r,eval=FALSE}
+input <- list(
+  year=2016,
+  thisstate = 'Connecticut',
+  type = 'Inflow',
+  scale = 'State'
+)
 
-      atf_marginal <- atf_data%>%
-        filter(year==2016)%>%
-        filter(base_rate>1|state==thisstate)%>%
-        mutate(chosen=state==thisstate)
-      
-      atf_data%>%
-        ggplot(aes(x=year,y=base_rate,group=state.abb))+
-        geom_line()+
-        geom_point(data=atf_marginal)+
-        ggrepel::geom_label_repel(aes(label=state.abb,fill=chosen),
-                                  data=atf_marginal,
-                                  show.legend = FALSE,
-                                  segment.alpha = .3,
-                                  segment.colour = 'blue')+
-        facet_wrap(~Division)+
-        scale_x_continuous(breaks=2010:2016,limits = c(2010,2017))+
-        theme_minimal()+
-        labs(title = 'Rate of Firearm Registration Per 100 individuals (age>17,Base year 2010)',
-             subtitle = 'Label indicates states in 2016 with rate of change above 100% (Blue is selected state)',
-             caption = 'Source: Bureau of Alcohol, Firearms and Explosives',
-             x = 'Year',
-             y = 'Rate of Change (Base year 2010)')
+gun_mat1 <- switch(input$type,
+                   Inflow={
+                     gun_mat%>%
+                       dplyr::filter(year==input$year)%>%
+                       dplyr::group_by(to)%>%
+                       dplyr::mutate(value1=ifelse(to==from,NA,value),pct=100*value1/sum(value1,na.rm = TRUE))%>%
+                       dplyr::filter(to==input$thisstate)%>%
+                       dplyr::rename(state=from)       
+                   },
+                   Outflow={
+                     gun_mat%>%
+                       dplyr::filter(year==input$year)%>%
+                       dplyr::group_by(from)%>%
+                       dplyr::mutate(value1=ifelse(to==from,NA,value),pct=100*value1/sum(value1,na.rm = TRUE))%>%
+                       dplyr::filter(from==input$thisstate)%>%
+                       dplyr::rename(state=to)
+                   })
+
+mydata <- states@data   
+mydata <- mydata%>%
+  rename(state=name)%>%
+  mutate(state=as.character(state))%>%
+  left_join(gun_mat1%>%ungroup%>%select(state,value1,value,pct),by='state')
+
+states@data$pct <- mydata$pct
+states@data$level <- mydata$value1
+states@data$value <- mydata$value
+states@data$density <- NULL
+
+df <- states
+
+d <- switch(input$scale,
+            National={
+              seq(0,35)
+            },
+            State={
+              df$pct
+            })
+
+pal <- colorNumeric(
+  palette = "RdYlBu",
+  domain = d,na.color = 'black',reverse = TRUE)
+
+m <- leaflet(df) %>%
+  setView(-96, 37.8, 4) %>%
+  addProviderTiles("MapBox", options = providerTileOptions(
+    id = "mapbox.light",
+    accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+
+
+labels <- switch (input$type,
+                  Inflow={
+                    sprintf(
+                      "Of the %s Out of State Firearms Recovered in <strong>%s</strong><br/>%g%% of them originating from <strong>%s</strong><br/>Total Firearms Recovered in <strong>%s</strong> : %s",
+                      sum(df$level,na.rm = TRUE),
+                      input$thisstate,
+                      round(df$pct,2),
+                      states$name,
+                      input$thisstate,
+                      sum(df$value,na.rm = TRUE)
+                    )
+                  },
+                  Outflow={
+                    sprintf(
+                      'Of the %s Out of State Firearms Originating from <strong>%s</strong><br/>%g%% were Recovered in <strong>%s</strong><br/>Total Firearms Originating from <strong>%s</strong> : %s',
+                      sum(df$level,na.rm = TRUE),
+                      input$thisstate,
+                      round(df$pct,2),
+                      states$name,
+                      input$thisstate,
+                      sum(df$value,na.rm = TRUE)
+                    ) 
+                  }
+)%>% lapply(htmltools::HTML)
+
+leafout <- m %>% addPolygons(
+  fillColor = ~pal(pct),
+  weight = 2,
+  smoothFactor = 0.2,
+  stroke=FALSE,
+  opacity = 1,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7,
+  highlight = highlightOptions(
+    weight = 5,
+    color = "#666",
+    dashArray = "",
+    fillOpacity = 1,
+    bringToFront = TRUE),
+  label = labels,
+  labelOptions = labelOptions(
+    style = list("font-weight" = "normal", padding = "3px 8px"),
+    textsize = "15px",
+    direction = "auto"))%>% 
+  addLegend(pal = pal, values = switch(input$scale,National=0:35,State=~pct), opacity = 0.7, title = 'Percent',
+            position = "bottomright",na.label = 'Selected State') 
+
+    widgetframe::frameWidget(leafout)
     
 ```
 
-![](https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_base_plot.svg)
+## Trends of firearm registration 2010-2016
 
-```{r,eval=FALSE}
-this_net_flow <- net_flow%>%filter(year==2016)
-      
-      this_net_flow$state <- factor(this_net_flow$state,levels = this_net_flow$state)
-      
-      idx1 <- which(this_net_flow$state==c(thisstate))
-      
-      this_net_flow$chosen <- ifelse(this_net_flow$state==thisstate,'State Selected','State Not Selected')
-      
-      this_net_plot <- ggplot2::ggplot(this_net_flow,
-                      ggplot2::aes(x=state,y=ratio_net,
-                                   fill=cut(ratio_net,
-                                            breaks = 10,
-                                            include.lowest = TRUE)))+
-        ggplot2::geom_bar(stat='identity')+
-        scale_fill_brewer(palette = "RdYlBu",direction = -1,name=NULL)+
-        theme_minimal(base_size = plot_size)+
-        labs(title='Net Firearm Flow per 100 Firearms Between States',
-             subtitle='High is Net Exporter, Low is Net Importer',
-             caption = "Source: Bureau of Alcohol, Firearms and Explosives (2016)",
-             y='Net Ratio per 100 Firearms',x='State')+
-        ggplot2::theme(axis.text.x = ggplot2::element_text(angle=90),legend.position = 'bottom')
-      
-      this_net_plot +
-        geom_segment(x= idx1, 
-                     xend=idx1,
-                     y=ceiling(max(this_net_flow$ratio_net))+5,
-                     yend=pmax(0,this_net_flow$ratio_net[idx1]), 
-                     arrow = arrow(length = unit(0.5, "cm")))
-```
+In the exploratory graphs first we check what states are trending up or down with regards to firearms registration. We calculate the ratios per 100 adults to make it possible to compare across states.
+
+We then create two plots one shows the trends on the scale of the ratios per 100 adults and another with the percent change from 2010 (base year), so we can compare across states and years. Code to create plots can be found [here](https://github.com/yonicd/blog/blob/master/gunflow_scripts/trends.R).
+
+What we find can see:
+
+  - Wyoming needed to be removed from the plots because it so skewed the y-axis with a rate of 30 registered per 100 adults in 2016. 
+  - New Hampshire has increased the rate of firearms per 100 adults from 3 in 2015 to 6 in 2016.
+  - The geographic region that has the highest rate is the Mountain geographic area that includes: Idaho, New Mexico, Nevada, Arizona and Utah
+  - 16 States have at least 100% increase in gun registration since 2010.
+
+![](https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_plot.png)
+
+![](https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_base_plot.png)
+
+
+## Net flow per 100 firearms between states
+
+We move on to the adjacency matrices showing the firearms found by the ATF. The script the plot for 2016 can be found [here](https://github.com/yonicd/blog/blob/master/gunflow_scripts/net_flow.R). We calculate the outflow rate per 100 firearms per state and the inflow rate per 100 firearms and the subtract the two to get the net flow per 100 firearms. A high positive number depicts a net exporter of firearms and a low negative number depicts a net importer of firearms. The gif below animates how this metric changes from 2011-2016. 
+
+What we see:
+
+  - Washington DC and Puerto Rico have moved from strong net exporters to the top net importers of firearms.
+  - Since 2014 New England has become a strong net exporter of firearms. 
+  - 
 
 ![](https://github.com/yonicd/blog/blob/master/img/gunflow/net_flow.gif?raw=true)
 
-```{r,eval=FALSE}
+## Firearms Flow relationship
 
-this_tot <- tot%>%filter(year==2016)
-      
-      this_tot$chosen=as.numeric((this_tot$state==thisstate))  
-      
-      this_tot%>%
-        ggplot(aes(x=from_pct,y=to_pct,fill=cut(within_pct,5,include.lowest = TRUE)))+
-        ggrepel::geom_label_repel(aes(label=state_grade),alpha=.7)+
-        scale_fill_brewer(palette = "RdYlBu",direction = -1,name='Internal Rate')+
-        geom_point(aes(size=chosen),show.legend = FALSE,data=this_tot)+
-        theme_minimal(base_size = plot_size)+
-        labs(title='Inflow, Outflow and Internal Firearms Rate per 100',
-             subtitle='Label Attributes: Higher grades reflect stricter gunlaws, * reflects state with background checks',
-             caption = "Sources: Bureau of Alcohol, Firearms and Explosives (2016)\n Law Center To Prevent Gun Violence",
-             x='Outflow Rate',y='Inflow Rate')
-```
+Next we combine the firearms flow with the regulation grades for each state 2011-2016, and give a colour for each node as the number of firearms recovered within the state and it was registered to someone in the state. The script to recreate these plots can be found [here](https://github.com/yonicd/blog/blob/master/gunflow_scripts/scatter.R).
+
+Here we start to see that states with high regulation tend to be high net importers of firearms. 
 
 ![](https://github.com/yonicd/blog/blob/master/img/gunflow/scatter_flow.gif?raw=true)
 
-```{r,eval=FALSE}
+## State Firearm flow networks
 
+To find clusters of states that have a high degree of correlation among each other and locate states that are conduits between geographical areas we use visualize the weighted adjaceny matrix as a network. The script to create these plots can be found [here](https://github.com/yonicd/gunflow/blob/master/funs.R). We can see over time that the network has become more connected and clusters of states have been connected across geographical regions, with Tennesee and Michigan being having a central role in these connections.  
 
-this_net_dat <- network_dat[[6]]
-      
-      this_net_dat$alpha_pow$chosen <- as.numeric((this_net_dat$alpha_pow$state==thisstate))
-      
-      this_net_dat$alpha_pow%>%
-      ggplot(aes(x=neg,y=pos,label=state,fill=Division))+
-      geom_hline(yintercept = 0,linetype=2) + 
-      geom_vline(xintercept = 0,linetype=2) + 
-      ggrepel::geom_label_repel()+theme_minimal(base_size = plot_size)+
-      geom_point(aes(size=chosen),show.legend = FALSE,data=this_net_dat$alpha_pow) +
-        scale_y_continuous(limits = c(-4,4)) +
-        scale_x_continuous(limits = c(-4,4)) + 
-      labs(x='(<== WEAKER | STRONGER ==>)\nLevel of Antagonistic Relations',
-           y='Level of Cooperative Relations\n(<== STRONGER | WEAKER ==>)',
-           title = "State Power Centrality of Interstate Firearms Directed Graph",
-           subtitle=paste(c("Cooperative Relations: If ego has neighbors who have many connections to others,",
-                            "making ego more powerful, because it has the 'right' connections.",
-                            "\nAntagonistic Relations: If ego has weak neighbors it increases the ego centrality power"),
-                          collapse='\n'),
-           caption = sprintf("Source: Bureau of Alcohol, Firearms and Explosives (2016)"))
-```
+![](https://github.com/yonicd/blog/blob/master/img/gunflow/net_plot.gif?raw=true)
+
+## Power Centrality 
+
+Finally we try and see if we can locate states that have a strong centrality power with the networks. We use the Bonacichi centrality metric to rate both the states that have high centrality because they are connected to states with that have themselves many connections (a cooperative relationship). Inversely we also measure states that are have a high centrality measure because states that are connected to them lack connections and depened on the state for firearms (an antagonistic relationship). The script to create these plots can be found [here](https://github.com/yonicd/blog/blob/master/gunflow_scripts/power.R)
+
 
 ![](https://github.com/yonicd/blog/blob/master/img/gunflow/power.gif?raw=true)
+
+This exploratory analysis will hopefully be a good starting point for some modeling of firearm flow between states and developing sound models to predict the flow of firearms between states using R.
