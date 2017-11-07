@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Gunflow</title>
+  <meta property="og:title" content="Gunflow" />
+  <meta name="twitter:title" content="Gunflow" />
+  <meta name="description" content="I want to try and probe a question that was raised since Las Vegas and now revived due to Sutherland Springs,TX: Can a state regulate firearms on it’s own, given the free trade between jurisdictions. This post will try to start to give an answer to this question using R.
+Since there is not an open electronic federal database for firearm ownership and transactions, one important source of information is the Bureau of Alcohol, Tobacco and Firearms, (ATF).">
+  <meta property="og:description" content="I want to try and probe a question that was raised since Las Vegas and now revived due to Sutherland Springs,TX: Can a state regulate firearms on it’s own, given the free trade between jurisdictions. This post will try to start to give an answer to this question using R.
+Since there is not an open electronic federal database for firearm ownership and transactions, one important source of information is the Bureau of Alcohol, Tobacco and Firearms, (ATF).">
+  <meta name="twitter:description" content="I want to try and probe a question that was raised since Las Vegas and now revived due to Sutherland Springs,TX: Can a state regulate firearms on it’s own, given the free trade between jurisdictions. …">
+  <meta name="author" content="Jonathan Sidi"/>
+  <link href='/img/cd-favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="/img/cd-icon.png" />
+  <meta name="twitter:image" content="/img/cd-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@yoniceedee" />
+  <meta name="twitter:creator" content="@yoniceedee" />
+  <meta property="og:url" content="/post/2017-11-06-gunflow/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Reproducible Random Thoughts" />
+
+  <meta name="generator" content="Hugo 0.27.1" />
+  <link rel="canonical" href="/post/2017-11-06-gunflow/" />
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Reproducible Random Thoughts">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="/css/highlight.min.css" />
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css" integrity="sha256-sCl5PUOGMLfFYctzDW3MtRib0ctyUvI9Qsmq2wXOeBY=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css" integrity="sha256-BFeI1V+Vh1Rk37wswuOYn5lsTcaU96hGaI7OUVCLjPc=" crossorigin="anonymous" />
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-84988961-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Reproducible Random Thoughts</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Projects</a>
+              <div class="navlinks-children">
+                
+                  <a href="/page/projects/">R Packages</a>
+                
+                  <a href="/page/gh_traffic">Github Traffic</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Resources</a>
+              <div class="navlinks-children">
+                
+                  <a href="http://www.metrumrg.com/">Metrum Research</a>
+                
+                  <a href="http://www.r-bloggers.com">R-bloggers</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="Reproducible Random Thoughts" href="/">
+            <img class="avatar-img" src="/img/cd-icon.png" alt="Reproducible Random Thoughts" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              <h1>Gunflow</h1>
+                
+                
+                  <span class="post-meta">
+  Posted on November 6, 2017
+  
+</span>
+
+
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+            <div>
+      
+ </div>
+ <div>
+ 
+ 
+    </div>
+
+      <article role="main" class="blog-post">
+        <p>I want to try and probe a question that was raised since Las Vegas and now revived due to Sutherland Springs,TX: Can a state regulate firearms on it’s own, given the free trade between jurisdictions. This post will try to start to give an answer to this question using R.</p>
+<p>Since there is not an open electronic federal database for firearm ownership and transactions, one important source of information is the <a href="https://www.atf.gov/resource-center/firearms-trace-data-2016">Bureau of Alcohol, Tobacco and Firearms</a>, (ATF). They publish the trace of firearms that were recovered every year, and when <em>possible</em> trace the state where the firearm originated. This creates a weighted adjaceny matrix that is similar to what in economics is called <a href="http://www.imf.org/external/pubs/cat/longres.aspx?sk=20096">Direction of Trade</a>.</p>
+<p>In this <a href="https://www.atf.gov/docs/undefined/sourcerecoverybystatecy2016xlsx/download">matrix</a> the rows depict the source and the columns depict the destination. This lets one get an idea where firearms that are confiscated by the ATF orginated from. From this we can also infer which states are net importers of firearms and which states are net exporters. I will explore this matrix in an attempt to better understand if firearms are more likely to flow between geographically adjacent states. In the end I will get to a shiny app that ties everything together, for those who want to stop here…</p>
+<div class="figure">
+<img src="/Users/jonathans/projects/blog/img/gunflow/gunflow_slick.gif" />
+
+</div>
+<p>Below is the script to run the app from R</p>
+<pre class="r"><code>#https://ysidi.shinyapps.io/gunflow/
+pkgs &lt;- c(&#39;reshape2&#39;,&#39;geojson&#39;,&#39;readxl&#39;,&#39;ggplot2&#39;,
+&#39;leaflet&#39;,&#39;httr&#39;,&#39;rgeolocate&#39;,&#39;shiny&#39;,&#39;sp&#39;,&#39;dplyr&#39;)
+
+check &lt;- sapply(pkgs,require,warn.conflicts = TRUE,character.only = TRUE)
+
+if(any(!check)){
+  pkgs.missing &lt;- pkgs[!check]
+  install.packages(pkgs.missing)
+  check &lt;- sapply(pkgs.missing,require,warn.conflicts = TRUE,character.only = TRUE)
+  }</code></pre>
+<p>So we start by loading all the pacakges we need</p>
+<pre class="r"><code>pkgs &lt;- c(&#39;reshape2&#39;,&#39;geojson&#39;,&#39;readxl&#39;,&#39;ggplot2&#39;,&#39;ggraph&#39;,
+&#39;igraph&#39;,&#39;leaflet&#39;,&#39;httr&#39;,&#39;rgeolocate&#39;,&#39;shiny&#39;,&#39;sp&#39;,&#39;slickR&#39;,&#39;dplyr&#39;,&#39;widgetframe&#39;)
+
+invisible(sapply(pkgs,require,character.only = TRUE))
+
+source(&#39;https://github.com/yonicd/gunflow/blob/master/funs.R?raw=true&#39;)
+
+plot_size = 7
+
+capitalize=function(x){
+  gsub(&quot;(^|[[:space:]])([[:alpha:]])&quot;, &quot;\\1\\U\\2&quot;, x, perl=TRUE)
+}
+</code></pre>
+<p>Read in the data</p>
+<pre class="r"><code>states &lt;- geojsonio::geojson_read(&#39;https://github.com/yonicd/gunflow/blob/master/www/us-states.geojson?raw=true&#39;, what = &quot;sp&quot;)
+f &lt;- tempfile()
+for(FILE in c(&#39;gun_mat&#39;,&#39;atf_data&#39;,&#39;gun_ranking&#39;)){
+download.file(sprintf(&#39;https://github.com/yonicd/gunflow/blob/master/www/%s.rda?raw=true&#39;,FILE),destfile = f)
+load(f)
+}
+unlink(f)
+
+net_flow &lt;- calc(side = &#39;from&#39;)%&gt;%
+  left_join(calc(side = &#39;to&#39;),by=c(&#39;year&#39;,&#39;state&#39;))%&gt;%
+  mutate(net=state_sum_from-state_sum_to,
+         ratio_net=ratio_from-ratio_to)%&gt;%
+  arrange(desc(ratio_net))
+
+network_dat &lt;- net_dat(gun_mat)
+tot &lt;- scatter_fun(gun_mat)
+tot &lt;- tot%&gt;%mutate(state=as.character(state))%&gt;%left_join(gun_ranking,by=c(&#39;year&#39;,&#39;state&#39;))
+
+tot$state_grade &lt;- gsub(&#39;NA&#39;,&#39;&#39;,paste(tot$state,tot$grade,tot$smart_law))
+tot$grade_round &lt;- gsub(&#39;[+-]&#39;,&#39;&#39;,tot$grade)
+</code></pre>
+<pre class="r"><code>thisstate &lt;- &#39;Connecticut&#39;
+
+this_atf &lt;- atf_data
+
+# removed for scaling (Wyoming has 30 firearms per 100 persons in 2016)
+      if(thisstate!=&#39;Wyoming&#39;) 
+         this_atf &lt;- this_atf%&gt;%filter(state!=&#39;Wyoming&#39;)
+      
+      this_atf$chosen &lt;- this_atf$state==thisstate
+      
+      atf_marginal &lt;- this_atf%&gt;%
+        filter(year==2016)%&gt;%
+        filter(rate&gt;3|state==thisstate)%&gt;%
+        mutate(chosen=state==thisstate)
+      
+      this_atf%&gt;% 
+        ggplot(aes(x=year,y=rate,group=state.abb))+
+        geom_line()+
+        ggrepel::geom_label_repel(aes(label=state.abb,fill=chosen),
+                                  data=atf_marginal,
+                                  show.legend = FALSE,
+                                  segment.alpha = .3,
+                                  segment.colour = &#39;blue&#39;)+
+        facet_wrap(~Division)+
+        scale_x_continuous(breaks=2010:2016,labels = 10:16,limits = c(2010,2017))+
+        theme_minimal()+
+        labs(title = &#39;Rate of Firearm Registration Per 100 individuals (age&gt;17)&#39;,
+             subtitle = &#39;Label indicates states in 2016 with rate above 3 Firearms per 100 (Blue is selected state)&#39;,
+             caption = &#39;Source: Bureau of Alcohol, Firearms and Explosives&#39;,
+             x = &#39;Year&#39;,
+             y = &#39;Rate per 100 Individuals (age&gt;17)&#39;)</code></pre>
+<div class="figure">
+<img src="/Users/jonathans/projects/blog/img/gunflow/atf_plot.svg" />
+
+</div>
+<pre class="r"><code>
+      atf_marginal &lt;- atf_data%&gt;%
+        filter(year==2016)%&gt;%
+        filter(base_rate&gt;1|state==thisstate)%&gt;%
+        mutate(chosen=state==thisstate)
+      
+      atf_data%&gt;%
+        ggplot(aes(x=year,y=base_rate,group=state.abb))+
+        geom_line()+
+        geom_point(data=atf_marginal)+
+        ggrepel::geom_label_repel(aes(label=state.abb,fill=chosen),
+                                  data=atf_marginal,
+                                  show.legend = FALSE,
+                                  segment.alpha = .3,
+                                  segment.colour = &#39;blue&#39;)+
+        facet_wrap(~Division)+
+        scale_x_continuous(breaks=2010:2016,limits = c(2010,2017))+
+        theme_minimal()+
+        labs(title = &#39;Rate of Firearm Registration Per 100 individuals (age&gt;17,Base year 2010)&#39;,
+             subtitle = &#39;Label indicates states in 2016 with rate of change above 100% (Blue is selected state)&#39;,
+             caption = &#39;Source: Bureau of Alcohol, Firearms and Explosives&#39;,
+             x = &#39;Year&#39;,
+             y = &#39;Rate of Change (Base year 2010)&#39;)
+    </code></pre>
+<div class="figure">
+<img src="../../img/gunflow/atf_plot_base.svg" />
+
+</div>
+<pre class="r"><code>this_net_flow &lt;- net_flow%&gt;%filter(year==2016)
+      
+      this_net_flow$state &lt;- factor(this_net_flow$state,levels = this_net_flow$state)
+      
+      idx1 &lt;- which(this_net_flow$state==c(thisstate))
+      
+      this_net_flow$chosen &lt;- ifelse(this_net_flow$state==thisstate,&#39;State Selected&#39;,&#39;State Not Selected&#39;)
+      
+      this_net_plot &lt;- ggplot2::ggplot(this_net_flow,
+                      ggplot2::aes(x=state,y=ratio_net,
+                                   fill=cut(ratio_net,
+                                            breaks = 10,
+                                            include.lowest = TRUE)))+
+        ggplot2::geom_bar(stat=&#39;identity&#39;)+
+        scale_fill_brewer(palette = &quot;RdYlBu&quot;,direction = -1,name=NULL)+
+        theme_minimal(base_size = plot_size)+
+        labs(title=&#39;Net Firearm Flow per 100 Firearms Between States&#39;,
+             subtitle=&#39;High is Net Exporter, Low is Net Importer&#39;,
+             caption = &quot;Source: Bureau of Alcohol, Firearms and Explosives (2016)&quot;,
+             y=&#39;Net Ratio per 100 Firearms&#39;,x=&#39;State&#39;)+
+        ggplot2::theme(axis.text.x = ggplot2::element_text(angle=90),legend.position = &#39;bottom&#39;)
+      
+      this_net_plot +
+        geom_segment(x= idx1, 
+                     xend=idx1,
+                     y=ceiling(max(this_net_flow$ratio_net))+5,
+                     yend=pmax(0,this_net_flow$ratio_net[idx1]), 
+                     arrow = arrow(length = unit(0.5, &quot;cm&quot;)))</code></pre>
+<div class="figure">
+<img src="/Users/jonathans/projects/blog/img/gunflow/net_flow.gif" />
+
+</div>
+<pre class="r"><code>
+this_tot &lt;- tot%&gt;%filter(year==2016)
+      
+      this_tot$chosen=as.numeric((this_tot$state==thisstate))  
+      
+      this_tot%&gt;%
+        ggplot(aes(x=from_pct,y=to_pct,fill=cut(within_pct,5,include.lowest = TRUE)))+
+        ggrepel::geom_label_repel(aes(label=state_grade),alpha=.7)+
+        scale_fill_brewer(palette = &quot;RdYlBu&quot;,direction = -1,name=&#39;Internal Rate&#39;)+
+        geom_point(aes(size=chosen),show.legend = FALSE,data=this_tot)+
+        theme_minimal(base_size = plot_size)+
+        labs(title=&#39;Inflow, Outflow and Internal Firearms Rate per 100&#39;,
+             subtitle=&#39;Label Attributes: Higher grades reflect stricter gunlaws, * reflects state with background checks&#39;,
+             caption = &quot;Sources: Bureau of Alcohol, Firearms and Explosives (2016)\n Law Center To Prevent Gun Violence&quot;,
+             x=&#39;Outflow Rate&#39;,y=&#39;Inflow Rate&#39;)</code></pre>
+<div class="figure">
+<img src="/Users/jonathans/projects/blog/img/gunflow/scatter_flow.gif" />
+
+</div>
+<pre class="r"><code>
+
+this_net_dat &lt;- network_dat[[6]]
+      
+      this_net_dat$alpha_pow$chosen &lt;- as.numeric((this_net_dat$alpha_pow$state==thisstate))
+      
+      this_net_dat$alpha_pow%&gt;%
+      ggplot(aes(x=neg,y=pos,label=state,fill=Division))+
+      geom_hline(yintercept = 0,linetype=2) + 
+      geom_vline(xintercept = 0,linetype=2) + 
+      ggrepel::geom_label_repel()+theme_minimal(base_size = plot_size)+
+      geom_point(aes(size=chosen),show.legend = FALSE,data=this_net_dat$alpha_pow) +
+        scale_y_continuous(limits = c(-4,4)) +
+        scale_x_continuous(limits = c(-4,4)) + 
+      labs(x=&#39;(&lt;== WEAKER | STRONGER ==&gt;)\nLevel of Antagonistic Relations&#39;,
+           y=&#39;Level of Cooperative Relations\n(&lt;== STRONGER | WEAKER ==&gt;)&#39;,
+           title = &quot;State Power Centrality of Interstate Firearms Directed Graph&quot;,
+           subtitle=paste(c(&quot;Cooperative Relations: If ego has neighbors who have many connections to others,&quot;,
+                            &quot;making ego more powerful, because it has the &#39;right&#39; connections.&quot;,
+                            &quot;\nAntagonistic Relations: If ego has weak neighbors it increases the ego centrality power&quot;),
+                          collapse=&#39;\n&#39;),
+           caption = sprintf(&quot;Source: Bureau of Alcohol, Firearms and Explosives (2016)&quot;))</code></pre>
+<div class="figure">
+<img src="/Users/jonathans/projects/blog/img/gunflow/power.gif" />
+
+</div>
+
+      </article>
+
+      <ul class="pager blog-pager">
+        
+          <li class="previous">
+            <a href="/post/slackr/" data-toggle="tooltip" data-placement="top" title="Extending slackr">&larr; Previous Post</a>
+          </li>
+        
+        
+      </ul>
+
+      
+        
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yonicd" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:yonicd@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/yoniceedee" title="Facebook">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://plus.google.com/&#43;yonicd" title="Google&#43;">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/yonicd" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/yoniceedee" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/yonicd" title="LinkedIn">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="/index.xml" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="yonicd.netlify.com">Jonathan Sidi</a>
+                      
+          
+          
+          &nbsp;&bull;&nbsp;
+          2017
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="/">Reproducible Random Thoughts</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.27.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="/js/main.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js" integrity="sha256-UplRCs9v4KXVJvVY+p+RSo5Q4ilAUXh7kpjyIP5odyc=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js" integrity="sha256-PWHOlUzc96pMc8ThwRIXPn8yH4NOLu42RQ0b9SpnpFk=" crossorigin="anonymous"></script>
+<script src="/js/load-photoswipe.js"></script>
+
+
+
+
+    
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  </body>
+</html>
+

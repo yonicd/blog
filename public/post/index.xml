@@ -7,10 +7,214 @@
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
-    <lastBuildDate>Wed, 25 Oct 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Nov 2017 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Gunflow</title>
+      <link>/post/2017-11-06-gunflow/</link>
+      <pubDate>Mon, 06 Nov 2017 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>/post/2017-11-06-gunflow/</guid>
+      <description>&lt;p&gt;I want to try and probe a question that was raised since Las Vegas and now revived due to Sutherland Springs,TX: Can a state regulate firearms on it’s own, given the free trade between jurisdictions. This post will try to start to give an answer to this question using R.&lt;/p&gt;
+&lt;p&gt;Since there is not an open electronic federal database for firearm ownership and transactions, one important source of information is the &lt;a href=&#34;https://www.atf.gov/resource-center/firearms-trace-data-2016&#34;&gt;Bureau of Alcohol, Tobacco and Firearms&lt;/a&gt;, (ATF). They publish the trace of firearms that were recovered every year, and when &lt;em&gt;possible&lt;/em&gt; trace the state where the firearm originated. This creates a weighted adjaceny matrix that is similar to what in economics is called &lt;a href=&#34;http://www.imf.org/external/pubs/cat/longres.aspx?sk=20096&#34;&gt;Direction of Trade&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In this &lt;a href=&#34;https://www.atf.gov/docs/undefined/sourcerecoverybystatecy2016xlsx/download&#34;&gt;matrix&lt;/a&gt; the rows depict the source and the columns depict the destination. This lets one get an idea where firearms that are confiscated by the ATF orginated from. From this we can also infer which states are net importers of firearms and which states are net exporters. I will explore this matrix in an attempt to better understand if firearms are more likely to flow between geographically adjacent states. In the end I will get to a shiny app that ties everything together, for those who want to stop here…&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/Users/jonathans/projects/blog/img/gunflow/gunflow_slick.gif&#34; /&gt;
+
+&lt;/div&gt;
+&lt;p&gt;Below is the script to run the app from R&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#https://ysidi.shinyapps.io/gunflow/
+pkgs &amp;lt;- c(&amp;#39;reshape2&amp;#39;,&amp;#39;geojson&amp;#39;,&amp;#39;readxl&amp;#39;,&amp;#39;ggplot2&amp;#39;,
+&amp;#39;leaflet&amp;#39;,&amp;#39;httr&amp;#39;,&amp;#39;rgeolocate&amp;#39;,&amp;#39;shiny&amp;#39;,&amp;#39;sp&amp;#39;,&amp;#39;dplyr&amp;#39;)
+
+check &amp;lt;- sapply(pkgs,require,warn.conflicts = TRUE,character.only = TRUE)
+
+if(any(!check)){
+  pkgs.missing &amp;lt;- pkgs[!check]
+  install.packages(pkgs.missing)
+  check &amp;lt;- sapply(pkgs.missing,require,warn.conflicts = TRUE,character.only = TRUE)
+  }&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So we start by loading all the pacakges we need&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pkgs &amp;lt;- c(&amp;#39;reshape2&amp;#39;,&amp;#39;geojson&amp;#39;,&amp;#39;readxl&amp;#39;,&amp;#39;ggplot2&amp;#39;,&amp;#39;ggraph&amp;#39;,
+&amp;#39;igraph&amp;#39;,&amp;#39;leaflet&amp;#39;,&amp;#39;httr&amp;#39;,&amp;#39;rgeolocate&amp;#39;,&amp;#39;shiny&amp;#39;,&amp;#39;sp&amp;#39;,&amp;#39;slickR&amp;#39;,&amp;#39;dplyr&amp;#39;,&amp;#39;widgetframe&amp;#39;)
+
+invisible(sapply(pkgs,require,character.only = TRUE))
+
+source(&amp;#39;https://github.com/yonicd/gunflow/blob/master/funs.R?raw=true&amp;#39;)
+
+plot_size = 7
+
+capitalize=function(x){
+  gsub(&amp;quot;(^|[[:space:]])([[:alpha:]])&amp;quot;, &amp;quot;\\1\\U\\2&amp;quot;, x, perl=TRUE)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Read in the data&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;states &amp;lt;- geojsonio::geojson_read(&amp;#39;https://github.com/yonicd/gunflow/blob/master/www/us-states.geojson?raw=true&amp;#39;, what = &amp;quot;sp&amp;quot;)
+f &amp;lt;- tempfile()
+for(FILE in c(&amp;#39;gun_mat&amp;#39;,&amp;#39;atf_data&amp;#39;,&amp;#39;gun_ranking&amp;#39;)){
+download.file(sprintf(&amp;#39;https://github.com/yonicd/gunflow/blob/master/www/%s.rda?raw=true&amp;#39;,FILE),destfile = f)
+load(f)
+}
+unlink(f)
+
+net_flow &amp;lt;- calc(side = &amp;#39;from&amp;#39;)%&amp;gt;%
+  left_join(calc(side = &amp;#39;to&amp;#39;),by=c(&amp;#39;year&amp;#39;,&amp;#39;state&amp;#39;))%&amp;gt;%
+  mutate(net=state_sum_from-state_sum_to,
+         ratio_net=ratio_from-ratio_to)%&amp;gt;%
+  arrange(desc(ratio_net))
+
+network_dat &amp;lt;- net_dat(gun_mat)
+tot &amp;lt;- scatter_fun(gun_mat)
+tot &amp;lt;- tot%&amp;gt;%mutate(state=as.character(state))%&amp;gt;%left_join(gun_ranking,by=c(&amp;#39;year&amp;#39;,&amp;#39;state&amp;#39;))
+
+tot$state_grade &amp;lt;- gsub(&amp;#39;NA&amp;#39;,&amp;#39;&amp;#39;,paste(tot$state,tot$grade,tot$smart_law))
+tot$grade_round &amp;lt;- gsub(&amp;#39;[+-]&amp;#39;,&amp;#39;&amp;#39;,tot$grade)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;thisstate &amp;lt;- &amp;#39;Connecticut&amp;#39;
+
+this_atf &amp;lt;- atf_data
+
+# removed for scaling (Wyoming has 30 firearms per 100 persons in 2016)
+      if(thisstate!=&amp;#39;Wyoming&amp;#39;) 
+         this_atf &amp;lt;- this_atf%&amp;gt;%filter(state!=&amp;#39;Wyoming&amp;#39;)
+      
+      this_atf$chosen &amp;lt;- this_atf$state==thisstate
+      
+      atf_marginal &amp;lt;- this_atf%&amp;gt;%
+        filter(year==2016)%&amp;gt;%
+        filter(rate&amp;gt;3|state==thisstate)%&amp;gt;%
+        mutate(chosen=state==thisstate)
+      
+      this_atf%&amp;gt;% 
+        ggplot(aes(x=year,y=rate,group=state.abb))+
+        geom_line()+
+        ggrepel::geom_label_repel(aes(label=state.abb,fill=chosen),
+                                  data=atf_marginal,
+                                  show.legend = FALSE,
+                                  segment.alpha = .3,
+                                  segment.colour = &amp;#39;blue&amp;#39;)+
+        facet_wrap(~Division)+
+        scale_x_continuous(breaks=2010:2016,labels = 10:16,limits = c(2010,2017))+
+        theme_minimal()+
+        labs(title = &amp;#39;Rate of Firearm Registration Per 100 individuals (age&amp;gt;17)&amp;#39;,
+             subtitle = &amp;#39;Label indicates states in 2016 with rate above 3 Firearms per 100 (Blue is selected state)&amp;#39;,
+             caption = &amp;#39;Source: Bureau of Alcohol, Firearms and Explosives&amp;#39;,
+             x = &amp;#39;Year&amp;#39;,
+             y = &amp;#39;Rate per 100 Individuals (age&amp;gt;17)&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/Users/jonathans/projects/blog/img/gunflow/atf_plot.svg&#34; /&gt;
+
+&lt;/div&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+      atf_marginal &amp;lt;- atf_data%&amp;gt;%
+        filter(year==2016)%&amp;gt;%
+        filter(base_rate&amp;gt;1|state==thisstate)%&amp;gt;%
+        mutate(chosen=state==thisstate)
+      
+      atf_data%&amp;gt;%
+        ggplot(aes(x=year,y=base_rate,group=state.abb))+
+        geom_line()+
+        geom_point(data=atf_marginal)+
+        ggrepel::geom_label_repel(aes(label=state.abb,fill=chosen),
+                                  data=atf_marginal,
+                                  show.legend = FALSE,
+                                  segment.alpha = .3,
+                                  segment.colour = &amp;#39;blue&amp;#39;)+
+        facet_wrap(~Division)+
+        scale_x_continuous(breaks=2010:2016,limits = c(2010,2017))+
+        theme_minimal()+
+        labs(title = &amp;#39;Rate of Firearm Registration Per 100 individuals (age&amp;gt;17,Base year 2010)&amp;#39;,
+             subtitle = &amp;#39;Label indicates states in 2016 with rate of change above 100% (Blue is selected state)&amp;#39;,
+             caption = &amp;#39;Source: Bureau of Alcohol, Firearms and Explosives&amp;#39;,
+             x = &amp;#39;Year&amp;#39;,
+             y = &amp;#39;Rate of Change (Base year 2010)&amp;#39;)
+    &lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;../../img/gunflow/atf_plot_base.svg&#34; /&gt;
+
+&lt;/div&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;this_net_flow &amp;lt;- net_flow%&amp;gt;%filter(year==2016)
+      
+      this_net_flow$state &amp;lt;- factor(this_net_flow$state,levels = this_net_flow$state)
+      
+      idx1 &amp;lt;- which(this_net_flow$state==c(thisstate))
+      
+      this_net_flow$chosen &amp;lt;- ifelse(this_net_flow$state==thisstate,&amp;#39;State Selected&amp;#39;,&amp;#39;State Not Selected&amp;#39;)
+      
+      this_net_plot &amp;lt;- ggplot2::ggplot(this_net_flow,
+                      ggplot2::aes(x=state,y=ratio_net,
+                                   fill=cut(ratio_net,
+                                            breaks = 10,
+                                            include.lowest = TRUE)))+
+        ggplot2::geom_bar(stat=&amp;#39;identity&amp;#39;)+
+        scale_fill_brewer(palette = &amp;quot;RdYlBu&amp;quot;,direction = -1,name=NULL)+
+        theme_minimal(base_size = plot_size)+
+        labs(title=&amp;#39;Net Firearm Flow per 100 Firearms Between States&amp;#39;,
+             subtitle=&amp;#39;High is Net Exporter, Low is Net Importer&amp;#39;,
+             caption = &amp;quot;Source: Bureau of Alcohol, Firearms and Explosives (2016)&amp;quot;,
+             y=&amp;#39;Net Ratio per 100 Firearms&amp;#39;,x=&amp;#39;State&amp;#39;)+
+        ggplot2::theme(axis.text.x = ggplot2::element_text(angle=90),legend.position = &amp;#39;bottom&amp;#39;)
+      
+      this_net_plot +
+        geom_segment(x= idx1, 
+                     xend=idx1,
+                     y=ceiling(max(this_net_flow$ratio_net))+5,
+                     yend=pmax(0,this_net_flow$ratio_net[idx1]), 
+                     arrow = arrow(length = unit(0.5, &amp;quot;cm&amp;quot;)))&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/Users/jonathans/projects/blog/img/gunflow/net_flow.gif&#34; /&gt;
+
+&lt;/div&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+this_tot &amp;lt;- tot%&amp;gt;%filter(year==2016)
+      
+      this_tot$chosen=as.numeric((this_tot$state==thisstate))  
+      
+      this_tot%&amp;gt;%
+        ggplot(aes(x=from_pct,y=to_pct,fill=cut(within_pct,5,include.lowest = TRUE)))+
+        ggrepel::geom_label_repel(aes(label=state_grade),alpha=.7)+
+        scale_fill_brewer(palette = &amp;quot;RdYlBu&amp;quot;,direction = -1,name=&amp;#39;Internal Rate&amp;#39;)+
+        geom_point(aes(size=chosen),show.legend = FALSE,data=this_tot)+
+        theme_minimal(base_size = plot_size)+
+        labs(title=&amp;#39;Inflow, Outflow and Internal Firearms Rate per 100&amp;#39;,
+             subtitle=&amp;#39;Label Attributes: Higher grades reflect stricter gunlaws, * reflects state with background checks&amp;#39;,
+             caption = &amp;quot;Sources: Bureau of Alcohol, Firearms and Explosives (2016)\n Law Center To Prevent Gun Violence&amp;quot;,
+             x=&amp;#39;Outflow Rate&amp;#39;,y=&amp;#39;Inflow Rate&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/Users/jonathans/projects/blog/img/gunflow/scatter_flow.gif&#34; /&gt;
+
+&lt;/div&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+
+this_net_dat &amp;lt;- network_dat[[6]]
+      
+      this_net_dat$alpha_pow$chosen &amp;lt;- as.numeric((this_net_dat$alpha_pow$state==thisstate))
+      
+      this_net_dat$alpha_pow%&amp;gt;%
+      ggplot(aes(x=neg,y=pos,label=state,fill=Division))+
+      geom_hline(yintercept = 0,linetype=2) + 
+      geom_vline(xintercept = 0,linetype=2) + 
+      ggrepel::geom_label_repel()+theme_minimal(base_size = plot_size)+
+      geom_point(aes(size=chosen),show.legend = FALSE,data=this_net_dat$alpha_pow) +
+        scale_y_continuous(limits = c(-4,4)) +
+        scale_x_continuous(limits = c(-4,4)) + 
+      labs(x=&amp;#39;(&amp;lt;== WEAKER | STRONGER ==&amp;gt;)\nLevel of Antagonistic Relations&amp;#39;,
+           y=&amp;#39;Level of Cooperative Relations\n(&amp;lt;== STRONGER | WEAKER ==&amp;gt;)&amp;#39;,
+           title = &amp;quot;State Power Centrality of Interstate Firearms Directed Graph&amp;quot;,
+           subtitle=paste(c(&amp;quot;Cooperative Relations: If ego has neighbors who have many connections to others,&amp;quot;,
+                            &amp;quot;making ego more powerful, because it has the &amp;#39;right&amp;#39; connections.&amp;quot;,
+                            &amp;quot;\nAntagonistic Relations: If ego has weak neighbors it increases the ego centrality power&amp;quot;),
+                          collapse=&amp;#39;\n&amp;#39;),
+           caption = sprintf(&amp;quot;Source: Bureau of Alcohol, Firearms and Explosives (2016)&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/Users/jonathans/projects/blog/img/gunflow/power.gif&#34; /&gt;
+
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Extending slackr</title>
