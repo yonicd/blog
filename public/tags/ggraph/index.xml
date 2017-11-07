@@ -32,8 +32,9 @@
 
 &lt;/div&gt;
 &lt;p&gt;The shiny app can be run directly&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pkgs &amp;lt;- c(&amp;#39;reshape2&amp;#39;,&amp;#39;geojson&amp;#39;,&amp;#39;readxl&amp;#39;,&amp;#39;ggplot2&amp;#39;,
-&amp;#39;leaflet&amp;#39;,&amp;#39;httr&amp;#39;,&amp;#39;rgeolocate&amp;#39;,&amp;#39;shiny&amp;#39;,&amp;#39;sp&amp;#39;,&amp;#39;dplyr&amp;#39;,&amp;#39;ggraph&amp;#39;,&amp;#39;igraph&amp;#39;)
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pkgs &amp;lt;- c(&amp;#39;reshape2&amp;#39;,&amp;#39;geojson&amp;#39;,&amp;#39;readxl&amp;#39;,&amp;#39;leaflet&amp;#39;,
+&amp;#39;httr&amp;#39;,&amp;#39;rgeolocate&amp;#39;,&amp;#39;shiny&amp;#39;,&amp;#39;ggplot2&amp;#39;,&amp;#39;sp&amp;#39;,
+&amp;#39;widyr&amp;#39;,&amp;#39;igraph&amp;#39;,&amp;#39;slickR&amp;#39;,&amp;#39;ggraph&amp;#39;,&amp;#39;svglite&amp;#39;,&amp;#39;dplyr&amp;#39;)
 
 check &amp;lt;- sapply(pkgs,require,warn.conflicts = TRUE,character.only = TRUE)
 

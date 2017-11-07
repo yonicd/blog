@@ -23,8 +23,9 @@ I will explore this matrix in an attempt to better understand if firearms are mo
 The shiny app can be run directly
 
 ```{r,eval=FALSE}
-pkgs <- c('reshape2','geojson','readxl','ggplot2',
-'leaflet','httr','rgeolocate','shiny','sp','dplyr','ggraph','igraph')
+pkgs <- c('reshape2','geojson','readxl','leaflet',
+'httr','rgeolocate','shiny','ggplot2','sp',
+'widyr','igraph','slickR','ggraph','svglite','dplyr')
 
 check <- sapply(pkgs,require,warn.conflicts = TRUE,character.only = TRUE)
 
