@@ -31,6 +31,8 @@ remotes::install_github(&amp;#39;yonicd/rsam&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;user-interface&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;User Interface&lt;/h3&gt;
 &lt;p&gt;The user interface is a shiny application that uses &lt;a href=&#34;http://jrowen.github.io/rhandsontable/&#34;&gt;rhandshontable&lt;/a&gt; to interact with the addins. The table includes a list of all the installed addins found in the &lt;code&gt;.libPaths()&lt;/code&gt;, their description, a checkbox to control if the addin will be shown in the IDE dropdown menu and a column to define keyboard shortcuts.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#invoking the UI
+rsam()&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Once you have decided which addins to toggle on or off you press the &lt;code&gt;update&lt;/code&gt; button. This will update the RStudio files. The final (currently unavoidable) step is to restart RStudio to invoke the changes.&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
 &lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/rsamUI.png&#34; /&gt;
@@ -42,7 +44,23 @@ remotes::install_github(&amp;#39;yonicd/rsam&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Via the command line you can manage the addins with greater flexibility.&lt;/p&gt;
 &lt;div id=&#34;retrieve-summary-of-installed-addins&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Retrieve Summary of Installed Addins&lt;/h4&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fetch_addins()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dplyr::as_tibble(fetch_addins())&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 47 x 8
+##         Package                Name
+##           &amp;lt;chr&amp;gt;               &amp;lt;chr&amp;gt;
+##  1     blogdown          Serve Site
+##  2     blogdown            New Post
+##  3     blogdown     Update Metadata
+##  4     bookdown        Preview Book
+##  5     bookdown    Input LaTeX Math
+##  6       chunky              chunky
+##  7        clipr  Value to clipboard
+##  8        clipr Output to clipboard
+##  9 colourpicker  Plot Colour Helper
+## 10 colourpicker       Colour Picker
+## # ... with 37 more rows, and 6 more variables: Description &amp;lt;chr&amp;gt;,
+## #   Binding &amp;lt;chr&amp;gt;, Interactive &amp;lt;chr&amp;gt;, Key &amp;lt;chr&amp;gt;, Shortcut &amp;lt;chr&amp;gt;,
+## #   libpath &amp;lt;chr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;toggle-addins-onoff&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Toggle Addins on/off&lt;/h4&gt;

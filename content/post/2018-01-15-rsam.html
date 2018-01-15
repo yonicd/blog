@@ -24,6 +24,8 @@ remotes::install_github(&#39;yonicd/rsam&#39;)</code></pre>
 <div id="user-interface" class="section level3">
 <h3>User Interface</h3>
 <p>The user interface is a shiny application that uses <a href="http://jrowen.github.io/rhandsontable/">rhandshontable</a> to interact with the addins. The table includes a list of all the installed addins found in the <code>.libPaths()</code>, their description, a checkbox to control if the addin will be shown in the IDE dropdown menu and a column to define keyboard shortcuts.</p>
+<pre class="r"><code>#invoking the UI
+rsam()</code></pre>
 <p>Once you have decided which addins to toggle on or off you press the <code>update</code> button. This will update the RStudio files. The final (currently unavoidable) step is to restart RStudio to invoke the changes.</p>
 <div class="figure">
 <img src="https://raw.githubusercontent.com/yonicd/blog/master/img/rsamUI.png" />
@@ -35,7 +37,23 @@ remotes::install_github(&#39;yonicd/rsam&#39;)</code></pre>
 <p>Via the command line you can manage the addins with greater flexibility.</p>
 <div id="retrieve-summary-of-installed-addins" class="section level4">
 <h4>Retrieve Summary of Installed Addins</h4>
-<pre class="r"><code>fetch_addins()</code></pre>
+<pre class="r"><code>dplyr::as_tibble(fetch_addins())</code></pre>
+<pre><code>## # A tibble: 47 x 8
+##         Package                Name
+##           &lt;chr&gt;               &lt;chr&gt;
+##  1     blogdown          Serve Site
+##  2     blogdown            New Post
+##  3     blogdown     Update Metadata
+##  4     bookdown        Preview Book
+##  5     bookdown    Input LaTeX Math
+##  6       chunky              chunky
+##  7        clipr  Value to clipboard
+##  8        clipr Output to clipboard
+##  9 colourpicker  Plot Colour Helper
+## 10 colourpicker       Colour Picker
+## # ... with 37 more rows, and 6 more variables: Description &lt;chr&gt;,
+## #   Binding &lt;chr&gt;, Interactive &lt;chr&gt;, Key &lt;chr&gt;, Shortcut &lt;chr&gt;,
+## #   libpath &lt;chr&gt;</code></pre>
 </div>
 <div id="toggle-addins-onoff" class="section level4">
 <h4>Toggle Addins on/off</h4>
