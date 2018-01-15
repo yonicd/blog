@@ -19,7 +19,6 @@
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/2017-11-07-gunflow/</guid>
       <description>&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/blazy/blazy.min.js&#34;&gt;&lt;/script&gt;
 &lt;script src=&#34;/rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
 &lt;script src=&#34;/rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
 
@@ -255,7 +254,6 @@ delete_slackr(count = 6,channel = &amp;#39;#general&amp;#39;)&lt;/code&gt;&lt;/p
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/jstree/</guid>
       <description>&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/blazy/blazy.min.js&#34;&gt;&lt;/script&gt;
 &lt;script src=&#34;/rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
 &lt;script src=&#34;/rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
 
@@ -279,65 +277,149 @@ library(widgetframe)&lt;/code&gt;&lt;/pre&gt;
 superfundsite &amp;lt;- readRDS(&amp;#39;../../data/superfundsite.Rds&amp;#39;)
 
 htmlTable::htmlTable(head(superfundsite),rnames=FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;table class=&#39;gmisc_table&#39; style=&#39;border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;&#39; &gt;
+&lt;table class=&#34;gmisc_table&#34; style=&#34;border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;&#34;&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th style=&#39;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#39;&gt;Region&lt;/th&gt;
-&lt;th style=&#39;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#39;&gt;State&lt;/th&gt;
-&lt;th style=&#39;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#39;&gt;City&lt;/th&gt;
-&lt;th style=&#39;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#39;&gt;County&lt;/th&gt;
-&lt;th style=&#39;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#39;&gt;Zip Code&lt;/th&gt;
-&lt;th style=&#39;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#39;&gt;Site Name&lt;/th&gt;
+&lt;th style=&#34;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#34;&gt;
+Region
+&lt;/th&gt;
+&lt;th style=&#34;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#34;&gt;
+State
+&lt;/th&gt;
+&lt;th style=&#34;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#34;&gt;
+City
+&lt;/th&gt;
+&lt;th style=&#34;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#34;&gt;
+County
+&lt;/th&gt;
+&lt;th style=&#34;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#34;&gt;
+Zip Code
+&lt;/th&gt;
+&lt;th style=&#34;border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;&#34;&gt;
+Site Name
+&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;01&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;Massachusetts&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;ACTON&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;MIDDLESEX&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;01720&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;W.R. GRACE &amp; CO., INC. (ACTON PLANT)&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+01
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+Massachusetts
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+ACTON
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+MIDDLESEX
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+01720
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+W.R. GRACE &amp;amp; CO., INC. (ACTON PLANT)
+&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;01&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;Massachusetts&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;AMESBURY&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;ESSEX&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;01913&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;MICROFAB INC (FORMER)&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+01
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+Massachusetts
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+AMESBURY
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+ESSEX
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+01913
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+MICROFAB INC (FORMER)
+&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;01&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;Massachusetts&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;ASHLAND&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;MIDDLESEX&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;01721&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;NYANZA CHEMICAL WASTE DUMP&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+01
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+Massachusetts
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+ASHLAND
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+MIDDLESEX
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+01721
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+NYANZA CHEMICAL WASTE DUMP
+&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;01&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;Massachusetts&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;ATTLEBORO&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;BRISTOL&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;02703&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;WALTON &amp; LONSBURY INC.&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+01
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+Massachusetts
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+ATTLEBORO
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+BRISTOL
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+02703
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+WALTON &amp;amp; LONSBURY INC.
+&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;01&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;Maine&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;AUGUSTA&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;KENNEBEC&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;04330&lt;/td&gt;
-&lt;td style=&#39;text-align: center;&#39;&gt;O&#39;CONNOR CO.&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+01
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+Maine
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+AUGUSTA
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+KENNEBEC
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+04330
+&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;
+O’CONNOR CO.
+&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&#39;border-bottom: 2px solid grey; text-align: center;&#39;&gt;01&lt;/td&gt;
-&lt;td style=&#39;border-bottom: 2px solid grey; text-align: center;&#39;&gt;Connecticut&lt;/td&gt;
-&lt;td style=&#39;border-bottom: 2px solid grey; text-align: center;&#39;&gt;BARKHAMSTED&lt;/td&gt;
-&lt;td style=&#39;border-bottom: 2px solid grey; text-align: center;&#39;&gt;LITCHFIELD&lt;/td&gt;
-&lt;td style=&#39;border-bottom: 2px solid grey; text-align: center;&#39;&gt;06063&lt;/td&gt;
-&lt;td style=&#39;border-bottom: 2px solid grey; text-align: center;&#39;&gt;BARKHAMSTED-NEW HARTFORD LANDFILL&lt;/td&gt;
+&lt;td style=&#34;border-bottom: 2px solid grey; text-align: center;&#34;&gt;
+01
+&lt;/td&gt;
+&lt;td style=&#34;border-bottom: 2px solid grey; text-align: center;&#34;&gt;
+Connecticut
+&lt;/td&gt;
+&lt;td style=&#34;border-bottom: 2px solid grey; text-align: center;&#34;&gt;
+BARKHAMSTED
+&lt;/td&gt;
+&lt;td style=&#34;border-bottom: 2px solid grey; text-align: center;&#34;&gt;
+LITCHFIELD
+&lt;/td&gt;
+&lt;td style=&#34;border-bottom: 2px solid grey; text-align: center;&#34;&gt;
+06063
+&lt;/td&gt;
+&lt;td style=&#34;border-bottom: 2px solid grey; text-align: center;&#34;&gt;
+BARKHAMSTED-NEW HARTFORD LANDFILL
+&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;

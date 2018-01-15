@@ -8,9 +8,9 @@
   <title>Reproducible Random Thoughts</title>
   <meta property="og:title" content="Reproducible Random Thoughts" />
   <meta name="twitter:title" content="Reproducible Random Thoughts" />
-  <meta name="description" content="    #htmlwidget-d4c921babbf9e2c06577 {margin-left:auto;margin-right:auto;margin-bottom:auto}  {&#34;x&#34;:{&#34;url&#34;:&#34;/_index_files/figure-html//widgets/widget_unnamed-chunk-2.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]} ">
-  <meta property="og:description" content="    #htmlwidget-d4c921babbf9e2c06577 {margin-left:auto;margin-right:auto;margin-bottom:auto}  {&#34;x&#34;:{&#34;url&#34;:&#34;/_index_files/figure-html//widgets/widget_unnamed-chunk-2.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]} ">
-  <meta name="twitter:description" content="    #htmlwidget-d4c921babbf9e2c06577 {margin-left:auto;margin-right:auto;margin-bottom:auto} …">
+  <meta name="description" content="   #htmlwidget-17b3fd6544a471087e25 {margin-left:auto;margin-right:auto;margin-bottom:auto}  {&#34;x&#34;:{&#34;url&#34;:&#34;/_index_files/figure-html//widgets/widget_unnamed-chunk-2.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]} ">
+  <meta property="og:description" content="   #htmlwidget-17b3fd6544a471087e25 {margin-left:auto;margin-right:auto;margin-bottom:auto}  {&#34;x&#34;:{&#34;url&#34;:&#34;/_index_files/figure-html//widgets/widget_unnamed-chunk-2.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]} ">
+  <meta name="twitter:description" content="   #htmlwidget-17b3fd6544a471087e25 {margin-left:auto;margin-right:auto;margin-bottom:auto} …">
   <meta name="author" content="Jonathan Sidi"/>
   <link href='/img/cd-favicon.ico' rel='icon' type='image/x-icon'/>
   <meta property="og:image" content="/img/cd-icon.png" />
@@ -219,12 +219,11 @@ ga('send', 'pageview');
         
           <div>
             <script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
-<script src="/rmarkdown-libs/blazy/blazy.min.js"></script>
 <script src="/rmarkdown-libs/pymjs/pym.v1.js"></script>
 <script src="/rmarkdown-libs/widgetframe-binding/widgetframe.js"></script>
 
 
-<style>#htmlwidget-d4c921babbf9e2c06577  {margin-left:auto;margin-right:auto;margin-bottom:auto}</style>
+<style>#htmlwidget-17b3fd6544a471087e25  {margin-left:auto;margin-right:auto;margin-bottom:auto}</style>
 <div id="htmlwidget-1" style="width:90%;height:250px;" class="widgetframe html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{"x":{"url":"/_index_files/figure-html//widgets/widget_unnamed-chunk-2.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 
@@ -233,6 +232,38 @@ ga('send', 'pageview');
 
         <div class="posts-list">
           
+          
+            <article class="post-preview">
+              <a href="/post/rsam/">
+                <h2 class="post-title">RStudio Addin Manager</h2>
+                
+              </a>
+
+              <span class="post-meta">
+  Posted on January 15, 2018
+  
+</span>
+
+
+              <div class="post-entry">
+                
+                  rsam provides a command line and user interface to manage RStudio addins. You can show or hide the addins in the RStudio IDE dropdown menu and set keyboard shortcuts for them.
+Installation Since rsam manages the RStudio addins it must write to disk. For this reason the package can not be hosted on CRAN.
+#install.packages(&#39;remotes&#39;) remotes::install_github(&#39;yonicd/rsam&#39;)  Usage library(rsam) User Interface The user interface is a shiny application that uses rhandshontable to interact with the addins.
+                  <a href="/post/rsam/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+                <span class="post-meta">
+                
+                  #<a href="/tags/rstudio/">RStudio</a>&nbsp;
+                
+                  #<a href="/tags/addin/">addin</a>&nbsp;
+                
+                </span>
+              
+            </article>
           
             <article class="post-preview">
               <a href="/post/2017-11-07-gunflow/">
@@ -548,46 +579,6 @@ Functionality  makeOxygen: Create skeleton for Roxygen2 documentation populated 
               
             </article>
           
-            <article class="post-preview">
-              <a href="/post/2017-03-31-ggedit_cranpost/">
-                <h2 class="post-title">ggedit 0.2.0</h2>
-                
-                  <h3 class="post-subtitle">
-                  Crantastic!
-                  </h3>
-                
-              </a>
-
-              <span class="post-meta">
-  Posted on March 31, 2017
-  
-</span>
-
-
-              <div class="post-entry">
-                
-                  We are pleased to announce the release of the ggedit package on CRAN.
-To install the package you can call the standard R command
-install.packages('ggedit')  The source version is still tracked on github, which has been reorganized to be easier to navigate.
-To install the dev version:
-devtools::install_github('metrumresearchgroup/ggedit')  What is ggedit? ggedit is an R package that is used to facilitate ggplot formatting. With ggedit, R users of all experience levels can easily move from creating ggplots to refining aesthetic details, all while maintaining portability for further reproducible research and collaboration.
-                  <a href="/post/2017-03-31-ggedit_cranpost/" class="post-read-more">[Read More]</a>
-                
-              </div>
-
-              
-                <span class="post-meta">
-                
-                  #<a href="/tags/shiny/">Shiny</a>&nbsp;
-                
-                  #<a href="/tags/ggplot2/">ggplot2</a>&nbsp;
-                
-                  #<a href="/tags/reproducibility/">Reproducibility</a>&nbsp;
-                
-                </span>
-              
-            </article>
-          
         </div>
 
         
@@ -677,7 +668,7 @@ devtools::install_github('metrumresearchgroup/ggedit')  What is ggedit? ggedit i
           
           
           &nbsp;&bull;&nbsp;
-          2017
+          2018
 
           
             &nbsp;&bull;&nbsp;

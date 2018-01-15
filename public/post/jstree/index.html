@@ -292,7 +292,6 @@ ga('send', 'pageview');
 
       <article role="main" class="blog-post">
         <script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
-<script src="/rmarkdown-libs/blazy/blazy.min.js"></script>
 <script src="/rmarkdown-libs/pymjs/pym.v1.js"></script>
 <script src="/rmarkdown-libs/widgetframe-binding/widgetframe.js"></script>
 
@@ -316,65 +315,149 @@ library(widgetframe)</code></pre>
 superfundsite &lt;- readRDS(&#39;../../data/superfundsite.Rds&#39;)
 
 htmlTable::htmlTable(head(superfundsite),rnames=FALSE)</code></pre>
-<table class='gmisc_table' style='border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;' >
+<table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
-<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>Region</th>
-<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>State</th>
-<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>City</th>
-<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>County</th>
-<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>Zip Code</th>
-<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'>Site Name</th>
+<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+Region
+</th>
+<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+State
+</th>
+<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+City
+</th>
+<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+County
+</th>
+<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+Zip Code
+</th>
+<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+Site Name
+</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style='text-align: center;'>01</td>
-<td style='text-align: center;'>Massachusetts</td>
-<td style='text-align: center;'>ACTON</td>
-<td style='text-align: center;'>MIDDLESEX</td>
-<td style='text-align: center;'>01720</td>
-<td style='text-align: center;'>W.R. GRACE & CO., INC. (ACTON PLANT)</td>
+<td style="text-align: center;">
+01
+</td>
+<td style="text-align: center;">
+Massachusetts
+</td>
+<td style="text-align: center;">
+ACTON
+</td>
+<td style="text-align: center;">
+MIDDLESEX
+</td>
+<td style="text-align: center;">
+01720
+</td>
+<td style="text-align: center;">
+W.R. GRACE &amp; CO., INC. (ACTON PLANT)
+</td>
 </tr>
 <tr>
-<td style='text-align: center;'>01</td>
-<td style='text-align: center;'>Massachusetts</td>
-<td style='text-align: center;'>AMESBURY</td>
-<td style='text-align: center;'>ESSEX</td>
-<td style='text-align: center;'>01913</td>
-<td style='text-align: center;'>MICROFAB INC (FORMER)</td>
+<td style="text-align: center;">
+01
+</td>
+<td style="text-align: center;">
+Massachusetts
+</td>
+<td style="text-align: center;">
+AMESBURY
+</td>
+<td style="text-align: center;">
+ESSEX
+</td>
+<td style="text-align: center;">
+01913
+</td>
+<td style="text-align: center;">
+MICROFAB INC (FORMER)
+</td>
 </tr>
 <tr>
-<td style='text-align: center;'>01</td>
-<td style='text-align: center;'>Massachusetts</td>
-<td style='text-align: center;'>ASHLAND</td>
-<td style='text-align: center;'>MIDDLESEX</td>
-<td style='text-align: center;'>01721</td>
-<td style='text-align: center;'>NYANZA CHEMICAL WASTE DUMP</td>
+<td style="text-align: center;">
+01
+</td>
+<td style="text-align: center;">
+Massachusetts
+</td>
+<td style="text-align: center;">
+ASHLAND
+</td>
+<td style="text-align: center;">
+MIDDLESEX
+</td>
+<td style="text-align: center;">
+01721
+</td>
+<td style="text-align: center;">
+NYANZA CHEMICAL WASTE DUMP
+</td>
 </tr>
 <tr>
-<td style='text-align: center;'>01</td>
-<td style='text-align: center;'>Massachusetts</td>
-<td style='text-align: center;'>ATTLEBORO</td>
-<td style='text-align: center;'>BRISTOL</td>
-<td style='text-align: center;'>02703</td>
-<td style='text-align: center;'>WALTON & LONSBURY INC.</td>
+<td style="text-align: center;">
+01
+</td>
+<td style="text-align: center;">
+Massachusetts
+</td>
+<td style="text-align: center;">
+ATTLEBORO
+</td>
+<td style="text-align: center;">
+BRISTOL
+</td>
+<td style="text-align: center;">
+02703
+</td>
+<td style="text-align: center;">
+WALTON &amp; LONSBURY INC.
+</td>
 </tr>
 <tr>
-<td style='text-align: center;'>01</td>
-<td style='text-align: center;'>Maine</td>
-<td style='text-align: center;'>AUGUSTA</td>
-<td style='text-align: center;'>KENNEBEC</td>
-<td style='text-align: center;'>04330</td>
-<td style='text-align: center;'>O'CONNOR CO.</td>
+<td style="text-align: center;">
+01
+</td>
+<td style="text-align: center;">
+Maine
+</td>
+<td style="text-align: center;">
+AUGUSTA
+</td>
+<td style="text-align: center;">
+KENNEBEC
+</td>
+<td style="text-align: center;">
+04330
+</td>
+<td style="text-align: center;">
+O’CONNOR CO.
+</td>
 </tr>
 <tr>
-<td style='border-bottom: 2px solid grey; text-align: center;'>01</td>
-<td style='border-bottom: 2px solid grey; text-align: center;'>Connecticut</td>
-<td style='border-bottom: 2px solid grey; text-align: center;'>BARKHAMSTED</td>
-<td style='border-bottom: 2px solid grey; text-align: center;'>LITCHFIELD</td>
-<td style='border-bottom: 2px solid grey; text-align: center;'>06063</td>
-<td style='border-bottom: 2px solid grey; text-align: center;'>BARKHAMSTED-NEW HARTFORD LANDFILL</td>
+<td style="border-bottom: 2px solid grey; text-align: center;">
+01
+</td>
+<td style="border-bottom: 2px solid grey; text-align: center;">
+Connecticut
+</td>
+<td style="border-bottom: 2px solid grey; text-align: center;">
+BARKHAMSTED
+</td>
+<td style="border-bottom: 2px solid grey; text-align: center;">
+LITCHFIELD
+</td>
+<td style="border-bottom: 2px solid grey; text-align: center;">
+06063
+</td>
+<td style="border-bottom: 2px solid grey; text-align: center;">
+BARKHAMSTED-NEW HARTFORD LANDFILL
+</td>
 </tr>
 </tbody>
 </table>
@@ -596,7 +679,7 @@ shinyApp(ui, server)</code></pre>
           
           
           &nbsp;&bull;&nbsp;
-          2017
+          2018
 
           
             &nbsp;&bull;&nbsp;

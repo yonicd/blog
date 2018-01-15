@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rstudio on Reproducible Random Thoughts</title>
+    <link>/tags/rstudio/</link>
+    <description>Recent content in Rstudio on Reproducible Random Thoughts</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
+    <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
+    <lastBuildDate>Mon, 15 Jan 2018 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="/tags/rstudio/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>RStudio Addin Manager</title>
+      <link>/post/rsam/</link>
+      <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>/post/rsam/</guid>
+      <description>&lt;p&gt;&lt;code&gt;rsam&lt;/code&gt; provides a command line and user interface to manage RStudio addins. You can show or hide the addins in the RStudio IDE dropdown menu and set keyboard shortcuts for them.&lt;/p&gt;
+&lt;div id=&#34;installation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Installation&lt;/h2&gt;
+&lt;p&gt;Since &lt;code&gt;rsam&lt;/code&gt; manages the RStudio addins it must write to disk. For this reason the package can not be hosted on &lt;a href=&#34;https://cran.r-project.org/web/packages/rsam/index.html&#34;&gt;CRAN&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#install.packages(&amp;#39;remotes&amp;#39;)
+remotes::install_github(&amp;#39;yonicd/rsam&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;usage&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Usage&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(rsam)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;user-interface&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;User Interface&lt;/h3&gt;
+&lt;p&gt;The user interface is a shiny application that uses &lt;a href=&#34;http://jrowen.github.io/rhandsontable/&#34;&gt;rhandshontable&lt;/a&gt; to interact with the addins. The table includes a list of all the installed addins found in the &lt;code&gt;.libPaths()&lt;/code&gt;, their description, a checkbox to control if the addin will be shown in the IDE dropdown menu and a column to define keyboard shortcuts.&lt;/p&gt;
+&lt;p&gt;Once you have decided which addins to toggle on or off you press the &lt;code&gt;update&lt;/code&gt; button. This will update the RStudio files. The final (currently unavoidable) step is to restart RStudio to invoke the changes.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;../../img/rsamUI.png&#34; /&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;command-line&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Command Line&lt;/h3&gt;
+&lt;p&gt;Via the command line you can manage the addins with greater flexibility.&lt;/p&gt;
+&lt;div id=&#34;retrieve-summary-of-installed-addins&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Retrieve Summary of Installed Addins&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fetch_addins()&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;toggle-addins-onoff&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Toggle Addins on/off&lt;/h4&gt;
+&lt;p&gt;Every time a binding is passed to the &lt;code&gt;toggle_addin&lt;/code&gt; function it will switch states.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;toggle_addin(key = c(&amp;quot;blogdown::serve_site&amp;quot;,&amp;quot;blogdown::new_post_addin&amp;quot;,&amp;quot;blogdown::update_meta_addin&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;building-keyboard-shortcuts&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Building Keyboard Shortcuts&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;rsam&lt;/code&gt; has a validation for keyboard keys through the class &lt;code&gt;key&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;KEYS$`left command/window key`&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Command&amp;quot;
+## attr(,&amp;quot;class&amp;quot;)
+## [1] &amp;quot;character&amp;quot; &amp;quot;key&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;KEYS$shift&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Shift&amp;quot;
+## attr(,&amp;quot;class&amp;quot;)
+## [1] &amp;quot;character&amp;quot; &amp;quot;key&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;KEYS$i&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;I&amp;quot;
+## attr(,&amp;quot;class&amp;quot;)
+## [1] &amp;quot;character&amp;quot; &amp;quot;key&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;key &amp;lt;- KEYS$`left command/window key` + KEYS$shift + KEYS$i
+
+key&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Command+Shift+I&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;set-keyboard-shortcut-for-addins&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Set Keyboard Shortcut for Addins&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set_shortcut(fn = &amp;#39;blogdown::serve_site&amp;#39;,shortcut = key)
+
+#if the binding already has a shortcut mapped to it `overide` must be TRUE
+set_shortcut(fn = &amp;#39;blogdown::serve_site&amp;#39;,shortcut = key, overide = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;remove-keyboard-shortcut-for-addins&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Remove Keyboard Shortcut for Addins&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rm_shortcut(fn = &amp;#39;blogdown::serve_site&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;limited-liability-addins&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Limited Liability Addins&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;rsam&lt;/code&gt; gives you 3 empty addins to pass into them whatever you want and run them as your personal addins. You can also set keyboard shortcuts for each one with &lt;code&gt;set_shortcut&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Pass through an expression wrapped the global objects &lt;code&gt;rsam_fn_1()&lt;/code&gt;, &lt;code&gt;rsam_fn_2()&lt;/code&gt;, and &lt;code&gt;rsam_fn_3()&lt;/code&gt; into the Rstudio Addin list.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rsam_fn_1 &amp;lt;- function(){
+  library(ggplot2)
+  library(dplyr)
+  
+  iris%&amp;gt;%ggplot(aes(x=Sepal.Length,y=Sepal.Width)) + geom_point()
+}
+
+# Change shortcuts to whatever you want
+
+keys &amp;lt;- KEYS$`left command/window key` + KEYS$shift + KEYS$l
+
+rsam::set_shortcut(fn = &amp;#39;rsam::lla1&amp;#39;,shortcut = keys + KEYS$`1`)
+
+rsam::set_shortcut(fn = &amp;#39;rsam::lla2&amp;#39;,shortcut = keys + KEYS$`2`)
+
+rsam::set_shortcut(fn = &amp;#39;rsam::lla3&amp;#39;,shortcut = keys + KEYS$`3`)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
