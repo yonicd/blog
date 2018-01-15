@@ -21,7 +21,7 @@
       <description>&lt;p&gt;&lt;code&gt;rsam&lt;/code&gt; provides a command line and user interface to manage RStudio addins. You can show or hide the addins in the RStudio IDE dropdown menu and set keyboard shortcuts for them.&lt;/p&gt;
 &lt;div id=&#34;installation&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Installation&lt;/h2&gt;
-&lt;p&gt;Since &lt;code&gt;rsam&lt;/code&gt; manages the RStudio addins it must write to disk. For this reason the package can not be hosted on &lt;a href=&#34;https://cran.r-project.org/web/packages/rsam/index.html&#34;&gt;CRAN&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Since &lt;code&gt;rsam&lt;/code&gt; manages the RStudio addins it must write to disk. For this reason the package cannot be hosted on &lt;a href=&#34;https://cran.r-project.org/web/packages/rsam/index.html&#34;&gt;CRAN&lt;/a&gt;.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#install.packages(&amp;#39;remotes&amp;#39;)
 remotes::install_github(&amp;#39;yonicd/rsam&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -33,7 +33,7 @@ remotes::install_github(&amp;#39;yonicd/rsam&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The user interface is a shiny application that uses &lt;a href=&#34;http://jrowen.github.io/rhandsontable/&#34;&gt;rhandshontable&lt;/a&gt; to interact with the addins. The table includes a list of all the installed addins found in the &lt;code&gt;.libPaths()&lt;/code&gt;, their description, a checkbox to control if the addin will be shown in the IDE dropdown menu and a column to define keyboard shortcuts.&lt;/p&gt;
 &lt;p&gt;Once you have decided which addins to toggle on or off you press the &lt;code&gt;update&lt;/code&gt; button. This will update the RStudio files. The final (currently unavoidable) step is to restart RStudio to invoke the changes.&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;../../img/rsamUI.png&#34; /&gt;
+&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/rsamUI.png&#34; /&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;

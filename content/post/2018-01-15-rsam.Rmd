@@ -13,7 +13,7 @@ gh_badge: [follow, star, issue]
 
 ## Installation
 
-Since `rsam` manages the RStudio addins it must write to disk. For this reason the package can not be hosted on [CRAN](https://cran.r-project.org/web/packages/rsam/index.html).
+Since `rsam` manages the RStudio addins it must write to disk. For this reason the package cannot be hosted on [CRAN](https://cran.r-project.org/web/packages/rsam/index.html).
 
 ```{r,eval=FALSE}
 #install.packages('remotes')
@@ -32,7 +32,7 @@ The user interface is a shiny application that uses [rhandshontable](http://jrow
 
 Once you have decided which addins to toggle on or off you press the `update` button. This will update the RStudio files. The final (currently unavoidable) step is to restart RStudio to invoke the changes. 
 
-![](../../img/rsamUI.png)
+![](https://raw.githubusercontent.com/yonicd/blog/master/img/rsamUI.png)
 
 ### Command Line
 
