@@ -5,12 +5,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Datasets</title>
-  <meta property="og:title" content="Datasets" />
-  <meta name="twitter:title" content="Datasets" />
-  <meta name="description" content="Source Data">
-  <meta property="og:description" content="Source Data">
-  <meta name="twitter:description" content="Source Data">
+  <title>Projects</title>
+  <meta property="og:title" content="Projects" />
+  <meta name="twitter:title" content="Projects" />
+  <meta name="description" content="Odds and Ends">
+  <meta property="og:description" content="Odds and Ends">
+  <meta name="twitter:description" content="Odds and Ends">
   <meta name="author" content="Jonathan Sidi"/>
   <link href='/img/cd-favicon.ico' rel='icon' type='image/x-icon'/>
   <meta property="og:image" content="/img/cd-icon.png" />
@@ -18,12 +18,12 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@yoniceedee" />
   <meta name="twitter:creator" content="@yoniceedee" />
-  <meta property="og:url" content="/page/datasets/" />
+  <meta property="og:url" content="/page/projects.utf8/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Reproducible Random Thoughts" />
 
   <meta name="generator" content="Hugo 0.49.2" />
-  <link rel="canonical" href="/page/datasets/" />
+  <link rel="canonical" href="/page/projects.utf8/" />
   <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Reproducible Random Thoughts">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -200,11 +200,11 @@ if (!doNotTrack) {
         <div class="row">
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="page-heading">
-              <h1>Datasets</h1>
+              <h1>Projects</h1>
                 
                   
                     <hr class="small">
-                    <span class="page-subheading">Source Data</span>
+                    <span class="page-subheading">Odds and Ends</span>
                   
                 
                 
@@ -230,23 +230,98 @@ if (!doNotTrack) {
     </div>
 
       <article role="main" class="blog-post">
-        <p>This page includes source data used in blog posts and packages.</p>
+        <p>This is a list of R packages that have been published on CRAN and/or are still being developed on Github. Many of the projects are part of <a href="https://www.metrumrg.com/try-open-source-tools/">open tools</a> developed at Metrum Research Group.</p>
 
-<p>|Dataset|Object Type|Source|Description|
-  |:&ndash;:|:&ndash;:|:&ndash;:|:&ndash;:|
-  |superfundsite|tibble|<a href="https://www.epa.gov/superfund/search-superfund-sites-where-you-live">EPA</a>|Superfund sites containing</p>
+<!-- https://img.shields.io/badge/METRUM-opentools-brightgreen.svg?link=https://www.metrumrg.com/&link=https://www.metrumrg.com/open-science/ -->
+
+<p>The icons at the end of each description show where the project is maintained and links are attached to each one to take you to the relevant page.</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">Metrum</th>
+<th align="center">Github</th>
+<th align="center">CRAN</th>
+<th align="center">bl.ocks</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center"><a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a></td>
+<td align="center"><a href="https://github.com"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></td>
+<td align="center"><a href="https://cran.r-project.org/"><img src="https://img.shields.io/badge/CRAN--blue.svg" alt="" /></a></td>
+<td align="center"><a href="https://bl.ocks.org/"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/d3js.jpeg" alt="" /></a></td>
+</tr>
+</tbody>
+</table>
+
+<p>(Not in any logical order, just what came to mind when I wrote this&hellip;)</p>
+
+<p><em>Reproduciblity</em></p>
+
+<ul>
+<li><p><strong>carbonate</strong> : Create beautiful images of source code using [carbon.js[(<a href="https://carbon.now.sh/about).[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/carbonate)[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/carbonate?color=blue)](https://cran.r-project.org/package=carbonate)![downloads](https://cranlogs.r-pkg.org/badges/carbonate">https://carbon.now.sh/about).[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/carbonate)[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/carbonate?color=blue)](https://cran.r-project.org/package=carbonate)![downloads](https://cranlogs.r-pkg.org/badges/carbonate</a>)</p></li>
+
+<li><p><strong>ggedit</strong> : Interactively edit ggplot2 layer and theme aesthetics definitions.<a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/metrumresearchgroup/ggedit"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://cran.r-project.org/package=ggedit"><img src="https://www.r-pkg.org/badges/version/ggedit?color=blue" alt="CRAN\_Status\_Badge" /></a><img src="https://cranlogs.r-pkg.org/badges/ggedit" alt="downloads" /></p></li>
+
+<li><p><strong>sinew</strong> : Create roxygen2 skeleton populated with information scraped from the within the function script. Also creates field entries for imports in the DESCRIPTION and import in the NAMESPACE files. Can be run from the R console or through the RStudio addin menu. <a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/metrumresearchgroup/sinew"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://cran.r-project.org/package=sinew"><img src="https://www.r-pkg.org/badges/version/sinew?color=blue" alt="CRAN\_Status\_Badge" /></a><img src="https://cranlogs.r-pkg.org/badges/sinew" alt="downloads" /></p></li>
+
+<li><p><strong>texPreview</strong> : Compile and preview snippets of LaTeX. Can be used directly from the R console, from RStudio, in Shiny apps and R Markdown documents. Must have pdflatex or xelatex or lualatex in PATH. <a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/metrumresearchgroup/texPreview"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://cran.r-project.org/package=texPreview"><img src="https://www.r-pkg.org/badges/version/texPreview?color=blue" alt="CRAN\_Status\_Badge" /></a><img src="https://cranlogs.r-pkg.org/badges/texPreview" alt="downloads" /></p></li>
+
+<li><p><strong>gdigest</strong> : Wrapper for memoise that lets users cache R objects on a remote repository. Works for objects created in console and Shiny. This is meant for multiple users to share cache via a repository, and increase efficiency of shiny apps that have heavy simulations.<a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/yonicd/gdigest"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+
+<li><p><strong>vcs</strong> : Managing, inspecting and sourcing remote repositories such as github, bitbucket and subversion.<a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/metrumresearchgroup/vcs"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+</ul>
+
+<p><em>Shiny Apps, Modules and Gadgets</em></p>
+
+<ul>
+<li><p><strong>regexSelect</strong> : R package to enable regular expression searches within a shiny selectize object. <a href="https://github.com/yonicd/regexSelect"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://cran.r-project.org/package=regexSelect"><img src="https://www.r-pkg.org/badges/version/regexSelect?color=blue" alt="CRAN\_Status\_Badge" /></a><img src="https://cranlogs.r-pkg.org/badges/regexSelect" alt="downloads" /></p></li>
+
+<li><p><strong>shinyHeatmaply</strong> : Access functionality of the <a href="https://github.com/talgalili/heatmaply">heatmaply</a> package through Shiny application and Shiny gadget. <a href="https://github.com/yonicd/shinyHeatmaply"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a> <a href="https://cran.r-project.org/package=shinyHeatmaply"><img src="https://www.r-pkg.org/badges/version/shinyHeatmaply?color=blue" alt="CRAN\_Status\_Badge" /></a> <img src="https://cranlogs.r-pkg.org/badges/shinyHeatmaply" alt="downloads" /></p></li>
+</ul>
+
+<p><em>Htmlwidgets</em></p>
+
+<ul>
+<li><p><strong>slickR</strong> : Create and customize interactive carousels using the Slick JavaScript library and the htmlwidgets package. The carousels can contain plots produced in R, images, iframes, videos and other htmlwidgets. These carousels can be used directly from the R console, from RStudio, in Shiny apps and R Markdown documents. <a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a> <a href="https://github.com/metrumresearchgroup/slickR"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a>
+<a href="https://cran.r-project.org/package=slickR"><img src="https://www.r-pkg.org/badges/version/slickR?color=blue" alt="CRAN\_Status\_Badge" /></a> <img src="https://cranlogs.r-pkg.org/badges/slickR" alt="downloads" /></p></li>
+
+<li><p><strong>jsTree</strong> : Create and customize interactive trees using the jQuery jsTree plugin library and the htmlwidgets package. These trees can be used directly from the R console, from RStudio, in Shiny apps and R Markdown documents.<a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/metrumresearchgroup/jsTree"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://cran.r-project.org/package=jsTree"><img src="https://www.r-pkg.org/badges/version/jsTree?color=blue" alt="CRAN\_Status\_Badge" /></a> <img src="https://cranlogs.r-pkg.org/badges/jsTree" alt="downloads" /></p></li>
+
+<li><p><strong>d3Tree</strong> : Create and customize interactive collapsible D3 trees using the D3 JavaScript library and the htmlwidgets package. These trees can be used directly from the R console, from RStudio, in Shiny apps and R Markdown documents. When in Shiny the tree layout is observed by the server and can be used as a reactive filter of structured data. <a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/metrumresearchgroup/d3Tree"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://cran.r-project.org/package=d3Tree"><img src="https://www.r-pkg.org/badges/version/d3Tree?color=blue" alt="CRAN\_Status\_Badge" /></a><img src="https://cranlogs.r-pkg.org/badges/d3Tree" alt="downloads" /></p></li>
+
+<li><p><strong>shinyCanvas</strong> : Htmlwidget that binds a fork of <a href="https://bl.ocks.org/mbostock/4342190">Spline Editor</a> by Mike Bostock to create an observable object in Shiny. <a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/metrumresearchgroup/shinyCanvas"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://bl.ocks.org/yonicd/4bc59fca901388ebe4905bdb19af1567"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/d3js.jpeg" alt="" /></a></p></li>
+
+<li><p><strong>rpdf</strong> : View PDFs from remote locations directly in R using the <a href="https://mozilla.github.io/pdf.js/">Mozilla pdf JavaScript library</a> and the htmlwidgets package. The viewer can be called directly from the R console, from RStudio, in Shiny apps and R Markdown documents.<a href="https://github.com/yonicd/rpdf"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+</ul>
+
+<p><em>Stats</em></p>
+
+<ul>
+<li><strong>lmmen</strong> : R package that solves the linear mixed model elastic net. <a href="https://github.com/yonicd/lmmen"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://cran.r-project.org/package=lmmen"><img src="https://www.r-pkg.org/badges/version/lmmen?color=blue" alt="CRAN\_Status\_Badge" /></a><img src="https://cranlogs.r-pkg.org/badges/lmmen" alt="downloads" /></li>
+</ul>
+
+<p><em>Random thoughts that weren&rsquo;t packaged, but are still useful.</em></p>
+
+<ul>
+<li><p><strong>Elections</strong> : Real time tracker and analysis of 2016 USA Elections <a href="https://github.com/yonicd/Elections"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+
+<li><p><strong>CIMDO</strong> : Shiny Dashboard for the IMF CIMDO model. <a href="https://github.com/yonicd/CIMDO"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+
+<li><p><strong>supermarketprices</strong> : Read daily suprmarket data in all israel stores. <a href="https://github.com/yonicd/supermarketprices"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+
+<li><p><strong>taseR</strong> : API to read data from Tel Aviv Stock Exchange (TASE) website to R. <a href="https://github.com/yonicd/taseR"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+</ul>
 
       </article>
 
       <ul class="pager blog-pager">
         
-          <li class="previous">
-            <a href="/page/gh_traffic/" data-toggle="tooltip" data-placement="top" title="GitHub Waffle Heatmap">&larr; Previous Post</a>
-          </li>
-        
         
           <li class="next">
-            <a href="/page/about/" data-toggle="tooltip" data-placement="top" title="About me">Next Post &rarr;</a>
+            <a href="/page/projects/" data-toggle="tooltip" data-placement="top" title="Projects">Next Post &rarr;</a>
           </li>
         
       </ul>

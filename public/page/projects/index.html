@@ -22,7 +22,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Reproducible Random Thoughts" />
 
-  <meta name="generator" content="Hugo 0.27.1" />
+  <meta name="generator" content="Hugo 0.49.2" />
   <link rel="canonical" href="/page/projects/" />
   <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Reproducible Random Thoughts">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
@@ -86,12 +86,16 @@
     </div>
 </div>
 
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-84988961-2', 'auto');
-ga('send', 'pageview');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-84988961-2', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 </head>
 
@@ -254,18 +258,30 @@ ga('send', 'pageview');
 
 <p>(Not in any logical order, just what came to mind when I wrote this&hellip;)</p>
 
+<p><em>R Package Development</em></p>
+
+<ul>
+<li><p><strong>covrpage</strong> : covrpage gives the package developer a simple tool to disseminate to potential users and collaborators the depth of unit testing and code coverage. Conversely, the users and collaborators can reliably verify that the developer has done due their diligence in the unit testing.<a href="https://github.com/yonicd/covrpage"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+
+<li><p><strong>sinew</strong> : Create <code>roxygen2</code> skeleton populated with information scraped from the within the function script. <a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/metrumresearchgroup/sinew"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://cran.r-project.org/package=sinew"><img src="https://www.r-pkg.org/badges/version/sinew?color=blue" alt="CRAN\_Status\_Badge" /></a><img src="https://cranlogs.r-pkg.org/badges/sinew" alt="downloads" /></p></li>
+
+<li><p><strong>vcs</strong> : Managing, inspecting and sourcing remote repositories such as github, bitbucket and subversion.<a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/metrumresearchgroup/vcs"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+
+<li><p><strong>tidycheckUsage</strong> : create tidy output for <code>codetools::checkUsage</code> functions, and fix <code>rlang</code> syntax in code progrmatically.<a href="https://github.com/yonicd/tidycheckUsage"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+</ul>
+
 <p><em>Reproduciblity</em></p>
 
 <ul>
-<li><p><strong>ggedit</strong> : Interactively edit ggplot2 layer and theme aesthetics definitions.<a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/metrumresearchgroup/ggedit"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://cran.r-project.org/package=ggedit"><img src="https://www.r-pkg.org/badges/version/ggedit?color=blue" alt="CRAN\_Status\_Badge" /></a><img src="https://cranlogs.r-pkg.org/badges/ggedit" alt="downloads" /></p></li>
+<li><p><strong>carbonate</strong> : Create beautiful images of source code using <a href="https://carbon.now.sh/about">carbon.js</a>.<a href="https://github.com/yonicd/carbonate"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://cran.r-project.org/package=carbonate"><img src="https://www.r-pkg.org/badges/version/carbonate?color=blue" alt="CRAN\_Status\_Badge" /></a><img src="https://cranlogs.r-pkg.org/badges/carbonate" alt="downloads" /></p></li>
 
-<li><p><strong>sinew</strong> : Create roxygen2 skeleton populated with information scraped from the within the function script. Also creates field entries for imports in the DESCRIPTION and import in the NAMESPACE files. Can be run from the R console or through the RStudio addin menu. <a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/metrumresearchgroup/sinew"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://cran.r-project.org/package=sinew"><img src="https://www.r-pkg.org/badges/version/sinew?color=blue" alt="CRAN\_Status\_Badge" /></a><img src="https://cranlogs.r-pkg.org/badges/sinew" alt="downloads" /></p></li>
+<li><p><strong>ggedit</strong> : Interactively edit ggplot2 layer and theme aesthetics definitions.<a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/metrumresearchgroup/ggedit"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://cran.r-project.org/package=ggedit"><img src="https://www.r-pkg.org/badges/version/ggedit?color=blue" alt="CRAN\_Status\_Badge" /></a><img src="https://cranlogs.r-pkg.org/badges/ggedit" alt="downloads" /></p></li>
 
 <li><p><strong>texPreview</strong> : Compile and preview snippets of LaTeX. Can be used directly from the R console, from RStudio, in Shiny apps and R Markdown documents. Must have pdflatex or xelatex or lualatex in PATH. <a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/metrumresearchgroup/texPreview"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://cran.r-project.org/package=texPreview"><img src="https://www.r-pkg.org/badges/version/texPreview?color=blue" alt="CRAN\_Status\_Badge" /></a><img src="https://cranlogs.r-pkg.org/badges/texPreview" alt="downloads" /></p></li>
 
-<li><p><strong>gdigest</strong> : Wrapper for memoise that lets users cache R objects on a remote repository. Works for objects created in console and Shiny. This is meant for multiple users to share cache via a repository, and increase efficiency of shiny apps that have heavy simulations.<a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/yonicd/gdigest"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+<li><p><strong>texblocks</strong>: Assemble LaTeX tabular environments using simple operations. blocks.<a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/metrumresearchgroup/texblocks"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
 
-<li><p><strong>vcs</strong> : Managing, inspecting and sourcing remote repositories such as github, bitbucket and subversion.<a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/metrumresearchgroup/vcs"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+<li><p><strong>gdigest</strong> : Wrapper for memoise that lets users cache R objects on a remote repository. Works for objects created in console and Shiny. This is meant for multiple users to share cache via a repository, and increase efficiency of shiny apps that have heavy simulations.<a href="https://www.metrumrg.com/open-science"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg" alt="" /></a><a href="https://github.com/yonicd/gdigest"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
 </ul>
 
 <p><em>Shiny Apps, Modules and Gadgets</em></p>
@@ -274,6 +290,20 @@ ga('send', 'pageview');
 <li><p><strong>regexSelect</strong> : R package to enable regular expression searches within a shiny selectize object. <a href="https://github.com/yonicd/regexSelect"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://cran.r-project.org/package=regexSelect"><img src="https://www.r-pkg.org/badges/version/regexSelect?color=blue" alt="CRAN\_Status\_Badge" /></a><img src="https://cranlogs.r-pkg.org/badges/regexSelect" alt="downloads" /></p></li>
 
 <li><p><strong>shinyHeatmaply</strong> : Access functionality of the <a href="https://github.com/talgalili/heatmaply">heatmaply</a> package through Shiny application and Shiny gadget. <a href="https://github.com/yonicd/shinyHeatmaply"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a> <a href="https://cran.r-project.org/package=shinyHeatmaply"><img src="https://www.r-pkg.org/badges/version/shinyHeatmaply?color=blue" alt="CRAN\_Status\_Badge" /></a> <img src="https://cranlogs.r-pkg.org/badges/shinyHeatmaply" alt="downloads" /></p></li>
+
+<li><p><strong>CIMDO</strong> : Shiny Dashboard for the IMF CIMDO model. <a href="https://github.com/yonicd/CIMDO"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+</ul>
+
+<p><em>Utility</em></p>
+
+<ul>
+<li><p><strong>rsam</strong>: Provides a command line and user interface to manage RStudio addins.<a href="https://github.com/yonicd/rsam"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+
+<li><p><strong>noplyr</strong>: Basic dplyr and tidyr functionality without the tidyverse dependencies.<a href="https://github.com/yonicd/noplyr"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+
+<li><p><strong>ripe</strong>: Lazily rerun a chain of <code>magrittr</code> pipes using a pipe.<a href="https://github.com/yonicd/ripe"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
+
+<li><p><strong>remedy</strong>: RStudio Addins to Simplify Markdown Writing. <a href="https://github.com/ThinkR-open/remedy"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a><a href="https://cran.r-project.org/package=remedy"><img src="https://www.r-pkg.org/badges/version/remedy?color=blue" alt="CRAN\_Status\_Badge" /></a><img src="https://cranlogs.r-pkg.org/badges/remedy" alt="downloads" /></p></li>
 </ul>
 
 <p><em>Htmlwidgets</em></p>
@@ -302,16 +332,16 @@ ga('send', 'pageview');
 <ul>
 <li><p><strong>Elections</strong> : Real time tracker and analysis of 2016 USA Elections <a href="https://github.com/yonicd/Elections"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
 
-<li><p><strong>CIMDO</strong> : Shiny Dashboard for the IMF CIMDO model. <a href="https://github.com/yonicd/CIMDO"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
-
 <li><p><strong>supermarketprices</strong> : Read daily suprmarket data in all israel stores. <a href="https://github.com/yonicd/supermarketprices"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
-
-<li><p><strong>taseR</strong> : API to read data from Tel Aviv Stock Exchange (TASE) website to R. <a href="https://github.com/yonicd/taseR"><img src="https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg" alt="" /></a></p></li>
 </ul>
 
       </article>
 
       <ul class="pager blog-pager">
+        
+          <li class="previous">
+            <a href="/page/projects.utf8/" data-toggle="tooltip" data-placement="top" title="Projects">&larr; Previous Post</a>
+          </li>
         
         
           <li class="next">
@@ -324,7 +354,7 @@ ga('send', 'pageview');
         
           <div class="disqus-comments">
             <div id="disqus_thread"></div>
-<script>
+<script type="application/javascript">
     var disqus_config = function () {
     
     
@@ -433,7 +463,7 @@ ga('send', 'pageview');
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.27.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="http://gohugo.io">Hugo v0.49.2</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
           
         </p>
       </div>

@@ -7,3 +7,6 @@ staging
 blog.Rproj
 data/zips_us_topo.json
 github_traffic/_ghcred.yml
+superfund
+.DS_Store
+gifs

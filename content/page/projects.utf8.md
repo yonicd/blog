@@ -15,27 +15,19 @@ The icons at the end of each description show where the project is maintained an
   
 (Not in any logical order, just what came to mind when I wrote this...)
 
-*R Package Development*
-
-  - **covrpage** : covrpage gives the package developer a simple tool to disseminate to potential users and collaborators the depth of unit testing and code coverage. Conversely, the users and collaborators can reliably verify that the developer has done due their diligence in the unit testing.[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/covrpage)
-
-  - **sinew** : Create `roxygen2` skeleton populated with information scraped from the within the function script. [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg)](https://www.metrumrg.com/open-science)[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/metrumresearchgroup/sinew)[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/sinew?color=blue)](https://cran.r-project.org/package=sinew)![downloads](https://cranlogs.r-pkg.org/badges/sinew)
-
-  - **vcs** : Managing, inspecting and sourcing remote repositories such as github, bitbucket and subversion.[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg)](https://www.metrumrg.com/open-science)[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/metrumresearchgroup/vcs)
-
-  - **tidycheckUsage** : create tidy output for `codetools::checkUsage` functions, and fix `rlang` syntax in code progrmatically.[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/tidycheckUsage)
-  
 *Reproduciblity*
 
-  - **carbonate** : Create beautiful images of source code using [carbon.js](https://carbon.now.sh/about).[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/carbonate)[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/carbonate?color=blue)](https://cran.r-project.org/package=carbonate)![downloads](https://cranlogs.r-pkg.org/badges/carbonate)
+  - **carbonate** : Create beautiful images of source code using [carbon.js[(https://carbon.now.sh/about).[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/carbonate)[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/carbonate?color=blue)](https://cran.r-project.org/package=carbonate)![downloads](https://cranlogs.r-pkg.org/badges/carbonate)
 
   - **ggedit** : Interactively edit ggplot2 layer and theme aesthetics definitions.[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg)](https://www.metrumrg.com/open-science)[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/metrumresearchgroup/ggedit)[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ggedit?color=blue)](https://cran.r-project.org/package=ggedit)![downloads](https://cranlogs.r-pkg.org/badges/ggedit)
 
+  - **sinew** : Create roxygen2 skeleton populated with information scraped from the within the function script. Also creates field entries for imports in the DESCRIPTION and import in the NAMESPACE files. Can be run from the R console or through the RStudio addin menu. [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg)](https://www.metrumrg.com/open-science)[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/metrumresearchgroup/sinew)[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/sinew?color=blue)](https://cran.r-project.org/package=sinew)![downloads](https://cranlogs.r-pkg.org/badges/sinew)
+
   - **texPreview** : Compile and preview snippets of LaTeX. Can be used directly from the R console, from RStudio, in Shiny apps and R Markdown documents. Must have pdflatex or xelatex or lualatex in PATH. [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg)](https://www.metrumrg.com/open-science)[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/metrumresearchgroup/texPreview)[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/texPreview?color=blue)](https://cran.r-project.org/package=texPreview)![downloads](https://cranlogs.r-pkg.org/badges/texPreview)
 
-  - **texblocks**: Assemble LaTeX tabular environments using simple operations. blocks.[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg)](https://www.metrumrg.com/open-science)[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/metrumresearchgroup/texblocks)
-
   - **gdigest** : Wrapper for memoise that lets users cache R objects on a remote repository. Works for objects created in console and Shiny. This is meant for multiple users to share cache via a repository, and increase efficiency of shiny apps that have heavy simulations.[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg)](https://www.metrumrg.com/open-science)[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/gdigest)
+
+  - **vcs** : Managing, inspecting and sourcing remote repositories such as github, bitbucket and subversion.[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg)](https://www.metrumrg.com/open-science)[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/metrumresearchgroup/vcs)
 
 *Shiny Apps, Modules and Gadgets*
 
@@ -43,17 +35,6 @@ The icons at the end of each description show where the project is maintained an
 
   - **shinyHeatmaply** : Access functionality of the [heatmaply](https://github.com/talgalili/heatmaply) package through Shiny application and Shiny gadget. [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/shinyHeatmaply) [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/shinyHeatmaply?color=blue)](https://cran.r-project.org/package=shinyHeatmaply) ![downloads](https://cranlogs.r-pkg.org/badges/shinyHeatmaply)
 
-  - **CIMDO** : Shiny Dashboard for the IMF CIMDO model. [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/CIMDO)
-
-*Utility*
-
-  - **rsam**: Provides a command line and user interface to manage RStudio addins.[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/rsam)
-
-  - **noplyr**: Basic dplyr and tidyr functionality without the tidyverse dependencies.[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/noplyr)
-  
-  - **ripe**: Lazily rerun a chain of `magrittr` pipes using a pipe.[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/ripe)
-  
-  - **remedy**: RStudio Addins to Simplify Markdown Writing. [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/ThinkR-open/remedy)[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/remedy?color=blue)](https://cran.r-project.org/package=remedy)![downloads](https://cranlogs.r-pkg.org/badges/remedy)
 
 *Htmlwidgets*
 
@@ -76,4 +57,8 @@ The icons at the end of each description show where the project is maintained an
 
   - **Elections** : Real time tracker and analysis of 2016 USA Elections [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/Elections)
 
+  - **CIMDO** : Shiny Dashboard for the IMF CIMDO model. [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/CIMDO)
+
   - **supermarketprices** : Read daily suprmarket data in all israel stores. [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/supermarketprices)
+
+  - **taseR** : API to read data from Tel Aviv Stock Exchange (TASE) website to R. [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/taseR)
