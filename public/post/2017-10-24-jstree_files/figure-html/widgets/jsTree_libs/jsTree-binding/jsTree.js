@@ -97,10 +97,11 @@ HTMLWidgets.widget({
         var treePlugins=['search','checkbox'];
         if(x.uri&&x.vcs!='svn') treePlugins.push('contextmenu');
   
-
       //create the tree    
       var tree = $('.jstree' + el.id).jstree({
-        'core' : x.core,
+        'core' : {
+          'data' : x.data
+      },
       'contextmenu': {'items': customMenu},
       'plugins': treePlugins,
       'search': {
