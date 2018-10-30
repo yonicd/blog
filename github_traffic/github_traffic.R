@@ -91,9 +91,4 @@ x <- repos%>%
   purrr::map_df(fetch_view_data, 
               gh_pat = Sys.getenv('GITHUB_PAT'))
 
-
-png(file.path(getwd(),'public/img/github_traffic.png'))
-
 plot_traffic(x)
-
-dev.off()

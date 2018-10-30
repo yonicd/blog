@@ -71,9 +71,162 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/page/gh_traffic/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/page/gh_traffic_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;how-we-got-this&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;How we got this:&lt;/h1&gt;
+&lt;div id=&#34;load-libraries&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Load libraries&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(purrr)
+library(ggplot2)
+library(gh)
+library(tidyr)
+library(svglite)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;define-the-github-repos&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Define the GitHub repos&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;repos &amp;lt;- c(
+  &amp;#39;yonicd/carbonate&amp;#39;,
+  &amp;#39;yonicd/noplyr&amp;#39;,
+  &amp;#39;yonicd/shinyHeatmaply&amp;#39;,
+  &amp;#39;yonicd/Elections&amp;#39;,
+  &amp;#39;yonicd/covrpage&amp;#39;,
+  &amp;#39;yonicd/rpdf&amp;#39;,
+  &amp;#39;yonicd/rsam&amp;#39;,
+  &amp;#39;yonicd/regexSelect&amp;#39;,
+  &amp;#39;yonicd/tidycheckUsage&amp;#39;,
+  &amp;#39;yonicd/ripe&amp;#39;,
+  &amp;#39;yonicd/lmmen&amp;#39;,
+  &amp;#39;metrumresearchgroup/ggedit&amp;#39;,
+  &amp;#39;metrumresearchgroup/sinew&amp;#39;,
+  &amp;#39;metrumresearchgroup/slickR&amp;#39;,
+  &amp;#39;metrumresearchgroup/d3Tree&amp;#39;,
+  &amp;#39;metrumresearchgroup/texPreview&amp;#39;,
+  &amp;#39;metrumresearchgroup/jsTree&amp;#39;,
+  &amp;#39;metrumresearchgroup/shinyCanvas&amp;#39;,
+  &amp;#39;metrumresearchgroup/vcs&amp;#39;  
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;define-functions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Define Functions&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fetch_view_type &amp;lt;- function(owner,repo,type,gh_pat){
+  
+  this_dat &amp;lt;- gh::gh(
+                &amp;#39;/repos/:owner/:repo/traffic/:type&amp;#39;,
+                owner  = owner,
+                repo   = repo,
+                type   = type,
+                .token = gh_pat)
+  
+  
+  if(length(this_dat[[type]])==0)
+    return(NULL)
+  
+  ret &amp;lt;- this_dat[[type]]%&amp;gt;%
+    purrr::transpose()%&amp;gt;%
+    dplyr::as_tibble()%&amp;gt;%
+    dplyr::mutate(
+      timestamp = as.Date(gsub(&amp;#39;T(.*?)$&amp;#39;,&amp;#39;&amp;#39;,purrr::flatten_chr(timestamp))),
+      count  = purrr::flatten_dbl(count),
+      uniques  = purrr::flatten_dbl(uniques),
+      repo = repo
+    )
+  
+  ret
+}
+
+fetch_view_data &amp;lt;- function(repo, gh_pat){
+  
+  types &amp;lt;- dplyr::data_frame(type = c(&amp;#39;views&amp;#39;,&amp;#39;clones&amp;#39;))
+
+  ret &amp;lt;- purrr::map_df(
+    types$type,
+    fetch_view_type,
+    gh_pat = gh_pat,
+    owner  = dirname(repo),
+    repo   = basename(repo),
+    .id    = &amp;#39;type&amp;#39;
+    )%&amp;gt;%
+    dplyr::mutate(
+      type = dplyr::case_when(
+        type==1~&amp;#39;views&amp;#39;,
+        type==2~&amp;#39;clones&amp;#39;
+        )
+    )
+
+  return(ret)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;run-the-function&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Run the function&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- repos%&amp;gt;%
+  purrr::map_df(
+    fetch_view_data, 
+    gh_pat = Sys.getenv(&amp;#39;GITHUB_PAT&amp;#39;)
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;waffle-heatmap&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Waffle heatmap&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_traffic &amp;lt;- function(dat){
+  dat %&amp;gt;%
+    tidyr::gather(
+      key   = &amp;#39;stat&amp;#39;,
+      value = &amp;#39;value&amp;#39;,
+      count,
+      uniques
+      )%&amp;gt;%
+    ggplot2::ggplot(
+      ggplot2::aes(
+        x    = timestamp,
+        y    = repo,
+        fill = value
+        )
+      ) +
+    ggplot2::geom_tile(
+      colour = &amp;#39;white&amp;#39;,
+      width  = 0.95,
+      alpha  = 0.75) +
+    ggplot2::geom_hline(
+      yintercept = c(0,(1:length(unique(dat$repo))) + 0.5),
+      colour     = &amp;#39;grey90&amp;#39;) +
+    viridis::scale_fill_viridis(
+      name      = &amp;#39;Count&amp;#39;,
+      direction = -1
+      ) +
+    ggplot2::facet_grid( . ~ stat ) +
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      panel.grid.major  = ggplot2::element_blank(),
+      axis.text.x       = ggplot2::element_text(angle=90),
+      panel.grid.minor  = ggplot2::element_blank(),
+      axis.title        = ggplot2::element_blank()
+      )
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;save-to-disk&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Save to disk&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;svglite::svglite(
+  file.path(getwd(),&amp;#39;public/img/github_traffic.svg&amp;#39;),
+  standalone = TRUE
+  )
+  
+plot_traffic(x)
+
+dev.off()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/page/gh_traffic_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>GitHub Waffle Heatmap</title>
+      <link>/page/gh_traffic/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>/page/gh_traffic/</guid>
       <description>
 
-&lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/img/github_traffic.svg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;gh_traffic_files/figure-html/unnamed-chunk-2-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;how-we-got-this&#34;&gt;How we got this:&lt;/h1&gt;
 
@@ -169,7 +322,6 @@ fetch_view_data &amp;lt;- function(repo, gh_pat){
     fetch_view_data, 
     gh_pat = Sys.getenv(&#39;GITHUB_PAT&#39;)
   )
-
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&#34;waffle-heatmap&#34;&gt;Waffle heatmap&lt;/h2&gt;
@@ -213,8 +365,7 @@ fetch_view_data &amp;lt;- function(repo, gh_pat){
 
 &lt;h2 id=&#34;save-to-disk&#34;&gt;Save to disk&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;
-svglite::svglite(
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;svglite::svglite(
   file.path(getwd(),&#39;public/img/github_traffic.svg&#39;),
   standalone = TRUE
   )
@@ -224,7 +375,7 @@ plot_traffic(x)
 dev.off()
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/img/github_traffic.svg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;gh_traffic_files/figure-html/unnamed-chunk-9-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
 </description>
     </item>
     

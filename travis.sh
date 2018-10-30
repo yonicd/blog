@@ -7,7 +7,7 @@ git config --global user.name "Travis CI"
 
 git checkout -b traffic
 
-Rscript -e "source('github_traffic/github_traffic.R')"
+Rscript -e "install.packages('blogdown');blogdown::build_dir(dir = 'content/page/')"
 
 git add .
 git commit --message "Update Traffic Travis build: $TRAVIS_BUILD_NUMBER [skip ci]"

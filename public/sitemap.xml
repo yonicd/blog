@@ -78,10 +78,6 @@
   </url>
   
   <url>
-    <loc>/gh_traffic/</loc>
-  </url>
-  
-  <url>
     <loc>/page/about/</loc>
   </url>
   
@@ -128,6 +124,10 @@
     <loc>/tags/ggraph/</loc>
     <lastmod>2017-11-07T00:00:00+00:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/page/gh_traffic/</loc>
   </url>
   
   <url>
