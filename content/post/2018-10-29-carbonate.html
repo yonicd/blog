@@ -10,6 +10,7 @@ cran: carbonate
 cran_badge: [status, downloads]
 gh_repo: yonicd/carbonate
 gh_badge: [follow, star, issue]
+image: "https://github.com/yonicd/carbonate/raw/master/hextools/hex.gif"
 ---
 
 
@@ -198,19 +199,19 @@ install.packages(&#39;carbonate&#39;)</code></pre>
 <div id="default" class="section level5">
 <h5>Default</h5>
 <pre class="r"><code>x$carbonate(file = &#39;myfile.png&#39;)</code></pre>
-<p><img src="/post/2018-10-28-carbonate_files/figure-html/unnamed-chunk-9-1.png" width="452" /></p>
+<p><img src="/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-9-1.png" width="452" /></p>
 </div>
 <div id="changing-the-template" class="section level5">
 <h5>Changing the template</h5>
 <pre class="r"><code>x$template &lt;-&#39;cobalt&#39;
 x$carbonate(file = &#39;new_template.png&#39;)</code></pre>
-<p><img src="/post/2018-10-28-carbonate_files/figure-html/unnamed-chunk-11-1.png" width="452" /></p>
+<p><img src="/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-11-1.png" width="452" /></p>
 </div>
 <div id="changing-the-font" class="section level5">
 <h5>Changing the font</h5>
 <pre class="r"><code>x$font_family &lt;-&#39;IBM Plex Mono&#39;
 x$carbonate(file = &#39;new_font.png&#39;)</code></pre>
-<p><img src="/post/2018-10-28-carbonate_files/figure-html/unnamed-chunk-13-1.png" width="452" /></p>
+<p><img src="/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-13-1.png" width="452" /></p>
 </div>
 </div>
 </div>
@@ -222,7 +223,7 @@ x$carbonate(file = &#39;new_font.png&#39;)</code></pre>
 <pre class="r"><code>x$add_tinyurl &lt;- TRUE
 x$carbonate(file = &#39;tiny_url.png&#39;)</code></pre>
 <p>By default the watermark is placed on the bottom left corner.</p>
-<p><img src="/post/2018-10-28-carbonate_files/figure-html/unnamed-chunk-15-1.png" width="452" /></p>
+<p><img src="/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-15-1.png" width="452" /></p>
 <p>If you just want the tinyurl link without the image to use in a tweet you can create it using</p>
 <pre class="r"><code>x$tiny()</code></pre>
 <pre class="r"><code>## [1] &quot;http://tinyurl.com/y7c64uyv&quot;</code></pre>
