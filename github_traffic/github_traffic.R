@@ -91,8 +91,12 @@ x <- repos%>%
   purrr::map_df(fetch_view_data, 
               gh_pat = Sys.getenv('GITHUB_PAT'))
 
-svglite::svglite(file.path(getwd(),'public/img/github_traffic.svg'),standalone = TRUE)
-  plot_traffic(x)
+
+png(file.path(getwd(),'public/img/github_traffic.png'))
+
+#svglite::svglite(file.path(getwd(),'public/img/github_traffic.svg'),standalone = TRUE)
+plot_traffic(x)
+
 dev.off()
 
 # system('git add public')
