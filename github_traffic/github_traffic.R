@@ -93,5 +93,5 @@ dev.off()
 
 system('git add public')
 system('git add github_traffic')
-system('git commit -m "update traffic"')
+system('git commit -m "update traffic [skip ci]"')
 system('git push origin master')
