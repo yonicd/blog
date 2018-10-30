@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
-    <lastBuildDate>Sun, 28 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Oct 2018 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/tags/rselenium/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>carbonate</title>
       <link>/post/carbonate/</link>
-      <pubDate>Sun, 28 Oct 2018 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 29 Oct 2018 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/post/carbonate/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://carbon.now.sh/about&#34;&gt;carbon.js&lt;/a&gt; is the easiest way to create beautiful images of your source code, and &lt;a href=&#34;https://yonicd.github.io/carbonate/&#34;&gt;carbonate&lt;/a&gt; creates an api in &lt;code&gt;R&lt;/code&gt; to interact with it. The package gives a new simple way to share your script with the rest of the &lt;code&gt;R&lt;/code&gt; community on posters, slides, Shiny apps and social media!&lt;/p&gt;
