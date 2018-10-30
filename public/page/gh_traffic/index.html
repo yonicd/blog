@@ -8,9 +8,9 @@
   <title>GitHub Waffle Heatmap</title>
   <meta property="og:title" content="GitHub Waffle Heatmap" />
   <meta name="twitter:title" content="GitHub Waffle Heatmap" />
-  <meta name="description" content="How we got this: Load libraries library(RSelenium) library(ggedit) library(svglite) library(viridis) library(XML) library(ggplot2) library(plyr) library(dplyr)  Set GitHub Credentials gh_user &lt;- &#39;github user&#39; gh_pass &lt;- &#39;github pass&#39;  Define the GitHub repos gh_team &lt;- rep(c(&#39;yonicd&#39;,&#39;metrumresearchgroup&#39;),c(5,7)) repos &lt;- c(&#39;shinyHeatmaply&#39;,&#39;regexSelect&#39;,&#39;rpdf&#39;,&#39;gunflow&#39;,&#39;lmmen&#39;, &#39;ggedit&#39;,&#39;slickR&#39;,&#39;sinew&#39;,&#39;d3Tree&#39;,&#39;texPreview&#39;,&#39;shinyCanvas&#39;, &#39;jsTree&#39;) repos &lt;- file.path(gh_team,repos)  Retrieve data from GitHub traffic using RSelenium github_traffic &lt;- function(gh_user,gh_pass,repos){ rD &lt;- rsDriver(verbose = FALSE) remDr &lt;- rD[[&quot;client&quot;]] remDr$navigate(sprintf(&#39;https://github.com/%s/graphs/traffic&#39;,repos[1])) webElem &lt;- remDr$findElement(using = &#39;id&#39;, value = &quot;login_field&quot;) webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_user) webElem &lt;- remDr$findElement(using = &#39;id&#39;, value = &quot;password&quot;) webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_pass) webElem=remDr$findElement(using = &#39;xpath&#39;, &#39;//*[@id=&quot;login&quot;]/form/div[4]/input[3]&#39;) webElem$clickElement() Sys.">
-  <meta property="og:description" content="How we got this: Load libraries library(RSelenium) library(ggedit) library(svglite) library(viridis) library(XML) library(ggplot2) library(plyr) library(dplyr)  Set GitHub Credentials gh_user &lt;- &#39;github user&#39; gh_pass &lt;- &#39;github pass&#39;  Define the GitHub repos gh_team &lt;- rep(c(&#39;yonicd&#39;,&#39;metrumresearchgroup&#39;),c(5,7)) repos &lt;- c(&#39;shinyHeatmaply&#39;,&#39;regexSelect&#39;,&#39;rpdf&#39;,&#39;gunflow&#39;,&#39;lmmen&#39;, &#39;ggedit&#39;,&#39;slickR&#39;,&#39;sinew&#39;,&#39;d3Tree&#39;,&#39;texPreview&#39;,&#39;shinyCanvas&#39;, &#39;jsTree&#39;) repos &lt;- file.path(gh_team,repos)  Retrieve data from GitHub traffic using RSelenium github_traffic &lt;- function(gh_user,gh_pass,repos){ rD &lt;- rsDriver(verbose = FALSE) remDr &lt;- rD[[&quot;client&quot;]] remDr$navigate(sprintf(&#39;https://github.com/%s/graphs/traffic&#39;,repos[1])) webElem &lt;- remDr$findElement(using = &#39;id&#39;, value = &quot;login_field&quot;) webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_user) webElem &lt;- remDr$findElement(using = &#39;id&#39;, value = &quot;password&quot;) webElem$setElementAttribute(attributeName = &#39;value&#39;,value = gh_pass) webElem=remDr$findElement(using = &#39;xpath&#39;, &#39;//*[@id=&quot;login&quot;]/form/div[4]/input[3]&#39;) webElem$clickElement() Sys.">
-  <meta name="twitter:description" content="How we got this: Load libraries library(RSelenium) library(ggedit) library(svglite) library(viridis) library(XML) library(ggplot2) library(plyr) library(dplyr)  Set GitHub Credentials gh_user &lt;- …">
+  <meta name="description" content="How we got this: Load libraries library(purrr) library(ggplot2) library(gh) library(tidyr) library(svglite)  Define the GitHub repos repos &lt;- c( &#39;yonicd/carbonate&#39;, &#39;yonicd/noplyr&#39;, &#39;yonicd/shinyHeatmaply&#39;, &#39;yonicd/Elections&#39;, &#39;yonicd/covrpage&#39;, &#39;yonicd/rpdf&#39;, &#39;yonicd/rsam&#39;, &#39;yonicd/regexSelect&#39;, &#39;yonicd/tidycheckUsage&#39;, &#39;yonicd/ripe&#39;, &#39;yonicd/lmmen&#39;, &#39;metrumresearchgroup/ggedit&#39;, &#39;metrumresearchgroup/sinew&#39;, &#39;metrumresearchgroup/slickR&#39;, &#39;metrumresearchgroup/d3Tree&#39;, &#39;metrumresearchgroup/texPreview&#39;, &#39;metrumresearchgroup/jsTree&#39;, &#39;metrumresearchgroup/shinyCanvas&#39;, &#39;metrumresearchgroup/vcs&#39; )  Define Functions fetch_view_type &lt;- function(owner,repo,type,gh_pat){ this_dat &lt;- gh::gh( &#39;/repos/:owner/:repo/traffic/:type&#39;, owner = owner, repo = repo, type = type, .token = gh_pat) if(length(this_dat[[type]])==0) return(NULL) ret &lt;- this_dat[[type]]%&gt;% purrr::transpose()%&gt;% dplyr::as_tibble()%&gt;% dplyr::mutate( timestamp = as.">
+  <meta property="og:description" content="How we got this: Load libraries library(purrr) library(ggplot2) library(gh) library(tidyr) library(svglite)  Define the GitHub repos repos &lt;- c( &#39;yonicd/carbonate&#39;, &#39;yonicd/noplyr&#39;, &#39;yonicd/shinyHeatmaply&#39;, &#39;yonicd/Elections&#39;, &#39;yonicd/covrpage&#39;, &#39;yonicd/rpdf&#39;, &#39;yonicd/rsam&#39;, &#39;yonicd/regexSelect&#39;, &#39;yonicd/tidycheckUsage&#39;, &#39;yonicd/ripe&#39;, &#39;yonicd/lmmen&#39;, &#39;metrumresearchgroup/ggedit&#39;, &#39;metrumresearchgroup/sinew&#39;, &#39;metrumresearchgroup/slickR&#39;, &#39;metrumresearchgroup/d3Tree&#39;, &#39;metrumresearchgroup/texPreview&#39;, &#39;metrumresearchgroup/jsTree&#39;, &#39;metrumresearchgroup/shinyCanvas&#39;, &#39;metrumresearchgroup/vcs&#39; )  Define Functions fetch_view_type &lt;- function(owner,repo,type,gh_pat){ this_dat &lt;- gh::gh( &#39;/repos/:owner/:repo/traffic/:type&#39;, owner = owner, repo = repo, type = type, .token = gh_pat) if(length(this_dat[[type]])==0) return(NULL) ret &lt;- this_dat[[type]]%&gt;% purrr::transpose()%&gt;% dplyr::as_tibble()%&gt;% dplyr::mutate( timestamp = as.">
+  <meta name="twitter:description" content="How we got this: Load libraries library(purrr) library(ggplot2) library(gh) library(tidyr) library(svglite)  Define the GitHub repos repos &lt;- c( &#39;yonicd/carbonate&#39;, &#39;yonicd/noplyr&#39;, …">
   <meta name="author" content="Jonathan Sidi"/>
   <link href='/img/cd-favicon.ico' rel='icon' type='image/x-icon'/>
   <meta property="og:image" content="/img/cd-icon.png" />
@@ -233,179 +233,148 @@ if (!doNotTrack) {
 
 <h2 id="load-libraries">Load libraries</h2>
 
-<pre><code class="language-r">library(RSelenium)
-library(ggedit)
-library(svglite)
-library(viridis)
-library(XML)
+<pre><code class="language-r">library(purrr)
 library(ggplot2)
-library(plyr)
-library(dplyr)
-</code></pre>
-
-<h2 id="set-github-credentials">Set GitHub Credentials</h2>
-
-<pre><code class="language-r">gh_user &lt;- 'github user'
-gh_pass &lt;- 'github pass'
+library(gh)
+library(tidyr)
+library(svglite)
 </code></pre>
 
 <h2 id="define-the-github-repos">Define the GitHub repos</h2>
 
-<pre><code class="language-r">gh_team &lt;- rep(c('yonicd','metrumresearchgroup'),c(5,7))
-
-repos &lt;- c('shinyHeatmaply','regexSelect','rpdf','gunflow','lmmen',
-           'ggedit','slickR','sinew','d3Tree','texPreview','shinyCanvas',
-           'jsTree')
-
-repos &lt;- file.path(gh_team,repos)
+<pre><code class="language-r">repos &lt;- c(
+  'yonicd/carbonate',
+  'yonicd/noplyr',
+  'yonicd/shinyHeatmaply',
+  'yonicd/Elections',
+  'yonicd/covrpage',
+  'yonicd/rpdf',
+  'yonicd/rsam',
+  'yonicd/regexSelect',
+  'yonicd/tidycheckUsage',
+  'yonicd/ripe',
+  'yonicd/lmmen',
+  'metrumresearchgroup/ggedit',
+  'metrumresearchgroup/sinew',
+  'metrumresearchgroup/slickR',
+  'metrumresearchgroup/d3Tree',
+  'metrumresearchgroup/texPreview',
+  'metrumresearchgroup/jsTree',
+  'metrumresearchgroup/shinyCanvas',
+  'metrumresearchgroup/vcs'  
+)
 </code></pre>
 
-<h2 id="retrieve-data-from-github-traffic-using-rselenium">Retrieve data from GitHub traffic using RSelenium</h2>
+<h2 id="define-functions">Define Functions</h2>
 
-<pre><code class="language-r">github_traffic &lt;- function(gh_user,gh_pass,repos){
+<pre><code class="language-r">fetch_view_type &lt;- function(owner,repo,type,gh_pat){
+  
+  this_dat &lt;- gh::gh(
+                '/repos/:owner/:repo/traffic/:type',
+                owner  = owner,
+                repo   = repo,
+                type   = type,
+                .token = gh_pat)
+  
+  
+  if(length(this_dat[[type]])==0)
+    return(NULL)
+  
+  ret &lt;- this_dat[[type]]%&gt;%
+    purrr::transpose()%&gt;%
+    dplyr::as_tibble()%&gt;%
+    dplyr::mutate(
+      timestamp = as.Date(gsub('T(.*?)$','',purrr::flatten_chr(timestamp))),
+      count  = purrr::flatten_dbl(count),
+      uniques  = purrr::flatten_dbl(uniques),
+      repo = repo
+    )
+  
+  ret
+}
 
-rD &lt;- rsDriver(verbose = FALSE)
-remDr &lt;- rD[[&quot;client&quot;]]
+fetch_view_data &lt;- function(repo, gh_pat){
+  
+  types &lt;- dplyr::data_frame(type = c('views','clones'))
 
-remDr$navigate(sprintf('https://github.com/%s/graphs/traffic',repos[1]))
-webElem &lt;- remDr$findElement(using = 'id', value = &quot;login_field&quot;)
-webElem$setElementAttribute(attributeName = 'value',value = gh_user)
-webElem &lt;- remDr$findElement(using = 'id', value = &quot;password&quot;)
-webElem$setElementAttribute(attributeName = 'value',value = gh_pass)
-webElem=remDr$findElement(using = 'xpath',
-'//*[@id=&quot;login&quot;]/form/div[4]/input[3]')
-webElem$clickElement()
-Sys.sleep(1)
+  ret &lt;- purrr::map_df(
+    types$type,
+    fetch_view_type,
+    gh_pat = gh_pat,
+    owner  = dirname(repo),
+    repo   = basename(repo),
+    .id    = 'type'
+    )%&gt;%
+    dplyr::mutate(
+      type = dplyr::case_when(
+        type==1~'views',
+        type==2~'clones'
+        )
+    )
 
-out &lt;- plyr::llply(repos,function(repo){
-  remDr$navigate(sprintf('https://github.com/%s/graphs/traffic',repo))
-  Sys.sleep(1)
-  out &lt;- XML::htmlParse(remDr$getPageSource(),asText = TRUE)
-  sapply(c('clones','visitors'),function(type){
-  XML::getNodeSet(out,
-  sprintf(sprintf('//*[@id=&quot;js-%s-graph&quot;]/div/div[1]/svg/g/g',type)))
-},simplify = FALSE,USE.NAMES = TRUE)
-},.progress = 'text')
-
-names(out) &lt;- repos
-
-remDr$close()
-rD[[&quot;server&quot;]]$stop()
-
-return(out)
+  return(ret)
 }
 </code></pre>
 
 <h3 id="run-the-function">Run the function</h3>
 
-<pre><code class="language-r">plot_data_html &lt;- github_traffic(gh_user=gh_user,
-                            gh_pass=gh_pass,
-                            repos=repos)
+<pre><code class="language-r">x &lt;- repos%&gt;%
+  purrr::map_df(
+    fetch_view_data, 
+    gh_pat = Sys.getenv('GITHUB_PAT')
+  )
+
 </code></pre>
 
-<h2 id="failsafe-if-rselenium-crashes">Failsafe if Rselenium Crashes</h2>
+<h2 id="waffle-heatmap">Waffle heatmap</h2>
 
-<pre><code class="language-r"># rD &lt;- rsDriver(verbose = FALSE,port=4444L)
-# remDr &lt;- rD$client
-# remDr$close()
-</code></pre>
-
-<h2 id="transform-d3-scales-to-r-scales">Transform d3 scales to R scales</h2>
-
-<pre><code class="language-r">plot_data &lt;- plyr::ldply(plot_data_html,function(repo){
-  plyr::mdply(names(repo),function(type){
-    
-    dat &lt;- repo[[type]]
-  
-    if(is.null(dat)) return(NULL)
-    
-    yticks_total &lt;- as.numeric(sapply(getNodeSet(dat[[2]],'g'),XML::xmlValue))
-    y_mult_total &lt;- as.numeric(gsub('[)]','',gsub('^(.*?),','',
-    xmlAttrs(tail(getNodeSet(dat[[2]],'g'),1)[[1]])[2])))
-    
-    yticks_unique &lt;- as.numeric(sapply(getNodeSet(dat[[5]],'g'),XML::xmlValue))
-    y_mult_unique &lt;- as.numeric(gsub('[)]','',gsub('^(.*?),','',
-    xmlAttrs(tail(getNodeSet(dat[[5]],'g'),1)[[1]])[2])))
-    
-    
-    x &lt;- data.frame(type=type,
-                    date = as.Date(sapply(getNodeSet(dat[[1]],'g'),XML::xmlValue),format = '%m/%d'),
-                    total = as.numeric(sapply(getNodeSet(dat[[3]],'circle'),XML::xmlGetAttr,name = 'cy')),
-                    unique = as.numeric(sapply(getNodeSet(dat[[4]],'circle'),XML::xmlGetAttr,name = 'cy')))
-
-    x$total &lt;- scales::rescale(x$total,
-    rev(range(yticks_total))/((193-y_mult_total)/193))
-    
-    x$unique &lt;- scales::rescale(x$unique,
-    rev(range(yticks_unique))/((193-y_mult_unique)/193))
-    
-    x%&gt;%reshape2::melt(.,c('type','date'),variable.name=c('metric'))
-  })
-},.id='repo')%&gt;%select(-X1)
-</code></pre>
-
-<h2 id="save-file-to-disk-as-rds">Save file to disk as RDS</h2>
-
-<pre><code class="language-r">saveRDS(plot_data,file = sprintf('github_traffic/data/%s_gh_traffic.rds',
-                                 format(Sys.time(),format = '%Y%m%d_%H%M')))
-</code></pre>
-
-<h2 id="read-in-all-historical-data">Read in all historical data</h2>
-
-<pre><code class="language-r">myfile &lt;- list.files('github_traffic/data',full.names = TRUE)
-
-plot_data_df &lt;- plyr::mdply(myfile,readRDS)
-
-levels(plot_data_df$X1) &lt;- gsub('_gh(.*?)$','',basename(myfile))
-
-names(plot_data_df)[1] &lt;- 'fetch_date'
-
-plot_data_df &lt;- plot_data_df%&gt;%
-  group_by(repo,type,date,metric)%&gt;%
-  do(.,tail(.,1))%&gt;%
-  ungroup()%&gt;%
-  mutate(repo=gsub('^(.*?)/','',repo),
-         val=ceiling(value))
-</code></pre>
-
-<h2 id="create-waffle-heatmap">Create waffle heatmap</h2>
-
-<pre><code class="language-r">plot_list &lt;- plyr::dlply(plot_data_df,c('type'),.fun = function(dat){
- p &lt;- dat%&gt;%
-    ggplot(aes(x=date,
-               y=repo,
-               fill=val))+
-    geom_tile(colour='white',width=.95)+
-    geom_hline(yintercept = c(0,(1:length(unique(dat$repo)))+0.5),colour='grey90')+
-    scale_fill_viridis(name='Count')+
-    facet_grid(.~metric)+
-    # uncomment if you want every date on x-axis
-    # scale_x_date(date_breaks = &quot;1 day&quot;,date_labels = &quot;%m/%d&quot;)+
-    theme_minimal()+
-    theme(panel.grid.major  = element_blank(),
-          axis.text.x = element_text(angle=90),
-          panel.grid.minor = element_blank(),
-          axis.title = element_blank())
- 
- if(dat$type[1] =='clones'){
-   p &lt;- p +
-     labs(title=sprintf('GitHub Team: %s | %s',
-     paste0(unique(dat$team),collapse = ','),Sys.time()),
-          subtitle='Clones')
- }else{
-   p &lt;- p +
-     labs(subtitle='Visitors')
- }
- 
- p
-})
+<pre><code class="language-r">plot_traffic &lt;- function(dat){
+  dat %&gt;%
+    tidyr::gather(
+      key   = 'stat',
+      value = 'value',
+      count,
+      uniques
+      )%&gt;%
+    ggplot2::ggplot(
+      ggplot2::aes(
+        x    = timestamp,
+        y    = repo,
+        fill = value
+        )
+      ) +
+    ggplot2::geom_tile(
+      colour = 'white',
+      width  = 0.95,
+      alpha  = 0.75) +
+    ggplot2::geom_hline(
+      yintercept = c(0,(1:length(unique(dat$repo))) + 0.5),
+      colour     = 'grey90') +
+    viridis::scale_fill_viridis(
+      name      = 'Count',
+      direction = -1
+      ) +
+    ggplot2::facet_grid( . ~ stat ) +
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      panel.grid.major  = ggplot2::element_blank(),
+      axis.text.x       = ggplot2::element_text(angle=90),
+      panel.grid.minor  = ggplot2::element_blank(),
+      axis.title        = ggplot2::element_blank()
+      )
+}
 </code></pre>
 
 <h2 id="save-to-disk">Save to disk</h2>
 
-<pre><code class="language-r">pl &lt;- ggedit::as.gglist(plot_list)
-svglite(file.path(getwd(),'public/img/github_traffic.svg'),standalone = TRUE)
-print(pl,plot.layout=list(list(rows=1,cols=1:2),list(rows=2,cols=1:2)))
+<pre><code class="language-r">
+svglite::svglite(
+  file.path(getwd(),'public/img/github_traffic.svg'),
+  standalone = TRUE
+  )
+  
+plot_traffic(x)
+
 dev.off()
 </code></pre>
 

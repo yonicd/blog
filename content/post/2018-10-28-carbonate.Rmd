@@ -1,0 +1,237 @@
+---
+title: carbonate
+author: Jonathan Sidi
+date: '2018-10-28'
+slug: carbonate
+categories: []
+tags: [reproducibility,collaboration,RSelenium,rweekly,rstats]
+subtitle: 'Create beautiful images of your source code from R'
+cran: carbonate
+cran_badge: [status, downloads]
+gh_repo: yonicd/carbonate
+gh_badge: [follow, star, issue]
+---
+
+[carbon.js](https://carbon.now.sh/about) is the easiest way to create beautiful images of your source code, and [carbonate](https://yonicd.github.io/carbonate/) creates an api in `R` to interact with it. The package gives a new simple way to share your script with the rest of the `R` community on posters, slides, Shiny apps and social media!
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">This little snippet combines SO MANY of my favorite <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> 📦s:<br>✨ <a href="https://twitter.com/jimhester_?ref_src=twsrc%5Etfw">@jimhester_</a>&#39;s glue<br>🥛 <a href="https://twitter.com/yoniceedee?ref_src=twsrc%5Etfw">@yoniceedee</a>&#39;s carbonate<br>🐦 <a href="https://twitter.com/kearneymw?ref_src=twsrc%5Etfw">@kearneymw</a>&#39;s rtweet<br>😎 <a href="https://twitter.com/hadleywickham?ref_src=twsrc%5Etfw">@hadleywickham</a>&#39;s emo<br>📍 <a href="https://twitter.com/krlmlr?ref_src=twsrc%5Etfw">@krlmlr</a>&#39;s here <a href="https://t.co/ploHThYu82">https://t.co/ploHThYu82</a></p>&mdash; 𝓛𝓾𝓬𝔂::maternity_leave🤱 (@LucyStats) <a href="https://twitter.com/LucyStats/status/1034972003130851328?ref_src=twsrc%5Etfw">August 30, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+```{r,include=FALSE}
+library(carbonate)
+x <- carbon$new(readLines(system.file('DESCRIPTION',package = 'carbonate')))
+```
+
+## Installation
+
+```{r,eval= FALSE}
+#remotes::install_github('yonicd/carbonate')
+install.packages('carbonate')
+```
+
+## Usage
+
+### Initialize new carbon object
+
+```{r,eval = FALSE}
+library(carbonate)
+```
+
+The default code in the carbon object is taken from the clipboard.
+
+```{r,eval = FALSE}
+x <- carbon$new()
+```
+
+But can also be defined inline. Code can be a character object of any length.
+
+```{r, eval = FALSE}
+x <- carbon$new(readLines('DESCRIPTION'))
+```
+
+The code is kept in the object and can be changed at any time.
+
+```{r}
+x$code
+```
+
+The main job of the package is to convert all the options set by the user into a URI that is sent to the carbon url page, where it is processed. 
+
+```{r}
+x$uri()
+```
+
+Click the [link](`r x$uri()`) to see the URI works.
+
+### Manipulate the carbon object
+
+What make carbon.js really nice that you can control all the aesthetics of the image.
+
+|Carbon Variable  |Carbonate Variable |Description | Default | 
+|:------:|:-----------------------|:-----------|:----:|
+|l      |language                |language          |r|
+|bg     |palette                 |layout pallete (vector with c(r,g,b,a)|c(r=171,g=184,b=195,a=1)|
+|t      |template                |layout template (listed in get_templates()) |'seti'|
+|wc     |add_window_control      |add/remove window controls (circles on top left corner) |TRUE|
+|wt     |window_control_theme    |change window control themes  (listed in get_windows_control_themes())        |'none'|
+|ds     |add_drop_shadow         |add/remove dropshadow     |TRUE|
+|dsyoff |drop_shadow_offset_y    |shadow vertical offset (px) |20|
+|dsblur |drop_shadow_blur_radius |shadow blur radius (px) |68|
+|wa     |auto_adjust_width       |auto-audjust output width          |TRUE|
+|pv     |padding_vertical        |vertical padding (px)          |48|
+|ph     |padding_horizontal      |horizontal padding (px)          |32|
+|ln     |add_line_number         |add/remove line numbers          |FALSE|
+|fm     |font_family             |layout font family (listed in get_font_families())          |'Hack'|
+|fs     |font_size               |font size (px)         |14|
+|lh     |line_height_percent     |relative space between lines (percent)          |133|
+|si     |square_image            |output image is square     |FALSE|
+|es     |relative_export_size    |image size in export relative to what is in the preview (1,2 or 4)    |1|
+|wm     |add_watermark           |add official carbon.js watermark          |FALSE|
+
+##### Default
+
+```{r,eval=FALSE}
+x$carbonate(file = 'myfile.png')
+```
+
+```{r,echo=FALSE}
+magick::image_read(file.path(system.file('help/figures',package = 'carbonate'),'README-unnamed-chunk-2-1.png'))
+```
+
+##### Changing the template
+
+```{r,eval=FALSE}
+x$template <-'cobalt'
+x$carbonate(file = 'new_template.png')
+```
+
+```{r,echo=FALSE}
+magick::image_read(file.path(system.file('help/figures',package = 'carbonate'),'README-unnamed-chunk-18-1.png'))
+```
+
+##### Changing the font
+
+```{r,eval=FALSE}
+x$font_family <-'IBM Plex Mono'
+x$carbonate(file = 'new_font.png')
+```
+
+```{r,echo=FALSE}
+magick::image_read(file.path(system.file('help/figures',package = 'carbonate'),'README-unnamed-chunk-20-1.png'))
+```
+
+
+## Sharing
+
+### Tinyurl
+
+You can also put a tinyurl link as a watermark on the image produced that will open to the [carbon.now.sh](carbon.now.sh) page that has the code in the image.
+
+```{r,eval=FALSE}
+x$add_tinyurl <- TRUE
+x$carbonate(file = 'tiny_url.png')
+```
+
+By default the watermark is placed on the bottom left corner.
+
+```{r,echo=FALSE}
+magick::image_read(file.path(system.file('help/figures',package = 'carbonate'),'README-unnamed-chunk-23-1.png'))
+```
+
+If you just want the tinyurl link without the image to use in a tweet you can create it using
+
+```{r,eval=FALSE}
+x$tiny()
+```
+
+```{r,eval=FALSE}
+## [1] "http://tinyurl.com/y7c64uyv"
+```
+
+Or you can put the link directly on your clipboard
+
+```{r,eval=FALSE}
+x$tiny(clip = TRUE)
+```
+
+```{r,eval=FALSE}
+## [1] "http://tinyurl.com/y7c64uyv"
+```
+
+```{r,eval=FALSE}
+clipr::read_clip()
+```
+
+```{r,eval=FALSE}
+## [1] "http://tinyurl.com/y7c64uyv"
+```
+### Twitter
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">📰 Hot off the press! Grab a tinyurl from <a href="https://twitter.com/yoniceedee?ref_src=twsrc%5Etfw">@yoniceedee</a>&#39;s 📦<br>Sharing pretty code is easy as 🥧<br>🔗 <a href="https://t.co/aDdvd4qqIH">https://t.co/aDdvd4qqIH</a> <a href="https://t.co/c10cOq6VNF">pic.twitter.com/c10cOq6VNF</a></p>&mdash; We are R-Ladies (@WeAreRLadies) <a href="https://twitter.com/WeAreRLadies/status/1034969993883144194?ref_src=twsrc%5Etfw">August 30, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+##### Direct
+
+You can also directly tweet the image. An automatic status is created with two options
+
+  - Default
+    - `r 'Created in R using the Carbonate \U0001f4e6'`
+    
+  - When `add_tinyurl <- TRUE`
+    - `r sprintf('%s\nCheck out this script at \U0001f517 %s', 'Created in R using the Carbonate \U0001f4e6', x$tiny())`
+    
+  - Manual
+    - Using `tweet_status` you can write your own status. 
+
+```{r,eval=FALSE}
+x <- carbonate::carbon$new()
+x$tweet <- TRUE
+x$carbonate()
+```
+
+##### Post process (Batch)
+
+If you have images stored in `x$carbons` you can post them also in a tweet using.
+
+```{r,eval = FALSE}
+# for multiple png attachments
+x$rtweet(x$carbons,media_type = 'png') #using default status
+
+# subsets of images
+x$rtweet(status='These are images',x$carbons[c(1,3)],media_type = 'png')
+
+# for gifs
+x$rtweet(status='This is a gif', x$carbons,media_type = 'gif')
+```
+
+### Reprex + Gist
+
+Finally, thanks to a suggestion from [Maelle Salmon](https://twitter.com/ma_salmon) to use [carbonate with gist and reprex](https://github.com/maelle/reprex_demo), now you can create and tweet out the reprex using carbon images linked to your Gist.
+
+```{r,eval=FALSE}
+reprex::reprex(plot(1:10),
+               outfile = "demo_carbonate",
+               venue = "r")
+
+gistr::gist_auth(reauth = TRUE)
+
+gist_out <- gistr::gist_create('demo_carbonate_reprex.md',browse = FALSE)
+
+x <- carbonate::carbon$new(readLines('demo_carbonate_reprex_rendered.R'))
+
+x$carbonate(code = clipr::read_clip())
+
+x$carbons <- append(x$carbons,
+                    magick::image_read('demo_carbonate_reprex_files/figure-markdown_strict/reprex-body-1.png')
+                    )
+x$rtweet(
+  media = x$carbons,
+  status = glue::glue("gistr + carbonate #rstats
+                      {emo::ji('link')} {tinyurl(gist_out$html_url)}"),
+  media_format = 'png')
+```
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="ro" dir="ltr">gistr + carbonate <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a><br>🔗 <a href="https://t.co/XWMHOe2DSc">https://t.co/XWMHOe2DSc</a> <a href="https://t.co/zbxphOS0gW">pic.twitter.com/zbxphOS0gW</a></p>&mdash; yoni sidi (@yoniceedee) <a href="https://twitter.com/yoniceedee/status/1056587571042705410?ref_src=twsrc%5Etfw">October 28, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

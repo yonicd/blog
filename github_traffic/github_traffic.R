@@ -1,4 +1,5 @@
-library(magrittr)
+library(purrr)
+library(ggplot2)
 
 fetch_view_type <- function(owner,repo,type,gh_pat){
   
@@ -60,22 +61,34 @@ plot_traffic <- function(dat){
           axis.title = ggplot2::element_blank())
 }
 
-yonicd_repos <- vcs::list_repos(user = 'yonicd')%>%purrr::flatten_chr()
-metrum_repos <- vcs::list_repos(user = 'metrumresearchgroup')%>%purrr::flatten_chr()
-metrum_repos <- metrum_repos[c(1,2,3,4,6,7,8,9,19)]
+repos <- c(
+  'yonicd/carbonate',
+  'yonicd/noplyr',
+  'yonicd/shinyHeatmaply',
+  'yonicd/Elections',
+  'yonicd/covrpage',
+  'yonicd/rpdf',
+  'yonicd/rsam',
+  'yonicd/regexSelect',
+  'yonicd/tidycheckUsage',
+  'yonicd/ripe',
+  'yonicd/lmmen',
+  'metrumresearchgroup/ggedit',
+  'metrumresearchgroup/sinew',
+  'metrumresearchgroup/slickR',
+  'metrumresearchgroup/d3Tree',
+  'metrumresearchgroup/texPreview',
+  'metrumresearchgroup/jsTree',
+  'metrumresearchgroup/shinyCanvas',
+  'metrumresearchgroup/vcs'  
+)
 
-
-x <- c(yonicd_repos,metrum_repos)%>%
+x <- repos%>%
   purrr::map_df(fetch_view_data, 
               gh_pat = Sys.getenv('GITHUB_PAT'))
 
-ignore <- c('d3','ciderhouse','revisionist','chunky','gunflow','supermarketprices','shinyProf','ghnet','roar','SearchTree','sinew_presentation',
-            'tidyghql','blog','EconomistLetter','rtravis','shinyghap','gdisest','GitHubAPI')
-
 svglite::svglite(file.path(getwd(),'public/img/github_traffic.svg'),standalone = TRUE)
-x%>%
-  dplyr::filter(!repo%in%ignore)%>%
-  plot_traffic()
+  plot_traffic(x)
 dev.off()
 
 system('git add public')
