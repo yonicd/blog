@@ -11,7 +11,7 @@ output:
 
 
 
-![](gh_traffic_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+![](https://github.com/yonicd/blog/blob/traffic/content/page/gh_traffic_files/figure-html/plot-1.png?raw=true)
 
 # How we got this:
 
@@ -168,4 +168,4 @@ plot_traffic(x)
 dev.off()
 ```
 
-![](gh_traffic_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![](gh_traffic_files/figure-html/plot-1.png)<!-- -->

@@ -106,9 +106,7 @@ x <- repos%>%
               gh_pat = Sys.getenv('GITHUB_PAT'))
 ```
 
-```{r,echo=FALSE}
-plot_traffic(x)
-```
+![](https://github.com/yonicd/blog/blob/traffic/content/page/gh_traffic_files/figure-html/plot-1.png?raw=true)
 
 # How we got this:
 
@@ -261,6 +259,6 @@ plot_traffic(x)
 dev.off()
 ```
 
-```{r,echo=FALSE}
+```{r plot,echo=FALSE}
 plot_traffic(x)
 ```
