@@ -1,5 +1,7 @@
-library(purrr)
-library(ggplot2)
+pkgs <- c("viridis","svglite","dplyr","purrr","ggplot2","gh","tidyr")
+x    <- setdiff(pkgs,rownames(installed.packages()))
+if(length(x)>0) 
+  install.packages(x)
 
 fetch_view_type <- function(owner,repo,type,gh_pat){
   
