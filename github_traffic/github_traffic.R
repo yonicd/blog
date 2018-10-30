@@ -3,6 +3,8 @@ x    <- setdiff(pkgs,rownames(installed.packages()))
 if(length(x)>0) 
   install.packages(x)
 
+library(purrr)
+
 fetch_view_type <- function(owner,repo,type,gh_pat){
   
   this_dat <- gh::gh('/repos/:owner/:repo/traffic/:type',
