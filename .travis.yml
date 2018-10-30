@@ -6,7 +6,7 @@ r_packages:
 - ggplot2
 - gh
 - tidyr
-after_success:
+script:
 - Rscript -e 'github_traffic/github_traffic.R'
 env:
   global:
