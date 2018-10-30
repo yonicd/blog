@@ -2694,7 +2694,7 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/page/gh_traffic/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;/page/gh_traffic_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+      <description>&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/gh_traffic_files/figure-html/plot-1.png?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;div id=&#34;how-we-got-this&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;How we got this:&lt;/h1&gt;
 &lt;div id=&#34;load-libraries&#34; class=&#34;section level2&#34;&gt;
@@ -2835,7 +2835,7 @@ fetch_view_data &amp;lt;- function(repo, gh_pat){
 plot_traffic(x)
 
 dev.off()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/page/gh_traffic_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/page/gh_traffic_files/figure-html/plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>
@@ -2849,7 +2849,7 @@ dev.off()&lt;/code&gt;&lt;/pre&gt;
       <guid>/page/gh_traffic/</guid>
       <description>
 
-&lt;p&gt;&lt;img src=&#34;gh_traffic_files/figure-html/unnamed-chunk-2-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/gh_traffic_files/figure-html/plot-1.png?raw=true&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;how-we-got-this&#34;&gt;How we got this:&lt;/h1&gt;
 
@@ -2998,7 +2998,7 @@ plot_traffic(x)
 dev.off()
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;img src=&#34;gh_traffic_files/figure-html/unnamed-chunk-9-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;gh_traffic_files/figure-html/plot-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
 </description>
     </item>
     
