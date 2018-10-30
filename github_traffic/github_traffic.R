@@ -91,8 +91,8 @@ svglite::svglite(file.path(getwd(),'public/img/github_traffic.svg'),standalone =
   plot_traffic(x)
 dev.off()
 
-system('git add public')
-system('git add github_traffic')
-system('git commit -m "update traffic [skip ci]"')
-system('git push origin master')
-
+# system('git add public')
+# system('git add github_traffic')
+# system('git commit -m "update traffic [skip ci]"')
+# system('git push origin master')
+# 

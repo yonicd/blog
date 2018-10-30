@@ -2,7 +2,7 @@ language: r
 cache: packages
 install: skip
 script: 
-  - Rscript -e 'pkgs = c("viridis","svglite","dplyr","purrr","ggplot2","gh","tidyr");x <- setdiff(pkgs,rownames(installed.packages()));if(length(x)>0) install.packages(x);source("github_traffic/github_traffic.R");'
+  - bash travis.sh
 env:
   global:
     secure: hYe9HLm5VAKQfSXQzuA760c3CQ9YZXbCZ5+SkxCkGwFHjvElSS1kyAa4VdzcpqdI3Hx8Kapgo1tpqVjEVPAjsMnf+X33Oo7UYtR8J1Km9TIiE1x4jChbq5azPFNKaju5mCet0GNPlMOIB8bimhsGUHuwBrRaXdWnZrZJvsWPbsP+ykaGxfpdVc5PSeSvqxyhynv1chG5/+ZLKCLgF+BXj3pnLvCYZO3QzWNOKl+nEXAGOWpQq8CfAcA85KzGoKQ5/fjScooyyjXDpK2iwkUy6MZUM6deN0+Mtlxob2nz7qmYG3NS3Hpt9DskI69GORlnMXkEPiVkSIuATZeNuIqR81dIBiRe8mVTcf4+ehIMMAgDMkU+RmgSS+1NrPjhmeRoWbThoM1A4DX7M2ocEeyb0S6hv2EYgcLP7iYUFmWIkI1LeCrwklBelGS01tFpVZR/kE2qMMhiKMFw9vC0YU5RowiOuKMTQQyngCnrov1WmgbyoRqEX62SJ9IMvywU2mT8/mSgy/pqE23vVQ0QF2WP4g4mQJ34w7LG4yL5giHTw5uHFdBruTdJzYtlYjf8W0kqat6eIlUFHCK2Q+yFjnmV64JvVj3GdRQQ1cLmExqndd1RnXC1zide651FlTerCx8hJZO1TnE1eHLaBWsdUjQ7gNM+fhpA9OAsk2QP1rZ8/oU=
