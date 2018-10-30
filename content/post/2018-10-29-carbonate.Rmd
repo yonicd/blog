@@ -10,7 +10,7 @@ cran: carbonate
 cran_badge: [status, downloads]
 gh_repo: yonicd/carbonate
 gh_badge: [follow, star, issue]
-image: "https://github.com/yonicd/carbonate/blob/master/hextools/hex.png?raw=true"
+image: "https://github.com/yonicd/carbonate/blob/master/hextools/hex_card.png?raw=true"
 ---
 
 [carbon.js](https://carbon.now.sh/about) is the easiest way to create beautiful images of your source code, and [carbonate](https://yonicd.github.io/carbonate/) creates an api in `R` to interact with it. The package gives a new simple way to share your script with the rest of the `R` community on posters, slides, Shiny apps and social media!
