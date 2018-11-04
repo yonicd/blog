@@ -39,7 +39,7 @@ library(widgetframe)
 
 ```{r,results='asis'}
 # Read in the data
-superfundsite <- readRDS('../../data/superfundsite.Rds')
+superfundsite <- readRDS('../../jstree_data/superfundsite.Rds')
 
 htmlTable::htmlTable(head(superfundsite),rnames=FALSE)
 ```

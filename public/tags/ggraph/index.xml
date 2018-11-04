@@ -2,34 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ggraph on Reproducible Random Thoughts</title>
-    <link>/tags/ggraph/</link>
+    <link>https://yonicd.netlify.com/tags/ggraph/</link>
     <description>Recent content in Ggraph on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Tue, 07 Nov 2017 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/tags/ggraph/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://yonicd.netlify.com/tags/ggraph/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Firearms Sourced and Recovered in the United States and Territories 2010-2016</title>
-      <link>/post/2017-11-07-gunflow/</link>
+      <link>https://yonicd.netlify.com/post/2017-11-07-gunflow/</link>
       <pubDate>Tue, 07 Nov 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2017-11-07-gunflow/</guid>
-      <description>&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
+      <guid>https://yonicd.netlify.com/post/2017-11-07-gunflow/</guid>
+      <description>&lt;script src=&#34;https://yonicd.netlify.com/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://yonicd.netlify.com/rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://yonicd.netlify.com/rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;I want to try and probe a question that was raised since Las Vegas and now revived due to the tragedy in Sutherland Springs,TX: Given the free trade between states, can a state unilaterally regulate firearms. This post will try to start to give an answer to this question using R.&lt;/p&gt;
 &lt;p&gt;Since there is not an open electronic federal database for firearm ownership and transactions, one important source of information is the &lt;a href=&#34;https://www.atf.gov/resource-center/firearms-trace-data-2016&#34;&gt;Bureau of Alcohol, Tobacco and Firearms&lt;/a&gt;, (ATF). They publish the trace of firearms that were recovered every year, and when &lt;em&gt;possible&lt;/em&gt; trace the state where the firearm originated. This creates a weighted adjaceny matrix that is similar to what in economics is called &lt;a href=&#34;http://www.imf.org/external/pubs/cat/longres.aspx?sk=20096&#34;&gt;Direction of Trade&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;In this &lt;a href=&#34;https://www.atf.gov/docs/undefined/sourcerecoverybystatecy2016xlsx/download&#34;&gt;matrix&lt;/a&gt; the rows depict the source and the columns depict the destination. This lets one get an idea where firearms that are confiscated by the ATF orginated from. From this we can also infer which states are net importers of firearms and which states are net exporters. I will explore this matrix in an attempt to better understand if firearms are more likely to flow between geographically adjacent states. In the end I will get to a shiny app that ties everything together, for those who want to stop here…&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/gunflow_slick.gif?raw=true&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;In this &lt;a href=&#34;https://www.atf.gov/docs/undefined/sourcerecoverybystatecy2016xlsx/download&#34;&gt;matrix&lt;/a&gt; the rows depict the source and the columns depict the destination. This lets one get an idea where firearms that are confiscated by the ATF orginated from. From this we can also infer which states are net importers of firearms and which states are net exporters.
+I will explore this matrix in an attempt to better understand if firearms are more likely to flow between geographically adjacent states. In the end I will get to a shiny app that ties everything together, for those who want to stop here…&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/gunflow_slick.gif?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The shiny app can be run directly&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pkgs &amp;lt;- c(&amp;#39;reshape2&amp;#39;,&amp;#39;geojson&amp;#39;,&amp;#39;readxl&amp;#39;,&amp;#39;leaflet&amp;#39;,
 &amp;#39;httr&amp;#39;,&amp;#39;rgeolocate&amp;#39;,&amp;#39;shiny&amp;#39;,&amp;#39;ggplot2&amp;#39;,&amp;#39;sp&amp;#39;,
@@ -112,14 +110,8 @@ tot$grade_round &amp;lt;- gsub(&amp;#39;[+-]&amp;#39;,&amp;#39;&amp;#39;,tot$gra
 &lt;li&gt;The geographic region that has the highest rate is the Mountain geographic area that includes: Idaho, New Mexico, Nevada, Arizona and Utah&lt;/li&gt;
 &lt;li&gt;16 States have at least 100% increase in gun registration since 2010.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_plot.png&#34; /&gt;
-
-&lt;/div&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_base_plot.png&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_plot.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_base_plot.png&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;net-flow-per-100-firearms-between-states&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Net flow per 100 firearms between states&lt;/h2&gt;
@@ -130,35 +122,23 @@ tot$grade_round &amp;lt;- gsub(&amp;#39;[+-]&amp;#39;,&amp;#39;&amp;#39;,tot$gra
 &lt;li&gt;Since 2014 New England has become a strong net exporter of firearms.&lt;/li&gt;
 &lt;li&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/net_flow.gif?raw=true&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/net_flow.gif?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;firearms-flow-relationship&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Firearms Flow relationship&lt;/h2&gt;
 &lt;p&gt;Next we combine the firearms flow with the regulation grades for each state 2011-2016, and give a colour for each node as the number of firearms recovered within the state and it was registered to someone in the state. The script to recreate these plots can be found &lt;a href=&#34;https://github.com/yonicd/blog/blob/master/gunflow_scripts/scatter.R&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Here we start to see that states with high regulation tend to be high net importers of firearms.&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/scatter_flow.gif?raw=true&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/scatter_flow.gif?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;state-firearm-flow-networks&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;State Firearm flow networks&lt;/h2&gt;
 &lt;p&gt;To find clusters of states that have a high degree of correlation among each other and locate states that are conduits between geographical areas we use visualize the weighted adjaceny matrix as a network. The script to create these plots can be found &lt;a href=&#34;https://github.com/yonicd/gunflow/blob/master/funs.R&#34;&gt;here&lt;/a&gt;. We can see over time that the network has become more connected and clusters of states have been connected across geographical regions, with Tennesee and Michigan being having a central role in these connections.&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/net_plot.gif?raw=true&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/net_plot.gif?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;power-centrality&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Power Centrality&lt;/h2&gt;
 &lt;p&gt;Finally we try and see if we can locate states that have a strong centrality power with the networks. We use the Bonacichi centrality metric to rate both the states that have high centrality because they are connected to states with that have themselves many connections (a cooperative relationship). Inversely we also measure states that are have a high centrality measure because states that are connected to them lack connections and depened on the state for firearms (an antagonistic relationship). The script to create these plots can be found &lt;a href=&#34;https://github.com/yonicd/blog/blob/master/gunflow_scripts/power.R&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/power.gif?raw=true&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/power.gif?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;This exploratory analysis attempted to start to answer the question can states unilaterally regulate firearms effictively. My impression is that it is nearly impossible to do so when neighboring states do not share the same regulatory framework. This manifests itself in changes of interstate firearm flow to reach a new steady state of firearms regardless of within state regulation.&lt;/p&gt;
 &lt;p&gt;Hopefully this will be a good starting point for some modeling of firearm flow between states and developing more effective state and federal policy through the prediction of the flow of firearms between states.&lt;/p&gt;
 &lt;p&gt;Any thoughts on the analysis is always welcome, especially if you think I erred in any way, or want have any ideas on how to model such a problem.&lt;/p&gt;

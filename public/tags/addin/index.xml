@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Addin on Reproducible Random Thoughts</title>
-    <link>/tags/addin/</link>
+    <link>https://yonicd.netlify.com/tags/addin/</link>
     <description>Recent content in Addin on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Mon, 15 Jan 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/tags/addin/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://yonicd.netlify.com/tags/addin/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>RStudio Addin Manager</title>
-      <link>/post/rsam/</link>
+      <link>https://yonicd.netlify.com/post/rsam/</link>
       <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/rsam/</guid>
+      <guid>https://yonicd.netlify.com/post/rsam/</guid>
       <description>&lt;p&gt;&lt;code&gt;rsam&lt;/code&gt; provides a command line and user interface to manage RStudio addins. You can show or hide the addins in the RStudio IDE dropdown menu and set keyboard shortcuts for them.&lt;/p&gt;
 &lt;div id=&#34;installation&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Installation&lt;/h2&gt;
@@ -28,16 +28,14 @@ remotes::install_github(&amp;#39;yonicd/rsam&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;usage&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Usage&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(rsam)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## rsam persmissions set by ~/_rsam.yml&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;user-interface&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;User Interface&lt;/h3&gt;
 &lt;p&gt;The user interface is a shiny application that uses &lt;a href=&#34;http://jrowen.github.io/rhandsontable/&#34;&gt;rhandshontable&lt;/a&gt; to interact with the addins. The table includes a list of all the installed addins found in the &lt;code&gt;.libPaths()&lt;/code&gt;, their description, a checkbox to control if the addin will be shown in the IDE dropdown menu and a column to define keyboard shortcuts.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#invoking the UI
 rsam()&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Once you have decided which addins to toggle on or off you press the &lt;code&gt;update&lt;/code&gt; button. This will update the RStudio files. The final (currently unavoidable) step is to restart RStudio to invoke the changes.&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/rsamUI.png&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/rsamUI.png&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;command-line&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Command Line&lt;/h3&gt;
@@ -45,22 +43,20 @@ rsam()&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;retrieve-summary-of-installed-addins&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Retrieve Summary of Installed Addins&lt;/h4&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dplyr::as_tibble(fetch_addins())&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 47 x 8
-##         Package                Name
-##           &amp;lt;chr&amp;gt;               &amp;lt;chr&amp;gt;
-##  1     blogdown          Serve Site
-##  2     blogdown            New Post
-##  3     blogdown     Update Metadata
-##  4     bookdown        Preview Book
-##  5     bookdown    Input LaTeX Math
-##  6       chunky              chunky
-##  7        clipr  Value to clipboard
-##  8        clipr Output to clipboard
-##  9 colourpicker  Plot Colour Helper
-## 10 colourpicker       Colour Picker
-## # ... with 37 more rows, and 6 more variables: Description &amp;lt;chr&amp;gt;,
-## #   Binding &amp;lt;chr&amp;gt;, Interactive &amp;lt;chr&amp;gt;, Key &amp;lt;chr&amp;gt;, Shortcut &amp;lt;chr&amp;gt;,
-## #   libpath &amp;lt;chr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 58 x 8
+##    Package  Name  Description  Binding Interactive Key   libpath  Shortcut
+##    &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;        &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;   
+##  1 blogdown Serv… &amp;quot;Run blogdo… serve_… true        blog… /Users/… &amp;lt;NA&amp;gt;    
+##  2 blogdown New … Create a ne… new_po… true        blog… /Users/… &amp;lt;NA&amp;gt;    
+##  3 blogdown Upda… &amp;quot;Update the… update… true        blog… /Users/… &amp;lt;NA&amp;gt;    
+##  4 blogdown Inse… Insert an e… insert… true        blog… /Users/… &amp;lt;NA&amp;gt;    
+##  5 blogdown Touc… &amp;quot;Change the… touch_… false       blog… /Users/… &amp;lt;NA&amp;gt;    
+##  6 blogdown Quot… &amp;quot;Add &amp;gt; to t… quote_… false       blog… /Users/… &amp;lt;NA&amp;gt;    
+##  7 bookdown Prev… Run bookdow… serve_… true        book… /Users/… &amp;lt;NA&amp;gt;    
+##  8 bookdown Inpu… Input math … mathqu… true        book… /Users/… &amp;lt;NA&amp;gt;    
+##  9 clipr    Valu… &amp;quot;Copies the… clipr_… false       clip… /Users/… &amp;lt;NA&amp;gt;    
+## 10 clipr    Outp… &amp;quot;Copies the… clipr_… false       clip… /Users/… &amp;lt;NA&amp;gt;    
+## # ... with 48 more rows&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;toggle-addins-onoff&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Toggle Addins on/off&lt;/h4&gt;

@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on Reproducible Random Thoughts</title>
-    <link>/page/</link>
+    <link>https://yonicd.netlify.com/page/</link>
     <description>Recent content in Pages on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     
-        <atom:link href="/page/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://yonicd.netlify.com/page/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>About me</title>
-      <link>/page/about/</link>
+      <link>https://yonicd.netlify.com/page/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/about/</guid>
+      <guid>https://yonicd.netlify.com/page/about/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;Research scientist at &lt;a href=&#34;https://www.metrumrg.com/&#34;&gt;Metrum Research Group&lt;/a&gt;. Previously worked as statistician in the Research Department of the &lt;a href=&#34;http://www.boi.org.il/en/Pages/Default.aspx&#34;&gt;Bank of Israel&lt;/a&gt;, &lt;a href=&#34;http://www.matrix.co.il/en/Pages/default.aspx&#34;&gt;Matrix&lt;/a&gt; and a consultant to the &lt;a href=&#34;http://www.vanleer.org.il/en&#34;&gt;Van Leer Jerusalem Institute&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
 
@@ -53,10 +53,10 @@
     
     <item>
       <title>Datasets</title>
-      <link>/page/datasets/</link>
+      <link>https://yonicd.netlify.com/page/datasets/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/datasets/</guid>
+      <guid>https://yonicd.netlify.com/page/datasets/</guid>
       <description>&lt;p&gt;This page includes source data used in blog posts and packages.&lt;/p&gt;
 
 &lt;p&gt;|Dataset|Object Type|Source|Description|
@@ -67,10 +67,10 @@
     
     <item>
       <title>GitHub Waffle Heatmap</title>
-      <link>/page/gh_traffic/</link>
+      <link>https://yonicd.netlify.com/page/gh_traffic/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/gh_traffic/</guid>
+      <guid>https://yonicd.netlify.com/page/gh_traffic/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/gh_traffic_files/figure-html/plot-1.png?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;div id=&#34;how-we-got-this&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;How we got this:&lt;/h1&gt;
@@ -212,7 +212,7 @@ fetch_view_data &amp;lt;- function(repo, gh_pat){
 plot_traffic(x)
 
 dev.off()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/page/gh_traffic_files/figure-html/plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/page/gh_traffic_files/figure-html/plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>
@@ -220,10 +220,10 @@ dev.off()&lt;/code&gt;&lt;/pre&gt;
     
     <item>
       <title>GitHub Waffle Heatmap</title>
-      <link>/page/gh_traffic/</link>
+      <link>https://yonicd.netlify.com/page/gh_traffic/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/gh_traffic/</guid>
+      <guid>https://yonicd.netlify.com/page/gh_traffic/</guid>
       <description>
 
 &lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/gh_traffic_files/figure-html/plot-1.png?raw=true&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
@@ -381,10 +381,10 @@ dev.off()
     
     <item>
       <title>Projects</title>
-      <link>/page/projects/</link>
+      <link>https://yonicd.netlify.com/page/projects/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/projects/</guid>
+      <guid>https://yonicd.netlify.com/page/projects/</guid>
       <description>&lt;p&gt;This is a list of R packages that have been published on CRAN and/or are still being developed on Github. Many of the projects are part of &lt;a href=&#34;https://www.metrumrg.com/try-open-source-tools/&#34;&gt;open tools&lt;/a&gt; developed at Metrum Research Group.&lt;/p&gt;
 
 &lt;!-- https://img.shields.io/badge/METRUM-opentools-brightgreen.svg?link=https://www.metrumrg.com/&amp;link=https://www.metrumrg.com/open-science/ --&gt;
@@ -494,10 +494,10 @@ dev.off()
     
     <item>
       <title>Projects</title>
-      <link>/page/projects.utf8/</link>
+      <link>https://yonicd.netlify.com/page/projects.utf8/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/projects.utf8/</guid>
+      <guid>https://yonicd.netlify.com/page/projects.utf8/</guid>
       <description>&lt;p&gt;This is a list of R packages that have been published on CRAN and/or are still being developed on Github. Many of the projects are part of &lt;a href=&#34;https://www.metrumrg.com/try-open-source-tools/&#34;&gt;open tools&lt;/a&gt; developed at Metrum Research Group.&lt;/p&gt;
 
 &lt;!-- https://img.shields.io/badge/METRUM-opentools-brightgreen.svg?link=https://www.metrumrg.com/&amp;link=https://www.metrumrg.com/open-science/ --&gt;

@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Reproducible Random Thoughts</title>
-    <link>/</link>
+    <link>https://yonicd.netlify.com/</link>
     <description>Recent content on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Mon, 29 Oct 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://yonicd.netlify.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>carbonate</title>
-      <link>/post/carbonate/</link>
+      <link>https://yonicd.netlify.com/post/carbonate/</link>
       <pubDate>Mon, 29 Oct 2018 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/carbonate/</guid>
+      <guid>https://yonicd.netlify.com/post/carbonate/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://carbon.now.sh/about&#34;&gt;carbon.js&lt;/a&gt; is the easiest way to create beautiful images of your source code, and &lt;a href=&#34;https://yonicd.github.io/carbonate/&#34;&gt;carbonate&lt;/a&gt; creates an api in &lt;code&gt;R&lt;/code&gt; to interact with it. The package gives a new simple way to share your script with the rest of the &lt;code&gt;R&lt;/code&gt; community on posters, slides, Shiny apps and social media!&lt;/p&gt;
 &lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
 &lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
@@ -202,19 +202,19 @@ install.packages(&amp;#39;carbonate&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;default&#34; class=&#34;section level5&#34;&gt;
 &lt;h5&gt;Default&lt;/h5&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$carbonate(file = &amp;#39;myfile.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;changing-the-template&#34; class=&#34;section level5&#34;&gt;
 &lt;h5&gt;Changing the template&lt;/h5&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$template &amp;lt;-&amp;#39;cobalt&amp;#39;
 x$carbonate(file = &amp;#39;new_template.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;changing-the-font&#34; class=&#34;section level5&#34;&gt;
 &lt;h5&gt;Changing the font&lt;/h5&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$font_family &amp;lt;-&amp;#39;IBM Plex Mono&amp;#39;
 x$carbonate(file = &amp;#39;new_font.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -226,7 +226,7 @@ x$carbonate(file = &amp;#39;new_font.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$add_tinyurl &amp;lt;- TRUE
 x$carbonate(file = &amp;#39;tiny_url.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;By default the watermark is placed on the bottom left corner.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-15-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-15-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;If you just want the tinyurl link without the image to use in a tweet you can create it using&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$tiny()&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;## [1] &amp;quot;http://tinyurl.com/y7c64uyv&amp;quot;&lt;/code&gt;&lt;/pre&gt;
@@ -317,10 +317,10 @@ gistr + carbonate &lt;a href=&#34;https://twitter.com/hashtag/rstats?src=hash&am
     
     <item>
       <title>RStudio Addin Manager</title>
-      <link>/post/rsam/</link>
+      <link>https://yonicd.netlify.com/post/rsam/</link>
       <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/rsam/</guid>
+      <guid>https://yonicd.netlify.com/post/rsam/</guid>
       <description>&lt;p&gt;&lt;code&gt;rsam&lt;/code&gt; provides a command line and user interface to manage RStudio addins. You can show or hide the addins in the RStudio IDE dropdown menu and set keyboard shortcuts for them.&lt;/p&gt;
 &lt;div id=&#34;installation&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Installation&lt;/h2&gt;
@@ -331,16 +331,14 @@ remotes::install_github(&amp;#39;yonicd/rsam&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;usage&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Usage&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(rsam)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## rsam persmissions set by ~/_rsam.yml&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;user-interface&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;User Interface&lt;/h3&gt;
 &lt;p&gt;The user interface is a shiny application that uses &lt;a href=&#34;http://jrowen.github.io/rhandsontable/&#34;&gt;rhandshontable&lt;/a&gt; to interact with the addins. The table includes a list of all the installed addins found in the &lt;code&gt;.libPaths()&lt;/code&gt;, their description, a checkbox to control if the addin will be shown in the IDE dropdown menu and a column to define keyboard shortcuts.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#invoking the UI
 rsam()&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Once you have decided which addins to toggle on or off you press the &lt;code&gt;update&lt;/code&gt; button. This will update the RStudio files. The final (currently unavoidable) step is to restart RStudio to invoke the changes.&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/rsamUI.png&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/rsamUI.png&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;command-line&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Command Line&lt;/h3&gt;
@@ -348,22 +346,20 @@ rsam()&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;retrieve-summary-of-installed-addins&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Retrieve Summary of Installed Addins&lt;/h4&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dplyr::as_tibble(fetch_addins())&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 47 x 8
-##         Package                Name
-##           &amp;lt;chr&amp;gt;               &amp;lt;chr&amp;gt;
-##  1     blogdown          Serve Site
-##  2     blogdown            New Post
-##  3     blogdown     Update Metadata
-##  4     bookdown        Preview Book
-##  5     bookdown    Input LaTeX Math
-##  6       chunky              chunky
-##  7        clipr  Value to clipboard
-##  8        clipr Output to clipboard
-##  9 colourpicker  Plot Colour Helper
-## 10 colourpicker       Colour Picker
-## # ... with 37 more rows, and 6 more variables: Description &amp;lt;chr&amp;gt;,
-## #   Binding &amp;lt;chr&amp;gt;, Interactive &amp;lt;chr&amp;gt;, Key &amp;lt;chr&amp;gt;, Shortcut &amp;lt;chr&amp;gt;,
-## #   libpath &amp;lt;chr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 58 x 8
+##    Package  Name  Description  Binding Interactive Key   libpath  Shortcut
+##    &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;        &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;   
+##  1 blogdown Serv… &amp;quot;Run blogdo… serve_… true        blog… /Users/… &amp;lt;NA&amp;gt;    
+##  2 blogdown New … Create a ne… new_po… true        blog… /Users/… &amp;lt;NA&amp;gt;    
+##  3 blogdown Upda… &amp;quot;Update the… update… true        blog… /Users/… &amp;lt;NA&amp;gt;    
+##  4 blogdown Inse… Insert an e… insert… true        blog… /Users/… &amp;lt;NA&amp;gt;    
+##  5 blogdown Touc… &amp;quot;Change the… touch_… false       blog… /Users/… &amp;lt;NA&amp;gt;    
+##  6 blogdown Quot… &amp;quot;Add &amp;gt; to t… quote_… false       blog… /Users/… &amp;lt;NA&amp;gt;    
+##  7 bookdown Prev… Run bookdow… serve_… true        book… /Users/… &amp;lt;NA&amp;gt;    
+##  8 bookdown Inpu… Input math … mathqu… true        book… /Users/… &amp;lt;NA&amp;gt;    
+##  9 clipr    Valu… &amp;quot;Copies the… clipr_… false       clip… /Users/… &amp;lt;NA&amp;gt;    
+## 10 clipr    Outp… &amp;quot;Copies the… clipr_… false       clip… /Users/… &amp;lt;NA&amp;gt;    
+## # ... with 48 more rows&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;toggle-addins-onoff&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Toggle Addins on/off&lt;/h4&gt;
@@ -429,22 +425,20 @@ rsam::set_shortcut(fn = &amp;#39;rsam::lla3&amp;#39;,shortcut = keys + KEYS$`3`)
     
     <item>
       <title>Firearms Sourced and Recovered in the United States and Territories 2010-2016</title>
-      <link>/post/2017-11-07-gunflow/</link>
+      <link>https://yonicd.netlify.com/post/2017-11-07-gunflow/</link>
       <pubDate>Tue, 07 Nov 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2017-11-07-gunflow/</guid>
-      <description>&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
+      <guid>https://yonicd.netlify.com/post/2017-11-07-gunflow/</guid>
+      <description>&lt;script src=&#34;https://yonicd.netlify.com/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://yonicd.netlify.com/rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://yonicd.netlify.com/rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;I want to try and probe a question that was raised since Las Vegas and now revived due to the tragedy in Sutherland Springs,TX: Given the free trade between states, can a state unilaterally regulate firearms. This post will try to start to give an answer to this question using R.&lt;/p&gt;
 &lt;p&gt;Since there is not an open electronic federal database for firearm ownership and transactions, one important source of information is the &lt;a href=&#34;https://www.atf.gov/resource-center/firearms-trace-data-2016&#34;&gt;Bureau of Alcohol, Tobacco and Firearms&lt;/a&gt;, (ATF). They publish the trace of firearms that were recovered every year, and when &lt;em&gt;possible&lt;/em&gt; trace the state where the firearm originated. This creates a weighted adjaceny matrix that is similar to what in economics is called &lt;a href=&#34;http://www.imf.org/external/pubs/cat/longres.aspx?sk=20096&#34;&gt;Direction of Trade&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;In this &lt;a href=&#34;https://www.atf.gov/docs/undefined/sourcerecoverybystatecy2016xlsx/download&#34;&gt;matrix&lt;/a&gt; the rows depict the source and the columns depict the destination. This lets one get an idea where firearms that are confiscated by the ATF orginated from. From this we can also infer which states are net importers of firearms and which states are net exporters. I will explore this matrix in an attempt to better understand if firearms are more likely to flow between geographically adjacent states. In the end I will get to a shiny app that ties everything together, for those who want to stop here…&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/gunflow_slick.gif?raw=true&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;In this &lt;a href=&#34;https://www.atf.gov/docs/undefined/sourcerecoverybystatecy2016xlsx/download&#34;&gt;matrix&lt;/a&gt; the rows depict the source and the columns depict the destination. This lets one get an idea where firearms that are confiscated by the ATF orginated from. From this we can also infer which states are net importers of firearms and which states are net exporters.
+I will explore this matrix in an attempt to better understand if firearms are more likely to flow between geographically adjacent states. In the end I will get to a shiny app that ties everything together, for those who want to stop here…&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/gunflow_slick.gif?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The shiny app can be run directly&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pkgs &amp;lt;- c(&amp;#39;reshape2&amp;#39;,&amp;#39;geojson&amp;#39;,&amp;#39;readxl&amp;#39;,&amp;#39;leaflet&amp;#39;,
 &amp;#39;httr&amp;#39;,&amp;#39;rgeolocate&amp;#39;,&amp;#39;shiny&amp;#39;,&amp;#39;ggplot2&amp;#39;,&amp;#39;sp&amp;#39;,
@@ -527,14 +521,8 @@ tot$grade_round &amp;lt;- gsub(&amp;#39;[+-]&amp;#39;,&amp;#39;&amp;#39;,tot$gra
 &lt;li&gt;The geographic region that has the highest rate is the Mountain geographic area that includes: Idaho, New Mexico, Nevada, Arizona and Utah&lt;/li&gt;
 &lt;li&gt;16 States have at least 100% increase in gun registration since 2010.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_plot.png&#34; /&gt;
-
-&lt;/div&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_base_plot.png&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_plot.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_base_plot.png&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;net-flow-per-100-firearms-between-states&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Net flow per 100 firearms between states&lt;/h2&gt;
@@ -545,35 +533,23 @@ tot$grade_round &amp;lt;- gsub(&amp;#39;[+-]&amp;#39;,&amp;#39;&amp;#39;,tot$gra
 &lt;li&gt;Since 2014 New England has become a strong net exporter of firearms.&lt;/li&gt;
 &lt;li&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/net_flow.gif?raw=true&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/net_flow.gif?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;firearms-flow-relationship&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Firearms Flow relationship&lt;/h2&gt;
 &lt;p&gt;Next we combine the firearms flow with the regulation grades for each state 2011-2016, and give a colour for each node as the number of firearms recovered within the state and it was registered to someone in the state. The script to recreate these plots can be found &lt;a href=&#34;https://github.com/yonicd/blog/blob/master/gunflow_scripts/scatter.R&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Here we start to see that states with high regulation tend to be high net importers of firearms.&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/scatter_flow.gif?raw=true&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/scatter_flow.gif?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;state-firearm-flow-networks&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;State Firearm flow networks&lt;/h2&gt;
 &lt;p&gt;To find clusters of states that have a high degree of correlation among each other and locate states that are conduits between geographical areas we use visualize the weighted adjaceny matrix as a network. The script to create these plots can be found &lt;a href=&#34;https://github.com/yonicd/gunflow/blob/master/funs.R&#34;&gt;here&lt;/a&gt;. We can see over time that the network has become more connected and clusters of states have been connected across geographical regions, with Tennesee and Michigan being having a central role in these connections.&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/net_plot.gif?raw=true&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/net_plot.gif?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;power-centrality&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Power Centrality&lt;/h2&gt;
 &lt;p&gt;Finally we try and see if we can locate states that have a strong centrality power with the networks. We use the Bonacichi centrality metric to rate both the states that have high centrality because they are connected to states with that have themselves many connections (a cooperative relationship). Inversely we also measure states that are have a high centrality measure because states that are connected to them lack connections and depened on the state for firearms (an antagonistic relationship). The script to create these plots can be found &lt;a href=&#34;https://github.com/yonicd/blog/blob/master/gunflow_scripts/power.R&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/power.gif?raw=true&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/master/img/gunflow/power.gif?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;This exploratory analysis attempted to start to answer the question can states unilaterally regulate firearms effictively. My impression is that it is nearly impossible to do so when neighboring states do not share the same regulatory framework. This manifests itself in changes of interstate firearm flow to reach a new steady state of firearms regardless of within state regulation.&lt;/p&gt;
 &lt;p&gt;Hopefully this will be a good starting point for some modeling of firearm flow between states and developing more effective state and federal policy through the prediction of the flow of firearms between states.&lt;/p&gt;
 &lt;p&gt;Any thoughts on the analysis is always welcome, especially if you think I erred in any way, or want have any ideas on how to model such a problem.&lt;/p&gt;
@@ -583,10 +559,10 @@ tot$grade_round &amp;lt;- gsub(&amp;#39;[+-]&amp;#39;,&amp;#39;&amp;#39;,tot$gra
     
     <item>
       <title>Extending slackr</title>
-      <link>/post/slackr/</link>
+      <link>https://yonicd.netlify.com/post/slackr/</link>
       <pubDate>Wed, 25 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/slackr/</guid>
+      <guid>https://yonicd.netlify.com/post/slackr/</guid>
       <description>&lt;p&gt;The &lt;a href=&#34;https://github.com/hrbrmstr/slackr&#34;&gt;slackr&lt;/a&gt; package, by &lt;a href=&#34;https://rud.is/b/&#34;&gt;Bob Rudis&lt;/a&gt;, contains functions that make it possible to interact with the Slack messaging platform. The great part of Slack is that it has mobile devices application interface. We take advantage of this by extending slackr’s interaction with the server:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Write&lt;/strong&gt; to a channel (current) - &lt;code&gt;slackr&lt;/code&gt;
@@ -664,13 +640,13 @@ delete_slackr(count = 6,channel = &amp;#39;#general&amp;#39;)&lt;/code&gt;&lt;/p
     
     <item>
       <title>jsTree htmlwidget</title>
-      <link>/post/jstree/</link>
+      <link>https://yonicd.netlify.com/post/jstree/</link>
       <pubDate>Tue, 24 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/jstree/</guid>
-      <description>&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
+      <guid>https://yonicd.netlify.com/post/jstree/</guid>
+      <description>&lt;script src=&#34;https://yonicd.netlify.com/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://yonicd.netlify.com/rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://yonicd.netlify.com/rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;jsTree is a R package that is a standalone htmlwidget for the jsTree JavaScript library. It can be run from the R console directly into the Rstudio Viewer, be used in a Shiny application or be part of an Rmarkdown html output.&lt;/p&gt;
@@ -689,7 +665,7 @@ devtools::install_github(&amp;#39;metrumresearchgroup/jsTree&amp;#39;)&lt;/code&
 library(jsTree)
 library(widgetframe)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Read in the data
-superfundsite &amp;lt;- readRDS(&amp;#39;../../data/superfundsite.Rds&amp;#39;)
+superfundsite &amp;lt;- readRDS(&amp;#39;../../jstree_data/superfundsite.Rds&amp;#39;)
 
 htmlTable::htmlTable(head(superfundsite),rnames=FALSE)&lt;/code&gt;&lt;/pre&gt;
 &lt;table class=&#34;gmisc_table&#34; style=&#34;border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;&#34;&gt;
@@ -941,10 +917,10 @@ shinyApp(ui, server)&lt;/code&gt;&lt;/pre&gt;
     
     <item>
       <title>Combining Github Traffic Plots Across Repositories</title>
-      <link>/post/2017-10-02-githubtraffic/</link>
+      <link>https://yonicd.netlify.com/post/2017-10-02-githubtraffic/</link>
       <pubDate>Mon, 02 Oct 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2017-10-02-githubtraffic/</guid>
+      <guid>https://yonicd.netlify.com/post/2017-10-02-githubtraffic/</guid>
       <description>
 
 &lt;p&gt;This post will show how to use the &lt;a href=&#34;https://cran.r-project.org/web/packages/RSelenium/vignettes/RSelenium-basics.html&#34;&gt;RSelenium&lt;/a&gt; package to scrape your own github account to retrieve all that fun traffic data of clones and visits and create a single traffic plot for your account.&lt;/p&gt;
@@ -1081,10 +1057,10 @@ remDr$close()
     
     <item>
       <title>Regular Expression Searching within Shiny Selectize Objects</title>
-      <link>/post/2017-09-26-regexselect/</link>
+      <link>https://yonicd.netlify.com/post/2017-09-26-regexselect/</link>
       <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2017-09-26-regexselect/</guid>
+      <guid>https://yonicd.netlify.com/post/2017-09-26-regexselect/</guid>
       <description>
 
 &lt;p&gt;regexSelect is a small package that uses &lt;a href=&#34;https://shiny.rstudio.com/articles/modules.html&#34;&gt;Shiny modules&lt;/a&gt; to solve a problem in Shiny selectize objects - &lt;a href=&#34;https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf&#34;&gt;regular expression&lt;/a&gt; (regex) searching. You can quickly filter the values in the selectize object, while being able to add that new regex query to the selectize list.&lt;/p&gt;
@@ -1219,10 +1195,10 @@ shiny::shinyApp(ui, server)
     
     <item>
       <title>What is the appropriate population scaling of the Affordable Care Act Funding?</title>
-      <link>/post/2017-09-26-aca/</link>
+      <link>https://yonicd.netlify.com/post/2017-09-26-aca/</link>
       <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2017-09-26-aca/</guid>
+      <guid>https://yonicd.netlify.com/post/2017-09-26-aca/</guid>
       <description>
 
 &lt;p&gt;I have been trying to decipher for myself, what is in the current (well, yesterday&amp;rsquo;s) Graham-Cassidy health care bill. I saw this image on many news outlets a few days ago and my inner hate for pie charts bubbled up.&lt;/p&gt;
@@ -1501,10 +1477,10 @@ states_facet$tile_lbl &amp;lt;- sprintf(&#39;%s\n%s&#39;,states_facet$Expansion,
     
     <item>
       <title>Automating roxygen2 package documentation</title>
-      <link>/post/2017-09-18-sinew/</link>
+      <link>https://yonicd.netlify.com/post/2017-09-18-sinew/</link>
       <pubDate>Mon, 18 Sep 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2017-09-18-sinew/</guid>
+      <guid>https://yonicd.netlify.com/post/2017-09-18-sinew/</guid>
       <description>
 
 &lt;p&gt;Thinking of creating a new package? Dread the task of function documentation? Afraid to run &lt;code&gt;devtools::check(build_args = &#39;--as-cran&#39;)&lt;/code&gt; and get bombarded by Errors, Warnings, and Notes (oh my!) ? Wait&amp;hellip;. breathe!&lt;/p&gt;
@@ -1704,10 +1680,10 @@ lm
     
     <item>
       <title>sinew</title>
-      <link>/post/2017-05-03-sinew/</link>
+      <link>https://yonicd.netlify.com/post/2017-05-03-sinew/</link>
       <pubDate>Wed, 03 May 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2017-05-03-sinew/</guid>
+      <guid>https://yonicd.netlify.com/post/2017-05-03-sinew/</guid>
       <description>
 
 &lt;p&gt;Sinew is a R package that generates a Roxygen skeleton populated with information scraped from the function script.&lt;/p&gt;
@@ -2003,10 +1979,10 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
     
     <item>
       <title>slickR</title>
-      <link>/post/2017-04-07-slickr/</link>
+      <link>https://yonicd.netlify.com/post/2017-04-07-slickr/</link>
       <pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2017-04-07-slickr/</guid>
+      <guid>https://yonicd.netlify.com/post/2017-04-07-slickr/</guid>
       <description>
 
 &lt;p&gt;We are happy to bring the &lt;a href=&#34;http://kenwheeler.github.io/slick/&#34;&gt;slick&lt;/a&gt; JavaScript library to R. It is self described as &amp;ldquo;the last carousel you&amp;rsquo;ll ever need&amp;rdquo;. This carousel is based on putting the elements of the carousel in a &lt;a href=&#34;https://www.w3schools.com/tags/tag_div.asp&#34;&gt;div&lt;/a&gt; HTML tag. This makes the carousel very versatile in what can be placed inside. Regular objects that are placed in a carousel can be for example: images, plots, tables, gifs, videos, iframes and even htmlwidgets.&lt;/p&gt;
@@ -2261,10 +2237,10 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
     
     <item>
       <title>ggedit 0.2.0</title>
-      <link>/post/2017-03-31-ggedit_cranpost/</link>
+      <link>https://yonicd.netlify.com/post/2017-03-31-ggedit_cranpost/</link>
       <pubDate>Fri, 31 Mar 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2017-03-31-ggedit_cranpost/</guid>
+      <guid>https://yonicd.netlify.com/post/2017-03-31-ggedit_cranpost/</guid>
       <description>
 
 &lt;p&gt;We are pleased to announce the release of the ggedit package on &lt;a href=&#34;https://cran.r-project.org/web/packages/ggedit/index.html&#34;&gt;CRAN&lt;/a&gt;.&lt;/p&gt;
@@ -2382,10 +2358,10 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
     
     <item>
       <title>ggedit 0.1.1</title>
-      <link>/post/2017-02-22-ggedit3/</link>
+      <link>https://yonicd.netlify.com/post/2017-02-22-ggedit3/</link>
       <pubDate>Wed, 22 Feb 2017 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2017-02-22-ggedit3/</guid>
+      <guid>https://yonicd.netlify.com/post/2017-02-22-ggedit3/</guid>
       <description>
 
 &lt;p&gt;ggedit is a package that lets users interactively edit ggplot layer and theme aesthetics.  In a previous &lt;a href=&#34;https://yonicd.github.io/2016-12-13-ggedit/&#34;&gt;post&lt;/a&gt; we showed you how to use it in a collaborative workflow using standard R scripts. More importantly, we &lt;a href=&#34;https://www.r-bloggers.com/ggedit-0-0-2-a-gui-for-advanced-editing-of-ggplot2-objects/&#34;&gt;highlighted&lt;/a&gt; that ggedit outputs to the user, after editing, updated: gg plots, layers, scales and themes as both self-contained objects &lt;em&gt;and&lt;/em&gt; script that you can paste directly in your code.&lt;/p&gt;
@@ -2515,10 +2491,10 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
     
     <item>
       <title>ggedit</title>
-      <link>/post/2016-12-13-ggedit/</link>
+      <link>https://yonicd.netlify.com/post/2016-12-13-ggedit/</link>
       <pubDate>Tue, 13 Dec 2016 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/post/2016-12-13-ggedit/</guid>
+      <guid>https://yonicd.netlify.com/post/2016-12-13-ggedit/</guid>
       <description>
 
 &lt;p&gt;ggplot2 has become the standard of plotting in R for many users. New users, however, may find the learning curve steep at first, and more experienced users may find it challenging to keep track of all the options (especially in the theme!).&lt;/p&gt;
@@ -2636,10 +2612,10 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
     
     <item>
       <title>About me</title>
-      <link>/page/about/</link>
+      <link>https://yonicd.netlify.com/page/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/about/</guid>
+      <guid>https://yonicd.netlify.com/page/about/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;Research scientist at &lt;a href=&#34;https://www.metrumrg.com/&#34;&gt;Metrum Research Group&lt;/a&gt;. Previously worked as statistician in the Research Department of the &lt;a href=&#34;http://www.boi.org.il/en/Pages/Default.aspx&#34;&gt;Bank of Israel&lt;/a&gt;, &lt;a href=&#34;http://www.matrix.co.il/en/Pages/default.aspx&#34;&gt;Matrix&lt;/a&gt; and a consultant to the &lt;a href=&#34;http://www.vanleer.org.il/en&#34;&gt;Van Leer Jerusalem Institute&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
 
@@ -2676,10 +2652,10 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
     
     <item>
       <title>Datasets</title>
-      <link>/page/datasets/</link>
+      <link>https://yonicd.netlify.com/page/datasets/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/datasets/</guid>
+      <guid>https://yonicd.netlify.com/page/datasets/</guid>
       <description>&lt;p&gt;This page includes source data used in blog posts and packages.&lt;/p&gt;
 
 &lt;p&gt;|Dataset|Object Type|Source|Description|
@@ -2690,10 +2666,10 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
     
     <item>
       <title>GitHub Waffle Heatmap</title>
-      <link>/page/gh_traffic/</link>
+      <link>https://yonicd.netlify.com/page/gh_traffic/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/gh_traffic/</guid>
+      <guid>https://yonicd.netlify.com/page/gh_traffic/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/gh_traffic_files/figure-html/plot-1.png?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;div id=&#34;how-we-got-this&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;How we got this:&lt;/h1&gt;
@@ -2835,7 +2811,7 @@ fetch_view_data &amp;lt;- function(repo, gh_pat){
 plot_traffic(x)
 
 dev.off()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/page/gh_traffic_files/figure-html/plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/page/gh_traffic_files/figure-html/plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>
@@ -2843,10 +2819,10 @@ dev.off()&lt;/code&gt;&lt;/pre&gt;
     
     <item>
       <title>GitHub Waffle Heatmap</title>
-      <link>/page/gh_traffic/</link>
+      <link>https://yonicd.netlify.com/page/gh_traffic/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/gh_traffic/</guid>
+      <guid>https://yonicd.netlify.com/page/gh_traffic/</guid>
       <description>
 
 &lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/gh_traffic_files/figure-html/plot-1.png?raw=true&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
@@ -3004,10 +2980,10 @@ dev.off()
     
     <item>
       <title>Projects</title>
-      <link>/page/projects/</link>
+      <link>https://yonicd.netlify.com/page/projects/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/projects/</guid>
+      <guid>https://yonicd.netlify.com/page/projects/</guid>
       <description>&lt;p&gt;This is a list of R packages that have been published on CRAN and/or are still being developed on Github. Many of the projects are part of &lt;a href=&#34;https://www.metrumrg.com/try-open-source-tools/&#34;&gt;open tools&lt;/a&gt; developed at Metrum Research Group.&lt;/p&gt;
 
 &lt;!-- https://img.shields.io/badge/METRUM-opentools-brightgreen.svg?link=https://www.metrumrg.com/&amp;link=https://www.metrumrg.com/open-science/ --&gt;
@@ -3117,10 +3093,10 @@ dev.off()
     
     <item>
       <title>Projects</title>
-      <link>/page/projects.utf8/</link>
+      <link>https://yonicd.netlify.com/page/projects.utf8/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/projects.utf8/</guid>
+      <guid>https://yonicd.netlify.com/page/projects.utf8/</guid>
       <description>&lt;p&gt;This is a list of R packages that have been published on CRAN and/or are still being developed on Github. Many of the projects are part of &lt;a href=&#34;https://www.metrumrg.com/try-open-source-tools/&#34;&gt;open tools&lt;/a&gt; developed at Metrum Research Group.&lt;/p&gt;
 
 &lt;!-- https://img.shields.io/badge/METRUM-opentools-brightgreen.svg?link=https://www.metrumrg.com/&amp;link=https://www.metrumrg.com/open-science/ --&gt;

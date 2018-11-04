@@ -14,11 +14,9 @@ gh_badge: [follow, star, issue]
 
 <p>I want to try and probe a question that was raised since Las Vegas and now revived due to the tragedy in Sutherland Springs,TX: Given the free trade between states, can a state unilaterally regulate firearms. This post will try to start to give an answer to this question using R.</p>
 <p>Since there is not an open electronic federal database for firearm ownership and transactions, one important source of information is the <a href="https://www.atf.gov/resource-center/firearms-trace-data-2016">Bureau of Alcohol, Tobacco and Firearms</a>, (ATF). They publish the trace of firearms that were recovered every year, and when <em>possible</em> trace the state where the firearm originated. This creates a weighted adjaceny matrix that is similar to what in economics is called <a href="http://www.imf.org/external/pubs/cat/longres.aspx?sk=20096">Direction of Trade</a>.</p>
-<p>In this <a href="https://www.atf.gov/docs/undefined/sourcerecoverybystatecy2016xlsx/download">matrix</a> the rows depict the source and the columns depict the destination. This lets one get an idea where firearms that are confiscated by the ATF orginated from. From this we can also infer which states are net importers of firearms and which states are net exporters. I will explore this matrix in an attempt to better understand if firearms are more likely to flow between geographically adjacent states. In the end I will get to a shiny app that ties everything together, for those who want to stop here…</p>
-<div class="figure">
-<img src="https://github.com/yonicd/blog/blob/master/img/gunflow/gunflow_slick.gif?raw=true" />
-
-</div>
+<p>In this <a href="https://www.atf.gov/docs/undefined/sourcerecoverybystatecy2016xlsx/download">matrix</a> the rows depict the source and the columns depict the destination. This lets one get an idea where firearms that are confiscated by the ATF orginated from. From this we can also infer which states are net importers of firearms and which states are net exporters.
+I will explore this matrix in an attempt to better understand if firearms are more likely to flow between geographically adjacent states. In the end I will get to a shiny app that ties everything together, for those who want to stop here…</p>
+<p><img src="https://github.com/yonicd/blog/blob/master/img/gunflow/gunflow_slick.gif?raw=true" /></p>
 <p>The shiny app can be run directly</p>
 <pre class="r"><code>pkgs &lt;- c(&#39;reshape2&#39;,&#39;geojson&#39;,&#39;readxl&#39;,&#39;leaflet&#39;,
 &#39;httr&#39;,&#39;rgeolocate&#39;,&#39;shiny&#39;,&#39;ggplot2&#39;,&#39;sp&#39;,
@@ -101,14 +99,8 @@ tot$grade_round &lt;- gsub(&#39;[+-]&#39;,&#39;&#39;,tot$grade)</code></pre>
 <li>The geographic region that has the highest rate is the Mountain geographic area that includes: Idaho, New Mexico, Nevada, Arizona and Utah</li>
 <li>16 States have at least 100% increase in gun registration since 2010.</li>
 </ul>
-<div class="figure">
-<img src="https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_plot.png" />
-
-</div>
-<div class="figure">
-<img src="https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_base_plot.png" />
-
-</div>
+<p><img src="https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_plot.png" /></p>
+<p><img src="https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_base_plot.png" /></p>
 </div>
 <div id="net-flow-per-100-firearms-between-states" class="section level2">
 <h2>Net flow per 100 firearms between states</h2>
@@ -119,35 +111,23 @@ tot$grade_round &lt;- gsub(&#39;[+-]&#39;,&#39;&#39;,tot$grade)</code></pre>
 <li>Since 2014 New England has become a strong net exporter of firearms.</li>
 <li></li>
 </ul>
-<div class="figure">
-<img src="https://github.com/yonicd/blog/blob/master/img/gunflow/net_flow.gif?raw=true" />
-
-</div>
+<p><img src="https://github.com/yonicd/blog/blob/master/img/gunflow/net_flow.gif?raw=true" /></p>
 </div>
 <div id="firearms-flow-relationship" class="section level2">
 <h2>Firearms Flow relationship</h2>
 <p>Next we combine the firearms flow with the regulation grades for each state 2011-2016, and give a colour for each node as the number of firearms recovered within the state and it was registered to someone in the state. The script to recreate these plots can be found <a href="https://github.com/yonicd/blog/blob/master/gunflow_scripts/scatter.R">here</a>.</p>
 <p>Here we start to see that states with high regulation tend to be high net importers of firearms.</p>
-<div class="figure">
-<img src="https://github.com/yonicd/blog/blob/master/img/gunflow/scatter_flow.gif?raw=true" />
-
-</div>
+<p><img src="https://github.com/yonicd/blog/blob/master/img/gunflow/scatter_flow.gif?raw=true" /></p>
 </div>
 <div id="state-firearm-flow-networks" class="section level2">
 <h2>State Firearm flow networks</h2>
 <p>To find clusters of states that have a high degree of correlation among each other and locate states that are conduits between geographical areas we use visualize the weighted adjaceny matrix as a network. The script to create these plots can be found <a href="https://github.com/yonicd/gunflow/blob/master/funs.R">here</a>. We can see over time that the network has become more connected and clusters of states have been connected across geographical regions, with Tennesee and Michigan being having a central role in these connections.</p>
-<div class="figure">
-<img src="https://github.com/yonicd/blog/blob/master/img/gunflow/net_plot.gif?raw=true" />
-
-</div>
+<p><img src="https://github.com/yonicd/blog/blob/master/img/gunflow/net_plot.gif?raw=true" /></p>
 </div>
 <div id="power-centrality" class="section level2">
 <h2>Power Centrality</h2>
 <p>Finally we try and see if we can locate states that have a strong centrality power with the networks. We use the Bonacichi centrality metric to rate both the states that have high centrality because they are connected to states with that have themselves many connections (a cooperative relationship). Inversely we also measure states that are have a high centrality measure because states that are connected to them lack connections and depened on the state for firearms (an antagonistic relationship). The script to create these plots can be found <a href="https://github.com/yonicd/blog/blob/master/gunflow_scripts/power.R">here</a></p>
-<div class="figure">
-<img src="https://github.com/yonicd/blog/blob/master/img/gunflow/power.gif?raw=true" />
-
-</div>
+<p><img src="https://github.com/yonicd/blog/blob/master/img/gunflow/power.gif?raw=true" /></p>
 <p>This exploratory analysis attempted to start to answer the question can states unilaterally regulate firearms effictively. My impression is that it is nearly impossible to do so when neighboring states do not share the same regulatory framework. This manifests itself in changes of interstate firearm flow to reach a new steady state of firearms regardless of within state regulation.</p>
 <p>Hopefully this will be a good starting point for some modeling of firearm flow between states and developing more effective state and federal policy through the prediction of the flow of firearms between states.</p>
 <p>Any thoughts on the analysis is always welcome, especially if you think I erred in any way, or want have any ideas on how to model such a problem.</p>

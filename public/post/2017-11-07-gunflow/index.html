@@ -14,27 +14,27 @@ Since there is not an open electronic federal database for firearm ownership and
 Since there is not an open electronic federal database for firearm ownership and transactions, one important source of information is the Bureau of Alcohol, Tobacco and Firearms, (ATF).">
   <meta name="twitter:description" content="I want to try and probe a question that was raised since Las Vegas and now revived due to the tragedy in Sutherland Springs,TX: Given the free trade between states, can a state unilaterally regulate …">
   <meta name="author" content="Jonathan Sidi"/>
-  <link href='/img/cd-favicon.ico' rel='icon' type='image/x-icon'/>
-  <meta property="og:image" content="/img/cd-icon.png" />
-  <meta name="twitter:image" content="/img/cd-icon.png" />
+  <link href='https://yonicd.netlify.com/img/cd-favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://yonicd.netlify.com/img/cd-icon.png" />
+  <meta name="twitter:image" content="https://yonicd.netlify.com/img/cd-icon.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@yoniceedee" />
   <meta name="twitter:creator" content="@yoniceedee" />
-  <meta property="og:url" content="/post/2017-11-07-gunflow/" />
+  <meta property="og:url" content="https://yonicd.netlify.com/post/2017-11-07-gunflow/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Reproducible Random Thoughts" />
 
   <meta name="generator" content="Hugo 0.49.2" />
-  <link rel="canonical" href="/post/2017-11-07-gunflow/" />
-  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Reproducible Random Thoughts">
+  <link rel="canonical" href="https://yonicd.netlify.com/post/2017-11-07-gunflow/" />
+  <link rel="alternate" href="https://yonicd.netlify.com/index.xml" type="application/rss+xml" title="Reproducible Random Thoughts">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://yonicd.netlify.com/css/main.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
-  <link rel="stylesheet" href="/css/pygment_highlights.css" />
-  <link rel="stylesheet" href="/css/highlight.min.css" />
+  <link rel="stylesheet" href="https://yonicd.netlify.com/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="https://yonicd.netlify.com/css/highlight.min.css" />
 
 
 
@@ -120,7 +120,7 @@ if (!doNotTrack) {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">Reproducible Random Thoughts</a>
+      <a class="navbar-brand" href="https://yonicd.netlify.com/">Reproducible Random Thoughts</a>
     </div>
 
     <div class="collapse navbar-collapse" id="main-navbar">
@@ -180,8 +180,8 @@ if (!doNotTrack) {
     <div class="avatar-container">
       <div class="avatar-img-border">
         
-          <a title="Reproducible Random Thoughts" href="/">
-            <img class="avatar-img" src="/img/cd-icon.png" alt="Reproducible Random Thoughts" />
+          <a title="Reproducible Random Thoughts" href="https://yonicd.netlify.com/">
+            <img class="avatar-img" src="https://yonicd.netlify.com/img/cd-icon.png" alt="Reproducible Random Thoughts" />
           </a>
         
       </div>
@@ -290,11 +290,9 @@ if (!doNotTrack) {
 
 <p>I want to try and probe a question that was raised since Las Vegas and now revived due to the tragedy in Sutherland Springs,TX: Given the free trade between states, can a state unilaterally regulate firearms. This post will try to start to give an answer to this question using R.</p>
 <p>Since there is not an open electronic federal database for firearm ownership and transactions, one important source of information is the <a href="https://www.atf.gov/resource-center/firearms-trace-data-2016">Bureau of Alcohol, Tobacco and Firearms</a>, (ATF). They publish the trace of firearms that were recovered every year, and when <em>possible</em> trace the state where the firearm originated. This creates a weighted adjaceny matrix that is similar to what in economics is called <a href="http://www.imf.org/external/pubs/cat/longres.aspx?sk=20096">Direction of Trade</a>.</p>
-<p>In this <a href="https://www.atf.gov/docs/undefined/sourcerecoverybystatecy2016xlsx/download">matrix</a> the rows depict the source and the columns depict the destination. This lets one get an idea where firearms that are confiscated by the ATF orginated from. From this we can also infer which states are net importers of firearms and which states are net exporters. I will explore this matrix in an attempt to better understand if firearms are more likely to flow between geographically adjacent states. In the end I will get to a shiny app that ties everything together, for those who want to stop here…</p>
-<div class="figure">
-<img src="https://github.com/yonicd/blog/blob/master/img/gunflow/gunflow_slick.gif?raw=true" />
-
-</div>
+<p>In this <a href="https://www.atf.gov/docs/undefined/sourcerecoverybystatecy2016xlsx/download">matrix</a> the rows depict the source and the columns depict the destination. This lets one get an idea where firearms that are confiscated by the ATF orginated from. From this we can also infer which states are net importers of firearms and which states are net exporters.
+I will explore this matrix in an attempt to better understand if firearms are more likely to flow between geographically adjacent states. In the end I will get to a shiny app that ties everything together, for those who want to stop here…</p>
+<p><img src="https://github.com/yonicd/blog/blob/master/img/gunflow/gunflow_slick.gif?raw=true" /></p>
 <p>The shiny app can be run directly</p>
 <pre class="r"><code>pkgs &lt;- c(&#39;reshape2&#39;,&#39;geojson&#39;,&#39;readxl&#39;,&#39;leaflet&#39;,
 &#39;httr&#39;,&#39;rgeolocate&#39;,&#39;shiny&#39;,&#39;ggplot2&#39;,&#39;sp&#39;,
@@ -377,14 +375,8 @@ tot$grade_round &lt;- gsub(&#39;[+-]&#39;,&#39;&#39;,tot$grade)</code></pre>
 <li>The geographic region that has the highest rate is the Mountain geographic area that includes: Idaho, New Mexico, Nevada, Arizona and Utah</li>
 <li>16 States have at least 100% increase in gun registration since 2010.</li>
 </ul>
-<div class="figure">
-<img src="https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_plot.png" />
-
-</div>
-<div class="figure">
-<img src="https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_base_plot.png" />
-
-</div>
+<p><img src="https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_plot.png" /></p>
+<p><img src="https://raw.githubusercontent.com/yonicd/blog/master/img/gunflow/atf_base_plot.png" /></p>
 </div>
 <div id="net-flow-per-100-firearms-between-states" class="section level2">
 <h2>Net flow per 100 firearms between states</h2>
@@ -395,35 +387,23 @@ tot$grade_round &lt;- gsub(&#39;[+-]&#39;,&#39;&#39;,tot$grade)</code></pre>
 <li>Since 2014 New England has become a strong net exporter of firearms.</li>
 <li></li>
 </ul>
-<div class="figure">
-<img src="https://github.com/yonicd/blog/blob/master/img/gunflow/net_flow.gif?raw=true" />
-
-</div>
+<p><img src="https://github.com/yonicd/blog/blob/master/img/gunflow/net_flow.gif?raw=true" /></p>
 </div>
 <div id="firearms-flow-relationship" class="section level2">
 <h2>Firearms Flow relationship</h2>
 <p>Next we combine the firearms flow with the regulation grades for each state 2011-2016, and give a colour for each node as the number of firearms recovered within the state and it was registered to someone in the state. The script to recreate these plots can be found <a href="https://github.com/yonicd/blog/blob/master/gunflow_scripts/scatter.R">here</a>.</p>
 <p>Here we start to see that states with high regulation tend to be high net importers of firearms.</p>
-<div class="figure">
-<img src="https://github.com/yonicd/blog/blob/master/img/gunflow/scatter_flow.gif?raw=true" />
-
-</div>
+<p><img src="https://github.com/yonicd/blog/blob/master/img/gunflow/scatter_flow.gif?raw=true" /></p>
 </div>
 <div id="state-firearm-flow-networks" class="section level2">
 <h2>State Firearm flow networks</h2>
 <p>To find clusters of states that have a high degree of correlation among each other and locate states that are conduits between geographical areas we use visualize the weighted adjaceny matrix as a network. The script to create these plots can be found <a href="https://github.com/yonicd/gunflow/blob/master/funs.R">here</a>. We can see over time that the network has become more connected and clusters of states have been connected across geographical regions, with Tennesee and Michigan being having a central role in these connections.</p>
-<div class="figure">
-<img src="https://github.com/yonicd/blog/blob/master/img/gunflow/net_plot.gif?raw=true" />
-
-</div>
+<p><img src="https://github.com/yonicd/blog/blob/master/img/gunflow/net_plot.gif?raw=true" /></p>
 </div>
 <div id="power-centrality" class="section level2">
 <h2>Power Centrality</h2>
 <p>Finally we try and see if we can locate states that have a strong centrality power with the networks. We use the Bonacichi centrality metric to rate both the states that have high centrality because they are connected to states with that have themselves many connections (a cooperative relationship). Inversely we also measure states that are have a high centrality measure because states that are connected to them lack connections and depened on the state for firearms (an antagonistic relationship). The script to create these plots can be found <a href="https://github.com/yonicd/blog/blob/master/gunflow_scripts/power.R">here</a></p>
-<div class="figure">
-<img src="https://github.com/yonicd/blog/blob/master/img/gunflow/power.gif?raw=true" />
-
-</div>
+<p><img src="https://github.com/yonicd/blog/blob/master/img/gunflow/power.gif?raw=true" /></p>
 <p>This exploratory analysis attempted to start to answer the question can states unilaterally regulate firearms effictively. My impression is that it is nearly impossible to do so when neighboring states do not share the same regulatory framework. This manifests itself in changes of interstate firearm flow to reach a new steady state of firearms regardless of within state regulation.</p>
 <p>Hopefully this will be a good starting point for some modeling of firearm flow between states and developing more effective state and federal policy through the prediction of the flow of firearms between states.</p>
 <p>Any thoughts on the analysis is always welcome, especially if you think I erred in any way, or want have any ideas on how to model such a problem.</p>
@@ -434,12 +414,12 @@ tot$grade_round &lt;- gsub(&#39;[+-]&#39;,&#39;&#39;,tot$grade)</code></pre>
       <ul class="pager blog-pager">
         
           <li class="previous">
-            <a href="/post/slackr/" data-toggle="tooltip" data-placement="top" title="Extending slackr">&larr; Previous Post</a>
+            <a href="https://yonicd.netlify.com/post/slackr/" data-toggle="tooltip" data-placement="top" title="Extending slackr">&larr; Previous Post</a>
           </li>
         
         
           <li class="next">
-            <a href="/post/rsam/" data-toggle="tooltip" data-placement="top" title="RStudio Addin Manager">Next Post &rarr;</a>
+            <a href="https://yonicd.netlify.com/post/rsam/" data-toggle="tooltip" data-placement="top" title="RStudio Addin Manager">Next Post &rarr;</a>
           </li>
         
       </ul>
@@ -531,7 +511,7 @@ tot$grade_round &lt;- gsub(&#39;[+-]&#39;,&#39;&#39;,tot$grade)</code></pre>
               </li>
           
           <li>
-            <a href="/index.xml" title="RSS">
+            <a href="https://yonicd.netlify.com/index.xml" title="RSS">
               <span class="fa-stack fa-lg">
                 <i class="fa fa-circle fa-stack-2x"></i>
                 <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
@@ -552,7 +532,7 @@ tot$grade_round &lt;- gsub(&#39;[+-]&#39;,&#39;&#39;,tot$grade)</code></pre>
 
           
             &nbsp;&bull;&nbsp;
-            <a href="/">Reproducible Random Thoughts</a>
+            <a href="https://yonicd.netlify.com/">Reproducible Random Thoughts</a>
           
         </p>
         
@@ -569,13 +549,13 @@ tot$grade_round &lt;- gsub(&#39;[+-]&#39;,&#39;&#39;,tot$grade)</code></pre>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="/js/main.js"></script>
-<script src="/js/highlight.min.js"></script>
+<script src="https://yonicd.netlify.com/js/main.js"></script>
+<script src="https://yonicd.netlify.com/js/highlight.min.js"></script>
 <script> hljs.initHighlightingOnLoad(); </script>
 <script> renderMathInElement(document.body); </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js" integrity="sha256-UplRCs9v4KXVJvVY+p+RSo5Q4ilAUXh7kpjyIP5odyc=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js" integrity="sha256-PWHOlUzc96pMc8ThwRIXPn8yH4NOLu42RQ0b9SpnpFk=" crossorigin="anonymous"></script>
-<script src="/js/load-photoswipe.js"></script>
+<script src="https://yonicd.netlify.com/js/load-photoswipe.js"></script>
 
 
 
