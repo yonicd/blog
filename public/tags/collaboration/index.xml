@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Collaboration on Reproducible Random Thoughts</title>
-    <link>https://yonicd.netlify.com/tags/collaboration/</link>
+    <link>/tags/collaboration/</link>
     <description>Recent content in Collaboration on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Mon, 29 Oct 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://yonicd.netlify.com/tags/collaboration/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/collaboration/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>carbonate</title>
-      <link>https://yonicd.netlify.com/post/carbonate/</link>
+      <link>/post/carbonate/</link>
       <pubDate>Mon, 29 Oct 2018 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/post/carbonate/</guid>
+      <guid>/post/carbonate/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://carbon.now.sh/about&#34;&gt;carbon.js&lt;/a&gt; is the easiest way to create beautiful images of your source code, and &lt;a href=&#34;https://yonicd.github.io/carbonate/&#34;&gt;carbonate&lt;/a&gt; creates an api in &lt;code&gt;R&lt;/code&gt; to interact with it. The package gives a new simple way to share your script with the rest of the &lt;code&gt;R&lt;/code&gt; community on posters, slides, Shiny apps and social media!&lt;/p&gt;
 &lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
 &lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
@@ -202,19 +202,19 @@ install.packages(&amp;#39;carbonate&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;default&#34; class=&#34;section level5&#34;&gt;
 &lt;h5&gt;Default&lt;/h5&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$carbonate(file = &amp;#39;myfile.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;changing-the-template&#34; class=&#34;section level5&#34;&gt;
 &lt;h5&gt;Changing the template&lt;/h5&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$template &amp;lt;-&amp;#39;cobalt&amp;#39;
 x$carbonate(file = &amp;#39;new_template.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;changing-the-font&#34; class=&#34;section level5&#34;&gt;
 &lt;h5&gt;Changing the font&lt;/h5&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$font_family &amp;lt;-&amp;#39;IBM Plex Mono&amp;#39;
 x$carbonate(file = &amp;#39;new_font.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -226,7 +226,7 @@ x$carbonate(file = &amp;#39;new_font.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$add_tinyurl &amp;lt;- TRUE
 x$carbonate(file = &amp;#39;tiny_url.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;By default the watermark is placed on the bottom left corner.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-15-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-15-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;If you just want the tinyurl link without the image to use in a tweet you can create it using&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$tiny()&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;## [1] &amp;quot;http://tinyurl.com/y7c64uyv&amp;quot;&lt;/code&gt;&lt;/pre&gt;

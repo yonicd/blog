@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Addin on Reproducible Random Thoughts</title>
-    <link>https://yonicd.netlify.com/tags/addin/</link>
+    <link>/tags/addin/</link>
     <description>Recent content in Addin on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     <lastBuildDate>Mon, 15 Jan 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://yonicd.netlify.com/tags/addin/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/tags/addin/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>RStudio Addin Manager</title>
-      <link>https://yonicd.netlify.com/post/rsam/</link>
+      <link>/post/rsam/</link>
       <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/post/rsam/</guid>
+      <guid>/post/rsam/</guid>
       <description>&lt;p&gt;&lt;code&gt;rsam&lt;/code&gt; provides a command line and user interface to manage RStudio addins. You can show or hide the addins in the RStudio IDE dropdown menu and set keyboard shortcuts for them.&lt;/p&gt;
 &lt;div id=&#34;installation&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Installation&lt;/h2&gt;

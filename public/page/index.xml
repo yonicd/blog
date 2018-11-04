@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on Reproducible Random Thoughts</title>
-    <link>https://yonicd.netlify.com/page/</link>
+    <link>/page/</link>
     <description>Recent content in Pages on Reproducible Random Thoughts</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
     
-        <atom:link href="https://yonicd.netlify.com/page/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/page/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>About me</title>
-      <link>https://yonicd.netlify.com/page/about/</link>
+      <link>/page/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/page/about/</guid>
+      <guid>/page/about/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;Research scientist at &lt;a href=&#34;https://www.metrumrg.com/&#34;&gt;Metrum Research Group&lt;/a&gt;. Previously worked as statistician in the Research Department of the &lt;a href=&#34;http://www.boi.org.il/en/Pages/Default.aspx&#34;&gt;Bank of Israel&lt;/a&gt;, &lt;a href=&#34;http://www.matrix.co.il/en/Pages/default.aspx&#34;&gt;Matrix&lt;/a&gt; and a consultant to the &lt;a href=&#34;http://www.vanleer.org.il/en&#34;&gt;Van Leer Jerusalem Institute&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
 
@@ -53,10 +53,10 @@
     
     <item>
       <title>Datasets</title>
-      <link>https://yonicd.netlify.com/page/datasets/</link>
+      <link>/page/datasets/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/page/datasets/</guid>
+      <guid>/page/datasets/</guid>
       <description>&lt;p&gt;This page includes source data used in blog posts and packages.&lt;/p&gt;
 
 &lt;p&gt;|Dataset|Object Type|Source|Description|
@@ -67,10 +67,10 @@
     
     <item>
       <title>GitHub Waffle Heatmap</title>
-      <link>https://yonicd.netlify.com/page/gh_traffic/</link>
+      <link>/page/gh_traffic/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/page/gh_traffic/</guid>
+      <guid>/page/gh_traffic/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/gh_traffic_files/figure-html/plot-1.png?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;div id=&#34;how-we-got-this&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;How we got this:&lt;/h1&gt;
@@ -212,7 +212,7 @@ fetch_view_data &amp;lt;- function(repo, gh_pat){
 plot_traffic(x)
 
 dev.off()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://yonicd.netlify.com/page/gh_traffic_files/figure-html/plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/page/gh_traffic_files/figure-html/plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>
@@ -220,56 +220,51 @@ dev.off()&lt;/code&gt;&lt;/pre&gt;
     
     <item>
       <title>GitHub Waffle Heatmap</title>
-      <link>https://yonicd.netlify.com/page/gh_traffic/</link>
+      <link>/page/github_traffic/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/page/gh_traffic/</guid>
-      <description>
-
-&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/gh_traffic_files/figure-html/plot-1.png?raw=true&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&#34;how-we-got-this&#34;&gt;How we got this:&lt;/h1&gt;
-
-&lt;h2 id=&#34;load-libraries&#34;&gt;Load libraries&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(purrr)
+      <guid>/page/github_traffic/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/gh_traffic_files/figure-html/plot-1.png?raw=true&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;how-we-got-this&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;How we got this:&lt;/h1&gt;
+&lt;div id=&#34;load-libraries&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Load libraries&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(purrr)
 library(ggplot2)
 library(gh)
 library(tidyr)
-library(svglite)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;define-the-github-repos&#34;&gt;Define the GitHub repos&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;repos &amp;lt;- c(
-  &#39;yonicd/carbonate&#39;,
-  &#39;yonicd/noplyr&#39;,
-  &#39;yonicd/shinyHeatmaply&#39;,
-  &#39;yonicd/Elections&#39;,
-  &#39;yonicd/covrpage&#39;,
-  &#39;yonicd/rpdf&#39;,
-  &#39;yonicd/rsam&#39;,
-  &#39;yonicd/regexSelect&#39;,
-  &#39;yonicd/tidycheckUsage&#39;,
-  &#39;yonicd/ripe&#39;,
-  &#39;yonicd/lmmen&#39;,
-  &#39;metrumresearchgroup/ggedit&#39;,
-  &#39;metrumresearchgroup/sinew&#39;,
-  &#39;metrumresearchgroup/slickR&#39;,
-  &#39;metrumresearchgroup/d3Tree&#39;,
-  &#39;metrumresearchgroup/texPreview&#39;,
-  &#39;metrumresearchgroup/jsTree&#39;,
-  &#39;metrumresearchgroup/shinyCanvas&#39;,
-  &#39;metrumresearchgroup/vcs&#39;  
-)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;define-functions&#34;&gt;Define Functions&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;fetch_view_type &amp;lt;- function(owner,repo,type,gh_pat){
+library(svglite)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;define-the-github-repos&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Define the GitHub repos&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;repos &amp;lt;- c(
+  &amp;#39;yonicd/carbonate&amp;#39;,
+  &amp;#39;yonicd/noplyr&amp;#39;,
+  &amp;#39;yonicd/shinyHeatmaply&amp;#39;,
+  &amp;#39;yonicd/Elections&amp;#39;,
+  &amp;#39;yonicd/covrpage&amp;#39;,
+  &amp;#39;yonicd/rpdf&amp;#39;,
+  &amp;#39;yonicd/rsam&amp;#39;,
+  &amp;#39;yonicd/regexSelect&amp;#39;,
+  &amp;#39;yonicd/tidycheckUsage&amp;#39;,
+  &amp;#39;yonicd/ripe&amp;#39;,
+  &amp;#39;yonicd/lmmen&amp;#39;,
+  &amp;#39;metrumresearchgroup/ggedit&amp;#39;,
+  &amp;#39;metrumresearchgroup/sinew&amp;#39;,
+  &amp;#39;metrumresearchgroup/slickR&amp;#39;,
+  &amp;#39;metrumresearchgroup/d3Tree&amp;#39;,
+  &amp;#39;metrumresearchgroup/texPreview&amp;#39;,
+  &amp;#39;metrumresearchgroup/jsTree&amp;#39;,
+  &amp;#39;metrumresearchgroup/shinyCanvas&amp;#39;,
+  &amp;#39;metrumresearchgroup/vcs&amp;#39;  
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;define-functions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Define Functions&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fetch_view_type &amp;lt;- function(owner,repo,type,gh_pat){
   
   this_dat &amp;lt;- gh::gh(
-                &#39;/repos/:owner/:repo/traffic/:type&#39;,
+                &amp;#39;/repos/:owner/:repo/traffic/:type&amp;#39;,
                 owner  = owner,
                 repo   = repo,
                 type   = type,
@@ -283,7 +278,7 @@ library(svglite)
     purrr::transpose()%&amp;gt;%
     dplyr::as_tibble()%&amp;gt;%
     dplyr::mutate(
-      timestamp = as.Date(gsub(&#39;T(.*?)$&#39;,&#39;&#39;,purrr::flatten_chr(timestamp))),
+      timestamp = as.Date(gsub(&amp;#39;T(.*?)$&amp;#39;,&amp;#39;&amp;#39;,purrr::flatten_chr(timestamp))),
       count  = purrr::flatten_dbl(count),
       uniques  = purrr::flatten_dbl(uniques),
       repo = repo
@@ -294,7 +289,7 @@ library(svglite)
 
 fetch_view_data &amp;lt;- function(repo, gh_pat){
   
-  types &amp;lt;- dplyr::data_frame(type = c(&#39;views&#39;,&#39;clones&#39;))
+  types &amp;lt;- dplyr::data_frame(type = c(&amp;#39;views&amp;#39;,&amp;#39;clones&amp;#39;))
 
   ret &amp;lt;- purrr::map_df(
     types$type,
@@ -302,35 +297,33 @@ fetch_view_data &amp;lt;- function(repo, gh_pat){
     gh_pat = gh_pat,
     owner  = dirname(repo),
     repo   = basename(repo),
-    .id    = &#39;type&#39;
+    .id    = &amp;#39;type&amp;#39;
     )%&amp;gt;%
     dplyr::mutate(
       type = dplyr::case_when(
-        type==1~&#39;views&#39;,
-        type==2~&#39;clones&#39;
+        type==1~&amp;#39;views&amp;#39;,
+        type==2~&amp;#39;clones&amp;#39;
         )
     )
 
   return(ret)
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;run-the-function&#34;&gt;Run the function&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;x &amp;lt;- repos%&amp;gt;%
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;run-the-function&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Run the function&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- repos%&amp;gt;%
   purrr::map_df(
     fetch_view_data, 
-    gh_pat = Sys.getenv(&#39;GITHUB_PAT&#39;)
-  )
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;waffle-heatmap&#34;&gt;Waffle heatmap&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;plot_traffic &amp;lt;- function(dat){
+    gh_pat = Sys.getenv(&amp;#39;GITHUB_PAT&amp;#39;)
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;waffle-heatmap&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Waffle heatmap&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_traffic &amp;lt;- function(dat){
   dat %&amp;gt;%
     tidyr::gather(
-      key   = &#39;stat&#39;,
-      value = &#39;value&#39;,
+      key   = &amp;#39;stat&amp;#39;,
+      value = &amp;#39;value&amp;#39;,
       count,
       uniques
       )%&amp;gt;%
@@ -342,14 +335,14 @@ fetch_view_data &amp;lt;- function(repo, gh_pat){
         )
       ) +
     ggplot2::geom_tile(
-      colour = &#39;white&#39;,
+      colour = &amp;#39;white&amp;#39;,
       width  = 0.95,
       alpha  = 0.75) +
     ggplot2::geom_hline(
       yintercept = c(0,(1:length(unique(dat$repo))) + 0.5),
-      colour     = &#39;grey90&#39;) +
+      colour     = &amp;#39;grey90&amp;#39;) +
     viridis::scale_fill_viridis(
-      name      = &#39;Count&#39;,
+      name      = &amp;#39;Count&amp;#39;,
       direction = -1
       ) +
     ggplot2::facet_grid( . ~ stat ) +
@@ -360,31 +353,30 @@ fetch_view_data &amp;lt;- function(repo, gh_pat){
       panel.grid.minor  = ggplot2::element_blank(),
       axis.title        = ggplot2::element_blank()
       )
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;save-to-disk&#34;&gt;Save to disk&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;svglite::svglite(
-  file.path(getwd(),&#39;public/img/github_traffic.svg&#39;),
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;save-to-disk&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Save to disk&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;svglite::svglite(
+  file.path(getwd(),&amp;#39;public/img/github_traffic.svg&amp;#39;),
   standalone = TRUE
   )
   
 plot_traffic(x)
 
-dev.off()
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;gh_traffic_files/figure-html/plot-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+dev.off()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/page/github_traffic_files/figure-html/plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 </description>
     </item>
     
     <item>
       <title>Projects</title>
-      <link>https://yonicd.netlify.com/page/projects/</link>
+      <link>/page/projects/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/page/projects/</guid>
+      <guid>/page/projects/</guid>
       <description>&lt;p&gt;This is a list of R packages that have been published on CRAN and/or are still being developed on Github. Many of the projects are part of &lt;a href=&#34;https://www.metrumrg.com/try-open-source-tools/&#34;&gt;open tools&lt;/a&gt; developed at Metrum Research Group.&lt;/p&gt;
 
 &lt;!-- https://img.shields.io/badge/METRUM-opentools-brightgreen.svg?link=https://www.metrumrg.com/&amp;link=https://www.metrumrg.com/open-science/ --&gt;
@@ -494,10 +486,10 @@ dev.off()
     
     <item>
       <title>Projects</title>
-      <link>https://yonicd.netlify.com/page/projects.utf8/</link>
+      <link>/page/projects.utf8/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>https://yonicd.netlify.com/page/projects.utf8/</guid>
+      <guid>/page/projects.utf8/</guid>
       <description>&lt;p&gt;This is a list of R packages that have been published on CRAN and/or are still being developed on Github. Many of the projects are part of &lt;a href=&#34;https://www.metrumrg.com/try-open-source-tools/&#34;&gt;open tools&lt;/a&gt; developed at Metrum Research Group.&lt;/p&gt;
 
 &lt;!-- https://img.shields.io/badge/METRUM-opentools-brightgreen.svg?link=https://www.metrumrg.com/&amp;link=https://www.metrumrg.com/open-science/ --&gt;
