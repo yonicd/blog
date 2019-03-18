@@ -11,6 +11,7 @@ HTMLWidgets.widget({
     return {
 
       renderValue: function(x) {
+        
             function buildDiv(obj,objType,cl,link,width,height){
               var len = obj.length,i = 0;
 							var mainDiv = document.createElement("div");
@@ -64,11 +65,17 @@ HTMLWidgets.widget({
               return mainDiv;
             }
 
-        if(x[0].obj){
+        //if(x[0].obj){
                for(j=0;j<x.length;j++){
-                  if(x[j].dotObj) var dotObj=x[j].dotObj;
+                 
+                  if(x[j].dotObj){
+                    
+                    var dotObj=x[j].dotObj;
+                    
+                  } 
+                  
                   $("."+x[j].divName).detach();
-
+                  
                   buildDiv(
                     x[j].obj,
                     x[j].divType,
@@ -77,35 +84,66 @@ HTMLWidgets.widget({
                     x[j].padding,
                     height+'px');
                   
-                  $("."+x[j].divName).slick(x[j].slickOpts);
-               
                   thisDiv = $("."+x[j].divName);
-
-                    $("."+x[j].divName).on('click','.slick-slide', function(e){
-
-                      centerIdx = ($('.slick-slider').slick('slickCurrentSlide') + 1 );
-                      clickIdx = ($(this).data('slickIndex') + 1 );
-                      totIdx = $('.slick-slider').slick("getSlick").slideCount;
-                      
-                      absclickIdx = clickIdx;
-                      
-                      //Reset the clicked index from relative to absolute
-                      if( clickIdx > totIdx) absclickIdx = clickIdx - totIdx;
-                      if( clickIdx < 1 ) absclickIdx = totIdx + clickIdx;
-
-                      if(typeof(Shiny) !== "undefined"){
-                        Shiny.onInputChange(el.id + "_current",{
-                          ".clicked": absclickIdx,
-                          ".relative_clicked": clickIdx,
-                          ".center": centerIdx,
-                          ".total": totIdx,
-                          ".slider_index": $(thisDiv).attr('class').split(' ')[0]
-                        });
-                      }
-                    });
+                  
+                  thisDiv.slick(x[j].slickOpts);
+                  
+                  if(typeof(Shiny) !== "undefined"){
+                    toshiny(thisDiv);
+                  }
                   
                 }
-            }
+                
+                function toshiny(thisDiv){
+                  toshiny_arrow(thisDiv);
+                  toshiny_slider(thisDiv);
+                }
+                
+               function toshiny_arrow(thisDiv){
+                  thisDiv.on("afterChange",function(event, slick, currentSlide, nextSlide){
+                    
+                        totIdx    = thisDiv.slick("getSlick").slideCount;
+                        centerIdx = thisDiv.slick('slickCurrentSlide') + 1 ;
+                        sliderId  = $(thisDiv).attr('class').split(' ')[0];
+                        
+                        Shiny.onInputChange(el.id + "_current",{
+
+                            ".center"  : centerIdx,
+                            ".total"   : totIdx,
+                            ".slider"  : sliderId
+                            
+                        });
+                        
+                  });
+                }
+                
+                function toshiny_slider(thisDiv){
+                  
+                      thisDiv.on('click','.slick-slide', function(e){
+                        centerIdx = thisDiv.slick('slickCurrentSlide') + 1 ;
+                        clickIdx  = $(this).data('slickIndex') + 1 ;
+                        totIdx    = thisDiv.slick("getSlick").slideCount;
+                        
+                        absclickIdx = clickIdx;
+                        sliderId  = $(thisDiv).attr('class').split(' ')[0];
+                        
+                        //Reset the clicked index from relative to absolute
+                        if( clickIdx > totIdx) absclickIdx = clickIdx - totIdx;
+                        if( clickIdx < 1 ) absclickIdx = totIdx + clickIdx;
+  
+                        Shiny.onInputChange(el.id + "_current",{
+                            ".center"           : centerIdx,
+                            ".total"            : totIdx,
+                            ".slider"           : sliderId,
+                            
+                            ".clicked"          : absclickIdx,
+                            ".relative_clicked" : clickIdx
+                        });
+                        
+                    });
+                }
+                
+            //}
             
   
 

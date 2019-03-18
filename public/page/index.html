@@ -308,6 +308,27 @@ if (!doNotTrack) {
             </article>
           
             <article class="post-preview">
+              <a href="/page/github_traffic/">
+                <h2 class="post-title">GitHub Waffle Heatmap</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                Posted on January 1, 0001
+              </p>
+              <div class="post-entry">
+                
+                  How we got this: Load libraries library(purrr) library(ggplot2) library(gh) library(tidyr) library(svglite)  Define the GitHub repos repos &lt;- c( 'yonicd/carbonate', 'yonicd/noplyr', 'yonicd/shinyHeatmaply', 'yonicd/Elections', 'yonicd/covrpage', 'yonicd/rpdf', 'yonicd/rsam', 'yonicd/regexSelect', 'yonicd/tidycheckUsage', 'yonicd/ripe', 'yonicd/lmmen', 'metrumresearchgroup/ggedit', 'metrumresearchgroup/sinew', 'metrumresearchgroup/slickR', 'metrumresearchgroup/d3Tree', 'metrumresearchgroup/texPreview', 'metrumresearchgroup/jsTree', 'metrumresearchgroup/shinyCanvas', 'metrumresearchgroup/vcs' )  Define Functions fetch_view_type &lt;- function(owner,repo,type,gh_pat){ this_dat &lt;- gh::gh( '/repos/:owner/:repo/traffic/:type', owner = owner, repo = repo, type = type, .token = gh_pat) if(length(this_dat[[type]])==0) return(NULL) ret &lt;- this_dat[[type]]%&gt;% purrr::transpose()%&gt;% dplyr::as_tibble()%&gt;% dplyr::mutate( timestamp = as.
+                  <a href="/page/github_traffic/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+
+            </article>
+          
+            <article class="post-preview">
               <a href="/page/projects/">
                 <h2 class="post-title">Projects</h2>
 

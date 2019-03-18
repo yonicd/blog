@@ -26,7 +26,7 @@
 &lt;li&gt;&lt;p&gt;PhD in Statistics (2018)&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Disseration: Research of Signal Process Classification and Monitoring in a High Dimension Setting.&lt;/li&gt;
+&lt;li&gt;Disseration: &lt;a href=&#34;../Dissertation.pdf&#34;&gt;Research of Signal Process Classification and Monitoring in a High Dimension Setting&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;Advisor: Prof. &lt;a href=&#34;http://www-personal.umich.edu/~yritov/jr.html&#34;&gt;Ya&amp;rsquo;acov Ritov&lt;/a&gt;
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
@@ -224,7 +224,7 @@ dev.off()&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/page/github_traffic/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/gh_traffic_files/figure-html/plot-1.png?raw=true&#34; /&gt;&lt;/p&gt;
+      <description>&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/github_traffic_files/figure-html/plot-1.png?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;div id=&#34;how-we-got-this&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;How we got this:&lt;/h1&gt;
 &lt;div id=&#34;load-libraries&#34; class=&#34;section level2&#34;&gt;
@@ -368,6 +368,167 @@ dev.off()&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/page/github_traffic_files/figure-html/plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>GitHub Waffle Heatmap</title>
+      <link>/page/github_traffic/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>/page/github_traffic/</guid>
+      <description>
+
+&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/github_traffic_files/figure-html/plot-1.png?raw=true&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;how-we-got-this&#34;&gt;How we got this:&lt;/h1&gt;
+
+&lt;h2 id=&#34;load-libraries&#34;&gt;Load libraries&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(purrr)
+library(ggplot2)
+library(gh)
+library(tidyr)
+library(svglite)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;define-the-github-repos&#34;&gt;Define the GitHub repos&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;repos &amp;lt;- c(
+  &#39;yonicd/carbonate&#39;,
+  &#39;yonicd/noplyr&#39;,
+  &#39;yonicd/shinyHeatmaply&#39;,
+  &#39;yonicd/Elections&#39;,
+  &#39;yonicd/covrpage&#39;,
+  &#39;yonicd/rpdf&#39;,
+  &#39;yonicd/rsam&#39;,
+  &#39;yonicd/regexSelect&#39;,
+  &#39;yonicd/tidycheckUsage&#39;,
+  &#39;yonicd/ripe&#39;,
+  &#39;yonicd/lmmen&#39;,
+  &#39;metrumresearchgroup/ggedit&#39;,
+  &#39;metrumresearchgroup/sinew&#39;,
+  &#39;metrumresearchgroup/slickR&#39;,
+  &#39;metrumresearchgroup/d3Tree&#39;,
+  &#39;metrumresearchgroup/texPreview&#39;,
+  &#39;metrumresearchgroup/jsTree&#39;,
+  &#39;metrumresearchgroup/shinyCanvas&#39;,
+  &#39;metrumresearchgroup/vcs&#39;  
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;define-functions&#34;&gt;Define Functions&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;fetch_view_type &amp;lt;- function(owner,repo,type,gh_pat){
+  
+  this_dat &amp;lt;- gh::gh(
+                &#39;/repos/:owner/:repo/traffic/:type&#39;,
+                owner  = owner,
+                repo   = repo,
+                type   = type,
+                .token = gh_pat)
+  
+  
+  if(length(this_dat[[type]])==0)
+    return(NULL)
+  
+  ret &amp;lt;- this_dat[[type]]%&amp;gt;%
+    purrr::transpose()%&amp;gt;%
+    dplyr::as_tibble()%&amp;gt;%
+    dplyr::mutate(
+      timestamp = as.Date(gsub(&#39;T(.*?)$&#39;,&#39;&#39;,purrr::flatten_chr(timestamp))),
+      count  = purrr::flatten_dbl(count),
+      uniques  = purrr::flatten_dbl(uniques),
+      repo = repo
+    )
+  
+  ret
+}
+
+fetch_view_data &amp;lt;- function(repo, gh_pat){
+  
+  types &amp;lt;- dplyr::data_frame(type = c(&#39;views&#39;,&#39;clones&#39;))
+
+  ret &amp;lt;- purrr::map_df(
+    types$type,
+    fetch_view_type,
+    gh_pat = gh_pat,
+    owner  = dirname(repo),
+    repo   = basename(repo),
+    .id    = &#39;type&#39;
+    )%&amp;gt;%
+    dplyr::mutate(
+      type = dplyr::case_when(
+        type==1~&#39;views&#39;,
+        type==2~&#39;clones&#39;
+        )
+    )
+
+  return(ret)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;run-the-function&#34;&gt;Run the function&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;x &amp;lt;- repos%&amp;gt;%
+  purrr::map_df(
+    fetch_view_data, 
+    gh_pat = Sys.getenv(&#39;GITHUB_PAT&#39;)
+  )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;waffle-heatmap&#34;&gt;Waffle heatmap&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;plot_traffic &amp;lt;- function(dat){
+  dat %&amp;gt;%
+    tidyr::gather(
+      key   = &#39;stat&#39;,
+      value = &#39;value&#39;,
+      count,
+      uniques
+      )%&amp;gt;%
+    ggplot2::ggplot(
+      ggplot2::aes(
+        x    = timestamp,
+        y    = repo,
+        fill = value
+        )
+      ) +
+    ggplot2::geom_tile(
+      colour = &#39;white&#39;,
+      width  = 0.95,
+      alpha  = 0.75) +
+    ggplot2::geom_hline(
+      yintercept = c(0,(1:length(unique(dat$repo))) + 0.5),
+      colour     = &#39;grey90&#39;) +
+    viridis::scale_fill_viridis(
+      name      = &#39;Count&#39;,
+      direction = -1
+      ) +
+    ggplot2::facet_grid( . ~ stat ) +
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      panel.grid.major  = ggplot2::element_blank(),
+      axis.text.x       = ggplot2::element_text(angle=90),
+      panel.grid.minor  = ggplot2::element_blank(),
+      axis.title        = ggplot2::element_blank()
+      )
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;save-to-disk&#34;&gt;Save to disk&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;svglite::svglite(
+  file.path(getwd(),&#39;public/img/github_traffic.svg&#39;),
+  standalone = TRUE
+  )
+  
+plot_traffic(x)
+
+dev.off()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;github_traffic_files/figure-html/plot-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
 </description>
     </item>
     

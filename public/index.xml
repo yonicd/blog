@@ -44,7 +44,7 @@ install.packages(&amp;#39;carbonate&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$code&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;Package: carbonate&amp;quot;                                                                                 
 ##  [2] &amp;quot;Title: Interact with &amp;#39;carbon.js&amp;#39;&amp;quot;                                                                   
-##  [3] &amp;quot;Version: 0.1.0&amp;quot;                                                                                     
+##  [3] &amp;quot;Version: 0.1.2&amp;quot;                                                                                     
 ##  [4] &amp;quot;Authors@R: person(given  = \&amp;quot;Jonathan\&amp;quot;,&amp;quot;                                                           
 ##  [5] &amp;quot;                 family  = \&amp;quot;Sidi\&amp;quot;,&amp;quot;                                                               
 ##  [6] &amp;quot;                 email   = \&amp;quot;yonicd@gmail.com\&amp;quot;,&amp;quot;                                                   
@@ -55,7 +55,7 @@ install.packages(&amp;#39;carbonate&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 ## [11] &amp;quot;License: MIT + file LICENSE&amp;quot;                                                                        
 ## [12] &amp;quot;Encoding: UTF-8&amp;quot;                                                                                    
 ## [13] &amp;quot;LazyData: true&amp;quot;                                                                                     
-## [14] &amp;quot;RoxygenNote: 6.1.0&amp;quot;                                                                                 
+## [14] &amp;quot;RoxygenNote: 6.1.1&amp;quot;                                                                                 
 ## [15] &amp;quot;Imports: R6, clipr, magick, wdman, RSelenium, utils, httr, rtweet, yaml&amp;quot;                            
 ## [16] &amp;quot;Suggests: testthat, covr, knitr, rmarkdown&amp;quot;                                                         
 ## [17] &amp;quot;URL: https://github.com/yonicd/carbonate&amp;quot;                                                           
@@ -64,11 +64,11 @@ install.packages(&amp;#39;carbonate&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 ## [20] &amp;quot;VignetteBuilder: knitr&amp;quot;                                                                             
 ## [21] &amp;quot;Author: Jonathan Sidi [aut, cre] (&amp;lt;https://orcid.org/0000-0002-4222-1819&amp;gt;)&amp;quot;                         
 ## [22] &amp;quot;Maintainer: Jonathan Sidi &amp;lt;yonicd@gmail.com&amp;gt;&amp;quot;                                                       
-## [23] &amp;quot;Built: R 3.5.1; ; 2018-10-28 15:50:25 UTC; unix&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+## [23] &amp;quot;Built: R 3.5.1; ; 2019-02-13 01:22:25 UTC; unix&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The main job of the package is to convert all the options set by the user into a URI that is sent to the carbon url page, where it is processed.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$uri()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;https://carbon.now.sh/?bg=rgba(171%2C175%2C195%2C0.7)&amp;amp;t=panda-syntax&amp;amp;wt=none&amp;amp;l=r&amp;amp;ds=true&amp;amp;dsyoff=20px&amp;amp;dsblur=68px&amp;amp;wc=true&amp;amp;wa=true&amp;amp;pv=11px&amp;amp;ph=14px&amp;amp;ln=false&amp;amp;fm=Fira%20Code&amp;amp;fs=14px&amp;amp;lh=133%25&amp;amp;si=false&amp;amp;es=1x&amp;amp;wm=false&amp;amp;ts=false&amp;amp;code=Package%253A%2520carbonate%250ATitle%253A%2520Interact%2520with%2520%27carbon.js%27%250AVersion%253A%25200.1.0%250AAuthors%2540R%253A%2520person(given%2520%2520%253D%2520%2522Jonathan%2522%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520family%2520%2520%253D%2520%2522Sidi%2522%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520email%2520%2520%2520%253D%2520%2522yonicd%2540gmail.com%2522%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520role%2520%2520%2520%2520%253D%2520c(%2522aut%2522%252C%2520%2522cre%2522)%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520comment%2520%253D%2520c(ORCID%2520%253D%2520%25220000-0002-4222-1819%2522))%250ADescription%253A%2520Create%2520beautiful%2520images%2520of%2520source%2520code%2520using%2520%27carbon.js%27%253Chttps%253A%252F%252Fcarbon.now.sh%252Fabout%253E.%250ADepends%253A%2520R%2520(%253E%253D%25203.2.0)%250ALicense%253A%2520MIT%2520%252B%2520file%2520LICENSE%250AEncoding%253A%2520UTF-8%250ALazyData%253A%2520true%250ARoxygenNote%253A%25206.1.0%250AImports%253A%2520R6%252C%2520clipr%252C%2520magick%252C%2520wdman%252C%2520RSelenium%252C%2520utils%252C%2520httr%252C%2520rtweet%252C%2520yaml%250ASuggests%253A%2520testthat%252C%2520covr%252C%2520knitr%252C%2520rmarkdown%250AURL%253A%2520https%253A%252F%252Fgithub.com%252Fyonicd%252Fcarbonate%250ABugReports%253A%2520https%253A%252F%252Fgithub.com%252Fyonicd%252Fcarbonate%252Fissues%250ARoxygen%253A%2520list(markdown%2520%253D%2520TRUE)%250AVignetteBuilder%253A%2520knitr%250AAuthor%253A%2520Jonathan%2520Sidi%2520%255Baut%252C%2520cre%255D%2520(%253Chttps%253A%252F%252Forcid.org%252F0000-0002-4222-1819%253E)%250AMaintainer%253A%2520Jonathan%2520Sidi%2520%253Cyonicd%2540gmail.com%253E%250ABuilt%253A%2520R%25203.5.1;%2520;%25202018-10-28%252015%253A50%253A25%2520UTC;%2520unix&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Click the &lt;a href=&#34;https://carbon.now.sh/?bg=rgba(171%2C175%2C195%2C0.7)&amp;amp;t=panda-syntax&amp;amp;wt=none&amp;amp;l=r&amp;amp;ds=true&amp;amp;dsyoff=20px&amp;amp;dsblur=68px&amp;amp;wc=true&amp;amp;wa=true&amp;amp;pv=11px&amp;amp;ph=14px&amp;amp;ln=false&amp;amp;fm=Fira%20Code&amp;amp;fs=14px&amp;amp;lh=133%25&amp;amp;si=false&amp;amp;es=1x&amp;amp;wm=false&amp;amp;ts=false&amp;amp;code=Package%253A%2520carbonate%250ATitle%253A%2520Interact%2520with%2520%27carbon.js%27%250AVersion%253A%25200.1.0%250AAuthors%2540R%253A%2520person(given%2520%2520%253D%2520%2522Jonathan%2522%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520family%2520%2520%253D%2520%2522Sidi%2522%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520email%2520%2520%2520%253D%2520%2522yonicd%2540gmail.com%2522%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520role%2520%2520%2520%2520%253D%2520c(%2522aut%2522%252C%2520%2522cre%2522)%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520comment%2520%253D%2520c(ORCID%2520%253D%2520%25220000-0002-4222-1819%2522))%250ADescription%253A%2520Create%2520beautiful%2520images%2520of%2520source%2520code%2520using%2520%27carbon.js%27%253Chttps%253A%252F%252Fcarbon.now.sh%252Fabout%253E.%250ADepends%253A%2520R%2520(%253E%253D%25203.2.0)%250ALicense%253A%2520MIT%2520%252B%2520file%2520LICENSE%250AEncoding%253A%2520UTF-8%250ALazyData%253A%2520true%250ARoxygenNote%253A%25206.1.0%250AImports%253A%2520R6%252C%2520clipr%252C%2520magick%252C%2520wdman%252C%2520RSelenium%252C%2520utils%252C%2520httr%252C%2520rtweet%252C%2520yaml%250ASuggests%253A%2520testthat%252C%2520covr%252C%2520knitr%252C%2520rmarkdown%250AURL%253A%2520https%253A%252F%252Fgithub.com%252Fyonicd%252Fcarbonate%250ABugReports%253A%2520https%253A%252F%252Fgithub.com%252Fyonicd%252Fcarbonate%252Fissues%250ARoxygen%253A%2520list(markdown%2520%253D%2520TRUE)%250AVignetteBuilder%253A%2520knitr%250AAuthor%253A%2520Jonathan%2520Sidi%2520%255Baut%252C%2520cre%255D%2520(%253Chttps%253A%252F%252Forcid.org%252F0000-0002-4222-1819%253E)%250AMaintainer%253A%2520Jonathan%2520Sidi%2520%253Cyonicd%2540gmail.com%253E%250ABuilt%253A%2520R%25203.5.1;%2520;%25202018-10-28%252015%253A50%253A25%2520UTC;%2520unix&#34;&gt;link&lt;/a&gt; to see the URI works.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;https://carbon.now.sh/?bg=rgba(171%2C175%2C195%2C0.7)&amp;amp;t=panda-syntax&amp;amp;wt=none&amp;amp;l=r&amp;amp;ds=true&amp;amp;dsyoff=20px&amp;amp;dsblur=68px&amp;amp;wc=true&amp;amp;wa=true&amp;amp;pv=11px&amp;amp;ph=14px&amp;amp;ln=false&amp;amp;fm=Fira%20Code&amp;amp;fs=14px&amp;amp;lh=133%25&amp;amp;si=false&amp;amp;es=1x&amp;amp;wm=false&amp;amp;ts=false&amp;amp;code=Package%253A%2520carbonate%250ATitle%253A%2520Interact%2520with%2520%27carbon.js%27%250AVersion%253A%25200.1.2%250AAuthors%2540R%253A%2520person(given%2520%2520%253D%2520%2522Jonathan%2522%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520family%2520%2520%253D%2520%2522Sidi%2522%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520email%2520%2520%2520%253D%2520%2522yonicd%2540gmail.com%2522%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520role%2520%2520%2520%2520%253D%2520c(%2522aut%2522%252C%2520%2522cre%2522)%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520comment%2520%253D%2520c(ORCID%2520%253D%2520%25220000-0002-4222-1819%2522))%250ADescription%253A%2520Create%2520beautiful%2520images%2520of%2520source%2520code%2520using%2520%27carbon.js%27%253Chttps%253A%252F%252Fcarbon.now.sh%252Fabout%253E.%250ADepends%253A%2520R%2520(%253E%253D%25203.2.0)%250ALicense%253A%2520MIT%2520%252B%2520file%2520LICENSE%250AEncoding%253A%2520UTF-8%250ALazyData%253A%2520true%250ARoxygenNote%253A%25206.1.1%250AImports%253A%2520R6%252C%2520clipr%252C%2520magick%252C%2520wdman%252C%2520RSelenium%252C%2520utils%252C%2520httr%252C%2520rtweet%252C%2520yaml%250ASuggests%253A%2520testthat%252C%2520covr%252C%2520knitr%252C%2520rmarkdown%250AURL%253A%2520https%253A%252F%252Fgithub.com%252Fyonicd%252Fcarbonate%250ABugReports%253A%2520https%253A%252F%252Fgithub.com%252Fyonicd%252Fcarbonate%252Fissues%250ARoxygen%253A%2520list(markdown%2520%253D%2520TRUE)%250AVignetteBuilder%253A%2520knitr%250AAuthor%253A%2520Jonathan%2520Sidi%2520%255Baut%252C%2520cre%255D%2520(%253Chttps%253A%252F%252Forcid.org%252F0000-0002-4222-1819%253E)%250AMaintainer%253A%2520Jonathan%2520Sidi%2520%253Cyonicd%2540gmail.com%253E%250ABuilt%253A%2520R%25203.5.1;%2520;%25202019-02-13%252001%253A22%253A25%2520UTC;%2520unix&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Click the &lt;a href=&#34;https://carbon.now.sh/?bg=rgba(171%2C175%2C195%2C0.7)&amp;amp;t=panda-syntax&amp;amp;wt=none&amp;amp;l=r&amp;amp;ds=true&amp;amp;dsyoff=20px&amp;amp;dsblur=68px&amp;amp;wc=true&amp;amp;wa=true&amp;amp;pv=11px&amp;amp;ph=14px&amp;amp;ln=false&amp;amp;fm=Fira%20Code&amp;amp;fs=14px&amp;amp;lh=133%25&amp;amp;si=false&amp;amp;es=1x&amp;amp;wm=false&amp;amp;ts=false&amp;amp;code=Package%253A%2520carbonate%250ATitle%253A%2520Interact%2520with%2520%27carbon.js%27%250AVersion%253A%25200.1.2%250AAuthors%2540R%253A%2520person(given%2520%2520%253D%2520%2522Jonathan%2522%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520family%2520%2520%253D%2520%2522Sidi%2522%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520email%2520%2520%2520%253D%2520%2522yonicd%2540gmail.com%2522%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520role%2520%2520%2520%2520%253D%2520c(%2522aut%2522%252C%2520%2522cre%2522)%252C%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520comment%2520%253D%2520c(ORCID%2520%253D%2520%25220000-0002-4222-1819%2522))%250ADescription%253A%2520Create%2520beautiful%2520images%2520of%2520source%2520code%2520using%2520%27carbon.js%27%253Chttps%253A%252F%252Fcarbon.now.sh%252Fabout%253E.%250ADepends%253A%2520R%2520(%253E%253D%25203.2.0)%250ALicense%253A%2520MIT%2520%252B%2520file%2520LICENSE%250AEncoding%253A%2520UTF-8%250ALazyData%253A%2520true%250ARoxygenNote%253A%25206.1.1%250AImports%253A%2520R6%252C%2520clipr%252C%2520magick%252C%2520wdman%252C%2520RSelenium%252C%2520utils%252C%2520httr%252C%2520rtweet%252C%2520yaml%250ASuggests%253A%2520testthat%252C%2520covr%252C%2520knitr%252C%2520rmarkdown%250AURL%253A%2520https%253A%252F%252Fgithub.com%252Fyonicd%252Fcarbonate%250ABugReports%253A%2520https%253A%252F%252Fgithub.com%252Fyonicd%252Fcarbonate%252Fissues%250ARoxygen%253A%2520list(markdown%2520%253D%2520TRUE)%250AVignetteBuilder%253A%2520knitr%250AAuthor%253A%2520Jonathan%2520Sidi%2520%255Baut%252C%2520cre%255D%2520(%253Chttps%253A%252F%252Forcid.org%252F0000-0002-4222-1819%253E)%250AMaintainer%253A%2520Jonathan%2520Sidi%2520%253Cyonicd%2540gmail.com%253E%250ABuilt%253A%2520R%25203.5.1;%2520;%25202019-02-13%252001%253A22%253A25%2520UTC;%2520unix&#34;&gt;link&lt;/a&gt; to see the URI works.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;manipulate-the-carbon-object&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Manipulate the carbon object&lt;/h3&gt;
@@ -202,19 +202,19 @@ install.packages(&amp;#39;carbonate&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;default&#34; class=&#34;section level5&#34;&gt;
 &lt;h5&gt;Default&lt;/h5&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$carbonate(file = &amp;#39;myfile.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;449&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;changing-the-template&#34; class=&#34;section level5&#34;&gt;
 &lt;h5&gt;Changing the template&lt;/h5&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$template &amp;lt;-&amp;#39;cobalt&amp;#39;
 x$carbonate(file = &amp;#39;new_template.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;449&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;changing-the-font&#34; class=&#34;section level5&#34;&gt;
 &lt;h5&gt;Changing the font&lt;/h5&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$font_family &amp;lt;-&amp;#39;IBM Plex Mono&amp;#39;
 x$carbonate(file = &amp;#39;new_font.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;449&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -222,11 +222,11 @@ x$carbonate(file = &amp;#39;new_font.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;Sharing&lt;/h2&gt;
 &lt;div id=&#34;tinyurl&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Tinyurl&lt;/h3&gt;
-&lt;p&gt;You can also put a tinyurl link as a watermark on the image produced that will open to the &lt;a href=&#34;carbon.now.sh&#34; class=&#34;uri&#34;&gt;carbon.now.sh&lt;/a&gt; page that has the code in the image.&lt;/p&gt;
+&lt;p&gt;You can also put a tinyurl link as a watermark on the image produced that will open to the &lt;a href=&#34;carbon.now.sh&#34;&gt;carbon.now.sh&lt;/a&gt; page that has the code in the image.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$add_tinyurl &amp;lt;- TRUE
 x$carbonate(file = &amp;#39;tiny_url.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;By default the watermark is placed on the bottom left corner.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-15-1.png&#34; width=&#34;452&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-29-carbonate_files/figure-html/unnamed-chunk-15-1.png&#34; width=&#34;449&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;If you just want the tinyurl link without the image to use in a tweet you can create it using&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x$tiny()&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;## [1] &amp;quot;http://tinyurl.com/y7c64uyv&amp;quot;&lt;/code&gt;&lt;/pre&gt;
@@ -256,7 +256,7 @@ x$carbonate(file = &amp;#39;tiny_url.png&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;When &lt;code&gt;add_tinyurl &amp;lt;- TRUE&lt;/code&gt;
 &lt;ul&gt;
 &lt;li&gt;Created in R using the Carbonate 📦
-Check out this script at 🔗 &lt;a href=&#34;http://tinyurl.com/yavh2yux&#34; class=&#34;uri&#34;&gt;http://tinyurl.com/yavh2yux&lt;/a&gt;&lt;/li&gt;
+Check out this script at 🔗 &lt;a href=&#34;http://tinyurl.com/y4nhdz8u&#34; class=&#34;uri&#34;&gt;http://tinyurl.com/y4nhdz8u&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;Manual
 &lt;ul&gt;
@@ -346,20 +346,20 @@ rsam()&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;retrieve-summary-of-installed-addins&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Retrieve Summary of Installed Addins&lt;/h4&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dplyr::as_tibble(fetch_addins())&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 58 x 8
-##    Package  Name  Description  Binding Interactive Key   libpath  Shortcut
-##    &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;        &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;   
-##  1 blogdown Serv… &amp;quot;Run blogdo… serve_… true        blog… /Users/… &amp;lt;NA&amp;gt;    
-##  2 blogdown New … Create a ne… new_po… true        blog… /Users/… &amp;lt;NA&amp;gt;    
-##  3 blogdown Upda… &amp;quot;Update the… update… true        blog… /Users/… &amp;lt;NA&amp;gt;    
-##  4 blogdown Inse… Insert an e… insert… true        blog… /Users/… &amp;lt;NA&amp;gt;    
-##  5 blogdown Touc… &amp;quot;Change the… touch_… false       blog… /Users/… &amp;lt;NA&amp;gt;    
-##  6 blogdown Quot… &amp;quot;Add &amp;gt; to t… quote_… false       blog… /Users/… &amp;lt;NA&amp;gt;    
-##  7 bookdown Prev… Run bookdow… serve_… true        book… /Users/… &amp;lt;NA&amp;gt;    
-##  8 bookdown Inpu… Input math … mathqu… true        book… /Users/… &amp;lt;NA&amp;gt;    
-##  9 clipr    Valu… &amp;quot;Copies the… clipr_… false       clip… /Users/… &amp;lt;NA&amp;gt;    
-## 10 clipr    Outp… &amp;quot;Copies the… clipr_… false       clip… /Users/… &amp;lt;NA&amp;gt;    
-## # ... with 48 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 77 x 8
+##    Package  Name   Description  Binding Interactive Key   libpath  Shortcut
+##    &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;        &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;   
+##  1 blogdown Serve… &amp;quot;Run blogdo… serve_… true        blog… /Users/… &amp;lt;NA&amp;gt;    
+##  2 blogdown New P… Create a ne… new_po… true        blog… /Users/… &amp;lt;NA&amp;gt;    
+##  3 blogdown Updat… &amp;quot;Update the… update… true        blog… /Users/… &amp;lt;NA&amp;gt;    
+##  4 blogdown Inser… Insert an e… insert… true        blog… /Users/… &amp;lt;NA&amp;gt;    
+##  5 blogdown Touch… &amp;quot;Change the… touch_… false       blog… /Users/… &amp;lt;NA&amp;gt;    
+##  6 blogdown Quote… &amp;quot;Add &amp;gt; to t… quote_… false       blog… /Users/… &amp;lt;NA&amp;gt;    
+##  7 bookdown Previ… Run bookdow… serve_… true        book… /Users/… &amp;lt;NA&amp;gt;    
+##  8 bookdown Input… Input math … mathqu… true        book… /Users/… &amp;lt;NA&amp;gt;    
+##  9 citr     Inser… Inserts Mar… insert… true        citr… /Users/… &amp;lt;NA&amp;gt;    
+## 10 clipr    Value… &amp;quot;Copies the… clipr_… false       clip… /Users/… &amp;lt;NA&amp;gt;    
+## # … with 67 more rows&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;toggle-addins-onoff&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Toggle Addins on/off&lt;/h4&gt;
@@ -495,8 +495,29 @@ net_flow &amp;lt;- calc(side = &amp;#39;from&amp;#39;)%&amp;gt;%
   mutate(net=state_sum_from-state_sum_to,
          ratio_net=ratio_from-ratio_to)%&amp;gt;%
   arrange(desc(ratio_net))
+## Warning: group_by_() is deprecated. 
+## Please use group_by() instead
+## 
+## The &amp;#39;programming&amp;#39; vignette or the tidyeval book can help you
+## to program with group_by() : https://tidyeval.tidyverse.org
+## This warning is displayed once per session.
+## Warning: rename_() is deprecated. 
+## Please use rename() instead
+## 
+## The &amp;#39;programming&amp;#39; vignette or the tidyeval book can help you
+## to program with rename() : https://tidyeval.tidyverse.org
+## This warning is displayed once per session.
 
 network_dat &amp;lt;- net_dat(gun_mat)
+## Warning: funs() is soft deprecated as of dplyr 0.8.0
+## please use list() instead
+## 
+## # Before:
+## funs(name = f(.))
+## 
+## # After: 
+## list(name = ~f(.))
+## This warning is displayed once per session.
 tot &amp;lt;- scatter_fun(gun_mat)
 tot &amp;lt;- tot%&amp;gt;%mutate(state=as.character(state))%&amp;gt;%left_join(gun_ranking,by=c(&amp;#39;year&amp;#39;,&amp;#39;state&amp;#39;))
 
@@ -2625,7 +2646,7 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
 &lt;li&gt;&lt;p&gt;PhD in Statistics (2018)&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Disseration: Research of Signal Process Classification and Monitoring in a High Dimension Setting.&lt;/li&gt;
+&lt;li&gt;Disseration: &lt;a href=&#34;../Dissertation.pdf&#34;&gt;Research of Signal Process Classification and Monitoring in a High Dimension Setting&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;Advisor: Prof. &lt;a href=&#34;http://www-personal.umich.edu/~yritov/jr.html&#34;&gt;Ya&amp;rsquo;acov Ritov&lt;/a&gt;
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
@@ -2823,7 +2844,7 @@ dev.off()&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <author>yonicd@gmail.com (Jonathan Sidi)</author>
       <guid>/page/github_traffic/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/gh_traffic_files/figure-html/plot-1.png?raw=true&#34; /&gt;&lt;/p&gt;
+      <description>&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/github_traffic_files/figure-html/plot-1.png?raw=true&#34; /&gt;&lt;/p&gt;
 &lt;div id=&#34;how-we-got-this&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;How we got this:&lt;/h1&gt;
 &lt;div id=&#34;load-libraries&#34; class=&#34;section level2&#34;&gt;
@@ -2971,6 +2992,167 @@ dev.off()&lt;/code&gt;&lt;/pre&gt;
     </item>
     
     <item>
+      <title>GitHub Waffle Heatmap</title>
+      <link>/page/github_traffic/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>/page/github_traffic/</guid>
+      <description>
+
+&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/github_traffic_files/figure-html/plot-1.png?raw=true&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;how-we-got-this&#34;&gt;How we got this:&lt;/h1&gt;
+
+&lt;h2 id=&#34;load-libraries&#34;&gt;Load libraries&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(purrr)
+library(ggplot2)
+library(gh)
+library(tidyr)
+library(svglite)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;define-the-github-repos&#34;&gt;Define the GitHub repos&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;repos &amp;lt;- c(
+  &#39;yonicd/carbonate&#39;,
+  &#39;yonicd/noplyr&#39;,
+  &#39;yonicd/shinyHeatmaply&#39;,
+  &#39;yonicd/Elections&#39;,
+  &#39;yonicd/covrpage&#39;,
+  &#39;yonicd/rpdf&#39;,
+  &#39;yonicd/rsam&#39;,
+  &#39;yonicd/regexSelect&#39;,
+  &#39;yonicd/tidycheckUsage&#39;,
+  &#39;yonicd/ripe&#39;,
+  &#39;yonicd/lmmen&#39;,
+  &#39;metrumresearchgroup/ggedit&#39;,
+  &#39;metrumresearchgroup/sinew&#39;,
+  &#39;metrumresearchgroup/slickR&#39;,
+  &#39;metrumresearchgroup/d3Tree&#39;,
+  &#39;metrumresearchgroup/texPreview&#39;,
+  &#39;metrumresearchgroup/jsTree&#39;,
+  &#39;metrumresearchgroup/shinyCanvas&#39;,
+  &#39;metrumresearchgroup/vcs&#39;  
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;define-functions&#34;&gt;Define Functions&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;fetch_view_type &amp;lt;- function(owner,repo,type,gh_pat){
+  
+  this_dat &amp;lt;- gh::gh(
+                &#39;/repos/:owner/:repo/traffic/:type&#39;,
+                owner  = owner,
+                repo   = repo,
+                type   = type,
+                .token = gh_pat)
+  
+  
+  if(length(this_dat[[type]])==0)
+    return(NULL)
+  
+  ret &amp;lt;- this_dat[[type]]%&amp;gt;%
+    purrr::transpose()%&amp;gt;%
+    dplyr::as_tibble()%&amp;gt;%
+    dplyr::mutate(
+      timestamp = as.Date(gsub(&#39;T(.*?)$&#39;,&#39;&#39;,purrr::flatten_chr(timestamp))),
+      count  = purrr::flatten_dbl(count),
+      uniques  = purrr::flatten_dbl(uniques),
+      repo = repo
+    )
+  
+  ret
+}
+
+fetch_view_data &amp;lt;- function(repo, gh_pat){
+  
+  types &amp;lt;- dplyr::data_frame(type = c(&#39;views&#39;,&#39;clones&#39;))
+
+  ret &amp;lt;- purrr::map_df(
+    types$type,
+    fetch_view_type,
+    gh_pat = gh_pat,
+    owner  = dirname(repo),
+    repo   = basename(repo),
+    .id    = &#39;type&#39;
+    )%&amp;gt;%
+    dplyr::mutate(
+      type = dplyr::case_when(
+        type==1~&#39;views&#39;,
+        type==2~&#39;clones&#39;
+        )
+    )
+
+  return(ret)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;run-the-function&#34;&gt;Run the function&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;x &amp;lt;- repos%&amp;gt;%
+  purrr::map_df(
+    fetch_view_data, 
+    gh_pat = Sys.getenv(&#39;GITHUB_PAT&#39;)
+  )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;waffle-heatmap&#34;&gt;Waffle heatmap&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;plot_traffic &amp;lt;- function(dat){
+  dat %&amp;gt;%
+    tidyr::gather(
+      key   = &#39;stat&#39;,
+      value = &#39;value&#39;,
+      count,
+      uniques
+      )%&amp;gt;%
+    ggplot2::ggplot(
+      ggplot2::aes(
+        x    = timestamp,
+        y    = repo,
+        fill = value
+        )
+      ) +
+    ggplot2::geom_tile(
+      colour = &#39;white&#39;,
+      width  = 0.95,
+      alpha  = 0.75) +
+    ggplot2::geom_hline(
+      yintercept = c(0,(1:length(unique(dat$repo))) + 0.5),
+      colour     = &#39;grey90&#39;) +
+    viridis::scale_fill_viridis(
+      name      = &#39;Count&#39;,
+      direction = -1
+      ) +
+    ggplot2::facet_grid( . ~ stat ) +
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      panel.grid.major  = ggplot2::element_blank(),
+      axis.text.x       = ggplot2::element_text(angle=90),
+      panel.grid.minor  = ggplot2::element_blank(),
+      axis.title        = ggplot2::element_blank()
+      )
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;save-to-disk&#34;&gt;Save to disk&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;svglite::svglite(
+  file.path(getwd(),&#39;public/img/github_traffic.svg&#39;),
+  standalone = TRUE
+  )
+  
+plot_traffic(x)
+
+dev.off()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;github_traffic_files/figure-html/plot-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Projects</title>
       <link>/page/projects/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -3079,99 +3261,6 @@ dev.off()&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;Elections&lt;/strong&gt; : Real time tracker and analysis of 2016 USA Elections &lt;a href=&#34;https://github.com/yonicd/Elections&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;supermarketprices&lt;/strong&gt; : Read daily suprmarket data in all israel stores. &lt;a href=&#34;https://github.com/yonicd/supermarketprices&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Projects</title>
-      <link>/page/projects.utf8/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/projects.utf8/</guid>
-      <description>&lt;p&gt;This is a list of R packages that have been published on CRAN and/or are still being developed on Github. Many of the projects are part of &lt;a href=&#34;https://www.metrumrg.com/try-open-source-tools/&#34;&gt;open tools&lt;/a&gt; developed at Metrum Research Group.&lt;/p&gt;
-
-&lt;!-- https://img.shields.io/badge/METRUM-opentools-brightgreen.svg?link=https://www.metrumrg.com/&amp;link=https://www.metrumrg.com/open-science/ --&gt;
-
-&lt;p&gt;The icons at the end of each description show where the project is maintained and links are attached to each one to take you to the relevant page.&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&#34;center&#34;&gt;Metrum&lt;/th&gt;
-&lt;th align=&#34;center&#34;&gt;Github&lt;/th&gt;
-&lt;th align=&#34;center&#34;&gt;CRAN&lt;/th&gt;
-&lt;th align=&#34;center&#34;&gt;bl.ocks&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://github.com&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://cran.r-project.org/&#34;&gt;&lt;img src=&#34;https://img.shields.io/badge/CRAN--blue.svg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://bl.ocks.org/&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/d3js.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;(Not in any logical order, just what came to mind when I wrote this&amp;hellip;)&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Reproduciblity&lt;/em&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;carbonate&lt;/strong&gt; : Create beautiful images of source code using [carbon.js[(&lt;a href=&#34;https://carbon.now.sh/about).[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/carbonate)[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/carbonate?color=blue)](https://cran.r-project.org/package=carbonate)![downloads](https://cranlogs.r-pkg.org/badges/carbonate&#34;&gt;https://carbon.now.sh/about).[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/carbonate)[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/carbonate?color=blue)](https://cran.r-project.org/package=carbonate)![downloads](https://cranlogs.r-pkg.org/badges/carbonate&lt;/a&gt;)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;ggedit&lt;/strong&gt; : Interactively edit ggplot2 layer and theme aesthetics definitions.&lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/ggedit&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://cran.r-project.org/package=ggedit&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/ggedit?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt;&lt;img src=&#34;https://cranlogs.r-pkg.org/badges/ggedit&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;sinew&lt;/strong&gt; : Create roxygen2 skeleton populated with information scraped from the within the function script. Also creates field entries for imports in the DESCRIPTION and import in the NAMESPACE files. Can be run from the R console or through the RStudio addin menu. &lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/sinew&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://cran.r-project.org/package=sinew&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/sinew?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt;&lt;img src=&#34;https://cranlogs.r-pkg.org/badges/sinew&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;texPreview&lt;/strong&gt; : Compile and preview snippets of LaTeX. Can be used directly from the R console, from RStudio, in Shiny apps and R Markdown documents. Must have pdflatex or xelatex or lualatex in PATH. &lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/texPreview&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://cran.r-project.org/package=texPreview&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/texPreview?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt;&lt;img src=&#34;https://cranlogs.r-pkg.org/badges/texPreview&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;gdigest&lt;/strong&gt; : Wrapper for memoise that lets users cache R objects on a remote repository. Works for objects created in console and Shiny. This is meant for multiple users to share cache via a repository, and increase efficiency of shiny apps that have heavy simulations.&lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/yonicd/gdigest&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;vcs&lt;/strong&gt; : Managing, inspecting and sourcing remote repositories such as github, bitbucket and subversion.&lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/vcs&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;em&gt;Shiny Apps, Modules and Gadgets&lt;/em&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;regexSelect&lt;/strong&gt; : R package to enable regular expression searches within a shiny selectize object. &lt;a href=&#34;https://github.com/yonicd/regexSelect&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://cran.r-project.org/package=regexSelect&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/regexSelect?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt;&lt;img src=&#34;https://cranlogs.r-pkg.org/badges/regexSelect&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;shinyHeatmaply&lt;/strong&gt; : Access functionality of the &lt;a href=&#34;https://github.com/talgalili/heatmaply&#34;&gt;heatmaply&lt;/a&gt; package through Shiny application and Shiny gadget. &lt;a href=&#34;https://github.com/yonicd/shinyHeatmaply&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt; &lt;a href=&#34;https://cran.r-project.org/package=shinyHeatmaply&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/shinyHeatmaply?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt; &lt;img src=&#34;https://cranlogs.r-pkg.org/badges/shinyHeatmaply&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;em&gt;Htmlwidgets&lt;/em&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;slickR&lt;/strong&gt; : Create and customize interactive carousels using the Slick JavaScript library and the htmlwidgets package. The carousels can contain plots produced in R, images, iframes, videos and other htmlwidgets. These carousels can be used directly from the R console, from RStudio, in Shiny apps and R Markdown documents. &lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt; &lt;a href=&#34;https://github.com/metrumresearchgroup/slickR&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;
-&lt;a href=&#34;https://cran.r-project.org/package=slickR&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/slickR?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt; &lt;img src=&#34;https://cranlogs.r-pkg.org/badges/slickR&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;jsTree&lt;/strong&gt; : Create and customize interactive trees using the jQuery jsTree plugin library and the htmlwidgets package. These trees can be used directly from the R console, from RStudio, in Shiny apps and R Markdown documents.&lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/jsTree&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://cran.r-project.org/package=jsTree&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/jsTree?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt; &lt;img src=&#34;https://cranlogs.r-pkg.org/badges/jsTree&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;d3Tree&lt;/strong&gt; : Create and customize interactive collapsible D3 trees using the D3 JavaScript library and the htmlwidgets package. These trees can be used directly from the R console, from RStudio, in Shiny apps and R Markdown documents. When in Shiny the tree layout is observed by the server and can be used as a reactive filter of structured data. &lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/d3Tree&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://cran.r-project.org/package=d3Tree&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/d3Tree?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt;&lt;img src=&#34;https://cranlogs.r-pkg.org/badges/d3Tree&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;shinyCanvas&lt;/strong&gt; : Htmlwidget that binds a fork of &lt;a href=&#34;https://bl.ocks.org/mbostock/4342190&#34;&gt;Spline Editor&lt;/a&gt; by Mike Bostock to create an observable object in Shiny. &lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/shinyCanvas&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://bl.ocks.org/yonicd/4bc59fca901388ebe4905bdb19af1567&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/d3js.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;rpdf&lt;/strong&gt; : View PDFs from remote locations directly in R using the &lt;a href=&#34;https://mozilla.github.io/pdf.js/&#34;&gt;Mozilla pdf JavaScript library&lt;/a&gt; and the htmlwidgets package. The viewer can be called directly from the R console, from RStudio, in Shiny apps and R Markdown documents.&lt;a href=&#34;https://github.com/yonicd/rpdf&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;em&gt;Stats&lt;/em&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;lmmen&lt;/strong&gt; : R package that solves the linear mixed model elastic net. &lt;a href=&#34;https://github.com/yonicd/lmmen&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://cran.r-project.org/package=lmmen&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/lmmen?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt;&lt;img src=&#34;https://cranlogs.r-pkg.org/badges/lmmen&#34; alt=&#34;downloads&#34; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;em&gt;Random thoughts that weren&amp;rsquo;t packaged, but are still useful.&lt;/em&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Elections&lt;/strong&gt; : Real time tracker and analysis of 2016 USA Elections &lt;a href=&#34;https://github.com/yonicd/Elections&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;CIMDO&lt;/strong&gt; : Shiny Dashboard for the IMF CIMDO model. &lt;a href=&#34;https://github.com/yonicd/CIMDO&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;supermarketprices&lt;/strong&gt; : Read daily suprmarket data in all israel stores. &lt;a href=&#34;https://github.com/yonicd/supermarketprices&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;taseR&lt;/strong&gt; : API to read data from Tel Aviv Stock Exchange (TASE) website to R. &lt;a href=&#34;https://github.com/yonicd/taseR&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>

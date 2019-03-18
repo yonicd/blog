@@ -73,8 +73,29 @@ net_flow &lt;- calc(side = &#39;from&#39;)%&gt;%
   mutate(net=state_sum_from-state_sum_to,
          ratio_net=ratio_from-ratio_to)%&gt;%
   arrange(desc(ratio_net))
+## Warning: group_by_() is deprecated. 
+## Please use group_by() instead
+## 
+## The &#39;programming&#39; vignette or the tidyeval book can help you
+## to program with group_by() : https://tidyeval.tidyverse.org
+## This warning is displayed once per session.
+## Warning: rename_() is deprecated. 
+## Please use rename() instead
+## 
+## The &#39;programming&#39; vignette or the tidyeval book can help you
+## to program with rename() : https://tidyeval.tidyverse.org
+## This warning is displayed once per session.
 
 network_dat &lt;- net_dat(gun_mat)
+## Warning: funs() is soft deprecated as of dplyr 0.8.0
+## please use list() instead
+## 
+## # Before:
+## funs(name = f(.))
+## 
+## # After: 
+## list(name = ~f(.))
+## This warning is displayed once per session.
 tot &lt;- scatter_fun(gun_mat)
 tot &lt;- tot%&gt;%mutate(state=as.character(state))%&gt;%left_join(gun_ranking,by=c(&#39;year&#39;,&#39;state&#39;))
 

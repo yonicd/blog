@@ -9,7 +9,7 @@ comments: false
 - Education [Department of Statistics](http://en.stat.huji.ac.il/) at the [Hebrew University of Jerusalem](http://new.huji.ac.il/) (HUJI).
 
   - PhD in Statistics (2018)
-     - Disseration: Research of Signal Process Classification and Monitoring in a High Dimension Setting.
+     - Disseration: [Research of Signal Process Classification and Monitoring in a High Dimension Setting](../Dissertation.pdf).
      - Advisor: Prof. [Ya'acov Ritov](http://www-personal.umich.edu/~yritov/jr.html)
     
   - Masters Degree in Statistics (2011)

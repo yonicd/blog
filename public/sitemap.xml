@@ -135,6 +135,10 @@
   </url>
   
   <url>
+    <loc>/page/github_traffic/</loc>
+  </url>
+  
+  <url>
     <loc>/tags/healthcare/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
