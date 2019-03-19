@@ -7,10 +7,324 @@
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
-    <lastBuildDate>Mon, 29 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Mar 2019 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GitHub Waffle Heatmap</title>
+      <link>/page/github_traffic/</link>
+      <pubDate>Tue, 19 Mar 2019 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>/page/github_traffic/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/github_traffic_files/figure-html/plot-1.png?raw=true&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;how-we-got-this&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;How we got this:&lt;/h1&gt;
+&lt;div id=&#34;load-libraries&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Load libraries&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(purrr)
+library(ggplot2)
+library(gh)
+library(tidyr)
+library(svglite)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;define-the-github-repos&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Define the GitHub repos&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;repos &amp;lt;- c(
+  &amp;#39;yonicd/carbonate&amp;#39;,
+  &amp;#39;yonicd/noplyr&amp;#39;,
+  &amp;#39;yonicd/shinyHeatmaply&amp;#39;,
+  &amp;#39;yonicd/Elections&amp;#39;,
+  &amp;#39;yonicd/covrpage&amp;#39;,
+  &amp;#39;yonicd/rpdf&amp;#39;,
+  &amp;#39;yonicd/rsam&amp;#39;,
+  &amp;#39;yonicd/regexSelect&amp;#39;,
+  &amp;#39;yonicd/tidycheckUsage&amp;#39;,
+  &amp;#39;yonicd/ripe&amp;#39;,
+  &amp;#39;yonicd/lmmen&amp;#39;,
+  &amp;#39;metrumresearchgroup/ggedit&amp;#39;,
+  &amp;#39;metrumresearchgroup/sinew&amp;#39;,
+  &amp;#39;metrumresearchgroup/slickR&amp;#39;,
+  &amp;#39;metrumresearchgroup/d3Tree&amp;#39;,
+  &amp;#39;metrumresearchgroup/texPreview&amp;#39;,
+  &amp;#39;metrumresearchgroup/jsTree&amp;#39;,
+  &amp;#39;metrumresearchgroup/shinyCanvas&amp;#39;,
+  &amp;#39;metrumresearchgroup/vcs&amp;#39;  
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;define-functions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Define Functions&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fetch_view_type &amp;lt;- function(owner,repo,type,gh_pat){
+  
+  this_dat &amp;lt;- gh::gh(
+                &amp;#39;/repos/:owner/:repo/traffic/:type&amp;#39;,
+                owner  = owner,
+                repo   = repo,
+                type   = type,
+                .token = gh_pat)
+  
+  
+  if(length(this_dat[[type]])==0)
+    return(NULL)
+  
+  ret &amp;lt;- this_dat[[type]]%&amp;gt;%
+    purrr::transpose()%&amp;gt;%
+    dplyr::as_tibble()%&amp;gt;%
+    dplyr::mutate(
+      timestamp = as.Date(gsub(&amp;#39;T(.*?)$&amp;#39;,&amp;#39;&amp;#39;,purrr::flatten_chr(timestamp))),
+      count  = purrr::flatten_dbl(count),
+      uniques  = purrr::flatten_dbl(uniques),
+      repo = repo
+    )
+  
+  ret
+}
+
+fetch_view_data &amp;lt;- function(repo, gh_pat){
+  
+  types &amp;lt;- dplyr::data_frame(type = c(&amp;#39;views&amp;#39;,&amp;#39;clones&amp;#39;))
+
+  ret &amp;lt;- purrr::map_df(
+    types$type,
+    fetch_view_type,
+    gh_pat = gh_pat,
+    owner  = dirname(repo),
+    repo   = basename(repo),
+    .id    = &amp;#39;type&amp;#39;
+    )%&amp;gt;%
+    dplyr::mutate(
+      type = dplyr::case_when(
+        type==1~&amp;#39;views&amp;#39;,
+        type==2~&amp;#39;clones&amp;#39;
+        )
+    )
+
+  return(ret)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;run-the-function&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Run the function&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- repos%&amp;gt;%
+  purrr::map_df(
+    fetch_view_data, 
+    gh_pat = Sys.getenv(&amp;#39;GITHUB_PAT&amp;#39;)
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;waffle-heatmap&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Waffle heatmap&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_traffic &amp;lt;- function(dat){
+  dat %&amp;gt;%
+    tidyr::gather(
+      key   = &amp;#39;stat&amp;#39;,
+      value = &amp;#39;value&amp;#39;,
+      count,
+      uniques
+      )%&amp;gt;%
+    ggplot2::ggplot(
+      ggplot2::aes(
+        x    = timestamp,
+        y    = repo,
+        fill = value
+        )
+      ) +
+    ggplot2::geom_tile(
+      colour = &amp;#39;white&amp;#39;,
+      width  = 0.95,
+      alpha  = 0.75) +
+    ggplot2::geom_hline(
+      yintercept = c(0,(1:length(unique(dat$repo))) + 0.5),
+      colour     = &amp;#39;grey90&amp;#39;) +
+    viridis::scale_fill_viridis(
+      name      = &amp;#39;Count&amp;#39;,
+      direction = -1
+      ) +
+    ggplot2::facet_grid( . ~ stat ) +
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      panel.grid.major  = ggplot2::element_blank(),
+      axis.text.x       = ggplot2::element_text(angle=90),
+      panel.grid.minor  = ggplot2::element_blank(),
+      axis.title        = ggplot2::element_blank()
+      )
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;save-to-disk&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Save to disk&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;svglite::svglite(
+  file.path(getwd(),&amp;#39;public/img/github_traffic.svg&amp;#39;),
+  standalone = TRUE
+  )
+  
+plot_traffic(x)
+
+dev.off()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/page/github_traffic_files/figure-html/plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>GitHub Waffle Heatmap</title>
+      <link>/page/github_traffic/</link>
+      <pubDate>Tue, 19 Mar 2019 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>/page/github_traffic/</guid>
+      <description>
+
+&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/github_traffic_files/figure-html/plot-1.png?raw=true&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;how-we-got-this&#34;&gt;How we got this:&lt;/h1&gt;
+
+&lt;h2 id=&#34;load-libraries&#34;&gt;Load libraries&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(purrr)
+library(ggplot2)
+library(gh)
+library(tidyr)
+library(svglite)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;define-the-github-repos&#34;&gt;Define the GitHub repos&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;repos &amp;lt;- c(
+  &#39;yonicd/carbonate&#39;,
+  &#39;yonicd/noplyr&#39;,
+  &#39;yonicd/shinyHeatmaply&#39;,
+  &#39;yonicd/Elections&#39;,
+  &#39;yonicd/covrpage&#39;,
+  &#39;yonicd/rpdf&#39;,
+  &#39;yonicd/rsam&#39;,
+  &#39;yonicd/regexSelect&#39;,
+  &#39;yonicd/tidycheckUsage&#39;,
+  &#39;yonicd/ripe&#39;,
+  &#39;yonicd/lmmen&#39;,
+  &#39;metrumresearchgroup/ggedit&#39;,
+  &#39;metrumresearchgroup/sinew&#39;,
+  &#39;metrumresearchgroup/slickR&#39;,
+  &#39;metrumresearchgroup/d3Tree&#39;,
+  &#39;metrumresearchgroup/texPreview&#39;,
+  &#39;metrumresearchgroup/jsTree&#39;,
+  &#39;metrumresearchgroup/shinyCanvas&#39;,
+  &#39;metrumresearchgroup/vcs&#39;  
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;define-functions&#34;&gt;Define Functions&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;fetch_view_type &amp;lt;- function(owner,repo,type,gh_pat){
+  
+  this_dat &amp;lt;- gh::gh(
+                &#39;/repos/:owner/:repo/traffic/:type&#39;,
+                owner  = owner,
+                repo   = repo,
+                type   = type,
+                .token = gh_pat)
+  
+  
+  if(length(this_dat[[type]])==0)
+    return(NULL)
+  
+  ret &amp;lt;- this_dat[[type]]%&amp;gt;%
+    purrr::transpose()%&amp;gt;%
+    dplyr::as_tibble()%&amp;gt;%
+    dplyr::mutate(
+      timestamp = as.Date(gsub(&#39;T(.*?)$&#39;,&#39;&#39;,purrr::flatten_chr(timestamp))),
+      count  = purrr::flatten_dbl(count),
+      uniques  = purrr::flatten_dbl(uniques),
+      repo = repo
+    )
+  
+  ret
+}
+
+fetch_view_data &amp;lt;- function(repo, gh_pat){
+  
+  types &amp;lt;- dplyr::data_frame(type = c(&#39;views&#39;,&#39;clones&#39;))
+
+  ret &amp;lt;- purrr::map_df(
+    types$type,
+    fetch_view_type,
+    gh_pat = gh_pat,
+    owner  = dirname(repo),
+    repo   = basename(repo),
+    .id    = &#39;type&#39;
+    )%&amp;gt;%
+    dplyr::mutate(
+      type = dplyr::case_when(
+        type==1~&#39;views&#39;,
+        type==2~&#39;clones&#39;
+        )
+    )
+
+  return(ret)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;run-the-function&#34;&gt;Run the function&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;x &amp;lt;- repos%&amp;gt;%
+  purrr::map_df(
+    fetch_view_data, 
+    gh_pat = Sys.getenv(&#39;GITHUB_PAT&#39;)
+  )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;waffle-heatmap&#34;&gt;Waffle heatmap&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;plot_traffic &amp;lt;- function(dat){
+  dat %&amp;gt;%
+    tidyr::gather(
+      key   = &#39;stat&#39;,
+      value = &#39;value&#39;,
+      count,
+      uniques
+      )%&amp;gt;%
+    ggplot2::ggplot(
+      ggplot2::aes(
+        x    = timestamp,
+        y    = repo,
+        fill = value
+        )
+      ) +
+    ggplot2::geom_tile(
+      colour = &#39;white&#39;,
+      width  = 0.95,
+      alpha  = 0.75) +
+    ggplot2::geom_hline(
+      yintercept = c(0,(1:length(unique(dat$repo))) + 0.5),
+      colour     = &#39;grey90&#39;) +
+    viridis::scale_fill_viridis(
+      name      = &#39;Count&#39;,
+      direction = -1
+      ) +
+    ggplot2::facet_grid( . ~ stat ) +
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      panel.grid.major  = ggplot2::element_blank(),
+      axis.text.x       = ggplot2::element_text(angle=90),
+      panel.grid.minor  = ggplot2::element_blank(),
+      axis.title        = ggplot2::element_blank()
+      )
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;save-to-disk&#34;&gt;Save to disk&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;svglite::svglite(
+  file.path(getwd(),&#39;public/img/github_traffic.svg&#39;),
+  standalone = TRUE
+  )
+  
+plot_traffic(x)
+
+dev.off()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;github_traffic_files/figure-html/plot-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>carbonate</title>
@@ -2686,473 +3000,6 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
     </item>
     
     <item>
-      <title>GitHub Waffle Heatmap</title>
-      <link>/page/gh_traffic/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/gh_traffic/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/gh_traffic_files/figure-html/plot-1.png?raw=true&#34; /&gt;&lt;/p&gt;
-&lt;div id=&#34;how-we-got-this&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;How we got this:&lt;/h1&gt;
-&lt;div id=&#34;load-libraries&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Load libraries&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(purrr)
-library(ggplot2)
-library(gh)
-library(tidyr)
-library(svglite)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;define-the-github-repos&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Define the GitHub repos&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;repos &amp;lt;- c(
-  &amp;#39;yonicd/carbonate&amp;#39;,
-  &amp;#39;yonicd/noplyr&amp;#39;,
-  &amp;#39;yonicd/shinyHeatmaply&amp;#39;,
-  &amp;#39;yonicd/Elections&amp;#39;,
-  &amp;#39;yonicd/covrpage&amp;#39;,
-  &amp;#39;yonicd/rpdf&amp;#39;,
-  &amp;#39;yonicd/rsam&amp;#39;,
-  &amp;#39;yonicd/regexSelect&amp;#39;,
-  &amp;#39;yonicd/tidycheckUsage&amp;#39;,
-  &amp;#39;yonicd/ripe&amp;#39;,
-  &amp;#39;yonicd/lmmen&amp;#39;,
-  &amp;#39;metrumresearchgroup/ggedit&amp;#39;,
-  &amp;#39;metrumresearchgroup/sinew&amp;#39;,
-  &amp;#39;metrumresearchgroup/slickR&amp;#39;,
-  &amp;#39;metrumresearchgroup/d3Tree&amp;#39;,
-  &amp;#39;metrumresearchgroup/texPreview&amp;#39;,
-  &amp;#39;metrumresearchgroup/jsTree&amp;#39;,
-  &amp;#39;metrumresearchgroup/shinyCanvas&amp;#39;,
-  &amp;#39;metrumresearchgroup/vcs&amp;#39;  
-)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;define-functions&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Define Functions&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fetch_view_type &amp;lt;- function(owner,repo,type,gh_pat){
-  
-  this_dat &amp;lt;- gh::gh(
-                &amp;#39;/repos/:owner/:repo/traffic/:type&amp;#39;,
-                owner  = owner,
-                repo   = repo,
-                type   = type,
-                .token = gh_pat)
-  
-  
-  if(length(this_dat[[type]])==0)
-    return(NULL)
-  
-  ret &amp;lt;- this_dat[[type]]%&amp;gt;%
-    purrr::transpose()%&amp;gt;%
-    dplyr::as_tibble()%&amp;gt;%
-    dplyr::mutate(
-      timestamp = as.Date(gsub(&amp;#39;T(.*?)$&amp;#39;,&amp;#39;&amp;#39;,purrr::flatten_chr(timestamp))),
-      count  = purrr::flatten_dbl(count),
-      uniques  = purrr::flatten_dbl(uniques),
-      repo = repo
-    )
-  
-  ret
-}
-
-fetch_view_data &amp;lt;- function(repo, gh_pat){
-  
-  types &amp;lt;- dplyr::data_frame(type = c(&amp;#39;views&amp;#39;,&amp;#39;clones&amp;#39;))
-
-  ret &amp;lt;- purrr::map_df(
-    types$type,
-    fetch_view_type,
-    gh_pat = gh_pat,
-    owner  = dirname(repo),
-    repo   = basename(repo),
-    .id    = &amp;#39;type&amp;#39;
-    )%&amp;gt;%
-    dplyr::mutate(
-      type = dplyr::case_when(
-        type==1~&amp;#39;views&amp;#39;,
-        type==2~&amp;#39;clones&amp;#39;
-        )
-    )
-
-  return(ret)
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;run-the-function&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Run the function&lt;/h3&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- repos%&amp;gt;%
-  purrr::map_df(
-    fetch_view_data, 
-    gh_pat = Sys.getenv(&amp;#39;GITHUB_PAT&amp;#39;)
-  )&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;waffle-heatmap&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Waffle heatmap&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_traffic &amp;lt;- function(dat){
-  dat %&amp;gt;%
-    tidyr::gather(
-      key   = &amp;#39;stat&amp;#39;,
-      value = &amp;#39;value&amp;#39;,
-      count,
-      uniques
-      )%&amp;gt;%
-    ggplot2::ggplot(
-      ggplot2::aes(
-        x    = timestamp,
-        y    = repo,
-        fill = value
-        )
-      ) +
-    ggplot2::geom_tile(
-      colour = &amp;#39;white&amp;#39;,
-      width  = 0.95,
-      alpha  = 0.75) +
-    ggplot2::geom_hline(
-      yintercept = c(0,(1:length(unique(dat$repo))) + 0.5),
-      colour     = &amp;#39;grey90&amp;#39;) +
-    viridis::scale_fill_viridis(
-      name      = &amp;#39;Count&amp;#39;,
-      direction = -1
-      ) +
-    ggplot2::facet_grid( . ~ stat ) +
-    ggplot2::theme_minimal() +
-    ggplot2::theme(
-      panel.grid.major  = ggplot2::element_blank(),
-      axis.text.x       = ggplot2::element_text(angle=90),
-      panel.grid.minor  = ggplot2::element_blank(),
-      axis.title        = ggplot2::element_blank()
-      )
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;save-to-disk&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Save to disk&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;svglite::svglite(
-  file.path(getwd(),&amp;#39;public/img/github_traffic.svg&amp;#39;),
-  standalone = TRUE
-  )
-  
-plot_traffic(x)
-
-dev.off()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/page/gh_traffic_files/figure-html/plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>GitHub Waffle Heatmap</title>
-      <link>/page/github_traffic/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/github_traffic/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/github_traffic_files/figure-html/plot-1.png?raw=true&#34; /&gt;&lt;/p&gt;
-&lt;div id=&#34;how-we-got-this&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;How we got this:&lt;/h1&gt;
-&lt;div id=&#34;load-libraries&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Load libraries&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(purrr)
-library(ggplot2)
-library(gh)
-library(tidyr)
-library(svglite)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;define-the-github-repos&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Define the GitHub repos&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;repos &amp;lt;- c(
-  &amp;#39;yonicd/carbonate&amp;#39;,
-  &amp;#39;yonicd/noplyr&amp;#39;,
-  &amp;#39;yonicd/shinyHeatmaply&amp;#39;,
-  &amp;#39;yonicd/Elections&amp;#39;,
-  &amp;#39;yonicd/covrpage&amp;#39;,
-  &amp;#39;yonicd/rpdf&amp;#39;,
-  &amp;#39;yonicd/rsam&amp;#39;,
-  &amp;#39;yonicd/regexSelect&amp;#39;,
-  &amp;#39;yonicd/tidycheckUsage&amp;#39;,
-  &amp;#39;yonicd/ripe&amp;#39;,
-  &amp;#39;yonicd/lmmen&amp;#39;,
-  &amp;#39;metrumresearchgroup/ggedit&amp;#39;,
-  &amp;#39;metrumresearchgroup/sinew&amp;#39;,
-  &amp;#39;metrumresearchgroup/slickR&amp;#39;,
-  &amp;#39;metrumresearchgroup/d3Tree&amp;#39;,
-  &amp;#39;metrumresearchgroup/texPreview&amp;#39;,
-  &amp;#39;metrumresearchgroup/jsTree&amp;#39;,
-  &amp;#39;metrumresearchgroup/shinyCanvas&amp;#39;,
-  &amp;#39;metrumresearchgroup/vcs&amp;#39;  
-)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;define-functions&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Define Functions&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fetch_view_type &amp;lt;- function(owner,repo,type,gh_pat){
-  
-  this_dat &amp;lt;- gh::gh(
-                &amp;#39;/repos/:owner/:repo/traffic/:type&amp;#39;,
-                owner  = owner,
-                repo   = repo,
-                type   = type,
-                .token = gh_pat)
-  
-  
-  if(length(this_dat[[type]])==0)
-    return(NULL)
-  
-  ret &amp;lt;- this_dat[[type]]%&amp;gt;%
-    purrr::transpose()%&amp;gt;%
-    dplyr::as_tibble()%&amp;gt;%
-    dplyr::mutate(
-      timestamp = as.Date(gsub(&amp;#39;T(.*?)$&amp;#39;,&amp;#39;&amp;#39;,purrr::flatten_chr(timestamp))),
-      count  = purrr::flatten_dbl(count),
-      uniques  = purrr::flatten_dbl(uniques),
-      repo = repo
-    )
-  
-  ret
-}
-
-fetch_view_data &amp;lt;- function(repo, gh_pat){
-  
-  types &amp;lt;- dplyr::data_frame(type = c(&amp;#39;views&amp;#39;,&amp;#39;clones&amp;#39;))
-
-  ret &amp;lt;- purrr::map_df(
-    types$type,
-    fetch_view_type,
-    gh_pat = gh_pat,
-    owner  = dirname(repo),
-    repo   = basename(repo),
-    .id    = &amp;#39;type&amp;#39;
-    )%&amp;gt;%
-    dplyr::mutate(
-      type = dplyr::case_when(
-        type==1~&amp;#39;views&amp;#39;,
-        type==2~&amp;#39;clones&amp;#39;
-        )
-    )
-
-  return(ret)
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;run-the-function&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Run the function&lt;/h3&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- repos%&amp;gt;%
-  purrr::map_df(
-    fetch_view_data, 
-    gh_pat = Sys.getenv(&amp;#39;GITHUB_PAT&amp;#39;)
-  )&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;waffle-heatmap&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Waffle heatmap&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_traffic &amp;lt;- function(dat){
-  dat %&amp;gt;%
-    tidyr::gather(
-      key   = &amp;#39;stat&amp;#39;,
-      value = &amp;#39;value&amp;#39;,
-      count,
-      uniques
-      )%&amp;gt;%
-    ggplot2::ggplot(
-      ggplot2::aes(
-        x    = timestamp,
-        y    = repo,
-        fill = value
-        )
-      ) +
-    ggplot2::geom_tile(
-      colour = &amp;#39;white&amp;#39;,
-      width  = 0.95,
-      alpha  = 0.75) +
-    ggplot2::geom_hline(
-      yintercept = c(0,(1:length(unique(dat$repo))) + 0.5),
-      colour     = &amp;#39;grey90&amp;#39;) +
-    viridis::scale_fill_viridis(
-      name      = &amp;#39;Count&amp;#39;,
-      direction = -1
-      ) +
-    ggplot2::facet_grid( . ~ stat ) +
-    ggplot2::theme_minimal() +
-    ggplot2::theme(
-      panel.grid.major  = ggplot2::element_blank(),
-      axis.text.x       = ggplot2::element_text(angle=90),
-      panel.grid.minor  = ggplot2::element_blank(),
-      axis.title        = ggplot2::element_blank()
-      )
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;save-to-disk&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Save to disk&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;svglite::svglite(
-  file.path(getwd(),&amp;#39;public/img/github_traffic.svg&amp;#39;),
-  standalone = TRUE
-  )
-  
-plot_traffic(x)
-
-dev.off()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/page/github_traffic_files/figure-html/plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>GitHub Waffle Heatmap</title>
-      <link>/page/github_traffic/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/github_traffic/</guid>
-      <description>
-
-&lt;p&gt;&lt;img src=&#34;https://github.com/yonicd/blog/blob/traffic/content/page/github_traffic_files/figure-html/plot-1.png?raw=true&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&#34;how-we-got-this&#34;&gt;How we got this:&lt;/h1&gt;
-
-&lt;h2 id=&#34;load-libraries&#34;&gt;Load libraries&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(purrr)
-library(ggplot2)
-library(gh)
-library(tidyr)
-library(svglite)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;define-the-github-repos&#34;&gt;Define the GitHub repos&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;repos &amp;lt;- c(
-  &#39;yonicd/carbonate&#39;,
-  &#39;yonicd/noplyr&#39;,
-  &#39;yonicd/shinyHeatmaply&#39;,
-  &#39;yonicd/Elections&#39;,
-  &#39;yonicd/covrpage&#39;,
-  &#39;yonicd/rpdf&#39;,
-  &#39;yonicd/rsam&#39;,
-  &#39;yonicd/regexSelect&#39;,
-  &#39;yonicd/tidycheckUsage&#39;,
-  &#39;yonicd/ripe&#39;,
-  &#39;yonicd/lmmen&#39;,
-  &#39;metrumresearchgroup/ggedit&#39;,
-  &#39;metrumresearchgroup/sinew&#39;,
-  &#39;metrumresearchgroup/slickR&#39;,
-  &#39;metrumresearchgroup/d3Tree&#39;,
-  &#39;metrumresearchgroup/texPreview&#39;,
-  &#39;metrumresearchgroup/jsTree&#39;,
-  &#39;metrumresearchgroup/shinyCanvas&#39;,
-  &#39;metrumresearchgroup/vcs&#39;  
-)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;define-functions&#34;&gt;Define Functions&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;fetch_view_type &amp;lt;- function(owner,repo,type,gh_pat){
-  
-  this_dat &amp;lt;- gh::gh(
-                &#39;/repos/:owner/:repo/traffic/:type&#39;,
-                owner  = owner,
-                repo   = repo,
-                type   = type,
-                .token = gh_pat)
-  
-  
-  if(length(this_dat[[type]])==0)
-    return(NULL)
-  
-  ret &amp;lt;- this_dat[[type]]%&amp;gt;%
-    purrr::transpose()%&amp;gt;%
-    dplyr::as_tibble()%&amp;gt;%
-    dplyr::mutate(
-      timestamp = as.Date(gsub(&#39;T(.*?)$&#39;,&#39;&#39;,purrr::flatten_chr(timestamp))),
-      count  = purrr::flatten_dbl(count),
-      uniques  = purrr::flatten_dbl(uniques),
-      repo = repo
-    )
-  
-  ret
-}
-
-fetch_view_data &amp;lt;- function(repo, gh_pat){
-  
-  types &amp;lt;- dplyr::data_frame(type = c(&#39;views&#39;,&#39;clones&#39;))
-
-  ret &amp;lt;- purrr::map_df(
-    types$type,
-    fetch_view_type,
-    gh_pat = gh_pat,
-    owner  = dirname(repo),
-    repo   = basename(repo),
-    .id    = &#39;type&#39;
-    )%&amp;gt;%
-    dplyr::mutate(
-      type = dplyr::case_when(
-        type==1~&#39;views&#39;,
-        type==2~&#39;clones&#39;
-        )
-    )
-
-  return(ret)
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;run-the-function&#34;&gt;Run the function&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;x &amp;lt;- repos%&amp;gt;%
-  purrr::map_df(
-    fetch_view_data, 
-    gh_pat = Sys.getenv(&#39;GITHUB_PAT&#39;)
-  )
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;waffle-heatmap&#34;&gt;Waffle heatmap&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;plot_traffic &amp;lt;- function(dat){
-  dat %&amp;gt;%
-    tidyr::gather(
-      key   = &#39;stat&#39;,
-      value = &#39;value&#39;,
-      count,
-      uniques
-      )%&amp;gt;%
-    ggplot2::ggplot(
-      ggplot2::aes(
-        x    = timestamp,
-        y    = repo,
-        fill = value
-        )
-      ) +
-    ggplot2::geom_tile(
-      colour = &#39;white&#39;,
-      width  = 0.95,
-      alpha  = 0.75) +
-    ggplot2::geom_hline(
-      yintercept = c(0,(1:length(unique(dat$repo))) + 0.5),
-      colour     = &#39;grey90&#39;) +
-    viridis::scale_fill_viridis(
-      name      = &#39;Count&#39;,
-      direction = -1
-      ) +
-    ggplot2::facet_grid( . ~ stat ) +
-    ggplot2::theme_minimal() +
-    ggplot2::theme(
-      panel.grid.major  = ggplot2::element_blank(),
-      axis.text.x       = ggplot2::element_text(angle=90),
-      panel.grid.minor  = ggplot2::element_blank(),
-      axis.title        = ggplot2::element_blank()
-      )
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;save-to-disk&#34;&gt;Save to disk&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;svglite::svglite(
-  file.path(getwd(),&#39;public/img/github_traffic.svg&#39;),
-  standalone = TRUE
-  )
-  
-plot_traffic(x)
-
-dev.off()
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;github_traffic_files/figure-html/plot-1.png&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Projects</title>
       <link>/page/projects/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -3261,6 +3108,99 @@ dev.off()
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;Elections&lt;/strong&gt; : Real time tracker and analysis of 2016 USA Elections &lt;a href=&#34;https://github.com/yonicd/Elections&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;supermarketprices&lt;/strong&gt; : Read daily suprmarket data in all israel stores. &lt;a href=&#34;https://github.com/yonicd/supermarketprices&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Projects</title>
+      <link>/page/projects.utf8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>/page/projects.utf8/</guid>
+      <description>&lt;p&gt;This is a list of R packages that have been published on CRAN and/or are still being developed on Github. Many of the projects are part of &lt;a href=&#34;https://www.metrumrg.com/try-open-source-tools/&#34;&gt;open tools&lt;/a&gt; developed at Metrum Research Group.&lt;/p&gt;
+
+&lt;!-- https://img.shields.io/badge/METRUM-opentools-brightgreen.svg?link=https://www.metrumrg.com/&amp;link=https://www.metrumrg.com/open-science/ --&gt;
+
+&lt;p&gt;The icons at the end of each description show where the project is maintained and links are attached to each one to take you to the relevant page.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;center&#34;&gt;Metrum&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Github&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;CRAN&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;bl.ocks&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://github.com&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://cran.r-project.org/&#34;&gt;&lt;img src=&#34;https://img.shields.io/badge/CRAN--blue.svg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://bl.ocks.org/&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/d3js.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;(Not in any logical order, just what came to mind when I wrote this&amp;hellip;)&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Reproduciblity&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;carbonate&lt;/strong&gt; : Create beautiful images of source code using [carbon.js[(&lt;a href=&#34;https://carbon.now.sh/about).[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/carbonate)[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/carbonate?color=blue)](https://cran.r-project.org/package=carbonate)![downloads](https://cranlogs.r-pkg.org/badges/carbonate&#34;&gt;https://carbon.now.sh/about).[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/carbonate)[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/carbonate?color=blue)](https://cran.r-project.org/package=carbonate)![downloads](https://cranlogs.r-pkg.org/badges/carbonate&lt;/a&gt;)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;ggedit&lt;/strong&gt; : Interactively edit ggplot2 layer and theme aesthetics definitions.&lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/ggedit&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://cran.r-project.org/package=ggedit&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/ggedit?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt;&lt;img src=&#34;https://cranlogs.r-pkg.org/badges/ggedit&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;sinew&lt;/strong&gt; : Create roxygen2 skeleton populated with information scraped from the within the function script. Also creates field entries for imports in the DESCRIPTION and import in the NAMESPACE files. Can be run from the R console or through the RStudio addin menu. &lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/sinew&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://cran.r-project.org/package=sinew&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/sinew?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt;&lt;img src=&#34;https://cranlogs.r-pkg.org/badges/sinew&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;texPreview&lt;/strong&gt; : Compile and preview snippets of LaTeX. Can be used directly from the R console, from RStudio, in Shiny apps and R Markdown documents. Must have pdflatex or xelatex or lualatex in PATH. &lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/texPreview&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://cran.r-project.org/package=texPreview&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/texPreview?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt;&lt;img src=&#34;https://cranlogs.r-pkg.org/badges/texPreview&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;gdigest&lt;/strong&gt; : Wrapper for memoise that lets users cache R objects on a remote repository. Works for objects created in console and Shiny. This is meant for multiple users to share cache via a repository, and increase efficiency of shiny apps that have heavy simulations.&lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/yonicd/gdigest&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;vcs&lt;/strong&gt; : Managing, inspecting and sourcing remote repositories such as github, bitbucket and subversion.&lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/vcs&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Shiny Apps, Modules and Gadgets&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;regexSelect&lt;/strong&gt; : R package to enable regular expression searches within a shiny selectize object. &lt;a href=&#34;https://github.com/yonicd/regexSelect&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://cran.r-project.org/package=regexSelect&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/regexSelect?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt;&lt;img src=&#34;https://cranlogs.r-pkg.org/badges/regexSelect&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;shinyHeatmaply&lt;/strong&gt; : Access functionality of the &lt;a href=&#34;https://github.com/talgalili/heatmaply&#34;&gt;heatmaply&lt;/a&gt; package through Shiny application and Shiny gadget. &lt;a href=&#34;https://github.com/yonicd/shinyHeatmaply&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt; &lt;a href=&#34;https://cran.r-project.org/package=shinyHeatmaply&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/shinyHeatmaply?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt; &lt;img src=&#34;https://cranlogs.r-pkg.org/badges/shinyHeatmaply&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Htmlwidgets&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;slickR&lt;/strong&gt; : Create and customize interactive carousels using the Slick JavaScript library and the htmlwidgets package. The carousels can contain plots produced in R, images, iframes, videos and other htmlwidgets. These carousels can be used directly from the R console, from RStudio, in Shiny apps and R Markdown documents. &lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt; &lt;a href=&#34;https://github.com/metrumresearchgroup/slickR&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;
+&lt;a href=&#34;https://cran.r-project.org/package=slickR&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/slickR?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt; &lt;img src=&#34;https://cranlogs.r-pkg.org/badges/slickR&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;jsTree&lt;/strong&gt; : Create and customize interactive trees using the jQuery jsTree plugin library and the htmlwidgets package. These trees can be used directly from the R console, from RStudio, in Shiny apps and R Markdown documents.&lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/jsTree&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://cran.r-project.org/package=jsTree&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/jsTree?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt; &lt;img src=&#34;https://cranlogs.r-pkg.org/badges/jsTree&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;d3Tree&lt;/strong&gt; : Create and customize interactive collapsible D3 trees using the D3 JavaScript library and the htmlwidgets package. These trees can be used directly from the R console, from RStudio, in Shiny apps and R Markdown documents. When in Shiny the tree layout is observed by the server and can be used as a reactive filter of structured data. &lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/d3Tree&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://cran.r-project.org/package=d3Tree&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/d3Tree?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt;&lt;img src=&#34;https://cranlogs.r-pkg.org/badges/d3Tree&#34; alt=&#34;downloads&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;shinyCanvas&lt;/strong&gt; : Htmlwidget that binds a fork of &lt;a href=&#34;https://bl.ocks.org/mbostock/4342190&#34;&gt;Spline Editor&lt;/a&gt; by Mike Bostock to create an observable object in Shiny. &lt;a href=&#34;https://www.metrumrg.com/open-science&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/mrgiconnew.jpg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://github.com/metrumresearchgroup/shinyCanvas&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://bl.ocks.org/yonicd/4bc59fca901388ebe4905bdb19af1567&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/d3js.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;rpdf&lt;/strong&gt; : View PDFs from remote locations directly in R using the &lt;a href=&#34;https://mozilla.github.io/pdf.js/&#34;&gt;Mozilla pdf JavaScript library&lt;/a&gt; and the htmlwidgets package. The viewer can be called directly from the R console, from RStudio, in Shiny apps and R Markdown documents.&lt;a href=&#34;https://github.com/yonicd/rpdf&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Stats&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;lmmen&lt;/strong&gt; : R package that solves the linear mixed model elastic net. &lt;a href=&#34;https://github.com/yonicd/lmmen&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;a href=&#34;https://cran.r-project.org/package=lmmen&#34;&gt;&lt;img src=&#34;https://www.r-pkg.org/badges/version/lmmen?color=blue&#34; alt=&#34;CRAN\_Status\_Badge&#34; /&gt;&lt;/a&gt;&lt;img src=&#34;https://cranlogs.r-pkg.org/badges/lmmen&#34; alt=&#34;downloads&#34; /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Random thoughts that weren&amp;rsquo;t packaged, but are still useful.&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Elections&lt;/strong&gt; : Real time tracker and analysis of 2016 USA Elections &lt;a href=&#34;https://github.com/yonicd/Elections&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;CIMDO&lt;/strong&gt; : Shiny Dashboard for the IMF CIMDO model. &lt;a href=&#34;https://github.com/yonicd/CIMDO&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;supermarketprices&lt;/strong&gt; : Read daily suprmarket data in all israel stores. &lt;a href=&#34;https://github.com/yonicd/supermarketprices&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;taseR&lt;/strong&gt; : API to read data from Tel Aviv Stock Exchange (TASE) website to R. &lt;a href=&#34;https://github.com/yonicd/taseR&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>

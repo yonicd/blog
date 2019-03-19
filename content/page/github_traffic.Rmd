@@ -1,7 +1,7 @@
 ---
 title: "GitHub Waffle Heatmap"
 author: "Jonathan Sidi"
-date: "10/30/2018"
+date: '`r Sys.Date()`'
 output: 
   html_document:
     keep_md: true
@@ -81,16 +81,17 @@ plot_traffic <- function(dat){
 
 repos <- c(
   'yonicd/carbonate',
-  'yonicd/noplyr',
+  'yonicd/bplyr',
+  'yonicd/details',  
   'yonicd/shinyHeatmaply',
   'yonicd/Elections',
-  'yonicd/covrpage',
   'yonicd/rpdf',
   'yonicd/rsam',
   'yonicd/regexSelect',
   'yonicd/tidycheckUsage',
   'yonicd/ripe',
   'yonicd/lmmen',
+  'metrumresearchgroup/covrpage',
   'metrumresearchgroup/ggedit',
   'metrumresearchgroup/sinew',
   'metrumresearchgroup/slickR',
@@ -247,7 +248,7 @@ plot_traffic <- function(dat){
 ```
 
 ## Save to disk
-```{r,eval=FALSE}
+```{r, eval = FALSE}
 
 svglite::svglite(
   file.path(getwd(),'public/img/github_traffic.svg'),
