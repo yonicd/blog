@@ -80,9 +80,10 @@ plot_traffic <- function(dat){
 }
 
 repos <- c(
+  'yonicd/whereami',
   'yonicd/carbonate',
   'yonicd/bplyr',
-  'yonicd/details',  
+  'yonicd/details',
   'yonicd/shinyHeatmaply',
   'yonicd/Elections',
   'yonicd/rpdf',
@@ -124,17 +125,19 @@ library(svglite)
 ## Define the GitHub repos
 ```{r,eval=FALSE}
 repos <- c(
+  'yonicd/whereami',
   'yonicd/carbonate',
-  'yonicd/noplyr',
+  'yonicd/bplyr',
+  'yonicd/details',
   'yonicd/shinyHeatmaply',
   'yonicd/Elections',
-  'yonicd/covrpage',
   'yonicd/rpdf',
   'yonicd/rsam',
   'yonicd/regexSelect',
   'yonicd/tidycheckUsage',
   'yonicd/ripe',
   'yonicd/lmmen',
+  'metrumresearchgroup/covrpage',
   'metrumresearchgroup/ggedit',
   'metrumresearchgroup/sinew',
   'metrumresearchgroup/slickR',

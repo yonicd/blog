@@ -1,7 +1,7 @@
 ---
 title: "GitHub Waffle Heatmap"
 author: "Jonathan Sidi"
-date: '2019-03-19'
+date: '2019-04-25'
 output: 
   html_document:
     keep_md: true
@@ -30,17 +30,19 @@ library(svglite)
 
 ```r
 repos <- c(
+  'yonicd/whereami',
   'yonicd/carbonate',
-  'yonicd/noplyr',
+  'yonicd/bplyr',
+  'yonicd/details',
   'yonicd/shinyHeatmaply',
   'yonicd/Elections',
-  'yonicd/covrpage',
   'yonicd/rpdf',
   'yonicd/rsam',
   'yonicd/regexSelect',
   'yonicd/tidycheckUsage',
   'yonicd/ripe',
   'yonicd/lmmen',
+  'metrumresearchgroup/covrpage',
   'metrumresearchgroup/ggedit',
   'metrumresearchgroup/sinew',
   'metrumresearchgroup/slickR',
