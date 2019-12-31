@@ -1,0 +1,101 @@
+---
+title: "GitHub Activity Reactable"
+author: "Jonathan Sidi"
+date: '`r Sys.Date()`'
+output: 
+  html_document:
+    keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r,echo=FALSE}
+
+create_dashboard <- function(tbl){
+  
+  tbl$views  <- NA
+  tbl$viewers <- NA
+  tbl$clones  <- NA
+  tbl$cloners <- NA
+  
+  for(i in seq_len(nrow(tbl))){
+    
+    tbl$views[i]   <- sum(fetch_data(owner = tbl$owner[i], repo  = tbl$repo[i], type  = 'views' , stat  = 'count'))
+    tbl$viewers[i] <- sum(fetch_data(owner = tbl$owner[i], repo  = tbl$repo[i], type  = 'views' , stat  = 'uniques'))
+    tbl$clones[i]   <- sum(fetch_data(owner = tbl$owner[i], repo  = tbl$repo[i], type  = 'clones', stat  = 'count'))
+    tbl$cloners[i]   <- sum(fetch_data(owner = tbl$owner[i], repo  = tbl$repo[i], type  = 'clones', stat  = 'uniques'))
+    
+  }
+  
+  tbl
+}
+
+user_repos <- function(owner = 'yonicd',type = 'owner'){
+
+  res <- gh::gh('/users/:owner/repos?type=:type',
+                      .limit = 100,
+                      owner = owner, type = type)
+
+  repo_names <- sapply(res,function(x) x[['name']])
+  repo_fork <- sapply(res,function(x) x[['fork']])
+  repo_owner <- sapply(res,function(x) x[['owner']][['login']])
+  repo_access <- sapply(res,function(x) x[['permissions']][['push']])
+  
+  d <- data.frame(type = type, owner = repo_owner, repo = repo_names,
+                  stringsAsFactors = FALSE)
+  
+  d <- d[(!repo_fork)&(repo_access),]
+  
+  rownames(d) <- NULL
+  
+  d
+  
+}
+
+get_data <- function(owner, repo, type){
+  
+  gh::gh('/repos/:owner/:repo/traffic/:type',
+         owner  = owner,
+         repo   = repo,
+         type   = type)
+}
+
+fetch_data <- function(owner, repo, type = c('views','clones'),stat = c('count','uniques')){
+  
+  this_dat <- get_data(owner  = owner, repo   = repo, type   = type)
+  
+  if(length(this_dat[[type]])==0)
+    return(NULL)
+  
+  stat_num <- ifelse(stat=='count',2,3)
+  
+  sapply(this_dat[[type]],`[[`,stat_num)
+  
+}
+
+```
+ 
+```{r,echo=FALSE}
+tbl <- do.call('rbind',lapply(c('owner','member'),user_repos,owner = 'yonicd'))
+
+tbl_md <- create_dashboard(tbl)
+
+```
+ 
+```{r}
+reactable::reactable(tbl_md, 
+          pagination = FALSE, 
+          highlight = TRUE, 
+          height = 500,
+          defaultSortOrder = "desc",
+          defaultSorted = c("views"),
+          rowStyle = function(index) {
+            if (tbl_md[index, "type"] =='owner') {
+              list(background = "rgba(0, 0, 0, 0.05)")
+            }
+          }
+)
+
+```

@@ -7,23 +7,15 @@ library(widgetframe)
 objs <- c(
   'https://github.com/yonicd/blog/blob/traffic/content/page/github_traffic_files/figure-html/plot-1.png?raw=true',
   'https://raw.githubusercontent.com/yonicd/regexSelect/master/Miscellaneous/gifs/regexSelectPlot.gif',
-  'https://raw.githubusercontent.com/yonicd/slickR/master/Miscellaneous/Multimedia/gif/slickRnestingWidgets.gif',
+  'https://raw.githubusercontent.com/metrumresearchgroup/slickR/multimedia/Multimedia/slickRnestingWidgets.gif',
   'https://raw.githubusercontent.com/metrumresearchgroup/texPreview/misc/Multimedia/texPreviewPanZoom.gif',
-  'https://raw.githubusercontent.com/metrumresearchgroup/shinyCanvas/master/gifs/plotSize.gif'#,
-  #'https://raw.githubusercontent.com/yonicd/blog/master/img/slackr/slackr_progress.gif'
+  'https://raw.githubusercontent.com/metrumresearchgroup/shinyCanvas/master/gifs/plotSize.gif'
   )
 
-#style="width:80%;height:300px;margin-left:100px"
+p1 <- slickR::slickR(obj=objs,height=250,width='80%') + 
+  settings(autoplay=TRUE,infinite=TRUE,autoplaySpeed=5000,swipeToSlide=TRUE,
+           draggable=TRUE,dots=TRUE)
 
 
-p1 <- slickR::slickR(obj=objs,
-                     slickOpts = list(autoplay=TRUE,
-                                      infinite=TRUE,
-                                      autoplaySpeed=5000,
-                                      swipeToSlide=TRUE,
-                                      draggable=TRUE,
-                                      dots=TRUE),height=250,width='80%')
-
-p2 <- widgetframe::frameWidget(targetWidget = p1,width='90%')
-slickR:::style_widget(hw=p2, "margin-left:auto;margin-right:auto;margin-bottom:auto")
+widgetframe::frameWidget(targetWidget = p1,width='90%')
 ```

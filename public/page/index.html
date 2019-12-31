@@ -209,19 +209,19 @@ if (!doNotTrack) {
         <div class="posts-list">
           
             <article class="post-preview">
-              <a href="/page/github_traffic/">
-                <h2 class="post-title">GitHub Waffle Heatmap</h2>
+              <a href="/page/reactable/">
+                <h2 class="post-title">GitHub Activity Reactable</h2>
 
                 
               </a>
 
               <p class="post-meta">
-                Posted on March 19, 2019
+                Posted on December 31, 2019
               </p>
               <div class="post-entry">
                 
-                  How we got this: Load libraries library(purrr) library(ggplot2) library(gh) library(tidyr) library(svglite)  Define the GitHub repos repos &lt;- c( &#39;yonicd/carbonate&#39;, &#39;yonicd/noplyr&#39;, &#39;yonicd/shinyHeatmaply&#39;, &#39;yonicd/Elections&#39;, &#39;yonicd/covrpage&#39;, &#39;yonicd/rpdf&#39;, &#39;yonicd/rsam&#39;, &#39;yonicd/regexSelect&#39;, &#39;yonicd/tidycheckUsage&#39;, &#39;yonicd/ripe&#39;, &#39;yonicd/lmmen&#39;, &#39;metrumresearchgroup/ggedit&#39;, &#39;metrumresearchgroup/sinew&#39;, &#39;metrumresearchgroup/slickR&#39;, &#39;metrumresearchgroup/d3Tree&#39;, &#39;metrumresearchgroup/texPreview&#39;, &#39;metrumresearchgroup/jsTree&#39;, &#39;metrumresearchgroup/shinyCanvas&#39;, &#39;metrumresearchgroup/vcs&#39; )  Define Functions fetch_view_type &lt;- function(owner,repo,type,gh_pat){ this_dat &lt;- gh::gh( &#39;/repos/:owner/:repo/traffic/:type&#39;, owner = owner, repo = repo, type = type, .token = gh_pat) if(length(this_dat[[type]])==0) return(NULL) ret &lt;- this_dat[[type]]%&gt;% purrr::transpose()%&gt;% dplyr::as_tibble()%&gt;% dplyr::mutate( timestamp = as.
-                  <a href="/page/github_traffic/" class="post-read-more">[Read More]</a>
+                  reactable::reactable(tbl_md, pagination = FALSE, highlight = TRUE, height = 500, defaultSortOrder = &quot;desc&quot;, defaultSorted = c(&quot;views&quot;), rowStyle = function(index) { if (tbl_md[index, &quot;type&quot;] ==&#39;owner&#39;) { list(background = &quot;rgba(0, 0, 0, 0.05)&quot;) } } )  {"x":{"tag":{"name":"Reactable","attribs":{"data":{"type":["owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","owner","member","member","member","member","member","member","member","member","member","member","member","member","member","member","member","member","member","member","member","member","member","member"],"owner":["yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","yonicd","hrbrmstr","jonocarroll","metrumresearchgroup","metrumresearchgroup","metrumresearchgroup","metrumresearchgroup","metrumresearchgroup","metrumresearchgroup","metrumresearchgroup","metrumresearchgroup","metrumresearchgroup","metrumresearchgroup","metrumresearchgroup","metrumresearchgroup","metrumresearchgroup","metrumresearchgroup","metrumresearchgroup","metrumresearchgroup","ropenscilabs","talgalili","ThinkR-open","yuliasidi"],"repo":["blog","bplyr","carbonate","chunky","ciderhouse","CIMDO","cookr","covrfail","covrwarn","d3","details","EconomistLetter","Elections","foreman","gdigest","ghnet","GitHubAPI","gitLogs","gunflow","helpdesk","issue","lmmen","places","potus_public_schedule","reactor","regexSelect","revisionist","ripe","rpdf","rsam","rtravis","SearchTree","shinyghap","shinyHeatmaply","shinyProf","shinyselect","sinew_presentation","slackr-app","slackteams","supermarketprices","taseR","texsnippets","tidycheckUsage","tidyghql","toddlr","trying.lockedata.starters","slackr","ggeasy","covrpage","d3Tree","ggedit","jsTree","qibble","shinyCanvas","shinyglmnet","shredder","sinew","slickR","stantools","texblocks","texPreview","tic.covrpage","TorstenHeaders","vcs","tic.covrpage","heatmaply","remedy","condor"],"views":[2,13,26,0,0,10,0,0,0,0,23,0,27,1,1,1,0,0,2,0,0,27,0,1,3,8,0,9,21,2,0,2,0,34,6,1,3,0,4,3,8,0,2,0,6,0,246,96,53,115,138,56,0,21,1,136,19,275,0,3,34,0,14,3,0,311,78,0],"viewers":[2,4,20,0,0,10,0,0,0,0,12,0,10,1,1,1,0,0,2,0,0,8,0,1,3,7,0,1,17,2,0,2,0,22,2,1,2,0,3,2,3,0,1,0,3,0,130,28,7,47,110,42,0,19,1,39,14,73,0,2,9,0,6,2,0,211,55,0],"clones":[0,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,0,1,0,0,0,0,0,0,1,1,0,0,0,1,0,0,3,3,0,2,1,1,0,1,0,5,1,44,0,0,2,0,0,0,1,4,3,0],"cloners":[0,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,0,1,0,0,0,0,0,0,1,1,0,0,0,1,0,0,3,1,0,2,1,1,0,1,0,5,1,41,0,0,2,0,0,0,1,4,3,0]},"columns":[{"accessor":"type","name":"type","type":"character"},{"accessor":"owner","name":"owner","type":"character"},{"accessor":"repo","name":"repo","type":"character"},{"accessor":"views","name":"views","type":"numeric"},{"accessor":"viewers","name":"viewers","type":"numeric"},{"accessor":"clones","name":"clones","type":"numeric"},{"accessor":"cloners","name":"cloners","type":"numeric"}],"defaultSortDesc":true,"defaultSorted":[{"id":"views","desc":true}],"defaultPageSize":68,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"rowStyle":[{"background":"rgba(0, 0, 0, 0.05)"},{"background":"rgba(0, 0, 0, 0.05)"},{"background":"rgba(0, 0, 0, 0.05)"},{"background":"rgba(0, 0, 0, 0.05)"},{"background":"rgba(0, 0, 0, 0.05)"},{"background":"rgba(0, 0, 0, 0.05)"},{"background":"rgba(0, 0, 0, 0.05)"},{"background":"rgba(0, 0, 0, 0.05)"},{"background":"rgba(0, 0, 0, 0.05)"},{"background":"rgba(0, 0, 0, 0.
+                  <a href="/page/reactable/" class="post-read-more">[Read More]</a>
                 
               </div>
 
@@ -237,12 +237,96 @@ if (!doNotTrack) {
               </a>
 
               <p class="post-meta">
-                Posted on March 19, 2019
+                Posted on December 31, 2019
               </p>
               <div class="post-entry">
                 
-                  How we got this: Load libraries library(purrr) library(ggplot2) library(gh) library(tidyr) library(svglite)  Define the GitHub repos repos &lt;- c( 'yonicd/carbonate', 'yonicd/noplyr', 'yonicd/shinyHeatmaply', 'yonicd/Elections', 'yonicd/covrpage', 'yonicd/rpdf', 'yonicd/rsam', 'yonicd/regexSelect', 'yonicd/tidycheckUsage', 'yonicd/ripe', 'yonicd/lmmen', 'metrumresearchgroup/ggedit', 'metrumresearchgroup/sinew', 'metrumresearchgroup/slickR', 'metrumresearchgroup/d3Tree', 'metrumresearchgroup/texPreview', 'metrumresearchgroup/jsTree', 'metrumresearchgroup/shinyCanvas', 'metrumresearchgroup/vcs' )  Define Functions fetch_view_type &lt;- function(owner,repo,type,gh_pat){ this_dat &lt;- gh::gh( '/repos/:owner/:repo/traffic/:type', owner = owner, repo = repo, type = type, .token = gh_pat) if(length(this_dat[[type]])==0) return(NULL) ret &lt;- this_dat[[type]]%&gt;% purrr::transpose()%&gt;% dplyr::as_tibble()%&gt;% dplyr::mutate( timestamp = as.
+                  How we got this: Load libraries library(purrr) library(ggplot2) library(gh) library(tidyr) library(svglite)  Define the GitHub repos repos &lt;- c( &#39;yonicd/whereami&#39;, &#39;yonicd/carbonate&#39;, &#39;yonicd/bplyr&#39;, &#39;yonicd/details&#39;, &#39;yonicd/shinyHeatmaply&#39;, &#39;yonicd/Elections&#39;, &#39;yonicd/rpdf&#39;, &#39;yonicd/rsam&#39;, &#39;yonicd/regexSelect&#39;, &#39;yonicd/tidycheckUsage&#39;, &#39;yonicd/ripe&#39;, &#39;yonicd/lmmen&#39;, &#39;metrumresearchgroup/covrpage&#39;, &#39;metrumresearchgroup/ggedit&#39;, &#39;metrumresearchgroup/sinew&#39;, &#39;metrumresearchgroup/slickR&#39;, &#39;metrumresearchgroup/d3Tree&#39;, &#39;metrumresearchgroup/texPreview&#39;, &#39;metrumresearchgroup/jsTree&#39;, &#39;metrumresearchgroup/shinyCanvas&#39;, &#39;metrumresearchgroup/vcs&#39; )  Define Functions fetch_view_type &lt;- function(owner,repo,type,gh_pat){ this_dat &lt;- gh::gh( &#39;/repos/:owner/:repo/traffic/:type&#39;, owner = owner, repo = repo, type = type, .token = gh_pat) if(length(this_dat[[type]])==0) return(NULL) ret &lt;- this_dat[[type]]%&gt;% purrr::transpose()%&gt;% dplyr::as_tibble()%&gt;% dplyr::mutate( timestamp = as.
                   <a href="/page/github_traffic/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="/page/reactable/">
+                <h2 class="post-title">GitHub Activity Reactable</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                Posted on December 14, 2019
+              </p>
+              <div class="post-entry">
+                
+                  reactable::reactable(tbl_md, pagination = FALSE, highlight = TRUE, height = 500, defaultSortOrder = &quot;desc&quot;, defaultSorted = c(&quot;views&quot;), rowStyle = function(index) { if (tbl_md[index, &quot;type&quot;] =='owner') { list(background = &quot;rgba(0, 0, 0, 0.05)&quot;) } } )   {&ldquo;x&rdquo;:{&ldquo;tag&rdquo;:{&ldquo;name&rdquo;:&ldquo;Reactable&rdquo;,&ldquo;attribs&rdquo;:{&ldquo;data&rdquo;:{&ldquo;type&rdquo;:[&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;owner&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;,&ldquo;member&rdquo;],&ldquo;owner&rdquo;:[&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;yonicd&rdquo;,&ldquo;hrbrmstr&rdquo;,&ldquo;jonocarroll&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;metrumresearchgroup&rdquo;,&ldquo;ropenscilabs&rdquo;,&ldquo;talgalili&rdquo;,&ldquo;ThinkR-open&rdquo;,&ldquo;yuliasidi&rdquo;],&ldquo;repo&rdquo;:[&ldquo;blog&rdquo;,&ldquo;bplyr&rdquo;,&ldquo;carbonate&rdquo;,&ldquo;chunky&rdquo;,&ldquo;ciderhouse&rdquo;,&ldquo;CIMDO&rdquo;,&ldquo;cookr&rdquo;,&ldquo;covrfail&rdquo;,&ldquo;covrwarn&rdquo;,&ldquo;d3&rdquo;,&ldquo;details&rdquo;,&ldquo;EconomistLetter&rdquo;,&ldquo;Elections&rdquo;,&ldquo;foreman&rdquo;,&ldquo;gdigest&rdquo;,&ldquo;ghnet&rdquo;,&ldquo;GitHubAPI&rdquo;,&ldquo;gitLogs&rdquo;,&ldquo;gunflow&rdquo;,&ldquo;helpdesk&rdquo;,&ldquo;issue&rdquo;,&ldquo;lmmen&rdquo;,&ldquo;places&rdquo;,&ldquo;potus_public_schedule&rdquo;,&ldquo;reactor&rdquo;,&ldquo;regexSelect&rdquo;,&ldquo;revisionist&rdquo;,&ldquo;ripe&rdquo;,&ldquo;rpdf&rdquo;,&ldquo;rsam&rdquo;,&ldquo;rtravis&rdquo;,&ldquo;SearchTree&rdquo;,&ldquo;shinyghap&rdquo;,&ldquo;shinyHeatmaply&rdquo;,&ldquo;shinyProf&rdquo;,&ldquo;shinyselect&rdquo;,&ldquo;sinew_presentation&rdquo;,&ldquo;slackr-app&rdquo;,&ldquo;slackteams&rdquo;,&ldquo;supermarketprices&rdquo;,&ldquo;taseR&rdquo;,&ldquo;texsnippets&rdquo;,&ldquo;tidycheckUsage&rdquo;,&ldquo;tidyghql&rdquo;,&ldquo;toddlr&rdquo;,&ldquo;trying.lockedata.starters&rdquo;,&ldquo;slackr&rdquo;,&ldquo;ggeasy&rdquo;,&ldquo;covrpage&rdquo;,&ldquo;d3Tree&rdquo;,&ldquo;ggedit&rdquo;,&ldquo;jsTree&rdquo;,&ldquo;qibble&rdquo;,&ldquo;shinyCanvas&rdquo;,&ldquo;shinyglmnet&rdquo;,&ldquo;shredder&rdquo;,&ldquo;sinew&rdquo;,&ldquo;slickR&rdquo;,&ldquo;stantools&rdquo;,&ldquo;texblocks&rdquo;,&ldquo;texPreview&rdquo;,&ldquo;tic.covrpage&rdquo;,&ldquo;TorstenHeaders&rdquo;,&ldquo;vcs&rdquo;,&ldquo;tic.covrpage&rdquo;,&ldquo;heatmaply&rdquo;,&ldquo;remedy&rdquo;,&ldquo;condor&rdquo;],&ldquo;views&rdquo;:[2,25,63,0,0,6,0,0,0,0,216,0,6,33,0,0,0,1,0,22,3,65,3,1,20,36,0,71,24,13,0,0,0,58,4,0,1,4,43,1,4,0,0,1,1,0,387,662,67,167,290,84,6,20,0,170,9,315,0,1,150,0,2,2,0,656,103,0],&ldquo;viewers&rdquo;:[2,5,49,0,0,6,0,0,0,0,87,0,5,14,0,0,0,1,0,12,3,20,1,1,12,13,0,30,22,7,0,0,0,30,4,0,1,2,13,1,2,0,0,1,1,0,217,336,17,57,229,62,1,18,0,43,7,86,0,1,30,0,2,2,0,416,75,0],&ldquo;clones&rdquo;:[0,0,1,1,0,0,1,1,1,0,22,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,6,0,0,0,1,0,0,0,0,0,1,17,1,1,1,0,0,0,0,3,5,2,2,2,0,0,0,1,9,0,8,0,0,18,1,4,0,0,13,1,0],&ldquo;cloners&rdquo;:[0,0,1,1,0,0,1,1,1,0,16,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,6,0,0,0,1,0,0,0,0,0,1,13,1,1,1,0,0,0,0,3,4,1,2,2,0,0,0,1,9,0,7,0,0,17,1,4,0,0,13,1,0]},&ldquo;columns&rdquo;:[{&ldquo;accessor&rdquo;:&ldquo;type&rdquo;,&ldquo;name&rdquo;:&ldquo;type&rdquo;,&ldquo;type&rdquo;:&ldquo;character&rdquo;},{&ldquo;accessor&rdquo;:&ldquo;owner&rdquo;,&ldquo;name&rdquo;:&ldquo;owner&rdquo;,&ldquo;type&rdquo;:&ldquo;character&rdquo;},{&ldquo;accessor&rdquo;:&ldquo;repo&rdquo;,&ldquo;name&rdquo;:&ldquo;repo&rdquo;,&ldquo;type&rdquo;:&ldquo;character&rdquo;},{&ldquo;accessor&rdquo;:&ldquo;views&rdquo;,&ldquo;name&rdquo;:&ldquo;views&rdquo;,&ldquo;type&rdquo;:&ldquo;numeric&rdquo;},{&ldquo;accessor&rdquo;:&ldquo;viewers&rdquo;,&ldquo;name&rdquo;:&ldquo;viewers&rdquo;,&ldquo;type&rdquo;:&ldquo;numeric&rdquo;},{&ldquo;accessor&rdquo;:&ldquo;clones&rdquo;,&ldquo;name&rdquo;:&ldquo;clones&rdquo;,&ldquo;type&rdquo;:&ldquo;numeric&rdquo;},{&ldquo;accessor&rdquo;:&ldquo;cloners&rdquo;,&ldquo;name&rdquo;:&ldquo;cloners&rdquo;,&ldquo;type&rdquo;:&ldquo;numeric&rdquo;}],&ldquo;defaultSortDesc&rdquo;:true,&ldquo;defaultSorted&rdquo;:[{&ldquo;id&rdquo;:&ldquo;views&rdquo;,&ldquo;desc&rdquo;:true}],&ldquo;defaultPageSize&rdquo;:68,&ldquo;paginationType&rdquo;:&ldquo;numbers&rdquo;,&ldquo;showPageInfo&rdquo;:true,&ldquo;minRows&rdquo;:1,&ldquo;highlight&rdquo;:true,&ldquo;rowStyle&rdquo;:[{&ldquo;background&rdquo;:&ldquo;rgba(0, 0, 0, 0.05)&rdquo;},{&ldquo;background&rdquo;:&ldquo;rgba(0, 0, 0, 0.05)&rdquo;},{&ldquo;background&rdquo;:&ldquo;rgba(0, 0, 0, 0.05)&rdquo;},{&ldquo;background&rdquo;:&ldquo;rgba(0, 0, 0, 0.05)&rdquo;},{&ldquo;background&rdquo;:&ldquo;rgba(0, 0, 0, 0.05)&rdquo;},{&ldquo;background&rdquo;:&ldquo;rgba(0, 0, 0, 0.05)&rdquo;},{&ldquo;background&rdquo;:&ldquo;rgba(0, 0, 0, 0.05)&rdquo;},{&ldquo;background&rdquo;:&ldquo;rgba(0, 0, 0, 0.05)&rdquo;},{&ldquo;background&rdquo;:&ldquo;rgba(0, 0, 0, 0.05)&rdquo;},{&ldquo;background&rdquo;:&ldquo;rgba(0, 0, 0, 0.05)&rdquo;},{&ldquo;background&rdquo;:&ldquo;rgba(0, 0, 0, 0.05)&rdquo;},{&ldquo;background&rdquo;:&ldquo;rgba(0, 0, 0, 0.
+                  <a href="/page/reactable/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="/page/github_traffic/">
+                <h2 class="post-title">GitHub Waffle Heatmap</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                Posted on April 25, 2019
+              </p>
+              <div class="post-entry">
+                
+                  How we got this: Load libraries library(purrr) library(ggplot2) library(gh) library(tidyr) library(svglite)  Define the GitHub repos repos &lt;- c( 'yonicd/whereami', 'yonicd/carbonate', 'yonicd/bplyr', 'yonicd/details', 'yonicd/shinyHeatmaply', 'yonicd/Elections', 'yonicd/rpdf', 'yonicd/rsam', 'yonicd/regexSelect', 'yonicd/tidycheckUsage', 'yonicd/ripe', 'yonicd/lmmen', 'metrumresearchgroup/covrpage', 'metrumresearchgroup/ggedit', 'metrumresearchgroup/sinew', 'metrumresearchgroup/slickR', 'metrumresearchgroup/d3Tree', 'metrumresearchgroup/texPreview', 'metrumresearchgroup/jsTree', 'metrumresearchgroup/shinyCanvas', 'metrumresearchgroup/vcs' )  Define Functions fetch_view_type &lt;- function(owner,repo,type,gh_pat){ this_dat &lt;- gh::gh( '/repos/:owner/:repo/traffic/:type', owner = owner, repo = repo, type = type, .token = gh_pat) if(length(this_dat[[type]])==0) return(NULL) ret &lt;- this_dat[[type]]%&gt;% purrr::transpose()%&gt;% dplyr::as_tibble()%&gt;% dplyr::mutate( timestamp = as.
+                  <a href="/page/github_traffic/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="/page/slickr/">
+                <h2 class="post-title"></h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                Posted on January 1, 0001
+              </p>
+              <div class="post-entry">
+                
+                  body{background-color:white;}        slickR     {"x":[{"obj":"\n \n \n \n \n \n \n Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                  <a href="/page/slickr/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="/page/slickr/slick-1.8.1/">
+                <h2 class="post-title"></h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                Posted on January 1, 0001
+              </p>
+              <div class="post-entry">
+                
+                  Slick Playground html, body { margin: 0; padding: 0; } * { box-sizing: border-box; } .slider { width: 50%; margin: 100px auto; } .slick-slide { margin: 0px 20px; } .slick-slide img { width: 100%; } .slick-prev:before, .slick-next:before { color: black; } .slick-slide { transition: all ease-in-out .3s; opacity: .2; } .slick-active { opacity: .5; } .slick-current { opacity: 1; }                                                                                                                                                                         $(document).
+                  <a href="/page/slickr/slick-1.8.1/" class="post-read-more">[Read More]</a>
                 
               </div>
 

@@ -3,13 +3,23 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/page/github_traffic/</loc>
-    <lastmod>2019-03-19T00:00:00+00:00</lastmod>
+    <loc>/page/reactable/</loc>
+    <lastmod>2019-12-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/page/github_traffic/</loc>
-    <lastmod>2019-03-19T00:00:00+00:00</lastmod>
+    <lastmod>2019-12-31T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/page/reactable/</loc>
+    <lastmod>2019-12-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/page/github_traffic/</loc>
+    <lastmod>2019-04-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -84,7 +94,19 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2019-03-19T00:00:00+00:00</lastmod>
+    <lastmod>2019-12-31T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/content/page/slickr/slick-1.8.1/</loc>
+  </url>
+  
+  <url>
+    <loc>/page/slickr/</loc>
+  </url>
+  
+  <url>
+    <loc>/page/slickr/slick-1.8.1/</loc>
   </url>
   
   <url>
@@ -94,6 +116,11 @@
   <url>
     <loc>/tags/addin/</loc>
     <lastmod>2018-01-15T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/blog/</loc>
     <priority>0</priority>
   </url>
   
@@ -156,7 +183,7 @@
   
   <url>
     <loc>/page/</loc>
-    <lastmod>2019-03-19T00:00:00+00:00</lastmod>
+    <lastmod>2019-12-31T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -244,6 +271,10 @@
     <loc>/tags/webscraping/</loc>
     <lastmod>2017-10-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/blog/content/page/slickr/</loc>
   </url>
   
 </urlset>
