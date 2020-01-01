@@ -18,12 +18,13 @@ x_names <- c(me_names,thinkr_names,RS_names,hexbin_names)
 
 library(slickR)
 
-p <- lapply(slick_div(x,links = x),function(x) {
-  names(x$attribs)[1] <- 'data-lazy' 
+p <- lapply(slick_div(x,links = x,css = htmltools::css(marginLeft='auto',marginRight='auto',height = '100px')),function(x) {
+  names(x$children[[1]]$attribs)[1] <- 'data-lazy' 
   x
 })
 
-p1 <- slickR::slickR(slick_list(p),height = 100) + 
+
+p1 <- slickR::slickR(p) + 
   slickR::settings(slidesToShow = 5,lazyLoad = 'ondemand',slidesToScroll = 5,centerMode = FALSE,autoplay = TRUE,autoplaySpeed = 3000)
 
 p2 <- slickR::slickR(x_names,slideType = 'p') + slickR::settings(slidesToShow = 5,arrows = FALSE,slidesToScroll = 5,centerMode = FALSE,autoplay = TRUE,autoplaySpeed = 3000)
