@@ -2006,7 +2006,7 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
       <guid>/post/2017-04-07-slickr/</guid>
       <description>
 
-&lt;p&gt;We are happy to bring the &lt;a href=&#34;http://kenwheeler.github.io/slick/&#34;&gt;slick&lt;/a&gt; JavaScript library to R. It is self described as &amp;ldquo;the last carousel you&amp;rsquo;ll ever need&amp;rdquo;. This carousel is based on putting the elements of the carousel in a &lt;a href=&#34;https://www.w3schools.com/tags/tag_div.asp&#34;&gt;div&lt;/a&gt; HTML tag. This makes the carousel very versatile in what can be placed inside. Regular objects that are placed in a carousel can be for example: images, plots, tables, gifs, videos, iframes and even htmlwidgets.&lt;/p&gt;
+&lt;p&gt;We are happy to bring the &lt;a href=&#34;https://kenwheeler.github.io/slick/&#34;&gt;slick&lt;/a&gt; JavaScript library to R. It is self described as &amp;ldquo;the last carousel you&amp;rsquo;ll ever need&amp;rdquo;. This carousel is based on putting the elements of the carousel in a &lt;a href=&#34;https://www.w3schools.com/tags/tag_div.asp&#34;&gt;div&lt;/a&gt; HTML tag. This makes the carousel very versatile in what can be placed inside. Regular objects that are placed in a carousel can be for example: images, plots, tables, gifs, videos, iframes and even htmlwidgets.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/slickR/master/Miscellaneous/Multimedia/gif/slickRnestingWidgets.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
