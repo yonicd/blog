@@ -3,11 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/post/interactive-carousels-in-tweets/</loc>
-    <lastmod>2020-01-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/page/reactable/</loc>
     <lastmod>2019-12-31T00:00:00+00:00</lastmod>
   </url>
@@ -154,7 +149,7 @@
   
   <url>
     <loc>/tags/htmlwigdet/</loc>
-    <lastmod>2020-01-02T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-07T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -172,7 +167,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2020-01-02T00:00:00+00:00</lastmod>
+    <lastmod>2018-10-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -182,6 +177,42 @@
   
   <url>
     <loc>/page/projects.utf8/</loc>
+  </url>
+  
+  <url>
+    <loc>/page/packages/collaborations/</loc>
+  </url>
+  
+  <url>
+    <loc>/page/packages/development/</loc>
+  </url>
+  
+  <url>
+    <loc>/page/packages/htmlwidgets/</loc>
+  </url>
+  
+  <url>
+    <loc>/page/packages/latex/</loc>
+  </url>
+  
+  <url>
+    <loc>/page/packages/reproducibility/</loc>
+  </url>
+  
+  <url>
+    <loc>/page/packages/shiny/</loc>
+  </url>
+  
+  <url>
+    <loc>/page/packages/slack/</loc>
+  </url>
+  
+  <url>
+    <loc>/page/packages/statistics/</loc>
+  </url>
+  
+  <url>
+    <loc>/page/packages/utility/</loc>
   </url>
   
   <url>
@@ -198,7 +229,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2020-01-02T00:00:00+00:00</lastmod>
+    <lastmod>2019-12-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -244,20 +275,8 @@
   </url>
   
   <url>
-    <loc>/tags/slick/</loc>
-    <lastmod>2020-01-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/tags/</loc>
     <lastmod>2018-01-15T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/twitter/</loc>
-    <lastmod>2020-01-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

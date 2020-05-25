@@ -43,48 +43,74 @@ rssLimit = 20
 [[menu.main]]
     name = "Blog"
     url = ""
-    weight = 1
 
 [[menu.main]]
-    identifier = "projects"
-    name = "Projects"
-    weight = 2
-
-[[menu.main]]
-    parent = "projects"
+    identifier = "R Packages"
     name = "R Packages"
-    url = "page/projects/"
-    weight = 1
+
+[[menu.main]]
+    parent = "R Packages"
+    name = "Package Development"
+    url = "page/packages/development/"
+
+[[menu.main]]
+    parent = "R Packages"
+    name = "Reproducibility"
+    url = "page/packages/reproducibility/"
+    
+[[menu.main]]
+    parent = "R Packages"
+    name = "Collaboration"
+    url = "page/packages/collaborations/"    
+    
+[[menu.main]]
+    parent = "R Packages"
+    name = "Slack"
+    url = "page/packages/slack/"
+
+[[menu.main]]
+    parent = "R Packages"
+    name = "Utility"
+    url = "page/packages/utility/"
+
+[[menu.main]]
+    parent = "R Packages"
+    name = "Shiny"
+    url = "page/packages/shiny/"
+
+[[menu.main]]
+    parent = "R Packages"
+    name = "htmlwidgets"
+    url = "page/packages/htmlwidgets/"
+    
+[[menu.main]]
+    parent = "R Packages"
+    name = "Statistics"
+    url = "page/packages/statistics/"
 
 [[menu.main]]
     name = "About"
     url = "page/about/"
-    weight = 3
 
 [[menu.main]]
     identifier = "resources"
     name = "Resources"
-    weight = 4
 
 [[menu.main]]
     parent = "resources"
-    name = "Metrum Research"
-    url = "http://www.metrumrg.com/"
-    weight = 1
+    name = "R Weekly"
+    url = "https://rweekly.org/"
 
 [[menu.main]]
     parent = "resources"
     name = "R-bloggers"
     url = "http://www.r-bloggers.com"
-    weight = 2
 
-#[[menu.main]]
-#    parent = "resources"
-#    name = "Code Sample"
-#    url = "post/2016-03-08-code-sample"
-#    weight = 3
+[[menu.main]]
+    parent = "resources"
+    name = "ROpenSci"
+    url = "https://ropensci.org/"
 
 [[menu.main]]
     name = "Tags"
     url = "tags"
-    weight = 4

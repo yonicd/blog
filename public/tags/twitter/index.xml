@@ -23,7 +23,10 @@
 &lt;script src=&#34;/rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
 
 
-&lt;p&gt;Using &lt;code&gt;slickR&lt;/code&gt; to populate carousels. And placce them in a twitter feed.&lt;/p&gt;
+&lt;div id=&#34;synopsis&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Synopsis&lt;/h2&gt;
+&lt;p&gt;This is a tutorial on how to create a carousel using &lt;code&gt;slickR&lt;/code&gt; and converting it into an interactive twitter post.&lt;/p&gt;
+&lt;/div&gt;
 &lt;div id=&#34;load-libraries&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Load Libraries&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(slickR)
