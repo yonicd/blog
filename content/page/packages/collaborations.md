@@ -10,6 +10,8 @@ CRAN
   - **ggeasy**: ggplot2 shortcuts (transformations made easy). [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/jonocarroll/ggeasy)[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ggeasy?color=blue)](https://cran.r-project.org/package=ggeasy)![downloads](https://cranlogs.r-pkg.org/badges/ggeasy)
   
   - **slackr**: A package to send webhook API messages to Slack.com channels/users from R. [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/hrbrmstr/slackr)[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/slackr?color=blue)](https://cran.r-project.org/package=slackr)![downloads](https://cranlogs.r-pkg.org/badges/slackr)
+  
+  - **ggalt**: Extra Coordinate Systems, Geoms, Statistical Transformations & Scales for ggplot2. [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/hrbrmstr/ggalt)[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ggalt?color=blue)](https://cran.r-project.org/package=ggalt)![downloads](https://cranlogs.r-pkg.org/badges/ggalt)  
 
 GitHub
 
