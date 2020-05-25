@@ -7,9 +7,9 @@ This is a list of R packages that have been published on CRAN and/or are still b
 
 The icons at the end of each description show where the project is maintained and links are attached to each one to take you to the relevant page. 
 
-| Github | CRAN | bl.ocks | JavaScript |
-|:--:|:--:|:--:|:--:|
-|[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/)| [![](https://img.shields.io/badge/CRAN--blue.svg)](https://cran.r-project.org/) | [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/d3js.jpeg)](https://bl.ocks.org/)|[![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/jsicon.jpeg)](https://bl.ocks.org/)|
+ Github | CRAN | bl.ocks
+:--:|:--:|:--:
+ [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg)](https://github.com/yonicd/) | [![](https://img.shields.io/badge/CRAN--blue.svg)](https://cran.r-project.org/) | [![](https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/d3js.jpeg)](https://bl.ocks.org/)
   
 (Not in any logical order, just what came to mind when I wrote this...)
 

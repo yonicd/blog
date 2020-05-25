@@ -456,7 +456,6 @@ dev.off()
 &lt;th align=&#34;center&#34;&gt;Github&lt;/th&gt;
 &lt;th align=&#34;center&#34;&gt;CRAN&lt;/th&gt;
 &lt;th align=&#34;center&#34;&gt;bl.ocks&lt;/th&gt;
-&lt;th align=&#34;center&#34;&gt;JavaScript&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 
@@ -465,7 +464,6 @@ dev.off()
 &lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://github.com/yonicd/&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/ghicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://cran.r-project.org/&#34;&gt;&lt;img src=&#34;https://img.shields.io/badge/CRAN--blue.svg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://bl.ocks.org/&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/d3js.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://bl.ocks.org/&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/yonicd/yonicd.github.io/master/img/jsicon.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
