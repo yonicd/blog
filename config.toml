@@ -57,12 +57,6 @@ rssLimit = 20
     weight = 1
 
 [[menu.main]]
-    parent = "projects"
-    name = "Github Traffic"
-    url = "page/github_traffic"
-    weight = 2
-
-[[menu.main]]
     name = "About"
     url = "page/about/"
     weight = 3

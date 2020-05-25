@@ -10,7 +10,7 @@
   <meta name="twitter:title" content="GitHub Waffle Heatmap" />
   <meta name="description" content="How we got this: Load libraries library(purrr) library(ggplot2) library(gh) library(tidyr) library(svglite)  Define the GitHub repos repos &lt;- c( &#39;yonicd/whereami&#39;, &#39;yonicd/carbonate&#39;, &#39;yonicd/bplyr&#39;, &#39;yonicd/details&#39;, &#39;yonicd/shinyHeatmaply&#39;, &#39;yonicd/Elections&#39;, &#39;yonicd/rpdf&#39;, &#39;yonicd/rsam&#39;, &#39;yonicd/regexSelect&#39;, &#39;yonicd/tidycheckUsage&#39;, &#39;yonicd/ripe&#39;, &#39;yonicd/lmmen&#39;, &#39;metrumresearchgroup/covrpage&#39;, &#39;metrumresearchgroup/ggedit&#39;, &#39;metrumresearchgroup/sinew&#39;, &#39;metrumresearchgroup/slickR&#39;, &#39;metrumresearchgroup/d3Tree&#39;, &#39;metrumresearchgroup/texPreview&#39;, &#39;metrumresearchgroup/jsTree&#39;, &#39;metrumresearchgroup/shinyCanvas&#39;, &#39;metrumresearchgroup/vcs&#39; )  Define Functions fetch_view_type &lt;- function(owner,repo,type,gh_pat){ this_dat &lt;- gh::gh( &#39;/repos/:owner/:repo/traffic/:type&#39;, owner = owner, repo = repo, type = type, .token = gh_pat) if(length(this_dat[[type]])==0) return(NULL) ret &lt;- this_dat[[type]]%&gt;% purrr::transpose()%&gt;% dplyr::as_tibble()%&gt;% dplyr::mutate( timestamp = as.">
   <meta property="og:description" content="How we got this: Load libraries library(purrr) library(ggplot2) library(gh) library(tidyr) library(svglite)  Define the GitHub repos repos &lt;- c( &#39;yonicd/whereami&#39;, &#39;yonicd/carbonate&#39;, &#39;yonicd/bplyr&#39;, &#39;yonicd/details&#39;, &#39;yonicd/shinyHeatmaply&#39;, &#39;yonicd/Elections&#39;, &#39;yonicd/rpdf&#39;, &#39;yonicd/rsam&#39;, &#39;yonicd/regexSelect&#39;, &#39;yonicd/tidycheckUsage&#39;, &#39;yonicd/ripe&#39;, &#39;yonicd/lmmen&#39;, &#39;metrumresearchgroup/covrpage&#39;, &#39;metrumresearchgroup/ggedit&#39;, &#39;metrumresearchgroup/sinew&#39;, &#39;metrumresearchgroup/slickR&#39;, &#39;metrumresearchgroup/d3Tree&#39;, &#39;metrumresearchgroup/texPreview&#39;, &#39;metrumresearchgroup/jsTree&#39;, &#39;metrumresearchgroup/shinyCanvas&#39;, &#39;metrumresearchgroup/vcs&#39; )  Define Functions fetch_view_type &lt;- function(owner,repo,type,gh_pat){ this_dat &lt;- gh::gh( &#39;/repos/:owner/:repo/traffic/:type&#39;, owner = owner, repo = repo, type = type, .token = gh_pat) if(length(this_dat[[type]])==0) return(NULL) ret &lt;- this_dat[[type]]%&gt;% purrr::transpose()%&gt;% dplyr::as_tibble()%&gt;% dplyr::mutate( timestamp = as.">
-  <meta name="twitter:description" content="How we got this: Load libraries library(purrr) library(ggplot2) library(gh) library(tidyr) library(svglite)  Define the GitHub repos repos &lt;- c( &#39;yonicd/whereami&#39;, …">
+  <meta name="twitter:description" content="How we got this: Load libraries library(purrr) library(ggplot2) library(gh) library(tidyr) library(svglite)  Define the GitHub repos repos &lt;- c( &#39;yonicd/whereami&#39;, &#39;yonicd/carbonate&#39;, …">
   <meta name="author" content="Jonathan Sidi"/>
   <link href='/img/cd-favicon.ico' rel='icon' type='image/x-icon'/>
   <meta property="og:image" content="/img/cd-icon.png" />
@@ -88,10 +88,13 @@
 <meta name="twitter:site" content="@myname">
 <meta name="twitter:creator" content="@myname">
 
-<meta name="twitter:description" content="How we got this: Load libraries library(purrr) library(ggplot2) library(gh) library(tidyr) library(svglite)  Define the GitHub repos repos &lt;- c( &#39;yonicd/whereami&#39;, &#39;yonicd/carbonate&#39;, &#39;yonicd/bplyr&#39;, &#39;yonicd/details&#39;, &#39;yonicd/shinyHeatmaply&#39;, &#39;yonicd/Elections&#39;, &#39;yonicd/rpdf&#39;, &#39;yonicd/rsam&#39;, &#39;yonicd/regexSelect&#39;, &#39;yonicd/tidycheckUsage&#39;, &#39;yonicd/ripe&#39;, &#39;yonicd/lmmen&#39;, &#39;metrumresearchgroup/covrpage&#39;, &#39;metrumresearchgroup/ggedit&#39;, &#39;metrumresearchgroup/sinew&#39;, &#39;metrumresearchgroup/slickR&#39;, &#39;metrumresearchgroup/d3Tree&#39;, &#39;metrumresearchgroup/texPreview&#39;, &#39;metrumresearchgroup/jsTree&#39;, &#39;metrumresearchgroup/shinyCanvas&#39;, &#39;metrumresearchgroup/vcs&#39; )  Define Functions fetch_view_type &lt;- function(owner,repo,type,gh_pat){ this_dat &lt;- gh::gh( &#39;/repos/:owner/:repo/traffic/:type&#39;, owner = owner, repo = repo, type = type, .token = gh_pat) if(length(this_dat[[type]])==0) return(NULL) ret &lt;- this_dat[[type]]%&gt;% purrr::transpose()%&gt;% dplyr::as_tibble()%&gt;% dplyr::mutate( timestamp = as." />
 <meta name="twitter:title" content="GitHub Waffle Heatmap" />
+<meta name="twitter:description" content="" />
+
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:image" content="" /> 
+<meta name="twitter:image" content="" />
+
+
 
 
 <script type="application/javascript">
@@ -135,8 +138,6 @@ if (!doNotTrack) {
               <div class="navlinks-children">
                 
                   <a href="/page/projects/">R Packages</a>
-                
-                  <a href="/page/github_traffic">Github Traffic</a>
                 
               </div>
             </li>
@@ -224,58 +225,63 @@ if (!doNotTrack) {
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-            <div>
-      
- </div>
- <div>
- 
- 
-    </div>
+      <div>
+  
+</div>
+<div>
+
+
+</div>
 
       <article role="main" class="blog-post">
-        <p><img src="https://github.com/yonicd/blog/blob/traffic/content/page/github_traffic_files/figure-html/plot-1.png?raw=true" /></p>
-<div id="how-we-got-this" class="section level1">
-<h1>How we got this:</h1>
-<div id="load-libraries" class="section level2">
-<h2>Load libraries</h2>
-<pre class="r"><code>library(purrr)
+        
+
+<p><img src="https://github.com/yonicd/blog/blob/traffic/content/page/github_traffic_files/figure-html/plot-1.png?raw=true" alt="" /></p>
+
+<h1 id="how-we-got-this">How we got this:</h1>
+
+<h2 id="load-libraries">Load libraries</h2>
+
+<pre><code class="language-r">library(purrr)
 library(ggplot2)
 library(gh)
 library(tidyr)
-library(svglite)</code></pre>
-</div>
-<div id="define-the-github-repos" class="section level2">
-<h2>Define the GitHub repos</h2>
-<pre class="r"><code>repos &lt;- c(
-  &#39;yonicd/whereami&#39;,
-  &#39;yonicd/carbonate&#39;,
-  &#39;yonicd/bplyr&#39;,
-  &#39;yonicd/details&#39;,
-  &#39;yonicd/shinyHeatmaply&#39;,
-  &#39;yonicd/Elections&#39;,
-  &#39;yonicd/rpdf&#39;,
-  &#39;yonicd/rsam&#39;,
-  &#39;yonicd/regexSelect&#39;,
-  &#39;yonicd/tidycheckUsage&#39;,
-  &#39;yonicd/ripe&#39;,
-  &#39;yonicd/lmmen&#39;,
-  &#39;metrumresearchgroup/covrpage&#39;,
-  &#39;metrumresearchgroup/ggedit&#39;,
-  &#39;metrumresearchgroup/sinew&#39;,
-  &#39;metrumresearchgroup/slickR&#39;,
-  &#39;metrumresearchgroup/d3Tree&#39;,
-  &#39;metrumresearchgroup/texPreview&#39;,
-  &#39;metrumresearchgroup/jsTree&#39;,
-  &#39;metrumresearchgroup/shinyCanvas&#39;,
-  &#39;metrumresearchgroup/vcs&#39;  
-)</code></pre>
-</div>
-<div id="define-functions" class="section level2">
-<h2>Define Functions</h2>
-<pre class="r"><code>fetch_view_type &lt;- function(owner,repo,type,gh_pat){
+library(svglite)
+</code></pre>
+
+<h2 id="define-the-github-repos">Define the GitHub repos</h2>
+
+<pre><code class="language-r">repos &lt;- c(
+  'yonicd/whereami',
+  'yonicd/carbonate',
+  'yonicd/bplyr',
+  'yonicd/details',
+  'yonicd/shinyHeatmaply',
+  'yonicd/Elections',
+  'yonicd/rpdf',
+  'yonicd/rsam',
+  'yonicd/regexSelect',
+  'yonicd/tidycheckUsage',
+  'yonicd/ripe',
+  'yonicd/lmmen',
+  'metrumresearchgroup/covrpage',
+  'metrumresearchgroup/ggedit',
+  'metrumresearchgroup/sinew',
+  'metrumresearchgroup/slickR',
+  'metrumresearchgroup/d3Tree',
+  'metrumresearchgroup/texPreview',
+  'metrumresearchgroup/jsTree',
+  'metrumresearchgroup/shinyCanvas',
+  'metrumresearchgroup/vcs'  
+)
+</code></pre>
+
+<h2 id="define-functions">Define Functions</h2>
+
+<pre><code class="language-r">fetch_view_type &lt;- function(owner,repo,type,gh_pat){
   
   this_dat &lt;- gh::gh(
-                &#39;/repos/:owner/:repo/traffic/:type&#39;,
+                '/repos/:owner/:repo/traffic/:type',
                 owner  = owner,
                 repo   = repo,
                 type   = type,
@@ -289,7 +295,7 @@ library(svglite)</code></pre>
     purrr::transpose()%&gt;%
     dplyr::as_tibble()%&gt;%
     dplyr::mutate(
-      timestamp = as.Date(gsub(&#39;T(.*?)$&#39;,&#39;&#39;,purrr::flatten_chr(timestamp))),
+      timestamp = as.Date(gsub('T(.*?)$','',purrr::flatten_chr(timestamp))),
       count  = purrr::flatten_dbl(count),
       uniques  = purrr::flatten_dbl(uniques),
       repo = repo
@@ -300,7 +306,7 @@ library(svglite)</code></pre>
 
 fetch_view_data &lt;- function(repo, gh_pat){
   
-  types &lt;- dplyr::data_frame(type = c(&#39;views&#39;,&#39;clones&#39;))
+  types &lt;- dplyr::data_frame(type = c('views','clones'))
 
   ret &lt;- purrr::map_df(
     types$type,
@@ -308,33 +314,35 @@ fetch_view_data &lt;- function(repo, gh_pat){
     gh_pat = gh_pat,
     owner  = dirname(repo),
     repo   = basename(repo),
-    .id    = &#39;type&#39;
+    .id    = 'type'
     )%&gt;%
     dplyr::mutate(
       type = dplyr::case_when(
-        type==1~&#39;views&#39;,
-        type==2~&#39;clones&#39;
+        type==1~'views',
+        type==2~'clones'
         )
     )
 
   return(ret)
-}</code></pre>
-<div id="run-the-function" class="section level3">
-<h3>Run the function</h3>
-<pre class="r"><code>x &lt;- repos%&gt;%
+}
+</code></pre>
+
+<h3 id="run-the-function">Run the function</h3>
+
+<pre><code class="language-r">x &lt;- repos%&gt;%
   purrr::map_df(
     fetch_view_data, 
-    gh_pat = Sys.getenv(&#39;GITHUB_PAT&#39;)
-  )</code></pre>
-</div>
-</div>
-<div id="waffle-heatmap" class="section level2">
-<h2>Waffle heatmap</h2>
-<pre class="r"><code>plot_traffic &lt;- function(dat){
+    gh_pat = Sys.getenv('GITHUB_PAT')
+  )
+</code></pre>
+
+<h2 id="waffle-heatmap">Waffle heatmap</h2>
+
+<pre><code class="language-r">plot_traffic &lt;- function(dat){
   dat %&gt;%
     tidyr::gather(
-      key   = &#39;stat&#39;,
-      value = &#39;value&#39;,
+      key   = 'stat',
+      value = 'value',
       count,
       uniques
       )%&gt;%
@@ -346,14 +354,14 @@ fetch_view_data &lt;- function(repo, gh_pat){
         )
       ) +
     ggplot2::geom_tile(
-      colour = &#39;white&#39;,
+      colour = 'white',
       width  = 0.95,
       alpha  = 0.75) +
     ggplot2::geom_hline(
       yintercept = c(0,(1:length(unique(dat$repo))) + 0.5),
-      colour     = &#39;grey90&#39;) +
+      colour     = 'grey90') +
     viridis::scale_fill_viridis(
-      name      = &#39;Count&#39;,
+      name      = 'Count',
       direction = -1
       ) +
     ggplot2::facet_grid( . ~ stat ) +
@@ -364,28 +372,29 @@ fetch_view_data &lt;- function(repo, gh_pat){
       panel.grid.minor  = ggplot2::element_blank(),
       axis.title        = ggplot2::element_blank()
       )
-}</code></pre>
-</div>
-<div id="save-to-disk" class="section level2">
-<h2>Save to disk</h2>
-<pre class="r"><code>svglite::svglite(
-  file.path(getwd(),&#39;public/img/github_traffic.svg&#39;),
+}
+</code></pre>
+
+<h2 id="save-to-disk">Save to disk</h2>
+
+<pre><code class="language-r">svglite::svglite(
+  file.path(getwd(),'public/img/github_traffic.svg'),
   standalone = TRUE
   )
   
 plot_traffic(x)
 
-dev.off()</code></pre>
-<p><img src="/page/github_traffic_files/figure-html/plot-1.png" width="672" /></p>
-</div>
-</div>
+dev.off()
+</code></pre>
+
+<p><img src="github_traffic_files/figure-html/plot-1.png" alt="" /><!-- --></p>
 
       </article>
 
       <ul class="pager blog-pager">
         
           <li class="previous">
-            <a href="/page/reactable/" data-toggle="tooltip" data-placement="top" title="GitHub Activity Reactable">&larr; Previous Post</a>
+            <a href="/page/about/" data-toggle="tooltip" data-placement="top" title="About me">&larr; Previous Post</a>
           </li>
         
         
@@ -499,7 +508,7 @@ dev.off()</code></pre>
           
           
           &nbsp;&bull;&nbsp;
-          2019
+          2020
 
           
             &nbsp;&bull;&nbsp;

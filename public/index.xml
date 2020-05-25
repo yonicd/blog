@@ -7,10 +7,82 @@
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>yonicd@gmail.com (Jonathan Sidi)</managingEditor>
     <webMaster>yonicd@gmail.com (Jonathan Sidi)</webMaster>
-    <lastBuildDate>Tue, 31 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jan 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Interactive Carousels in Tweets</title>
+      <link>/post/interactive-carousels-in-tweets/</link>
+      <pubDate>Thu, 02 Jan 2020 00:00:00 +0000</pubDate>
+      <author>yonicd@gmail.com (Jonathan Sidi)</author>
+      <guid>/post/interactive-carousels-in-tweets/</guid>
+      <description>&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/pymjs/pym.v1.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/widgetframe-binding/widgetframe.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;Using &lt;code&gt;slickR&lt;/code&gt; to populate carousels. And placce them in a twitter feed.&lt;/p&gt;
+&lt;div id=&#34;load-libraries&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Load Libraries&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(slickR)
+library(magrittr)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;build-urls&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Build URLs&lt;/h2&gt;
+&lt;div id=&#34;thinkr&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;ThinkR&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;thinkr_names &amp;lt;- c(&amp;#39;colin-hex-attempt&amp;#39;, &amp;#39;colin-hex-proustr&amp;#39;, &amp;#39;thinkr-hex-attachment&amp;#39;, &amp;#39;thinkr-hex-fakir&amp;#39;, &amp;#39;thinkr-hex-fcuk&amp;#39;, &amp;#39;thinkr-hex-golem2&amp;#39;, &amp;#39;thinkr-hex-prenoms&amp;#39;, &amp;#39;thinkr-hex-remedy&amp;#39;, &amp;#39;thinkr-hex-rusk&amp;#39;, &amp;#39;thinkr-hex-shinipsum&amp;#39;, &amp;#39;thinkr-hex-thinkr-entreprise&amp;#39;, &amp;#39;thinkr-hex-thinkr-package&amp;#39;)
+
+thinkr &amp;lt;- sprintf(&amp;#39;https://raw.githubusercontent.com/ThinkR-open/visuals/master/hexes/%s.png&amp;#39;,thinkr_names)
+
+thinkr_names &amp;lt;- gsub(&amp;#39;^(.*?)hex-&amp;#39;,&amp;#39;&amp;#39;,thinkr_names)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;yonicd&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;yonicd&lt;/h3&gt;
+&lt;p&gt;List of hex stickers of projects I have contributed to&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;me_names &amp;lt;- c(&amp;#39;carbonate&amp;#39;, &amp;#39;covrpage&amp;#39;, &amp;#39;details&amp;#39;, &amp;#39;helpdesk&amp;#39;, &amp;#39;ripe&amp;#39;, &amp;#39;shredder&amp;#39;, &amp;#39;slickr&amp;#39;, &amp;#39;whereami&amp;#39;)
+
+me &amp;lt;- sprintf(&amp;#39;https://raw.githubusercontent.com/yonicd/hex/master/images/logos/%s.png&amp;#39;,me_names)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Combine&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(me,thinkr)
+x_names &amp;lt;- c(me_names,thinkr_names)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;create-dom-elements&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Create DOM elements&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p &amp;lt;- slick_div(x,
+               links = x,
+               css = htmltools::css(
+                 marginLeft=&amp;#39;auto&amp;#39;,
+                 marginRight=&amp;#39;auto&amp;#39;,
+                 height = &amp;#39;100px&amp;#39;,
+                 width = &amp;#39;80%&amp;#39;)
+               )%&amp;gt;%
+    lapply(function(x) {
+      names(x$children[[1]]$attribs)[1] &amp;lt;- &amp;#39;data-lazy&amp;#39; 
+      x
+    })&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;create-carousel&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Create Carousel&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p1 &amp;lt;- p%&amp;gt;%
+  slickR::slickR() + 
+  slickR::settings(
+    slidesToShow = 5,
+    slidesToScroll = 5,   
+    centerMode = FALSE,
+    lazyLoad = &amp;#39;ondemand&amp;#39;,
+    autoplay = TRUE,
+    autoplaySpeed = 3000
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;widgetframe::frameWidget(targetWidget = p1,width=&amp;#39;90%&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:90%;height:480px;&#34; class=&#34;widgetframe html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;url&#34;:&#34;/post/2020-01-02-interactive-carousels-in-tweets.en_files/figure-html//widgets/widget_unnamed-chunk-7.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>GitHub Activity Reactable</title>
@@ -3042,20 +3114,6 @@ Contact: For questions and comments, feel free to email me at: yonis@metrumrg.co
 
 &lt;li&gt;&lt;p&gt;Enjoy integrating different languages with R like JavaScript and C++, to improve workflows.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Datasets</title>
-      <link>/page/datasets/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <author>yonicd@gmail.com (Jonathan Sidi)</author>
-      <guid>/page/datasets/</guid>
-      <description>&lt;p&gt;This page includes source data used in blog posts and packages.&lt;/p&gt;
-
-&lt;p&gt;|Dataset|Object Type|Source|Description|
-  |:&amp;ndash;:|:&amp;ndash;:|:&amp;ndash;:|:&amp;ndash;:|
-  |superfundsite|tibble|&lt;a href=&#34;https://www.epa.gov/superfund/search-superfund-sites-where-you-live&#34;&gt;EPA&lt;/a&gt;|Superfund sites containing&lt;/p&gt;
 </description>
     </item>
     

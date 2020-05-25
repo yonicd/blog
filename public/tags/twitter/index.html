@@ -5,9 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Collaboration</title>
-  <meta property="og:title" content="Collaboration" />
-  <meta name="twitter:title" content="Collaboration" />
+  <title>Twitter</title>
+  <meta property="og:title" content="Twitter" />
+  <meta name="twitter:title" content="Twitter" />
   <meta name="author" content="Jonathan Sidi"/>
   <link href='/img/cd-favicon.ico' rel='icon' type='image/x-icon'/>
   <meta property="og:image" content="/img/cd-icon.png" />
@@ -15,12 +15,12 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@yoniceedee" />
   <meta name="twitter:creator" content="@yoniceedee" />
-  <meta property="og:url" content="/tags/collaboration/" />
+  <meta property="og:url" content="/tags/twitter/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Reproducible Random Thoughts" />
 
   <meta name="generator" content="Hugo 0.49.2" />
-  <link rel="canonical" href="/tags/collaboration/" />
+  <link rel="canonical" href="/tags/twitter/" />
   <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Reproducible Random Thoughts">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -188,7 +188,7 @@ if (!doNotTrack) {
         <div class="row">
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="page-heading">
-              <h1>#Collaboration</h1>
+              <h1>#Twitter</h1>
               <hr class="small">
             </div>
           </div>
@@ -205,42 +205,33 @@ if (!doNotTrack) {
         <div class="posts-list">
           
             <article class="post-preview">
-              <a href="/post/carbonate/">
-                <h2 class="post-title">carbonate</h2>
+              <a href="/post/interactive-carousels-in-tweets/">
+                <h2 class="post-title">Interactive Carousels in Tweets</h2>
 
-                
-                  <h3 class="post-subtitle">
-                    Create beautiful images of your source code from R
-                  </h3>
                 
               </a>
 
               <p class="post-meta">
-                Posted on October 29, 2018
+                Posted on January 2, 2020
               </p>
               <div class="post-entry">
                 
-                  carbon.js is the easiest way to create beautiful images of your source code, and carbonate creates an api in R to interact with it. The package gives a new simple way to share your script with the rest of the R community on posters, slides, Shiny apps and social media!
-This little snippet combines SO MANY of my favorite #rstats 📦s:
-✨ @jimhester_'s glue
-🥛 @yoniceedee's carbonate
-🐦 @kearneymw's rtweet
-                  <a href="/post/carbonate/" class="post-read-more">[Read More]</a>
+                  Using slickR to populate carousels. And placce them in a twitter feed.
+Load Libraries library(slickR) library(magrittr)  Build URLs ThinkR thinkr_names &lt;- c(&#39;colin-hex-attempt&#39;, &#39;colin-hex-proustr&#39;, &#39;thinkr-hex-attachment&#39;, &#39;thinkr-hex-fakir&#39;, &#39;thinkr-hex-fcuk&#39;, &#39;thinkr-hex-golem2&#39;, &#39;thinkr-hex-prenoms&#39;, &#39;thinkr-hex-remedy&#39;, &#39;thinkr-hex-rusk&#39;, &#39;thinkr-hex-shinipsum&#39;, &#39;thinkr-hex-thinkr-entreprise&#39;, &#39;thinkr-hex-thinkr-package&#39;) thinkr &lt;- sprintf(&#39;https://raw.githubusercontent.com/ThinkR-open/visuals/master/hexes/%s.png&#39;,thinkr_names) thinkr_names &lt;- gsub(&#39;^(.*?)hex-&#39;,&#39;&#39;,thinkr_names)  yonicd List of hex stickers of projects I have contributed to
+me_names &lt;- c(&#39;carbonate&#39;, &#39;covrpage&#39;, &#39;details&#39;, &#39;helpdesk&#39;, &#39;ripe&#39;, &#39;shredder&#39;, &#39;slickr&#39;, &#39;whereami&#39;) me &lt;- sprintf(&#39;https://raw.githubusercontent.com/yonicd/hex/master/images/logos/%s.png&#39;,me_names) Combine
+x &lt;- c(me,thinkr) x_names &lt;- c(me_names,thinkr_names)   Create DOM elements p &lt;- slick_div(x, links = x, css = htmltools::css( marginLeft=&#39;auto&#39;, marginRight=&#39;auto&#39;, height = &#39;100px&#39;, width = &#39;80%&#39;) )%&gt;% lapply(function(x) { names(x$children[[1]]$attribs)[1] &lt;- &#39;data-lazy&#39; x })  Create Carousel p1 &lt;- p%&gt;% slickR::slickR() + slickR::settings( slidesToShow = 5, slidesToScroll = 5, centerMode = FALSE, lazyLoad = &#39;ondemand&#39;, autoplay = TRUE, autoplaySpeed = 3000 ) widgetframe::frameWidget(targetWidget = p1,width=&#39;90%&#39;)  {"
+                  <a href="/post/interactive-carousels-in-tweets/" class="post-read-more">[Read More]</a>
                 
               </div>
 
               
                 <span class="post-meta">
                   
-                    #<a href="/tags/reproducibility/">reproducibility</a>&nbsp;
+                    #<a href="/tags/htmlwigdet/">htmlwigdet</a>&nbsp;
                   
-                    #<a href="/tags/collaboration/">collaboration</a>&nbsp;
+                    #<a href="/tags/twitter/">twitter</a>&nbsp;
                   
-                    #<a href="/tags/rselenium/">RSelenium</a>&nbsp;
-                  
-                    #<a href="/tags/rweekly/">rweekly</a>&nbsp;
-                  
-                    #<a href="/tags/rstats/">rstats</a>&nbsp;
+                    #<a href="/tags/slick/">slick</a>&nbsp;
                   
                 </span>
               

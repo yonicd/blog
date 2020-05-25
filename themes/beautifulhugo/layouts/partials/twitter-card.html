@@ -1,9 +1,16 @@
 <meta name="twitter:site" content="@myname">
 <meta name="twitter:creator" content="@myname">
 {{ if .IsPage }}
-<meta name="twitter:description" content="{{ .Summary }}" />
 <meta name="twitter:title" content="{{ .Title }}" />
+<meta name="twitter:description" content="{{ .Description }}" />
+{{ if .Params.twitter_player }}
+<meta name="twitter:card" content="player" />
+<meta name="twitter:image" content="{{ .Params.twitter_player.image }}" />
+<meta name="twitter:player" content="{{ .Params.twitter_player.url }}" />
+<meta name="twitter:player.width" content= "{{ .Params.twitter_player.width }}" />
+<meta name="twitter:player.height" content="{{ .Params.twitter_player.height }}" />
+{{ else }}
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:image" content="{{ .Params.image }}" /> {{ else }}
-<meta name="twitter:title" content="{{ .Site.Title }}" />
-<meta name="twitter:description" content="{{ .Description }}" /> {{ end }}
+<meta name="twitter:image" content="{{ .Params.image }}" />
+{{ end }}
+{{ end }}

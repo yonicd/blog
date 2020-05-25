@@ -1,52 +1,52 @@
-      <div>
-      {{ if .Params.gh_repo }}
-      {{ if (gt (.Params.gh_badge | len) 0) }}
-      {{ $myrepo := .Params.gh_repo }}
-      
-      {{ $myuser := index (split $myrepo "/") 0 }}
-      
-      
-          {{ range $badge := .Params.gh_badge }}
-                {{ if eq $badge "follow" }}
-                <a class="github-button" href="https://github.com/{{ $myuser }}" data-show-count="true" aria-label="Follow @{{ $myuser }} on GitHub">Follow @{{ $myuser }}</a>
-                {{ end }}
-                {{ if eq $badge "watch" }}
-                <a class="github-button" href="https://github.com/{{ $myuser }}/{{ $myrepo }}/subscription" data-show-count="true" aria-label="Watch {{ $myrepo }} on GitHub">Watch</a>
-                {{ end }}
-                {{ if eq $badge "star" }}
-                <a class="github-button" href="https://github.com/{{ $myrepo }}" data-show-count="true" aria-label="Star {{ $myrepo }} on GitHub">Star</a> 
-                {{ end }}
-                {{ if eq $badge "fork" }}
-                <a class="github-button" href="https://github.com/{{ $myrepo }}/fork" data-show-count="true" aria-label="Fork {{ $myrepo }} on GitHub">Fork</a>
-                {{ end }}
-                {{ if eq $badge "issue" }}
-                <a class="github-button" href="https://github.com/{{ $myrepo }}/issues" data-show-count="true" aria-label="Issue {{ $myrepo }} on GitHub">Issue</a>
-                {{ end }}
-                {{ if eq $badge "download" }}
-                <a class="github-button" href="https://github.com/{{ $myrepo }}/archive/master.zip" aria-label="Download {{ $myrepo }} on GitHub">Download</a>
-                {{ end }}
-                
-          {{ end }}
-        
-        {{ end }}
-      {{ end }}
- </div>
- <div>
- 
- {{ if .Params.cran }}
-       {{ if (gt (.Params.cran_badge | len) 0) }}
-       {{ $mycran := .Params.cran }}
-          {{ range $badge := .Params.cran_badge }}
-
-            {{ if eq $badge "status" }}
-              <a href="https://cran.r-project.org/package={{ $mycran }}"><img src="https://www.r-pkg.org/badges/version/{{ $mycran }}?color=blue" alt="CRAN_Status_Badge" /></a>
+<div>
+  {{ if .Params.gh_repo }}
+  {{ if (gt (.Params.gh_badge | len) 0) }}
+  {{ $myrepo := .Params.gh_repo }}
+  
+  {{ $myuser := index (split $myrepo "/") 0 }}
+  
+  
+      {{ range $badge := .Params.gh_badge }}
+            {{ if eq $badge "follow" }}
+            <a class="github-button" href="https://github.com/{{ $myuser }}" data-show-count="true" aria-label="Follow @{{ $myuser }} on GitHub">Follow @{{ $myuser }}</a>
             {{ end }}
-          
-            {{ if eq $badge "downloads" }}
-              <img src="https://cranlogs.r-pkg.org/badges/grand-total/{{ $mycran }}" alt="downloads" />
+            {{ if eq $badge "watch" }}
+            <a class="github-button" href="https://github.com/{{ $myuser }}/{{ $myrepo }}/subscription" data-show-count="true" aria-label="Watch {{ $myrepo }} on GitHub">Watch</a>
+            {{ end }}
+            {{ if eq $badge "star" }}
+            <a class="github-button" href="https://github.com/{{ $myrepo }}" data-show-count="true" aria-label="Star {{ $myrepo }} on GitHub">Star</a> 
+            {{ end }}
+            {{ if eq $badge "fork" }}
+            <a class="github-button" href="https://github.com/{{ $myrepo }}/fork" data-show-count="true" aria-label="Fork {{ $myrepo }} on GitHub">Fork</a>
+            {{ end }}
+            {{ if eq $badge "issue" }}
+            <a class="github-button" href="https://github.com/{{ $myrepo }}/issues" data-show-count="true" aria-label="Issue {{ $myrepo }} on GitHub">Issue</a>
+            {{ end }}
+            {{ if eq $badge "download" }}
+            <a class="github-button" href="https://github.com/{{ $myrepo }}/archive/master.zip" aria-label="Download {{ $myrepo }} on GitHub">Download</a>
             {{ end }}
             
-          {{ end }}
-        {{ end }}
       {{ end }}
-    </div>
+    
+    {{ end }}
+  {{ end }}
+</div>
+<div>
+
+{{ if .Params.cran }}
+   {{ if (gt (.Params.cran_badge | len) 0) }}
+   {{ $mycran := .Params.cran }}
+      {{ range $badge := .Params.cran_badge }}
+
+        {{ if eq $badge "status" }}
+          <a href="https://cran.r-project.org/package={{ $mycran }}"><img src="https://www.r-pkg.org/badges/version/{{ $mycran }}?color=blue" alt="CRAN_Status_Badge" /></a>
+        {{ end }}
+      
+        {{ if eq $badge "downloads" }}
+          <img src="https://cranlogs.r-pkg.org/badges/grand-total/{{ $mycran }}" alt="downloads" />
+        {{ end }}
+        
+      {{ end }}
+    {{ end }}
+  {{ end }}
+</div>
